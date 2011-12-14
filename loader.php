@@ -48,6 +48,7 @@ class Commons_In_A_Box {
 	 */
 	private function setup_globals() {
 		$this->plugin_dir = trailingslashit( dirname( __FILE__ ) );
+		define( 'CIAB_PLUGIN_DIR', $this->plugin_dir );
 	}
 	
 	/**
@@ -67,8 +68,13 @@ class Commons_In_A_Box {
 	 */
 	private function includes() {
 		require( $this->plugin_dir . 'plugins/plugins-loader.php' );
+		$this->plugins = new CIAB_Plugins;
+	}
+	
+	public function get_plugin_dir() {
+		return $this->plugin_dir;
 	}
 }
-add_action( 'init', array( 'Commons_In_A_Box', 'init' ) ); 
+add_action( 'plugins_loaded', array( 'Commons_In_A_Box', 'init' ), 1 ); 
 
 ?>

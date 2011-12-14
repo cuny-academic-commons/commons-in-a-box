@@ -1,0 +1,6 @@
+id = buddypress-docs
+name = BuddyPress Docs
+file = buddypress-docs/loader.php
+version = 2.0
+core = 3.3
+dependencies[] = buddypress 1.6

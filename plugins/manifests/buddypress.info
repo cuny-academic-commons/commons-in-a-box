@@ -1,0 +1,5 @@
+id = buddypress
+name = BuddyPress
+file = buddypress/bp-loader.php
+version = 1.6
+core = 3.3
