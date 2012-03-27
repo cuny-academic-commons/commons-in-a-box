@@ -69,6 +69,8 @@ class Commons_In_A_Box {
 	private function includes() {
 		require( $this->plugin_dir . 'plugins/plugins-loader.php' );
 		$this->plugins = new CIAB_Plugins;
+		
+		require( $this->plugin_dir . 'api/class.api-server.php' );
 	}
 	
 	public function get_plugin_dir() {

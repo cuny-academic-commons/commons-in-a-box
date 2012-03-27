@@ -65,7 +65,7 @@ class CIAB_Plugins {
 		// - version of parent plugins
 		// - whether parent plugins are activated/CIAB setting is configured
 		
-		var_dump( $this );
+		//var_dump( $this );
 	}
 	
 	/**
@@ -104,7 +104,7 @@ class CIAB_Plugins {
 				// Create nested arrays.
 				foreach ($keys as $key) {
 					if ( 'dependencies' == $key ) {
-						var_dump( 'hr' );
+						//var_dump( 'hr' );
 					}
 					
 					if (!isset($parent[$key]) || !is_array($parent[$key])) {
