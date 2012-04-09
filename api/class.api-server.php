@@ -75,7 +75,6 @@ class BP_API_Server extends BP_Component {
 			
 			$this->restler->handle();
 			die();
-			var_Dump( $this );
 		}
 	}
 }

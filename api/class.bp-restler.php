@@ -133,7 +133,7 @@ class BP_Restler extends Restler {
 			$p = $call->defaults;
 			foreach ( $call->arguments as $key => $value ) {
 				if ( isset( $params[$key] ) ) {
-					$p[$value] = $this->_process_param( $value, $params[$key] );
+					$p[$value] = $this->_process_param( $key, $params[$key] );
 				}
 			}
 			$call->arguments = $p;
@@ -152,7 +152,8 @@ class BP_Restler extends Restler {
 	 */
 	public function sendData($data)
 	{
-		$this->setStatus( 200 );
+		$response_code = isset( $data['error']['code'] ) ? (int) $data['error']['code'] : 200;
+		$this->setStatus( $response_code );
 		
 		$data =  $this->response_format->encode($data, !$this->production_mode);
 		$post_process =  '_'.$this->service_method .'_'.
@@ -195,10 +196,10 @@ class BP_Restler extends Restler {
 				}
 		
 				// You can pass a field id or name
-				if ( is_numeric( $field ) ) {
-					$field_id = $field;
+				if ( is_numeric( $value ) ) {
+					$field_id = $value;
 				} else {
-					$field_id = xprofile_get_field_id_from_name( $field );
+					$field_id = xprofile_get_field_id_from_name( $value );
 				}
 				
 				// Make sure the field exists
