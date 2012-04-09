@@ -2,18 +2,25 @@
 
 class BP_API_Client {
 	function __construct() {
-		$url = 'http://boone.cool/ciab/api/v1/user/admin';
+		$url = 'http://boone.cool/ciab/api/v1/group/3';
 		$method = 'POST';
 		$body = array(
-			'action' => 'update_profile_field',
-			'profile_field_id' => 1,
-			'profile_field_data' => 'abcde'
+			'action' => 'update_group_name',
+			'name' => 'My Test Group 323232',
+			'description' => 'A great test group. Yeah!',
+			'creator_id' => 1,
+			'enable_forum' => 1,
+			'status' => 'private',
+			'invite_status' => 'mods'
 		);
 	
-		wp_remote_request( $url, array(
+		echo '<pre>';
+		print_r( wp_remote_request( $url, array(
 			'method' => $method,
 			'body' => $body
-		) );
+		) ) );
+		echo '</pre>';
+		die();
 	}
 }
 
