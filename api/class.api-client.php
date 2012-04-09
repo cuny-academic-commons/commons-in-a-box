@@ -21,6 +21,6 @@ class BP_API_Client {
 function cbox_api_client_test() {
 	new BP_API_Client;
 }
-add_action( 'init', 'cbox_api_client_test' );
+//add_action( 'init', 'cbox_api_client_test' );
 
 ?>

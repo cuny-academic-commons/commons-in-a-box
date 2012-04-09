@@ -44,6 +44,7 @@ class BP_Restler extends Restler {
 					$param->getDefaultValue() : NULL;
 				$position++;
 			}
+			
 			$method_flag = $method->isProtected() ?
 			(isRestlerCompatibilityModeEnabled() ? 2 :  3) :
 			(isset($metadata['protected']) ? 1 : 0);
@@ -107,23 +108,93 @@ class BP_Restler extends Restler {
 		foreach ($urls as $url => $call) {
 			//echo PHP_EOL.$url.' = '.$this->url.PHP_EOL;
 			$call = (object)$call;
-			echo strpos( $this->url, $url );
-			if ( $url == $this->url && isset( $params['action'] ) && $params['action'] == $call->method_name ){
+			if ( 0 === strpos( $this->url, $url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
+				$item_type = array_pop( explode( '/', $url ) );
+				$url_a = explode( '/', $this->url );
+				$item_type_key = array_search( $item_type, $url_a );
+				
+				if ( false !== $item_type_key ) {
+					switch ( $item_type ) {
+						case 'user' :
+							if ( isset( $url_a[$item_type_key + 1] ) ) {
+								$params['user_id'] = urldecode( $url_a[$item_type_key + 1] ); 
+							}
+							break;
+						
+					}
+				}
+				
 				$found = TRUE;
 				break;
 			}
 		}
-		if($found){
-			//echo PHP_EOL."Found $url ";
-			//print_r($call);
+		
+		if ( $found ) {
 			$p = $call->defaults;
-			foreach ($call->arguments as $key => $value) {
-				//echo "$key => $value \n";
-				if(isset($params[$key]))$p[$value] = $params[$key];
+			foreach ( $call->arguments as $key => $value ) {
+				if ( isset( $params[$key] ) ) {
+					$p[$value] = $this->_process_param( $value, $params[$key] );
+				}
 			}
-			$call->arguments=$p;
+			$call->arguments = $p;
+//			print_r( $call->arguments );
 			return $call;
 		}
+	}
+	
+		
+	/**
+	 * Fetch the data corresponding to a given param key.
+	 *
+	 * Most of this data gets validated somehow. We cast to the proper type, and we check to
+	 * make sure the referenced object exists
+	 *
+	 * @param string $key The parameter key
+	 * @return mixed The validated return content
+	 */
+	function _process_param( $key = false, $value = '' ) {
+		
+		switch( $key ) {
+			case 'user_id' :
+				// Check that the user exists. If not, $value is set to 0
+				$user = new WP_User( $value );
+				$value = $user->ID;
+				
+				break;
+			
+			case 'profile_field_id' :			
+				if ( !bp_is_active( 'xprofile' ) ) {
+					return 0;
+				}
+		
+				// You can pass a field id or name
+				if ( is_numeric( $field ) ) {
+					$field_id = $field;
+				} else {
+					$field_id = xprofile_get_field_id_from_name( $field );
+				}
+				
+				// Make sure the field exists
+				$field_obj = xprofile_get_field( $field_id );
+				
+				$value = (int) $field_obj->id;
+				
+				break;
+			
+			case 'profile_field_data' :
+				if ( !bp_is_active( 'xprofile' ) ) {
+					return 0;
+				}
+				
+				break;
+			
+			default :
+				// @todo I think this is where a hook will go?
+				break;
+			
+		}
+		
+		return $value;
 	}
 }
 
