@@ -93,6 +93,10 @@ class BP_Restler extends Restler {
 		}
 	}
 	
+	/**
+	 * We're departing from Restler's native /classname/methodname/ REST implementation. This
+	 * method does the dirty work.
+	 */
 	protected function mapUrlToMethod () {
 		if(!isset($this->routes[$this->request_method])){
 			return array();
@@ -104,10 +108,9 @@ class BP_Restler extends Restler {
 		$this->request_data += $_GET;
 		$params = array('request_data'=>$this->request_data);
 		$params += $this->request_data;
-		
+		print_r( $urls ); die();
 		foreach ($urls as $url => $call) {
-			//echo PHP_EOL.$url.' = '.$this->url.PHP_EOL;
-			$call = (object)$call;
+			$call = (object) $call;
 			if ( 0 === strpos( $this->url, $url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
 				$item_type = array_pop( explode( '/', $url ) );
 				$url_a = explode( '/', $this->url );
@@ -120,7 +123,12 @@ class BP_Restler extends Restler {
 								$params['user_id'] = urldecode( $url_a[$item_type_key + 1] ); 
 							}
 							break;
-						
+						case 'group' :
+							if ( isset( $url_a[$item_type_key + 1] ) ) {
+								$params['group_id'] = urldecode( $url_a[$item_type_key + 1] );
+							}
+						default :
+							break;
 					}
 				}
 				
@@ -212,6 +220,29 @@ class BP_Restler extends Restler {
 			case 'profile_field_data' :
 				if ( !bp_is_active( 'xprofile' ) ) {
 					return 0;
+				}
+				
+				break;
+			
+			case 'group_id' :
+				if ( !bp_is_active( 'groups' ) ) {
+					return 0;
+				}
+				
+				// Accepts either a numeric id, or a group slug
+				if ( is_numeric( $value ) ) {
+					$group_id = $value;
+				} else {
+					$group_id = BP_Groups_Group::group_exists( $value );
+				}
+				
+				$group_obj = groups_get_group( array( 'group_id' => $group_id ) );
+				
+				// BP_Groups_Group behaves strangely when a bum group_id is passed
+				if ( empty( $group_obj->slug ) ) {
+					$value = 0;
+				} else {
+					$value = (int) $group_obj->id;
 				}
 				
 				break;
