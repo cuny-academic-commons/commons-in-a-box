@@ -70,7 +70,10 @@ class Commons_In_A_Box {
 		require( $this->plugin_dir . 'plugins/plugins-loader.php' );
 		$this->plugins = new CIAB_Plugins;
 		
-		require( $this->plugin_dir . 'api/class.api-server.php' );
+		// @todo temporary
+		add_action( 'bp_include', create_function( '', '
+			require( "' . $this->plugin_dir . 'api/class.api-server.php" );
+		' ) );
 	}
 	
 	public function get_plugin_dir() {

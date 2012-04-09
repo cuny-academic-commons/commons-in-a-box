@@ -13,6 +13,7 @@
  */
 class BP_API_Server extends BP_Component {
 	protected $request;
+	protected $restler;
 	
 	/**
 	 * Constructor
@@ -61,27 +62,20 @@ class BP_API_Server extends BP_Component {
 	public function endpoint() {
 		global $bp;
 		if ( bp_is_current_component( $bp->api->id ) ) {
+			require( CIAB_PLUGIN_DIR . 'lib/restler/restler.php' );
+			require( CIAB_PLUGIN_DIR . 'api/class.bp-restler.php' );
+			$this->restler = new BP_Restler;
 			
-			// @todo This must be broken out somehow
-			switch ( strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
-				case 'POST' :
-					$params = $_POST;
-					break;
-				
-				case 'GET' :
-					$params = $_GET;
-					break;
-				
-				// @todo flesh out
-				default :
-					
-					break;
-			}
+			// @todo Make this non-nonsense
+			require( CIAB_PLUGIN_DIR . 'api/class.auth.php' );			
+			$this->restler->addAuthenticationClass( 'BP_API_Auth' );
 			
-			require_once( dirname(__FILE__) . '/class.api-server-request.php' );
-			$this->request = new BP_API_Server_Request( $params );
-			var_dump( $this );
-			die();
+			require( CIAB_PLUGIN_DIR . 'api/class.api-server-actions.php' );
+			$this->restler->addAPIClass( 'BP_API_Server_Actions' );
+			
+			$this->restler->handle();
+			
+			var_Dump( $this );
 		}
 	}
 }
