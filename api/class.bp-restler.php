@@ -66,7 +66,8 @@ class BP_Restler extends Restler {
 				foreach ($matches as $match) {
 					$http_method = $match[1];
 					$url = rtrim($match[2],'/');
-					$this->routes[$http_method][$url] = $call;
+					$call['url'] = $url;
+					$this->routes[$http_method][] = $call;
 				}
 			}elseif($method_url[0] != '_'){ //not prefixed with underscore
 				// no configuration found so use convention
@@ -87,7 +88,8 @@ class BP_Restler extends Restler {
 					}
 					$url .= $url=='' ? ':' : '/:';
 					$url .= $param->getName();
-					$this->routes[$http_method][$url] = $call;
+					$call['url'] = $url;
+					$this->routes[$http_method][] = $call;
 				}
 			}
 		}
@@ -108,11 +110,11 @@ class BP_Restler extends Restler {
 		$this->request_data += $_GET;
 		$params = array('request_data'=>$this->request_data);
 		$params += $this->request_data;
-		print_r( $urls ); die();
+		
 		foreach ($urls as $url => $call) {
 			$call = (object) $call;
-			if ( 0 === strpos( $this->url, $url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
-				$item_type = array_pop( explode( '/', $url ) );
+			if ( 0 === strpos( $this->url, $call->url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
+				$item_type = array_pop( explode( '/', $call->url ) );
 				$url_a = explode( '/', $this->url );
 				$item_type_key = array_search( $item_type, $url_a );
 				
