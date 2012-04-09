@@ -107,7 +107,7 @@ class BP_Restler extends Restler {
 		foreach ($urls as $url => $call) {
 			//echo PHP_EOL.$url.' = '.$this->url.PHP_EOL;
 			$call = (object)$call;
-			
+			echo strpos( $this->url, $url );
 			if ( $url == $this->url && isset( $params['action'] ) && $params['action'] == $call->method_name ){
 				$found = TRUE;
 				break;
@@ -124,7 +124,6 @@ class BP_Restler extends Restler {
 			$call->arguments=$p;
 			return $call;
 		}
-
 	}
 }
 

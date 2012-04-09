@@ -74,7 +74,7 @@ class BP_API_Server extends BP_Component {
 			$this->restler->addAPIClass( 'BP_API_Server_Actions' );
 			
 			$this->restler->handle();
-			
+			die();
 			var_Dump( $this );
 		}
 	}

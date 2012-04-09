@@ -74,6 +74,9 @@ class Commons_In_A_Box {
 		add_action( 'bp_include', create_function( '', '
 			require( "' . $this->plugin_dir . 'api/class.api-server.php" );
 		' ) );
+		
+		// @todo For testing only
+		require( $this->plugin_dir . 'api/class.api-client.php' );
 	}
 	
 	public function get_plugin_dir() {

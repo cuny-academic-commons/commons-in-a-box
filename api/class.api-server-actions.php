@@ -2,6 +2,7 @@
 
 class BP_API_Server_Actions {
 	
+	
 	/** PARAMETER HANDLERS ******************************************************/
 
 	/**
@@ -126,7 +127,7 @@ class BP_API_Server_Actions {
 	 * Updates an xprofile field
 	 *
 	 * @uses xprofile_set_field_data()
-	 * @url GET/v1/user
+	 * @url POST/v1/user
 	 */
 	protected function update_profile_field() {
 		// Set up params
