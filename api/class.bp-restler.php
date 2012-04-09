@@ -137,9 +137,36 @@ class BP_Restler extends Restler {
 				}
 			}
 			$call->arguments = $p;
-//			print_r( $call->arguments );
+
 			return $call;
 		}
+	}
+	
+	/**
+	 * Encodes the response in the prefered format
+	 * and sends back
+	 *
+	 * Overriding Restler's version so that we can explicitly countermand WP's 404 status
+	 *
+	 * @param $data array php data
+	 */
+	public function sendData($data)
+	{
+		$this->setStatus( 200 );
+		
+		$data =  $this->response_format->encode($data, !$this->production_mode);
+		$post_process =  '_'.$this->service_method .'_'.
+		$this->response_format->getExtension();
+		if(isset($this->service_class_instance) &&
+		method_exists($this->service_class_instance,$post_process)){
+			$data = call_user_func(array($this->service_class_instance,
+			$post_process), $data);
+		}
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Expires: 0");
+		header('Content-Type: ' . $this->response_format->getMIME());
+		header("X-Powered-By: Luracast Restler v".Restler::VERSION);
+		die($data);
 	}
 	
 		
