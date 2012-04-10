@@ -1,8 +1,8 @@
 <?php
 
-require ( CIAB_PLUGIN_DIR . 'lib/oauth2-php/lib/OAuth2.inc' );
+require ( CIAB_PLUGIN_DIR . 'lib/oauth-php/lib/OAuth.inc' );
 
-class BP_OAuth2 extends OAuth2 {
+class BP_OAuth extends OAuth {
 	
 	/**
 	 * Make sure that the client credentials is valid.

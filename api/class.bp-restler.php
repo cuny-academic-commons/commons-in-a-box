@@ -18,6 +18,7 @@ class BP_Restler extends Restler {
 		
 		$path = preg_replace('/(\/*\?.*$)|(\/$)/', '', $path);
 		$path = str_replace($this->format_map['extensions'], '', $path);
+		
 		return $path;
 	}
 	

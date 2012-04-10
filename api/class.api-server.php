@@ -2,14 +2,6 @@
 
 /**
  * BuddyPress API server
- *
- * This class is responsible for:
- *   - Setting up the API endpoint(s)
- *   - Processing incoming requests (whether internal or, more likely, over HTTP) and parsing them
- *     to a common format, for passing along to the Server_Request class
- *   - Formatting the request results (returned from Server_Request) into the requested format
- *     (xml, json, etc)
- *   - Returning the request results, along with any necessary header information
  */
 class BP_API_Server extends BP_Component {
 	protected $request;
@@ -28,6 +20,9 @@ class BP_API_Server extends BP_Component {
 		);
 
 		$bp->active_components[$this->id] = '1';
+		
+		require( CIAB_PLUGIN_DIR . 'api/functions.php' );
+		
 		$this->setup_hooks();
 	}
 
@@ -52,6 +47,24 @@ class BP_API_Server extends BP_Component {
 	public function setup_hooks() {
 		// @todo This needs to be toggleable
 		add_action( 'bp_actions', array( &$this, 'endpoint' ), 1 );
+		
+		add_action( 'admin_menu', array( &$this, 'setup_admin_panels' ) );
+		
+		add_filter( 'query', array( &$this, 'oauth_table_prefix' ) );
+	}
+	
+	function oauth_table_prefix( $q ) {
+		global $wpdb;
+		
+		// Not sure what this will do on enable_multisite, groan
+		$prefix = $wpdb->get_blog_prefix( bp_get_root_blog_id() );
+		
+		$pattern = '/(CREATE TABLE|CREATE TABLE IF NOT EXISTS|ALTER TABLE|UPDATE|INSERT INTO|FROM) oauth_/';
+		$replacement = '$1 ' . $prefix . 'oauth_';
+		
+		$q = preg_replace( $pattern, $replacement, $q );
+		
+		return $q;
 	}
 	
 	/**
@@ -62,6 +75,14 @@ class BP_API_Server extends BP_Component {
 	public function endpoint() {
 		global $bp;
 		if ( bp_is_current_component( $bp->api->id ) ) {
+			
+			if ( bp_is_current_action( 'addclient' ) ) {
+				if ( !empty( $_POST ) ) {
+					$this->process_addclient();
+				}
+				bp_api_load_template( 'api/addclient' );
+			}
+			
 			require( CIAB_PLUGIN_DIR . 'lib/restler/restler.php' );
 			require( CIAB_PLUGIN_DIR . 'api/class.bp-restler.php' );
 			$this->restler = new BP_Restler;
@@ -76,6 +97,67 @@ class BP_API_Server extends BP_Component {
 			$this->restler->handle();
 			die();
 		}
+	}
+	
+	function install_oauth_store() {
+		global $wpdb;
+		
+		// todo - move!
+		$sql = file_get_contents( CIAB_PLUGIN_DIR . 'lib/oauth-php/library/store/mysql/mysql.sql');
+		$ps  = explode('#--SPLIT--', $sql);
+		
+		foreach( $ps as $p ) {
+			$p = str_replace( 'oauth_', $wpdb->base_prefix . 'oauth_', $p );
+			$wpdb->query( $p );
+		}
+	}
+
+	function process_addclient() {
+		global $wpdb;
+		
+		check_admin_referer( 'add_client' );
+		
+		// Check for required fields
+		
+		$user_id = 1; // TEMP
+		
+		// Assemble
+		$consumer = array();
+		$c_keys = array( 'requester_name', 'requester_email',
+			'callback_uri', 'application_uri', 'application_title',
+			'application_descr',
+			'application_notes',
+			'application_type',
+			'application_commercial'
+			);
+			
+		foreach( $c_keys as $c_key ) {
+			if ( isset( $_POST[$c_key] ) ) {
+				$consumer[$c_key] = $_POST[$c_key];
+			}
+		}
+	
+		require( CIAB_PLUGIN_DIR . 'lib/oauth-php/library/OAuthStore.php' );
+		
+		$args = array(
+			'conn' => $wpdb->dbh			
+		);
+		
+		// Register the consumer
+		$store = OAuthStore::instance(CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', $args ); 
+		$key   = $store->updateConsumer($consumer, $user_id);
+		
+		// Get the complete consumer from the store
+		$consumer = $store->getConsumer( $key, $user_id );
+		var_dump( $consumer );		
+		// Some interesting fields, the user will need the key and secret
+		$consumer_id = $consumer['id'];
+		$consumer_key = $consumer['consumer_key'];
+		$consumer_secret = $consumer['consumer_secret'];
+	}
+
+	function setup_admin_panels() {
+	
 	}
 }
 
