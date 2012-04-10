@@ -4,10 +4,14 @@
  * Authentication class
  */
 class BP_API_Auth implements iAuthenticate{
-	const KEY = 'rEsTlEr2';
+	protected $OAuth;
+
 	function __isAuthenticated() {
+		require( CIAB_PLUGIN_DIR . 'api/class.bp-oauth2.php' );
+		$this->oauth = new BP_OAuth2();
+		
+	
 		return true;
-		//return isset($_GET['key']) && $_GET['key'] == BP_API_Auth::KEY ? TRUE : FALSE;
 	}
 	function key(){
 		return BP_API_Auth::KEY;

@@ -113,7 +113,7 @@ class BP_Restler extends Restler {
 		
 		foreach ($urls as $url => $call) {
 			$call = (object) $call;
-			if ( 0 === strpos( $this->url, $call->url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
+			if ( !empty( $call->url ) && 0 === strpos( $this->url, $call->url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
 				$item_type = array_pop( explode( '/', $call->url ) );
 				$url_a = explode( '/', $this->url );
 				$item_type_key = array_search( $item_type, $url_a );
