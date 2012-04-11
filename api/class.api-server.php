@@ -133,11 +133,13 @@ class BP_API_Server extends BP_Component {
 
 		// Get the complete consumer from the store
 		$consumer = $store->getConsumer( $key, $user_id );
-		var_dump( $consumer );
+
 		// Some interesting fields, the user will need the key and secret
 		$consumer_id = $consumer['id'];
 		$consumer_key = $consumer['consumer_key'];
 		$consumer_secret = $consumer['consumer_secret'];
+
+		// Todo: return to user? or echo to the screen? not sure
 	}
 
 	function process_request_token() {

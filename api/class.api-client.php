@@ -5,11 +5,29 @@
  */
 class BP_API_Client {
 	function __construct() {
+		// @todo This needs to be toggleable
+		add_action( 'bp_actions', array( &$this, 'endpoint' ), 1 );
+
 		$this->store = bp_api_get_oauth_store();
 	}
 
 	function get_oauth_info_for_site( $url ) {
 		return $this->store->getServerForUri( $url, 0 );
+	}
+
+	function endpoint() {
+		global $bp;
+
+		if ( bp_is_current_component( $bp->api->id ) ) {
+
+			if ( bp_is_current_action( 'request_access_token' ) ) {
+				$this->process_request_access_token();
+			}
+		}
+	}
+
+	function process_request_access_token() {
+		var_dump( $_GET );
 	}
 }
 
@@ -60,6 +78,9 @@ function cbox_api_client_test() {
 	$client = new BP_API_Client;
 	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api' );
 
+	// Set up our special store
+	$store = bp_api_get_oauth_store();
+
 	include( CIAB_LIB_DIR . 'oauth-php/library/OAuthRequester.php' );
 
 	// Obtain a request token from the server
@@ -69,13 +90,25 @@ function cbox_api_client_test() {
 	$callback_uri = add_query_arg( array(
 		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
 		'user_id' => intval( $consumer_info['user_id'] )
-	), bp_get_root_domain() . 'api' );
+	), bp_get_root_domain() . '/api/request_access_token' );
+
+	try
+	{
+	    OAuthRequester::requestAccessToken($consumer_info['consumer_key'], $token['token'], $consumer_info['user_id']);
+	}
+	catch (OAuthException $e)
+	{
+	    // Something wrong with the oauth_token.
+	    // Could be:
+	    // 1. Was already ok
+	    // 2. We were not authorized
+	}
 
 	var_dump( $token );
 	var_dump( $callback_uri );
 
 	var_dump( $consumer_info );
 }
-add_action( 'init', 'cbox_api_client_test' );
+add_action( 'init', 'cbox_api_client_test', 1000 );
 
 ?>

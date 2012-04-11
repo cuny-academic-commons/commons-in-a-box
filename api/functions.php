@@ -42,7 +42,7 @@ function bp_api_oauth_table_prefix( $q ) {
 	// Not sure what this will do on enable_multisite, groan
 	$prefix = $wpdb->get_blog_prefix( bp_get_root_blog_id() );
 
-	$pattern = '/(CREATE TABLE|CREATE TABLE IF NOT EXISTS|ALTER TABLE|UPDATE|INTO|FROM) oauth_/';
+	$pattern = '/(CREATE TABLE|CREATE TABLE IF NOT EXISTS|ALTER TABLE|UPDATE|INTO|FROM|JOIN) oauth_/';
 	$replacement = '$1 ' . $prefix . 'oauth_';
 
 	$q = preg_replace( $pattern, $replacement, $q );

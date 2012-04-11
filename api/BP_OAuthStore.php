@@ -194,6 +194,42 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		return $rs;
 	}
 
+	/**
+	 * Delete a token we obtained from a server.
+	 *
+	 * Overridden here because of what appears to be some invalid SQL in the original.
+	 *
+	 * @see OAuthStoreSQL::deleteServerToken()
+	 *
+	 * @param string consumer_key
+	 * @param string token
+	 * @param int user_id
+	 * @param boolean user_is_admin
+	 */
+	public function deleteServerToken ( $consumer_key, $token, $user_id, $user_is_admin = false )
+	{
+		global $wpdb;
+
+		$table_oct = $wpdb->get_blog_prefix( bp_get_root_blog_id() ) . 'oauth_consumer_token';
+		$table_ocr = $wpdb->get_blog_prefix( bp_get_root_blog_id() ) . 'oauth_consumer_registry';
+
+		if ($user_is_admin)
+		{
+			// Get the oct_id
+			$oct_id = $wpdb->get_var( $wpdb->prepare( "SELECT oct_id FROM {$table_oct} JOIN {$table_ocr} on {$table_oct}.oct_ocr_id_ref = {$table_ocr}.ocr_id WHERE {$table_ocr}.ocr_consumer_key = %s AND oct_token = %s", $consumer_key, $token ) );
+
+		}
+		else
+		{
+			// Get the oct_id
+			$oct_id = $wpdb->get_var( $wpdb->prepare( "SELECT oct_id FROM {$table_oct} JOIN {$table_ocr} on {$table_oct}.oct_ocr_id_ref = {$table_ocr}.ocr_id WHERE {$table_ocr}.ocr_consumer_key = %s AND oct_token = %s AND oct_usa_id_ref = %d", $consumer_key, $token, $user_id ) );
+
+		}
+
+		if ( $oct_id ) {
+			$wpdb->query( $wpdb->prepare( "DELETE FROM {$table_oct} WHERE oct_id = %s", $oct_id ) );
+		}
+	}
 
 
 }
