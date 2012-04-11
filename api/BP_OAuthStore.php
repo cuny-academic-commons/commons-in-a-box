@@ -5,7 +5,7 @@ require CIAB_PLUGIN_DIR . 'lib/oauth-php/library/store/OAuthStoreMySQL.php';
 class BP_OAuthStore extends OAuthStoreMySQL {
 	/**
 	 * Perform a query, ignore the results
-	 * 
+	 *
 	 * @param string sql
 	 * @param vararg arguments (for sprintf)
 	 */
@@ -15,11 +15,11 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		$sql = $this->sql_printf(func_get_args());
 		return $wpdb->query( $sql );
 	}
-	
+
 
 	/**
 	 * Perform a query, ignore the results
-	 * 
+	 *
 	 * @param string sql
 	 * @param vararg arguments (for sprintf)
 	 * @return array
@@ -30,11 +30,11 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		$sql = $this->sql_printf(func_get_args());
 		return $wpdb->get_results( $sql, ARRAY_A );
 	}
-	
-	
+
+
 	/**
 	 * Perform a query, return the first row
-	 * 
+	 *
 	 * @param string sql
 	 * @param vararg arguments (for sprintf)
 	 * @return array
@@ -46,10 +46,10 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		return $wpdb->get_row( $sql, ARRAY_A );
 	}
 
-	
+
 	/**
 	 * Perform a query, return the first row
-	 * 
+	 *
 	 * @param string sql
 	 * @param vararg arguments (for sprintf)
 	 * @return array
@@ -58,13 +58,13 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 	{
 		global $wpdb;
 		$sql = $this->sql_printf(func_get_args());
-		return $wpdb->get_row( $sql, ARRAY_A );
+		return $wpdb->get_row( $sql, ARRAY_N );
 	}
-	
-		
+
+
 	/**
 	 * Perform a query, return the first column of the first row
-	 * 
+	 *
 	 * @param string sql
 	 * @param vararg arguments (for sprintf)
 	 * @return mixed
@@ -75,19 +75,19 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		$sql = $this->sql_printf(func_get_args());
 		return $wpdb->get_var( $sql );
 	}
-	
+
 	/**
-	 * List of all registered applications. Data returned has not sensitive 
+	 * List of all registered applications. Data returned has not sensitive
 	 * information and therefore is suitable for public displaying.
-	 * 
+	 *
 	 * @param int $begin
 	 * @param int $total
 	 * @return array
 	 */
-	public function listConsumerApplications( $args = array(), $deprecated = true ) 
+	public function listConsumerApplications( $args = array(), $deprecated = true )
 	{
 		global $wpdb;
-		
+
 		$defaults = array(
 			'paged'    => 1,
 			'per_page' => 20,
@@ -96,20 +96,20 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		);
 		$r = wp_parse_args( $args, $defaults );
 		extract( $r );
-		
+
 		// Sanitization
 		if ( !in_array( strtolower( $orderby ), array( 'id', 'enabled', 'status', 'issue_date', 'application_uri', 'application_title', 'application_descr' ) ) ) {
 			$orderby = 'issue_date';
 		}
-		
+
 		if ( !in_array( strtoupper( $order ), array( 'ASC', 'DESC' ) ) ) {
 			$order = 'DESC';
 		}
-		
+
 		// Convert paged/per page to limits
 		$lower_limit = (int) ( $per_page * ( $paged - 1 ) );
 		$upper_limit = (int) ( $lower_limit + $per_page );
-		
+
 		$apps = $this->query_all_assoc( "
 				SELECT SQL_CALC_FOUND_ROWS
 				    osr_id			as id,
@@ -123,28 +123,28 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 				ORDER BY {$orderby} {$order}
 				LIMIT {$lower_limit}, {$upper_limit}
 				" );
-		
+
 		// Fake a WP_Query
 		$rs = new stdClass;
 		$rs->posts = $apps;
 		$rs->found_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" );
 		$rs->max_num_pages = ceil( $rs->found_posts / $per_page );
-		
+
 		return $rs;
 	}
-	
+
 	/**
 	 * Get a list of all consumers from the consumer registry.
 	 * The consumer keys belong to the user or are public (user id is null)
-	 * 
+	 *
 	 * @param string q	query term
 	 * @param int user_id
 	 * @return array
-	 */	
+	 */
 	public function listServers ( $args = array(), $deprecated = 0 )
 	{
 		global $wpdb;
-		
+
 		$defaults = array(
 			'paged'    => 1,
 			'per_page' => 20,
@@ -153,20 +153,20 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		);
 		$r = wp_parse_args( $args, $defaults );
 		extract( $r );
-		
+
 		// Sanitization
 		if ( !in_array( strtolower( $orderby ), array( 'id', 'user_id', 'consumer_key', 'consumer_secret', 'signature_methods', 'server_uri', 'server_uri_host', 'server_uri_path', 'request_token_uri', 'authorize_uri', 'access_token_uri' ) ) ) {
 			$orderby = 'id';
 		}
-		
+
 		if ( !in_array( strtoupper( $order ), array( 'ASC', 'DESC' ) ) ) {
 			$order = 'ASC';
 		}
-		
+
 		// Convert paged/per page to limits
 		$lower_limit = (int) ( $per_page * ( $paged - 1 ) );
 		$upper_limit = (int) ( $lower_limit + $per_page );
-		
+
 		$servers = $this->query_all_assoc( "
 			SELECT SQL_CALC_FOUND_ROWS
 				ocr_id			as id,
@@ -184,13 +184,13 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 			ORDER BY {$orderby} {$order}
 			LIMIT {$lower_limit}, {$upper_limit}
 			" );
-			
+
 		// Fake a WP_Query
 		$rs = new stdClass;
 		$rs->posts = $servers;
 		$rs->found_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" );
 		$rs->max_num_pages = ceil( $rs->found_posts / $per_page );
-		
+
 		return $rs;
 	}
 

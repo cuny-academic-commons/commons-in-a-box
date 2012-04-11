@@ -164,6 +164,7 @@ class OAuthRequester extends OAuthRequestSigner
 			throw new OAuthException2('No answer from the server "'.$uri.'" while requesting a request token');
 		}
 		$data	= $oauth->curl_parse($text);
+
 		if ($data['code'] != 200)
 		{
 			throw new OAuthException2('Unexpected result from the server "'.$uri.'" ('.$data['code'].') while requesting a request token');

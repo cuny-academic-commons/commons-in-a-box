@@ -2,26 +2,26 @@
 
 /**
  * Server layer over the OAuthRequest handler
- * 
+ *
  * @version $Id: OAuthServer.php 154 2010-08-31 18:04:41Z brunobg@corollarium.com $
  * @author Marc Worrell <marcw@pobox.com>
  * @date  Nov 27, 2007 12:36:38 PM
- * 
- * 
+ *
+ *
  * The MIT License
- * 
+ *
  * Copyright (c) 2007-2008 Mediamatic Lab
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,7 +37,7 @@ require_once 'OAuthSession.php';
 class OAuthServer extends OAuthRequestVerifier
 {
 	protected $session;
-	
+
 	protected $allowed_uri_schemes = array(
 		'http',
 		'https'
@@ -51,7 +51,7 @@ class OAuthServer extends OAuthRequestVerifier
 
 	/**
 	 * Construct the request to be verified
-	 * 
+	 *
 	 * @param string request
 	 * @param string method
 	 * @param array params The request parameters
@@ -60,32 +60,32 @@ class OAuthServer extends OAuthRequestVerifier
 	 * @param array options Extra options:
 	 *   - allowed_uri_schemes: list of allowed uri schemes.
 	 *   - disallowed_uri_schemes: list of unallowed uri schemes.
-	 * 
+	 *
 	 * e.g. Allow only http and https
 	 * $options = array(
 	 *     'allowed_uri_schemes' => array('http', 'https'),
 	 *     'disallowed_uri_schemes' => array()
 	 * );
-	 * 
+	 *
 	 * e.g. Disallow callto, mailto and file, allow everything else
 	 * $options = array(
 	 *     'allowed_uri_schemes' => array(),
 	 *     'disallowed_uri_schemes' => array('callto', 'mailto', 'file')
 	 * );
-	 * 
+	 *
 	 * e.g. Allow everything
 	 * $options = array(
 	 *     'allowed_uri_schemes' => array(),
 	 *     'disallowed_uri_schemes' => array()
-	 * ); 
-	 *  
+	 * );
+	 *
 	 */
-	function __construct ( $uri = null, $method = null, $params = null, $store = 'SESSION', 
+	function __construct ( $uri = null, $method = null, $params = null, $store = 'SESSION',
 			$store_options = array(), $options = array() )
 	{
  		parent::__construct($uri, $method, $params);
  		$this->session = OAuthSession::instance($store, $store_options);
- 		
+
 	 	if (array_key_exists('allowed_uri_schemes', $options) && is_array($options['allowed_uri_schemes'])) {
 	 		$this->allowed_uri_schemes = $options['allowed_uri_schemes'];
 	 	}
@@ -93,13 +93,13 @@ class OAuthServer extends OAuthRequestVerifier
 	 		$this->disallowed_uri_schemes = $options['disallowed_uri_schemes'];
 	 	}
 	}
-	
+
 	/**
 	 * Handle the request_token request.
 	 * Returns the new request token and request token secret.
-	 * 
+	 *
 	 * TODO: add correct result code to exception
-	 * 
+	 *
 	 * @return string 	returned request token, false on an error
 	 */
 	public function requestToken ()
@@ -108,7 +108,7 @@ class OAuthServer extends OAuthRequestVerifier
 		try
 		{
 			$this->verify(false);
-			
+
 			$options = array();
 			$ttl     = $this->getParam('xoauth_token_ttl', false);
 			if ($ttl)
@@ -121,7 +121,7 @@ class OAuthServer extends OAuthRequestVerifier
  			if ($cbUrl) {
  				$options['oauth_callback'] = $cbUrl;
  			}
-			
+
 			// Create a request token
 			$store  = OAuthStore::instance();
 			$token  = $store->addConsumerRequestToken($this->getParam('oauth_consumer_key', true), $options);
@@ -134,7 +134,7 @@ class OAuthServer extends OAuthRequestVerifier
 			}
 
 			$request_token = $token['token'];
-			
+
 			header('HTTP/1.1 200 OK');
 			header('Content-Length: '.strlen($result));
 			header('Content-Type: application/x-www-form-urlencoded');
@@ -154,14 +154,14 @@ class OAuthServer extends OAuthRequestVerifier
 		OAuthRequestLogger::flush();
 		return $request_token;
 	}
-	
-	
+
+
 	/**
 	 * Verify the start of an authorization request.  Verifies if the request token is valid.
 	 * Next step is the method authorizeFinish()
-	 * 
+	 *
 	 * Nota bene: this stores the current token, consumer key and callback in the _SESSION
-	 * 
+	 *
 	 * @exception OAuthException2 thrown when not a valid request
 	 * @return array token description
 	 */
@@ -178,13 +178,13 @@ class OAuthServer extends OAuthRequestVerifier
 		}
 
 		// We need to remember the callback
-		$verify_oauth_token = $this->session->get('verify_oauth_token');		
+		$verify_oauth_token = $this->session->get('verify_oauth_token');
 		if (	empty($verify_oauth_token)
 			||	strcmp($verify_oauth_token, $rs['token']))
 		{
 			$this->session->set('verify_oauth_token', $rs['token']);
 			$this->session->set('verify_oauth_consumer_key', $rs['consumer_key']);
-			$cb = $this->getParam('oauth_callback', true); 
+			$cb = $this->getParam('oauth_callback', true);
 			if ($cb)
 				$this->session->set('verify_oauth_callback', $cb);
 			else
@@ -193,13 +193,13 @@ class OAuthServer extends OAuthRequestVerifier
 		OAuthRequestLogger::flush();
 		return $rs;
 	}
-	
-	
+
+
 	/**
 	 * Overrule this method when you want to display a nice page when
 	 * the authorization is finished.  This function does not know if the authorization was
 	 * succesfull, you need to check the token in the database.
-	 * 
+	 *
 	 * @param boolean authorized	if the current token (oauth_token param) is authorized or not
 	 * @param int user_id			user for which the token was authorized (or denied)
 	 * @return string verifier  For 1.0a Compatibility
@@ -228,7 +228,7 @@ class OAuthServer extends OAuthRequestVerifier
 					$referrer_host = $ps['host'];
 				}
 			}
-			
+
 			if ($authorized)
 			{
 				OAuthRequestLogger::addNote('Authorized token "'.$token.'" for user '.$user_id.' with referrer "'.$referrer_host.'"');
@@ -240,7 +240,7 @@ class OAuthServer extends OAuthRequestVerifier
 				OAuthRequestLogger::addNote('Authorization rejected for token "'.$token.'" for user '.$user_id."\nToken has been deleted");
 				$store->deleteConsumerRequestToken($token);
 			}
-			
+
 			if (!empty($oauth_callback))
 			{
  				$params = array('oauth_token' => rawurlencode($token));
@@ -248,16 +248,16 @@ class OAuthServer extends OAuthRequestVerifier
  				if ($verifier) {
  					$params['oauth_verifier'] = $verifier;
  				}
- 				
+
 				$uri = preg_replace('/\s/', '%20', $oauth_callback);
-				if (!empty($this->allowed_uri_schemes)) 
+				if (!empty($this->allowed_uri_schemes))
 				{
-					if (!in_array(substr($uri, 0, strpos($uri, '://')), $this->allowed_uri_schemes)) 
+					if (!in_array(substr($uri, 0, strpos($uri, '://')), $this->allowed_uri_schemes))
 					{
 						throw new OAuthException2('Illegal protocol in redirect uri '.$uri);
 					}
-				} 
-				else if (!empty($this->disallowed_uri_schemes)) 
+				}
+				else if (!empty($this->disallowed_uri_schemes))
 				{
 					if (in_array(substr($uri, 0, strpos($uri, '://')), $this->disallowed_uri_schemes))
 					{
@@ -271,12 +271,12 @@ class OAuthServer extends OAuthRequestVerifier
 		OAuthRequestLogger::flush();
 		return $verifier;
 	}
-	
-	
+
+
 	/**
 	 * Exchange a request token for an access token.
 	 * The exchange is only succesful iff the request token has been authorized.
-	 * 
+	 *
 	 * Never returns, calls exit() when token is exchanged or when error is returned.
 	 */
 	public function accessToken ()
@@ -298,17 +298,17 @@ class OAuthServer extends OAuthRequestVerifier
  			if ($verifier) {
  				$options['verifier'] = $verifier;
  			}
-			
+
 			$store  = OAuthStore::instance();
 			$token  = $store->exchangeConsumerRequestForAccessToken($this->getParam('oauth_token', true), $options);
 			$result = 'oauth_token='.$this->urlencode($token['token'])
 					.'&oauth_token_secret='.$this->urlencode($token['token_secret']);
-					
+
 			if (!empty($token['token_ttl']))
 			{
 				$result .= '&xoauth_token_ttl='.$this->urlencode($token['token_ttl']);
 			}
-					
+
 			header('HTTP/1.1 200 OK');
 			header('Content-Length: '.strlen($result));
 			header('Content-Type: application/x-www-form-urlencoded');
@@ -322,10 +322,10 @@ class OAuthServer extends OAuthRequestVerifier
 
 			echo "OAuth Verification Failed: " . $e->getMessage();
 		}
-		
+
 		OAuthRequestLogger::flush();
 		exit();
-	}	
+	}
 }
 
 /* vi:set ts=4 sts=4 sw=4 binary noeol: */

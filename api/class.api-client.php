@@ -53,6 +53,9 @@ function cbox_api_client_test() {
 		echo '</pre>';
 		die();*/
 
+	if ( 'http://boone.cool/cbox2' != bp_get_root_domain() )
+		return false;
+
 
 	$client = new BP_API_Client;
 	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api' );
