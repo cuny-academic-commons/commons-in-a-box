@@ -23,4 +23,17 @@ function bp_api_load_template( $templates ) {
 	}
 }
 
+/**
+ * Fetch the OAuth data store, modified for use with $wpdb
+ */
+function bp_api_get_oauth_store() {
+	global $wpdb;
+	
+	if ( !class_exists( 'OAuthStore' ) ) {
+		require_once( CIAB_LIB_DIR . 'oauth-php/library/OAuthStore.php' );
+	}
+	
+	return OAuthStore::instance( CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', array( 'conn' => $wpdb->dbh ) );
+}
+
 ?>

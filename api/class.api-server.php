@@ -141,14 +141,8 @@ class BP_API_Server extends BP_Component {
 			}
 		}
 	
-		require( CIAB_LIB_DIR . 'oauth-php/library/OAuthStore.php' );
+		$store = bp_api_get_oauth_store();
 		
-		$args = array(
-			'conn' => $wpdb->dbh			
-		);
-		
-		// Register the consumer
-		$store = OAuthStore::instance(CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', $args ); 
 		$key   = $store->updateConsumer($consumer, $user_id);
 		
 		// Get the complete consumer from the store

@@ -4,8 +4,6 @@ class BP_API_Admin {
 	function __construct() {
 		$this->setup_hooks();
 		
-		require( CIAB_LIB_DIR . 'oauth-php/library/OAuthStore.php' );
-		
 		if ( !class_exists( 'BBG_CPT_Sort' ) ) {
 			require( CIAB_LIB_DIR . 'boones-sortable-columns/boones-sortable-columns.php' );
 		}
@@ -30,10 +28,7 @@ class BP_API_Admin {
 	}
 	
 	function menu_screen() {
-		global $wpdb;
-		
-		$args        = array( 'conn' => $wpdb->dbh );
-		$this->store = OAuthStore::instance(CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', $args );
+		$this->store = bp_api_get_oauth_store();
 		
 		$cols = array(
 			array(
