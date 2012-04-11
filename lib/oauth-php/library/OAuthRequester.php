@@ -2,25 +2,25 @@
 
 /**
  * Perform a signed OAuth request with a GET, POST, PUT or DELETE operation.
- * 
+ *
  * @version $Id: OAuthRequester.php 174 2010-11-24 15:15:41Z brunobg@corollarium.com $
  * @author Marc Worrell <marcw@pobox.com>
  * @date  Nov 20, 2007 1:41:38 PM
- * 
+ *
  * The MIT License
- * 
+ *
  * Copyright (c) 2007-2008 Mediamatic Lab
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,18 +40,18 @@ class OAuthRequester extends OAuthRequestSigner
 
 	/**
 	 * Construct a new request signer.  Perform the request with the doRequest() method below.
-	 * 
-	 * A request can have either one file or a body, not both. 
-	 * 
+	 *
+	 * A request can have either one file or a body, not both.
+	 *
 	 * The files array consists of arrays:
 	 * - file			the filename/path containing the data for the POST/PUT
 	 * - data			data for the file, omit when you have a file
 	 * - mime			content-type of the file
 	 * - filename		filename for content disposition header
-	 * 
+	 *
 	 * When OAuth (and PHP) can support multipart/form-data then we can handle more than one file.
 	 * For now max one file, with all the params encoded in the query string.
-	 * 
+	 *
 	 * @param string request
 	 * @param string method		http method.  GET, PUT, POST etc.
 	 * @param array params		name=>value array with request parameters
@@ -70,7 +70,7 @@ class OAuthRequester extends OAuthRequestSigner
 			{
 				$empty = $empty && empty($f['file']) && !isset($f['data']);
 			}
-			
+
 			if (!$empty)
 			{
 				if (!is_null($body))
@@ -85,7 +85,7 @@ class OAuthRequester extends OAuthRequestSigner
 
 	/**
 	 * Perform the request, returns the response code, headers and body.
-	 * 
+	 *
 	 * @param int usr_id			optional user id for which we make the request
 	 * @param array curl_options	optional extra options for curl request
 	 * @param array options			options like name and token_ttl
@@ -111,14 +111,14 @@ class OAuthRequester extends OAuthRequestSigner
 		}
 		$this->sign($usr_id, null, $name);
 		$text   = $this->curl_raw($curl_options);
-		$result = $this->curl_parse($text);	
+		$result = $this->curl_parse($text);
 		if ($result['code'] >= 400)
 		{
 			throw new OAuthException2('Request failed with code ' . $result['code'] . ': ' . $result['body']);
 		}
 
 		// Record the token time to live for this server access token, immediate delete iff ttl <= 0
-		// Only done on a succesful request.	
+		// Only done on a succesful request.
 		$token_ttl = $this->getParam('xoauth_token_ttl', false);
 		if (is_numeric($token_ttl))
 		{
@@ -128,10 +128,10 @@ class OAuthRequester extends OAuthRequestSigner
 		return $result;
 	}
 
-	
+
 	/**
 	 * Request a request token from the site belonging to consumer_key
-	 * 
+	 *
 	 * @param string consumer_key
 	 * @param int usr_id
 	 * @param array params (optional) extra arguments for when requesting the request token
@@ -175,7 +175,7 @@ class OAuthRequester extends OAuthRequestSigner
 			@list($name, $value) = explode('=', $p, 2);
 			$token[$name] = $oauth->urldecode($value);
 		}
-		
+
 		if (!empty($token['oauth_token']) && !empty($token['oauth_token_secret']))
 		{
 			$opts = array();
@@ -208,33 +208,33 @@ class OAuthRequester extends OAuthRequestSigner
 	 * Request an access token from the site belonging to consumer_key.
 	 * Before this we got an request token, now we want to exchange it for
 	 * an access token.
-	 * 
+	 *
 	 * @param string consumer_key
 	 * @param string token
 	 * @param int usr_id		user requesting the access token
 	 * @param string method (optional) change the method of the request, defaults to POST (as it should be)
 	 * @param array options (optional) extra options for request, eg token_ttl
 	 * @param array curl_options	optional extra options for curl request
-	 *  
+	 *
 	 * @exception OAuthException2 when no key could be fetched
 	 * @exception OAuthException2 when no server with consumer_key registered
 	 */
 	static function requestAccessToken ( $consumer_key, $token, $usr_id, $method = 'POST', $options = array(), $curl_options = array() )
 	{
 		OAuthRequestLogger::start();
-				
+
 		$store	    = OAuthStore::instance();
 		$r		    = $store->getServerTokenSecrets($consumer_key, $token, 'request', $usr_id);
 		$uri 	    = $r['access_token_uri'];
 		$token_name	= $r['token_name'];
-		
+
 		// Delete the server request token, this one was for one use only
 		$store->deleteServerToken($consumer_key, $r['token'], 0, true);
 
 		// Try to exchange our request token for an access token
 		$oauth 	= new OAuthRequester($uri, $method);
 
-		if (isset($options['oauth_verifier'])) 
+		if (isset($options['oauth_verifier']))
 		{
 			$oauth->setParam('oauth_verifier', $options['oauth_verifier']);
         }
@@ -265,7 +265,7 @@ class OAuthRequester extends OAuthRequestSigner
 			@list($name, $value) = explode('=', $p, 2);
 			$token[$oauth->urldecode($name)] = $oauth->urldecode($value);
 		}
-		
+
 		if (!empty($token['oauth_token']) && !empty($token['oauth_token_secret']))
 		{
 			$opts         = array();
@@ -288,7 +288,7 @@ class OAuthRequester extends OAuthRequestSigner
 
 	/**
 	 * Open and close a curl session passing all the options to the curl libs
-	 * 
+	 *
 	 * @param array opts the curl options.
 	 * @exception OAuthException2 when temporary file for PUT operation could not be created
 	 * @return string the result of the curl action
@@ -303,7 +303,7 @@ class OAuthRequester extends OAuthRequestSigner
 		{
 			$header = array();
 		}
-		
+
 		$ch 		= curl_init();
 		$method		= $this->getMethod();
 		$url		= $this->getRequestUrl();
@@ -319,7 +319,7 @@ class OAuthRequester extends OAuthRequestSigner
 				$has_content_type = true;
 			}
 		}
-		
+
 		if (!is_null($body))
 		{
 			if ($method == 'TRACE')
@@ -339,7 +339,7 @@ class OAuthRequester extends OAuthRequestSigner
 				$header[]         = 'Content-Type: application/octet-stream';
 				$has_content_type = true;
 			}
-			
+
 			// When PUTting, we need to use an intermediate file (because of the curl implementation)
 			if ($method == 'PUT')
 			{
@@ -350,7 +350,7 @@ class OAuthRequester extends OAuthRequestSigner
 					$put_file = fopen('data://application/octet-stream;base64,'.base64_encode($body));
 				}
 				*/
-				
+
 				$put_file = @tmpfile();
 				if (!$put_file)
 				{
@@ -402,7 +402,7 @@ class OAuthRequester extends OAuthRequestSigner
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, 		 true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 		 30);
-	
+
 		foreach ($opts as $k => $v)
 		{
 			if ($k != CURLOPT_HTTPHEADER)
@@ -416,9 +416,9 @@ class OAuthRequester extends OAuthRequestSigner
 			$error = curl_error($ch);
 			curl_close($ch);
 			throw new OAuthException2('CURL error: ' . $error);
-		} 
+		}
 		curl_close($ch);
-		
+
 		if (!empty($put_file))
 		{
 			fclose($put_file);
@@ -440,11 +440,11 @@ class OAuthRequester extends OAuthRequestSigner
 
 		return $txt;
 	}
-	
-	
+
+
 	/**
 	 * Parse an http response
-	 * 
+	 *
 	 * @param string response the http text to parse
 	 * @return array (code=>http-code, headers=>http-headers, body=>body)
 	 */
@@ -454,7 +454,7 @@ class OAuthRequester extends OAuthRequestSigner
 		{
 			return array();
 		}
-	
+
 		@list($headers,$body) = explode("\r\n\r\n",$response,2);
 		$lines = explode("\r\n",$headers);
 
@@ -466,14 +466,14 @@ class OAuthRequester extends OAuthRequestSigner
 			@list($headers,$body) = explode("\r\n\r\n",$body,2);
 			$lines = explode("\r\n",$headers);
 		}
-	
-		// first line of headers is the HTTP response code 
+
+		// first line of headers is the HTTP response code
 		$http_line = array_shift($lines);
 		if (preg_match('@^HTTP/[0-9]\.[0-9] +([0-9]{3})@', $http_line, $matches))
 		{
 			$code = $matches[1];
 		}
-	
+
 		// put the rest of the headers in an array
 		$headers = array();
 		foreach ($lines as $l)
@@ -481,14 +481,14 @@ class OAuthRequester extends OAuthRequestSigner
 			list($k, $v) = explode(': ', $l, 2);
 			$headers[strtolower($k)] = $v;
 		}
-	
+
 		return array( 'code' => $code, 'headers' => $headers, 'body' => $body);
 	}
 
 
 	/**
 	 * Mix the given headers into the headers that were given to curl
-	 * 
+	 *
 	 * @param array curl_options
 	 * @param array extra_headers
 	 * @return array new curl options
@@ -507,7 +507,7 @@ class OAuthRequester extends OAuthRequestSigner
 		}
 
 		$curl_options[CURLOPT_HTTPHEADER] = array();
-		$hs = array_merge($hs, $extra_headers);		
+		$hs = array_merge($hs, $extra_headers);
 		foreach ($hs as $h => $v)
 		{
 			$curl_options[CURLOPT_HTTPHEADER][] = "$h: $v";
