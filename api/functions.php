@@ -36,4 +36,19 @@ function bp_api_get_oauth_store() {
 	return OAuthStore::instance( CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', array( 'conn' => $wpdb->dbh ) );
 }
 
+function bp_api_oauth_table_prefix( $q ) {
+	global $wpdb;
+	
+	// Not sure what this will do on enable_multisite, groan
+	$prefix = $wpdb->get_blog_prefix( bp_get_root_blog_id() );
+	
+	$pattern = '/(CREATE TABLE|CREATE TABLE IF NOT EXISTS|ALTER TABLE|UPDATE|INSERT INTO|FROM) oauth_/';
+	$replacement = '$1 ' . $prefix . 'oauth_';
+	
+	$q = preg_replace( $pattern, $replacement, $q );
+	
+	return $q;
+}
+add_filter( 'query', 'bp_api_oauth_table_prefix' );
+
 ?>

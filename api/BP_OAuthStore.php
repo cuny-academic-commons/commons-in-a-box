@@ -132,6 +132,68 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		
 		return $rs;
 	}
+	
+	/**
+	 * Get a list of all consumers from the consumer registry.
+	 * The consumer keys belong to the user or are public (user id is null)
+	 * 
+	 * @param string q	query term
+	 * @param int user_id
+	 * @return array
+	 */	
+	public function listServers ( $args = array(), $deprecated = 0 )
+	{
+		global $wpdb;
+		
+		$defaults = array(
+			'paged'    => 1,
+			'per_page' => 20,
+			'order'    => 'ASC',
+			'orderby'  => 'id'
+		);
+		$r = wp_parse_args( $args, $defaults );
+		extract( $r );
+		
+		// Sanitization
+		if ( !in_array( strtolower( $orderby ), array( 'id', 'user_id', 'consumer_key', 'consumer_secret', 'signature_methods', 'server_uri', 'server_uri_host', 'server_uri_path', 'request_token_uri', 'authorize_uri', 'access_token_uri' ) ) ) {
+			$orderby = 'id';
+		}
+		
+		if ( !in_array( strtoupper( $order ), array( 'ASC', 'DESC' ) ) ) {
+			$order = 'ASC';
+		}
+		
+		// Convert paged/per page to limits
+		$lower_limit = (int) ( $per_page * ( $paged - 1 ) );
+		$upper_limit = (int) ( $lower_limit + $per_page );
+		
+		$servers = $this->query_all_assoc( "
+			SELECT SQL_CALC_FOUND_ROWS
+				ocr_id			as id,
+				ocr_usa_id_ref		as user_id,
+				ocr_consumer_key 	as consumer_key,
+				ocr_consumer_secret 	as consumer_secret,
+				ocr_signature_methods	as signature_methods,
+				ocr_server_uri		as server_uri,
+				ocr_server_uri_host	as server_uri_host,
+				ocr_server_uri_path	as server_uri_path,
+				ocr_request_token_uri	as request_token_uri,
+				ocr_authorize_uri	as authorize_uri,
+				ocr_access_token_uri	as access_token_uri
+			FROM oauth_consumer_registry
+			ORDER BY {$orderby} {$order}
+			LIMIT {$lower_limit}, {$upper_limit}
+			" );
+			
+		// Fake a WP_Query
+		$rs = new stdClass;
+		$rs->posts = $servers;
+		$rs->found_posts = $wpdb->get_var( "SELECT FOUND_ROWS()" );
+		$rs->max_num_pages = ceil( $rs->found_posts / $per_page );
+		
+		return $rs;
+	}
+
 
 
 }

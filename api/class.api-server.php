@@ -53,22 +53,6 @@ class BP_API_Server extends BP_Component {
 		add_action( 'bp_actions', array( &$this, 'endpoint' ), 1 );
 		
 		add_action( 'admin_menu', array( &$this, 'setup_admin_panels' ) );
-		
-		add_filter( 'query', array( &$this, 'oauth_table_prefix' ) );
-	}
-	
-	function oauth_table_prefix( $q ) {
-		global $wpdb;
-		
-		// Not sure what this will do on enable_multisite, groan
-		$prefix = $wpdb->get_blog_prefix( bp_get_root_blog_id() );
-		
-		$pattern = '/(CREATE TABLE|CREATE TABLE IF NOT EXISTS|ALTER TABLE|UPDATE|INSERT INTO|FROM) oauth_/';
-		$replacement = '$1 ' . $prefix . 'oauth_';
-		
-		$q = preg_replace( $pattern, $replacement, $q );
-		
-		return $q;
 	}
 	
 	/**

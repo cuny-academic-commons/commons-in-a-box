@@ -2,6 +2,32 @@
 
 class BP_API_Client {
 	function __construct() {
+		$this->setup_endpoint();
+	}
+	
+	function setup_endpoint() {
+		
+	}
+}
+
+
+function cbox_api_client_test() {
+	//BP_API_Server::install_oauth_store();
+	/*$url = 'http://boone.cool/ciab/api/v1/addclient/';
+	$method = 'POST';
+	
+	$client_id = '12345';
+	$client_secret = 'abcde';
+	$redirect_uri = 'http://boone.cool/cbox';
+	
+	$body = array(
+		'client_id' => $client_id,
+		'client_secret' => $client_secret,
+		'redirect_uri' => $redirect_uri
+	);
+	*/
+	
+	/*
 		$url = 'http://boone.cool/ciab/api/v1/group/3';
 		$method = 'POST';
 		$body = array(
@@ -13,21 +39,18 @@ class BP_API_Client {
 			'status' => 'private',
 			'invite_status' => 'mods'
 		);
-	
+*/	/*
 		echo '<pre>';
 		print_r( wp_remote_request( $url, array(
 			'method' => $method,
 			'body' => $body
 		) ) );
 		echo '</pre>';
-		die();
-	}
-}
+		die();*/
 
 
-function cbox_api_client_test() {
-	new BP_API_Client;
+//	new BP_API_Client;
 }
-//add_action( 'init', 'cbox_api_client_test' );
+add_action( 'init', 'cbox_api_client_test' );
 
 ?>
