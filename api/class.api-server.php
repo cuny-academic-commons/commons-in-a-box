@@ -23,6 +23,10 @@ class BP_API_Server extends BP_Component {
 		
 		require( CIAB_PLUGIN_DIR . 'api/functions.php' );
 		
+		if ( is_admin() || is_network_admin() ) {
+			require( CIAB_PLUGIN_DIR . 'api/admin.php' );
+		}
+		
 		$this->setup_hooks();
 	}
 
@@ -137,7 +141,7 @@ class BP_API_Server extends BP_Component {
 			}
 		}
 	
-		require( CIAB_PLUGIN_DIR . 'lib/oauth-php/library/OAuthStore.php' );
+		require( CIAB_LIB_DIR . 'oauth-php/library/OAuthStore.php' );
 		
 		$args = array(
 			'conn' => $wpdb->dbh			

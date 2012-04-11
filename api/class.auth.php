@@ -15,7 +15,7 @@ class BP_API_Auth implements iAuthenticate{
 	 *    - client_secret
 	 */
 	function __isAuthenticated() {
-		require( CIAB_PLUGIN_DIR . 'api/class.bp-oauth.php' );
+		require( CIAB_LIB_DIR . 'class.bp-oauth.php' );
 		$this->oauth = new BP_OAuth();
 		
 		

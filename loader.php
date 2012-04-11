@@ -49,6 +49,7 @@ class Commons_In_A_Box {
 	private function setup_globals() {
 		$this->plugin_dir = trailingslashit( dirname( __FILE__ ) );
 		define( 'CIAB_PLUGIN_DIR', $this->plugin_dir );
+		define( 'CIAB_LIB_DIR', trailingslashit( CIAB_PLUGIN_DIR . 'lib' ) );
 	}
 	
 	/**
