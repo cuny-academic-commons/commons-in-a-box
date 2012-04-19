@@ -6,7 +6,7 @@
 class BP_API_Client {
 	function __construct() {
 		// @todo This needs to be toggleable
-		add_action( 'bp_actions', array( &$this, 'endpoint' ), 1 );
+		add_action( 'init', array( &$this, 'endpoint' ), 1001 );
 
 		$this->store = bp_api_get_oauth_store();
 	}
@@ -28,6 +28,7 @@ class BP_API_Client {
 
 	function process_request_access_token() {
 		var_dump( $_GET );
+		die();
 	}
 }
 
@@ -71,11 +72,15 @@ function cbox_api_client_test() {
 		echo '</pre>';
 		die();*/
 
-	if ( 'http://boone.cool/cbox2' != bp_get_root_domain() )
+	if ( empty( $_GET['test_request'] ) )
 		return false;
 
 
 	$client = new BP_API_Client;
+
+	if ( 'request_access_token' == bp_current_action() && !empty( $_GET ) )
+		return false;
+
 	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api' );
 
 	// Set up our special store
@@ -91,6 +96,20 @@ function cbox_api_client_test() {
 		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
 		'user_id' => intval( $consumer_info['user_id'] )
 	), bp_get_root_domain() . '/api/request_access_token' );
+
+	$authorize_uri = add_query_arg( array(
+		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
+		'user_id' => intval( $consumer_info['user_id'] ),
+		'token' => urlencode( $token['token'] )
+	), bp_get_root_domain() . '/api/request_access_token' );
+
+	$request_uri = add_query_arg( array(
+		'callback_uri' => urlencode( $callback_uri )
+	), $token['authorize_uri'] );
+
+	wp_redirect( $request_uri );
+
+	var_dump( $token ); die();
 
 	try
 	{

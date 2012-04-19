@@ -71,6 +71,10 @@ class BP_API_Server extends BP_Component {
 				bp_api_load_template( 'api/addclient' );
 			} else if ( bp_is_current_action( 'request_token' ) ) {
 				$this->process_request_token();
+			} else if ( bp_is_current_action( 'authorize' ) ) {
+				$this->process_authorize();
+			} else if ( bp_is_current_action( 'access_token' ) ) {
+				$this->process_access_token();
 			}
 
 			require( CIAB_PLUGIN_DIR . 'lib/restler/restler.php' );
@@ -103,13 +107,12 @@ class BP_API_Server extends BP_Component {
 	}
 
 	function process_addclient() {
-		global $wpdb;
+		global $wpdb, $bp;
 
 		check_admin_referer( 'add_client' );
 
 		// Check for required fields
-
-		$user_id = 1; // TEMP
+		$user_id = 0; // TEMP
 
 		// Assemble
 		$consumer = array();
@@ -128,18 +131,23 @@ class BP_API_Server extends BP_Component {
 		}
 
 		$store = bp_api_get_oauth_store();
-
-		$key   = $store->updateConsumer($consumer, $user_id);
+		$key   = $store->updateConsumer( $consumer, $user_id );
 
 		// Get the complete consumer from the store
-		$consumer = $store->getConsumer( $key, $user_id );
+		$bp->api->consumer = $store->getConsumer( $key, $user_id );
+	}
 
-		// Some interesting fields, the user will need the key and secret
-		$consumer_id = $consumer['id'];
-		$consumer_key = $consumer['consumer_key'];
-		$consumer_secret = $consumer['consumer_secret'];
+	function process_authorize() {
+		if ( !is_user_logged_in() ) {
+			bp_core_no_access( array( 'mode' => 2 ) );
+		}
 
-		// Todo: return to user? or echo to the screen? not sure
+		if ( !empty( $_POST['consumer_key'] ) ) {
+			$server->authorizeVerify();
+			var_dump( $server->authorizeFinish(true, 1) );
+		}
+
+		bp_api_load_template( 'api/authorize' );
 	}
 
 	function process_request_token() {
@@ -151,6 +159,47 @@ class BP_API_Server extends BP_Component {
 		$server = new OAuthServer();
 		$server->requestToken();
 		die();
+	}
+
+	function process_access_token() {
+		// The current user
+		$user_id = 1;
+
+		if ( !class_exists( 'OAuthServer' ) ) {
+			require( CIAB_LIB_DIR . 'oauth-php/library/OAuthServer.php' );
+		}
+
+		// Fetch the oauth store and the oauth server.
+		$store  = bp_api_get_oauth_store();
+		$server = new OAuthServer();
+
+		try
+		{
+		    // Check if there is a valid request token in the current request
+		    // Returns an array with the consumer key, consumer secret, token, token secret and token type.
+		    $rs = $server->authorizeVerify();
+
+		    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		    {
+			// See if the user clicked the 'allow' submit button (or whatever you choose)
+			$authorized = array_key_exists('allow', $_POST);
+
+			// Set the request token to be authorized or not authorized
+			// When there was a oauth_callback then this will redirect to the consumer
+			$server->authorizeFinish($authorized, $user_id);
+
+			// No oauth_callback, show the user the result of the authorization
+			// ** your code here **
+		   }
+		}
+		catch (OAuthException $e)
+		{
+		    // No token to be verified in the request, show a page where the user can enter the token to be verified
+		    // **your code here**
+		}
+
+		die();
+
 	}
 
 	function setup_admin_panels() {

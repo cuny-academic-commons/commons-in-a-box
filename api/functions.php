@@ -36,6 +36,9 @@ function bp_api_get_oauth_store() {
 	return OAuthStore::instance( CIAB_PLUGIN_DIR . 'api/BP_OAuthStore.php', array( 'conn' => $wpdb->dbh ) );
 }
 
+/**
+ * Todo: move to store class
+ */
 function bp_api_oauth_table_prefix( $q ) {
 	global $wpdb;
 
@@ -51,4 +54,45 @@ function bp_api_oauth_table_prefix( $q ) {
 }
 add_filter( 'query', 'bp_api_oauth_table_prefix' );
 
+function bp_api_remote_auth_form_action() {
+	echo bp_api_get_remote_auth_form_action();
+}
+	function bp_api_get_remote_auth_form_action() {
+		if ( empty( $_GET['callback_uri'] ) ) {
+			$callback_uri = 'http://boone.cool/cbox2/';
+		} else {
+			$callback_uri = urldecode( $_GET['callback_uri'] );
+		}
+
+		return $callback_uri;
+	}
+
+function bp_api_has_consumer_key() {
+	global $bp;
+	return isset( $bp->api->consumer );
+}
+
+function bp_api_consumer_val( $val = '' ) {
+	echo bp_api_get_consumer_val( $val );
+}
+	function bp_api_get_consumer_val( $val = '' ) {
+		global $bp;
+
+		if ( isset( $bp->api->consumer[$val] ) ) {
+			return esc_html( $bp->api->consumer[$val] );
+		}
+
+		return '';
+	}
+
+function bp_api_server_uri( $type = '' ) {
+	global $bp;
+	$uri = trailingslashit( bp_get_root_domain() ) . trailingslashit( $bp->api->root_slug );
+
+	if ( $type ) {
+		$uri = trailingslashit( $uri . $type );
+	}
+
+	echo $uri;
+}
 ?>
