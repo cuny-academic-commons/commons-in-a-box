@@ -22,6 +22,8 @@ class BP_API_Client {
 
 			if ( bp_is_current_action( 'request_access_token' ) ) {
 				$this->process_request_access_token();
+			} else if ( bp_is_current_action( 'authorized' ) ) {
+				$this->process_authorized();
 			}
 		}
 	}
@@ -29,6 +31,10 @@ class BP_API_Client {
 	function process_request_access_token() {
 		var_dump( $_GET );
 		die();
+	}
+
+	function process_authorized() {
+		bp_api_load_template( 'api/authorized' );
 	}
 }
 
@@ -72,10 +78,14 @@ function cbox_api_client_test() {
 		echo '</pre>';
 		die();*/
 
+
+	$client = new BP_API_Client;
 	if ( !isset( $_GET['test_request'] ) )
 		return false;
 
-	$client = new BP_API_Client;
+
+	if ( 'authorized' == bp_current_action() )
+		return false;
 
 	if ( 'request_access_token' == bp_current_action() && !empty( $_GET ) )
 		return false;
@@ -89,21 +99,16 @@ function cbox_api_client_test() {
 
 	// Obtain a request token from the server
 	$token = OAuthRequester::requestRequestToken( $consumer_info['consumer_key'], $consumer_info['user_id'] );
-var_dump( $token ); die();
+
 	// Callback to our (consumer) site, will be called when the user finished the authorization at the server
 	$callback_uri = add_query_arg( array(
 		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
 		'user_id' => intval( $consumer_info['user_id'] )
-	), bp_get_root_domain() . '/api/request_access_token' );
-
-	$authorize_uri = add_query_arg( array(
-		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
-		'user_id' => intval( $consumer_info['user_id'] ),
-		'token' => urlencode( $token['token'] )
-	), bp_get_root_domain() . '/api/request_access_token' );
+	), bp_get_root_domain() . '/api/authorized' );
 
 	$request_uri = add_query_arg( array(
-		'callback_uri' => urlencode( $callback_uri )
+		'callback_uri' => urlencode( $callback_uri ),
+		'oauth_token'  => urlencode( $token['token'] )
 	), $token['authorize_uri'] );
 
 	wp_redirect( $request_uri );

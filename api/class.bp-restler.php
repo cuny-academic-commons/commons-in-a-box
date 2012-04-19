@@ -13,15 +13,15 @@ class BP_Restler extends Restler {
 	*/
 	protected function getPath () {
 		global $bp;
-		
+
 		$path = str_replace( bp_get_root_domain() . '/' . $bp->pages->api->slug . '/', '', wp_guess_url() );
-		
+
 		$path = preg_replace('/(\/*\?.*$)|(\/$)/', '', $path);
 		$path = str_replace($this->format_map['extensions'], '', $path);
-		
+
 		return $path;
 	}
-	
+
 	/**
 	 * Generates cachable url to method mapping
 	 * @param string $class_name
@@ -45,7 +45,7 @@ class BP_Restler extends Restler {
 					$param->getDefaultValue() : NULL;
 				$position++;
 			}
-			
+
 			$method_flag = $method->isProtected() ?
 			(isRestlerCompatibilityModeEnabled() ? 2 :  3) :
 			(isset($metadata['protected']) ? 1 : 0);
@@ -60,9 +60,9 @@ class BP_Restler extends Restler {
 			'method_flag'=>$method_flag
 			);
 			$method_url = strtolower($method->getName());
-			
+
 			if (preg_match_all(
-			'/@url\s+(GET|POST|PUT|DELETE|HEAD|OPTIONS)[ \t]*\/?(\S*)/s', 
+			'/@url\s+(GET|POST|PUT|DELETE|HEAD|OPTIONS)[ \t]*\/?(\S*)/s',
 			$doc, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
 					$http_method = $match[1];
@@ -72,14 +72,14 @@ class BP_Restler extends Restler {
 				}
 			}elseif($method_url[0] != '_'){ //not prefixed with underscore
 				// no configuration found so use convention
-				if (preg_match_all('/^(GET|POST|PUT|DELETE|HEAD|OPTIONS)/i', 
+				if (preg_match_all('/^(GET|POST|PUT|DELETE|HEAD|OPTIONS)/i',
 				$method_url, $matches)) {
 					$http_method = strtoupper($matches[0][0]);
 					$method_url = substr($method_url, strlen($http_method));
 				}else{
 					$http_method = 'GET';
 				}
-				$url = $base_path. ($method_url=='index' || 
+				$url = $base_path. ($method_url=='index' ||
 				$method_url=='default' ? '' : $method_url);
 				$url = rtrim($url,'/');
 				$this->routes[$http_method][$url] = $call;
@@ -95,7 +95,7 @@ class BP_Restler extends Restler {
 			}
 		}
 	}
-	
+
 	/**
 	 * We're departing from Restler's native /classname/methodname/ REST implementation. This
 	 * method does the dirty work.
@@ -111,19 +111,19 @@ class BP_Restler extends Restler {
 		$this->request_data += $_GET;
 		$params = array('request_data'=>$this->request_data);
 		$params += $this->request_data;
-		
+
 		foreach ($urls as $url => $call) {
 			$call = (object) $call;
 			if ( !empty( $call->url ) && 0 === strpos( $this->url, $call->url ) && isset( $params['action'] ) && $params['action'] == $call->method_name ){
 				$item_type = array_pop( explode( '/', $call->url ) );
 				$url_a = explode( '/', $this->url );
 				$item_type_key = array_search( $item_type, $url_a );
-				
+
 				if ( false !== $item_type_key ) {
 					switch ( $item_type ) {
 						case 'user' :
 							if ( isset( $url_a[$item_type_key + 1] ) ) {
-								$params['user_id'] = urldecode( $url_a[$item_type_key + 1] ); 
+								$params['user_id'] = urldecode( $url_a[$item_type_key + 1] );
 							}
 							break;
 						case 'group' :
@@ -134,12 +134,12 @@ class BP_Restler extends Restler {
 							break;
 					}
 				}
-				
+
 				$found = TRUE;
 				break;
 			}
 		}
-		
+
 		if ( $found ) {
 			$p = $call->defaults;
 			foreach ( $call->arguments as $key => $value ) {
@@ -152,7 +152,7 @@ class BP_Restler extends Restler {
 			return $call;
 		}
 	}
-	
+
 	/**
 	 * Encodes the response in the prefered format
 	 * and sends back
@@ -165,7 +165,7 @@ class BP_Restler extends Restler {
 	{
 		$response_code = isset( $data['error']['code'] ) ? (int) $data['error']['code'] : 200;
 		$this->setStatus( $response_code );
-		
+
 		$data =  $this->response_format->encode($data, !$this->production_mode);
 		$post_process =  '_'.$this->service_method .'_'.
 		$this->response_format->getExtension();
@@ -180,8 +180,8 @@ class BP_Restler extends Restler {
 		header("X-Powered-By: Luracast Restler v".Restler::VERSION);
 		die($data);
 	}
-	
-		
+
+
 	/**
 	 * Fetch the data corresponding to a given param key.
 	 *
@@ -192,70 +192,70 @@ class BP_Restler extends Restler {
 	 * @return mixed The validated return content
 	 */
 	function _process_param( $key = false, $value = '' ) {
-		
+
 		switch( $key ) {
 			case 'user_id' :
 				// Check that the user exists. If not, $value is set to 0
 				$user = new WP_User( $value );
 				$value = $user->ID;
-				
+
 				break;
-			
-			case 'profile_field_id' :			
+
+			case 'profile_field_id' :
 				if ( !bp_is_active( 'xprofile' ) ) {
 					return 0;
 				}
-		
+
 				// You can pass a field id or name
 				if ( is_numeric( $value ) ) {
 					$field_id = $value;
 				} else {
 					$field_id = xprofile_get_field_id_from_name( $value );
 				}
-				
+
 				// Make sure the field exists
 				$field_obj = xprofile_get_field( $field_id );
-				
+
 				$value = (int) $field_obj->id;
-				
+
 				break;
-			
+
 			case 'profile_field_data' :
 				if ( !bp_is_active( 'xprofile' ) ) {
 					return 0;
 				}
-				
+
 				break;
-			
+
 			case 'group_id' :
 				if ( !bp_is_active( 'groups' ) ) {
 					return 0;
 				}
-				
+
 				// Accepts either a numeric id, or a group slug
 				if ( is_numeric( $value ) ) {
 					$group_id = $value;
 				} else {
 					$group_id = BP_Groups_Group::group_exists( $value );
 				}
-				
+
 				$group_obj = groups_get_group( array( 'group_id' => $group_id ) );
-				
+
 				// BP_Groups_Group behaves strangely when a bum group_id is passed
 				if ( empty( $group_obj->slug ) ) {
 					$value = 0;
 				} else {
 					$value = (int) $group_obj->id;
 				}
-				
+
 				break;
-			
+
 			default :
 				// @todo I think this is where a hook will go?
 				break;
-			
+
 		}
-		
+
 		return $value;
 	}
 }

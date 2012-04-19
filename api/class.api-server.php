@@ -13,6 +13,9 @@ class BP_API_Server extends BP_Component {
 	public function __construct() {
 		global $bp;
 
+		// for oauth
+		session_start();
+
 		parent::start(
 			'api',
 			__( 'API Server', 'cbox' ),
@@ -142,9 +145,17 @@ class BP_API_Server extends BP_Component {
 			bp_core_no_access( array( 'mode' => 2 ) );
 		}
 
-		if ( !empty( $_POST['consumer_key'] ) ) {
+		if ( !empty( $_POST['allow'] ) ) {
+			if ( !class_exists( 'OAuthServer' ) ) {
+				require( CIAB_LIB_DIR . 'oauth-php/library/OAuthServer.php' );
+			}
+
+			$this->store = bp_api_get_oauth_store();
+			$server = new OAuthServer();
 			$server->authorizeVerify();
-			var_dump( $server->authorizeFinish(true, 1) );
+			$server->authorizeFinish(true, 1);
+
+			wp_redirect( urldecode( $server->getParam( 'callback_uri' ) ) );
 		}
 
 		bp_api_load_template( 'api/authorize' );
