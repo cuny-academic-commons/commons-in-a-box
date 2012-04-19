@@ -86,13 +86,16 @@ function bp_api_consumer_val( $val = '' ) {
 	}
 
 function bp_api_server_uri( $type = '' ) {
-	global $bp;
-	$uri = trailingslashit( bp_get_root_domain() ) . trailingslashit( $bp->api->root_slug );
-
-	if ( $type ) {
-		$uri = trailingslashit( $uri . $type );
-	}
-
-	echo $uri;
+	echo bp_api_get_server_uri( $type );
 }
+	function bp_api_get_server_uri( $type = '' ) {
+		global $bp;
+		$uri = trailingslashit( bp_get_root_domain() ) . trailingslashit( $bp->api->root_slug );
+
+		if ( $type ) {
+			$uri = trailingslashit( $uri . $type );
+		}
+
+		return $uri;
+	}
 ?>

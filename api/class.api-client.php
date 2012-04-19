@@ -72,16 +72,15 @@ function cbox_api_client_test() {
 		echo '</pre>';
 		die();*/
 
-	if ( empty( $_GET['test_request'] ) )
+	if ( !isset( $_GET['test_request'] ) )
 		return false;
-
 
 	$client = new BP_API_Client;
 
 	if ( 'request_access_token' == bp_current_action() && !empty( $_GET ) )
 		return false;
 
-	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api' );
+	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api/' );
 
 	// Set up our special store
 	$store = bp_api_get_oauth_store();
@@ -90,7 +89,7 @@ function cbox_api_client_test() {
 
 	// Obtain a request token from the server
 	$token = OAuthRequester::requestRequestToken( $consumer_info['consumer_key'], $consumer_info['user_id'] );
-
+var_dump( $token ); die();
 	// Callback to our (consumer) site, will be called when the user finished the authorization at the server
 	$callback_uri = add_query_arg( array(
 		'consumer_key' => rawurlencode( $consumer_info['consumer_key'] ),
