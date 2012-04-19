@@ -231,6 +231,14 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 		}
 	}
 
+	public function getTokenByOcrIdRef( $ref ) {
+		global $wpdb;
+
+		$table_oct = $wpdb->get_blog_prefix( bp_get_root_blog_id() ) . 'oauth_consumer_token';
+
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_oct WHERE oct_ocr_id_ref = %d", $ref ) );
+	}
+
 
 }
 

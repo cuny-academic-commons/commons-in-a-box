@@ -3,7 +3,7 @@
 require ( CIAB_LIB_DIR . 'oauth-php/library/OAuth.inc' );
 
 class BP_OAuth extends OAuth {
-	
+
 	/**
 	 * Make sure that the client credentials is valid.
 	 *
@@ -20,9 +20,9 @@ class BP_OAuth extends OAuth {
 	 * @ingroup oauth2_section_2
 	 */
 	protected function checkClientCredentials($client_id, $client_secret = NULL) {
-	
+
 	}
-	
+
 	/**
 	 * Get the registered redirect URI of corresponding client_id.
 	 *
@@ -39,9 +39,9 @@ class BP_OAuth extends OAuth {
 	 * @ingroup oauth2_section_3
 	 */
 	protected function getRedirectUri($client_id) {
-	
+
 	}
-	
+
 	/**
 	 * Look up the supplied oauth_token from storage.
 	 *
@@ -60,9 +60,9 @@ class BP_OAuth extends OAuth {
 	 * @ingroup oauth2_section_5
 	 */
 	protected function getAccessToken($oauth_token) {
-	
+
 	}
-	
+
 	/**
 	 * Store the supplied access token values to storage.
 	 *
@@ -80,7 +80,7 @@ class BP_OAuth extends OAuth {
 	 * @ingroup oauth2_section_4
 	 */
 	protected function setAccessToken($oauth_token, $client_id, $expires, $scope = NULL) {
-	
+
 	}
 
 }

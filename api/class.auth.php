@@ -4,7 +4,7 @@
  * Authentication class
  */
 class BP_API_Auth implements iAuthenticate{
-	protected $OAuth;
+	protected $store;
 
 	/**
 	 * Here is the schema for the time being:
@@ -15,11 +15,13 @@ class BP_API_Auth implements iAuthenticate{
 	 *    - client_secret
 	 */
 	function __isAuthenticated() {
-		require( CIAB_LIB_DIR . 'class.bp-oauth.php' );
-		$this->oauth = new BP_OAuth();
-		
-		
-	
+
+
+	//	require( CIAB_PLUGIN_DIR . 'api/class.bp-oauth.php' );
+	//	$this->oauth = new BP_OAuth();
+
+
+
 		return true;
 	}
 }

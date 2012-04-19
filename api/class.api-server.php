@@ -100,7 +100,7 @@ class BP_API_Server extends BP_Component {
 		global $wpdb;
 
 		// todo - move!
-		$sql = file_get_contents( CIAB_PLUGIN_DIR . 'lib/oauth-php/library/store/mysql/mysql.sql');
+		$sql = file_get_contents( CIAB_LIB_DIR . 'oauth-php/library/store/mysql/mysql.sql');
 		$ps  = explode('#--SPLIT--', $sql);
 
 		foreach( $ps as $p ) {
@@ -174,7 +174,7 @@ class BP_API_Server extends BP_Component {
 
 	function process_access_token() {
 		// The current user
-		$user_id = 1;
+		$user_id = 0;
 
 		if ( !class_exists( 'OAuthServer' ) ) {
 			require( CIAB_LIB_DIR . 'oauth-php/library/OAuthServer.php' );
@@ -208,6 +208,8 @@ class BP_API_Server extends BP_Component {
 		    // No token to be verified in the request, show a page where the user can enter the token to be verified
 		    // **your code here**
 		}
+
+		$server->accessToken();
 
 		die();
 
