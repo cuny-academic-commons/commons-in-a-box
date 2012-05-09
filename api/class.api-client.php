@@ -113,8 +113,6 @@ function cbox_api_client_test() {
 
 	wp_redirect( $request_uri );
 
-	var_dump( $token ); die();
-
 	try
 	{
 	    OAuthRequester::requestAccessToken($consumer_info['consumer_key'], $token['token'], $consumer_info['user_id']);

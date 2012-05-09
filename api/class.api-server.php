@@ -153,9 +153,9 @@ class BP_API_Server extends BP_Component {
 			$this->store = bp_api_get_oauth_store();
 			$server = new OAuthServer();
 			$server->authorizeVerify();
-			$server->authorizeFinish(true, 1);
 
-			wp_redirect( urldecode( $server->getParam( 'callback_uri' ) ) );
+			// This method handles the redirect back to the client
+			$server->authorizeFinish( true, 1 );
 		}
 
 		bp_api_load_template( 'api/authorize' );
@@ -168,7 +168,14 @@ class BP_API_Server extends BP_Component {
 
 		$this->store = bp_api_get_oauth_store();
 		$server = new OAuthServer();
-		$server->requestToken();
+
+//		$server->setParam( 'xoauth_token_ttl', 60*60*24*365*1000, false );
+
+		$token = $server->requestToken();
+
+		// Manually modify the request token ttl (1000 years from now, groan)
+		$this->store->setCServerTokenTtl( $server->getParam( 'oauth_consumer_key' ), $token, 60*60*24*365*1000 );
+
 		die();
 	}
 
