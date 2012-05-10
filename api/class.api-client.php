@@ -83,17 +83,21 @@ function cbox_api_client_test() {
 	if ( !isset( $_GET['test_request'] ) )
 		return false;
 
-
 	if ( 'authorized' == bp_current_action() )
 		return false;
 
 	if ( 'request_access_token' == bp_current_action() && !empty( $_GET ) )
 		return false;
 
-	$consumer_info = $client->get_oauth_info_for_site( 'http://boone.cool/ciab/api/' );
 
 	// Set up our special store
 	$store = bp_api_get_oauth_store();
+
+	$server_uri = 'http://boone.cool/ciab/api/';
+	$user_id = 1; // temp
+
+	// Get the consumer info
+	$consumer_info = $client->get_oauth_info_for_site( $server_uri );
 
 	include( CIAB_LIB_DIR . 'oauth-php/library/OAuthRequester.php' );
 
@@ -106,13 +110,15 @@ function cbox_api_client_test() {
 		'user_id' => intval( $consumer_info['user_id'] )
 	), bp_get_root_domain() . '/api/authorized' );
 
+	error_log( $token['token'] );
+
 	$request_uri = add_query_arg( array(
 		'callback_uri' => urlencode( $callback_uri ),
 		'oauth_token'  => urlencode( $token['token'] )
 	), $token['authorize_uri'] );
 
-	wp_redirect( $request_uri );
-
+	bp_core_redirect( $request_uri );
+return;
 	try
 	{
 	    OAuthRequester::requestAccessToken($consumer_info['consumer_key'], $token['token'], $consumer_info['user_id']);

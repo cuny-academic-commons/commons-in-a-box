@@ -13,14 +13,17 @@ $r = $store->getServer($consumer_key, $user_id);
 
 $remote_uri = isset( $r['server_uri'] ) ? $r['server_uri'] : '';
 
-
 var_dump( $_GET );
 
 
 require_once( CIAB_PLUGIN_DIR . 'api/oauth-extensions/BP_OAuthRequester.php' );
 
-$a = OAuthRequester::requestAccessToken($_GET['consumer_key'], $_GET['oauth_token'], $_GET['user_id']);
-var_dump( $a );
+try {
+	$access_token = OAuthRequester::requestAccessToken($_GET['consumer_key'], $_GET['oauth_token'], $_GET['user_id']);
+} catch ( OAuthException2 $e ) {
+	echo '<pre>'; print_r( $e ); echo '</pre>';
+}
+
 
 //$url = 'http://boone.cool/ciab/api/v1/group/3';
 $url = 'http://boone.cool/ciab/api/v1/group/3';
@@ -39,10 +42,14 @@ $body = array(
 );
 
 $request = new OAuthRequester( $url, $method, $_GET, $body );
-var_dump( $request );
-$result = $request->doRequest(0);
 
-var_dump( $request ); die();
+try {
+	$result = $request->doRequest(0);
+} catch ( OAuthException2 $e ) {
+
+	echo '<pre>'; print_r( $e ); echo '</pre>';
+}
+
 
 		echo '<pre>';
 		print_r( wp_remote_request( $url, array(

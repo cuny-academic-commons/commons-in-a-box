@@ -206,7 +206,7 @@ class BP_OAuthStore extends OAuthStoreMySQL {
 	 * @param int user_id
 	 * @param boolean user_is_admin
 	 */
-	public function deleteServerToken ( $consumer_key, $token, $user_id, $user_is_admin = false )
+	public function xxxx_deleteServerToken ( $consumer_key, $token, $user_id, $user_is_admin = false )
 	{
 		global $wpdb;
 

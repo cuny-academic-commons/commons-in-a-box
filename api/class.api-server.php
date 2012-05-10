@@ -115,7 +115,7 @@ class BP_API_Server extends BP_Component {
 		check_admin_referer( 'add_client' );
 
 		// Check for required fields
-		$user_id = 0; // TEMP
+		$user_id = 1; // TEMP
 
 		// Assemble
 		$consumer = array();
@@ -152,10 +152,22 @@ class BP_API_Server extends BP_Component {
 
 			$this->store = bp_api_get_oauth_store();
 			$server = new OAuthServer();
-			$server->authorizeVerify();
+
+			try {
+				$server->authorizeVerify();
+			} catch ( OAuthException2 $e ) {
+				echo '<pre>'; print_r( $e ); echo '</pre>';
+			}
+
+			// Let's manually authorize the token
+
 
 			// This method handles the redirect back to the client
-			$server->authorizeFinish( true, 1 );
+			try {
+				$server->authorizeFinish( true, 0 );
+			} catch ( OAuthException2 $e ) {
+				echo '<pre>'; print_r( $e ); echo '</pre>';
+			}
 		}
 
 		bp_api_load_template( 'api/authorize' );
@@ -169,19 +181,26 @@ class BP_API_Server extends BP_Component {
 		$this->store = bp_api_get_oauth_store();
 		$server = new OAuthServer();
 
-//		$server->setParam( 'xoauth_token_ttl', 60*60*24*365*1000, false );
+		try {
+			$token = $server->requestToken();
+		} catch ( OAuthException2 $e ) {
+			//echo '<pre>'; print_r( $e ); echo '</pre>';
+		}
 
-		$token = $server->requestToken();
-
+error_log( $token );
 		// Manually modify the request token ttl (1000 years from now, groan)
-		$this->store->setCServerTokenTtl( $server->getParam( 'oauth_consumer_key' ), $token, 60*60*24*365*1000 );
+		try {
+			$this->store->setCServerTokenTtl( $server->getParam( 'oauth_consumer_key' ), $token, 60*60*24*365*1000 );
+		} catch ( OAuthException2 $e ) {
+			//echo '<pre>'; print_r( $e ); echo '</pre>';
+		}
 
 		die();
 	}
 
 	function process_access_token() {
 		// The current user
-		$user_id = 0;
+		$user_id = 1;
 
 		if ( !class_exists( 'OAuthServer' ) ) {
 			require( CIAB_LIB_DIR . 'oauth-php/library/OAuthServer.php' );
@@ -191,32 +210,7 @@ class BP_API_Server extends BP_Component {
 		$store  = bp_api_get_oauth_store();
 		$server = new OAuthServer();
 
-		try
-		{
-		    // Check if there is a valid request token in the current request
-		    // Returns an array with the consumer key, consumer secret, token, token secret and token type.
-		    $rs = $server->authorizeVerify();
-
-		    if ($_SERVER['REQUEST_METHOD'] == 'POST')
-		    {
-			// See if the user clicked the 'allow' submit button (or whatever you choose)
-			$authorized = array_key_exists('allow', $_POST);
-
-			// Set the request token to be authorized or not authorized
-			// When there was a oauth_callback then this will redirect to the consumer
-			$server->authorizeFinish($authorized, $user_id);
-
-			// No oauth_callback, show the user the result of the authorization
-			// ** your code here **
-		   }
-		}
-		catch (OAuthException $e)
-		{
-		    // No token to be verified in the request, show a page where the user can enter the token to be verified
-		    // **your code here**
-		}
-
-		$server->accessToken();
+		$at = $server->accessToken();
 
 		die();
 
