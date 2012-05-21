@@ -167,10 +167,11 @@ class BP_Restler extends Restler {
 		$this->setStatus( $response_code );
 
 		$data =  $this->response_format->encode($data, !$this->production_mode);
-		$post_process =  '_'.$this->service_method .'_'.
+		$post_process = '_' . $this->service_method . '_' .
 		$this->response_format->getExtension();
-		if(isset($this->service_class_instance) &&
-		method_exists($this->service_class_instance,$post_process)){
+
+		if( isset( $this->service_class_instance ) &&
+		method_exists( $this->service_class_instance,$post_process ) ){
 			$data = call_user_func(array($this->service_class_instance,
 			$post_process), $data);
 		}

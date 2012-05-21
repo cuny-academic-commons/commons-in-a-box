@@ -13,9 +13,7 @@ class BP_OAuthSignatureMethod_MD5 extends OAuthSignatureMethod_MD5 {
 	 * @param string signature		from the request, still urlencoded
 	 * @return string
 	 */
-	public function verify ( $request, $base_string, $consumer_secret, $token_secret, $signature )
-	{
-		error_log( 'ok' );
+	public function verify ( $request, $base_string, $consumer_secret, $token_secret, $signature ) {
 		$a = $request->urldecode($signature);
 		$b = $request->urldecode($this->signature($request, $base_string, $consumer_secret, $token_secret));
 

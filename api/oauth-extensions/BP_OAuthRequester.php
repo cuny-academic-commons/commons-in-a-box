@@ -6,6 +6,54 @@ require_once( CIAB_LIB_DIR . 'oauth-php/library/OAuthRequester.php' );
 class BP_OAuthRequester extends OAuthRequester {
 
 	/**
+	 * Perform the request, returns the response code, headers and body.
+	 *
+	 * We can do without some of the native method's cURL checking, since we're using WP's
+	 * HTTP API
+	 *
+	 * @param int usr_id			optional user id for which we make the request
+	 * @param array curl_options	optional extra options for curl request
+	 * @param array options			options like name and token_ttl
+	 * @exception OAuthException2 when authentication not accepted
+	 * @exception OAuthException2 when signing was not possible
+	 * @return array (code=>int, headers=>array(), body=>string)
+	 */
+	function doRequest ( $usr_id = 0, $curl_options = array(), $options = array() )
+	{
+		$name = isset($options['name']) ? $options['name'] : '';
+		if (isset($options['token_ttl']))
+		{
+			$this->setParam('xoauth_token_ttl', intval($options['token_ttl']));
+		}
+
+		if (!empty($this->files))
+		{
+			// At the moment OAuth does not support multipart/form-data, so try to encode
+			// the supplied file (or data) as the request body and add a content-disposition header.
+			list($extra_headers, $body) = OAuthBodyContentDisposition::encodeBody($this->files);
+			$this->setBody($body);
+			$curl_options = $this->prepareCurlOptions($curl_options, $extra_headers);
+		}
+		$this->sign($usr_id, null, $name);
+		$result = $this->curl_raw($curl_options);
+
+		if ($result['code'] >= 400)
+		{
+			throw new OAuthException2('Request failed with code ' . $result['code'] . ': ' . $result['body']);
+		}
+
+		// Record the token time to live for this server access token, immediate delete iff ttl <= 0
+		// Only done on a succesful request.
+		$token_ttl = $this->getParam('xoauth_token_ttl', false);
+		if (is_numeric($token_ttl))
+		{
+			$this->store->setServerTokenTtl($this->getParam('oauth_consumer_key',true), $this->getParam('oauth_token',true), $token_ttl);
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Swaps out the direct cURL requests with WP's HTTP API, for better WP support and more
 	 * robust fallbacks
 	 */

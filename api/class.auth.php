@@ -20,18 +20,15 @@ class BP_API_Auth implements iAuthenticate{
 			require_once( CIAB_PLUGIN_DIR . 'api/oauth-extensions/BP_OAuthServer.php' );
 		}
 
-		error_log( 'attempting authorization' );
-
 		$authorized = false;
 		$server = new BP_OAuthServer();
 		try
 		{
 			if ($server->verifyIfSigned())
 			{
-				error_log( 'authorized' );
 				$authorized = true;
 			} else {
-				error_log( 'not authorized' );
+				//error_log( 'not authorized' );
 			}
 		}
 		catch (OAuthException2 $e)
@@ -39,11 +36,6 @@ class BP_API_Auth implements iAuthenticate{
 			error_log( $e );
 		}
 
-	//	require( CIAB_PLUGIN_DIR . 'api/class.bp-oauth.php' );
-	//	$this->oauth = new BP_OAuth();
-
-
-return true;
 		return $authorized;
 	}
 }

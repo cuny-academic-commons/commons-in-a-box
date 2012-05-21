@@ -13,8 +13,6 @@ class BP_OAuthServer extends OAuthServer {
 
 		$params = $this->getNormalizedParams();
 
-		error_log( 'DIRTY: ' . $params );
-
 		$params_a = wp_parse_args( $params );
 
 		$new_params = array();

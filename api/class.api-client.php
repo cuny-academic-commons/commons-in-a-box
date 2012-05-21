@@ -110,8 +110,6 @@ function cbox_api_client_test() {
 		'user_id' => intval( $consumer_info['user_id'] )
 	), bp_get_root_domain() . '/api/authorized' );
 
-	error_log( $token['token'] );
-
 	$request_uri = add_query_arg( array(
 		'callback_uri' => urlencode( $callback_uri ),
 		'oauth_token'  => urlencode( $token['token'] )

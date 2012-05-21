@@ -53,7 +53,13 @@ class BP_API_Server_Actions {
 		$group->name = $name;
 
 		if ( $group->save() ) {
-			return true;
+			$retval = array(
+				'uri' => bp_get_group_permalink( $group_obj ),
+			);
+			foreach( $group as $k => $v ) {
+				$retval[$k] = $v;
+			}
+			return $retval;
 		} else {
 			throw new RestException( 500 );
 		}
