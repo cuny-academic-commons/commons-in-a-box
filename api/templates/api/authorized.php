@@ -41,7 +41,7 @@ $body = array(
 	'invite_status' => 'mods'
 );
 
-$request = new OAuthRequester( $url, $method, $_GET, $body );
+$request = new OAuthRequester( $url, $method, '', $body );
 
 try {
 	$result = $request->doRequest(0);
@@ -49,14 +49,8 @@ try {
 
 	echo '<pre>'; print_r( $e ); echo '</pre>';
 }
-
-
-		echo '<pre>';
-		print_r( wp_remote_request( $url, array(
-			'method' => $method,
-			'body' => $body
-		) ) );
-		echo '</pre>';
+var_dump( $request );
+var_dump( $result );
 		die();
 
 

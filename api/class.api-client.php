@@ -138,4 +138,41 @@ return;
 }
 add_action( 'init', 'cbox_api_client_test', 1000 );
 
+
+function cbox_test_request_2() {
+	if ( !isset( $_GET['tt'] ) ) {
+		return;
+	}
+
+	// Must be trailingslashed bc of BP canonical. Fix upstream
+	$url = 'http://boone.cool/ciab/api/v1/group/3/';
+
+	$method = 'POST';
+	$body = array(
+		'action' => 'update_group_name',
+		'name' => '2foo My Test Group abc1',
+		'description' => 'A great test group. Yeah!',
+		'creator_id' => 1,
+		'enable_forum' => 1,
+		'status' => 'private',
+		'invite_status' => 'mods'
+	);
+
+
+	require_once( CIAB_PLUGIN_DIR . 'api/oauth-extensions/BP_OAuthRequester.php' );
+
+	$request = new BP_OAuthRequester( $url, $method, '', $body );
+
+	try {
+		$result = $request->doRequest(0);
+	} catch ( OAuthException2 $e ) {
+
+		echo '<pre>'; print_r( $e ); echo '</pre>';
+	}
+
+	var_dump( $request );
+	var_dump( $result );
+}
+add_action( 'init', 'cbox_test_request_2', 1000 );
+
 ?>

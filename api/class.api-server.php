@@ -187,7 +187,7 @@ class BP_API_Server extends BP_Component {
 			//echo '<pre>'; print_r( $e ); echo '</pre>';
 		}
 
-error_log( $token );
+//error_log( $token );
 		// Manually modify the request token ttl (1000 years from now, groan)
 		try {
 			$this->store->setCServerTokenTtl( $server->getParam( 'oauth_consumer_key' ), $token, 60*60*24*365*1000 );
