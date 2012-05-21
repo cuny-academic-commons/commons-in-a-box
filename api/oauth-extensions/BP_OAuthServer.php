@@ -62,6 +62,15 @@ class BP_OAuthServer extends OAuthServer {
 		}
 		return $sig;
 	}
+
+	/**
+	 * The core library attempts to add the POST body parameters onto the base URL for signature
+	 * verification. This causes discrepancies between the client- and server-side signature
+	 * bases, resulting in failed authentications.
+	 */
+	private function getRequestBodyOfMultipart() {
+		return null;
+	}
 }
 
 ?>
