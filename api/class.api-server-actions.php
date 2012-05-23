@@ -155,20 +155,33 @@ class BP_API_Server_Actions {
 	/** GROUP ******************************************************/
 
 	/**
-	 * Update a group's name
+	 * Update a group
+	 *
+	 * For $args, pass an array that is keyed by the aspect of the group you want to update. Eg:
+	 *     $args = array(
+	 *         'name' => 'Foo',
+	 *         'description' => 'This group is totally foo'
+	 *     );
+	 * If you don't want to change a given value, just don't include it in your array, and it'll
+	 * remain untouched.
 	 *
 	 * @url POST/v1/group
 	 * @param int $group_id
-	 * @param string $name
+	 * @param array $args
 	 */
-	protected function update_group_name( $group_id = 0, $name = 0 ) {
+	protected function update_group( $group_id = 0, $args = array() ) {
 
 		if ( !$group_id ) {
 			throw new RestException( 404, 'Group not found' );
 		}
 
 		$group = groups_get_group( array( 'group_id' => $group_id ) );
-		$group->name = $name;
+
+		foreach( (array) $args as $key => $value ) {
+			if ( isset( $group->{$key} ) && !empty( $value ) ) {
+				$group->{$key} = $value;
+			}
+		}
 
 		if ( $group->save() ) {
 			$retval = array(
