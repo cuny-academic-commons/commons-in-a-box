@@ -5,6 +5,124 @@ class BP_API_Server_Actions {
 	/** USER ******************************************************/
 
 	/**
+	 * Create a user
+	 *
+	 * We use bp_core_signup_user(), so that BP will do all xprofile data processing, and so
+	 * that all of the BP-specific actions will be fired. However, bp_core_signup_user() (and
+	 * wp_insert_user() itself) do not provide very robust error reporting, so we do a bit of
+	 * manual validation first.
+	 *
+	 * @url POST/v1/user
+	 * @param string $login
+	 * @param string $email_address
+	 * @param string $display_name
+	 * @param string $password
+	 * @param int $activate_user 0 if you want an activation email sent; 1 if you want the user
+	 *    auto-activated
+	 */
+	protected function create_user( $login = '', $email_address = '', $display_name = '', $password = '', $activate_user = 1 ) {
+		global $wpdb;
+
+		// @todo if current_user_can( create_users )
+
+		if ( empty( $display_name ) ) {
+			throw new RestException( 400, 'You must provide a display name' );
+		}
+
+		if ( username_exists( $login ) ) {
+			throw new RestException( 409, 'A user with this login name already exists' );
+		}
+
+		if ( email_exists( $email_address ) ) {
+			throw new RestException( 409, 'A user with this email address already exists' );
+		}
+
+		// Passwords can't be empty
+		if ( empty( $password ) ) {
+			$password = wp_generate_password( 12, true );
+		}
+
+		// bp_core_signup_user() expects a particular format
+		// @todo Allow more profile fields to be set at creation?
+		$userdata = array(
+			'profile_field_ids' => '1',
+			'field_1' => $display_name
+		);
+
+		if ( is_multisite() ) {
+			$userdata['password'] = wp_hash_password( $password );
+		}
+
+		// Prevent activation emails from being sent, if necessary
+		if ( $activate_user ) {
+			if ( is_multisite() ) {
+				add_filter( 'wpmu_signup_user_notification', '__return_false' );
+			} else {
+				add_filter( 'bp_core_signup_send_activation_key', '__return_false' );
+			}
+		}
+
+		$user_id = bp_core_signup_user( $login, $password, $email_address, $userdata );
+
+		// If there's a failure at this point, return a generic error
+		if ( is_wp_error( $user_id ) ) {
+			throw new RestException( 500 );
+		}
+
+		// On Multisite, unactivated users do not really exist yet. Thus, if activate_user
+		// is true, we will have to kickstart the activation process in order to get a valid
+		// user_id and WP_User object. If activate_user is false, we'll just return an empty
+		// object, with a nice note explaining what's happened.
+		if ( is_multisite() ) {
+			if ( $activate_user ) {
+				$key = $wpdb->get_var( $wpdb->prepare( "SELECT activation_key FROM $wpdb->signups WHERE user_login = %s ORDER BY registered DESC LIMIT 1", $login ) );
+
+				if ( empty( $key ) ) {
+					throw new RestException( 500 );
+				}
+
+				$user_id = bp_core_activate_signup( $key );
+			} else {
+				return array(
+					'user_id' => 0,
+					'user_login' => $login,
+					'user_email' => $email_address,
+					'display_name' => $display_name,
+					'uri' => '',
+					'note' => __( 'Your new user has been created, but a user_id and uri will not be available until the user has clicked the link in the activation email just sent. This is a limitation of WordPress Multisite, and the fact that you have not chosen to auto-activate the newly created user.', 'cbox' )
+				);
+			}
+		} else {
+			if ( $activate_user ) {
+				// Due to a BP bug, disabling the activation email also results
+				// in no key being generated. So we create one manually.
+				// This is a profoundly dumb workaround.
+				// @see https://buddypress.trac.wordpress.org/ticket/4218
+				$key = wp_hash( $user_id );
+				update_user_meta( $user_id, 'activation_key', $key );
+				$user_id = bp_core_activate_signup( $key );
+			}
+		}
+
+		if ( !$user_id || is_wp_error( $user_id ) ) {
+			throw new RestException( 500 );
+		}
+
+		// Create a useful user object to return to the requestee
+		$user = new WP_User( $user_id );
+
+		$retval = array(
+			'user_id'      => $user->ID,
+			'user_login'   => $user->user_login,
+			'user_email'   => $user->user_email,
+			'display_name' => bp_core_get_user_displayname( $user->ID ),
+			'uri'          => bp_core_get_user_domain( $user->ID )
+		);
+
+		return $retval;
+	}
+
+	/**
 	 * Update an xprofile field
 	 *
 	 * @uses xprofile_set_field_data()
