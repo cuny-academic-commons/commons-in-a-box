@@ -84,8 +84,20 @@ class BP_API_Server extends BP_Component {
 			require( CIAB_PLUGIN_DIR . 'api/class.bp-restler.php' );
 			$this->restler = new BP_Restler;
 
-			// @todo Make this non-nonsense
-			require( CIAB_PLUGIN_DIR . 'api/class.auth.php' );
+			do_action( 'bp_api_init' );
+
+			/**
+			 * @todo Make this non-nonsense
+			 *
+			 * Be sure you know what you're doing before you disable OAuth! You can
+			 * enable admin access to your whole site if you're not careful!
+			 *
+			 * You can override OAuth by supplying your own BP_API_Auth class. Make sure
+			 * it's loaded before we get to this point, so that we don't load OAuth.
+			 */
+			if ( !class_exists( 'BP_API_Auth' ) ) {
+				require( CIAB_PLUGIN_DIR . 'api/class.auth.php' );
+			}
 			$this->restler->addAuthenticationClass( 'BP_API_Auth' );
 
 			require( CIAB_PLUGIN_DIR . 'api/class.api-server-actions.php' );
@@ -187,7 +199,6 @@ class BP_API_Server extends BP_Component {
 			//echo '<pre>'; print_r( $e ); echo '</pre>';
 		}
 
-//error_log( $token );
 		// Manually modify the request token ttl (1000 years from now, groan)
 		try {
 			$this->store->setCServerTokenTtl( $server->getParam( 'oauth_consumer_key' ), $token, 60*60*24*365*1000 );
@@ -221,18 +232,10 @@ class BP_API_Server extends BP_Component {
 	}
 }
 
-
-
+/**
+ * @todo Find a more elegant way of loading this
+ */
 function cbox_test() {
-	/*
-	$args = array(
-		'action' => 'update_profile_field',
-		'user_id' => 1,
-		'profile_field_id' => 1,
-		'profile_field_data' => 'Top Notch Dude'
-	);
-	$test = new BP_API_Server_Request( $args );
-	var_dump( $test );*/
 	global $bp;
 	$bp->api = new BP_API_Server;
 

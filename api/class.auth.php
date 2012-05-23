@@ -2,9 +2,10 @@
 
 /**
  * Authentication class
+ *
+ * Uses OAuth
  */
 class BP_API_Auth implements iAuthenticate{
-	protected $store;
 
 	/**
 	 * Here is the schema for the time being:
