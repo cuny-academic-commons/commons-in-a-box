@@ -142,10 +142,14 @@ class BP_API_Server_Actions {
 		}
 
 		// Note that $profile_field_data can be empty, resulting in a delete action
-		$retval = xprofile_set_field_data( $profile_field_id, $user_id, $profile_field_data );
+		$updated = xprofile_set_field_data( $profile_field_id, $user_id, $profile_field_data );
 
-		if ( $retval ) {
-			return $retval;
+		if ( $updated ) {
+			return array(
+				'user_id' => $user_id,
+				'profile_field_id' => $profile_field_id,
+				'profile_field_data' => $profile_field_data
+			);
 		} else {
 			throw new RestException( 500 );
 		}
