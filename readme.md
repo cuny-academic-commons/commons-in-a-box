@@ -14,3 +14,12 @@ If you use it on a live site, it will crash your servers!
 If you look directly at the code, it will fry your brains!
 
 Come back soon for something more polished.
+
+# Changelog
+
+## 0.1 - 23 May 2012
+
+- Initial version of REST API implementation, including:
+
+    - Rudimentary OAuth 1.0 support
+    - API methods: create_user(), update_profile_field(), create_group(), update_group()
