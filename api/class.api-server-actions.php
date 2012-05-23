@@ -103,7 +103,7 @@ class BP_API_Server_Actions {
 
 		// Make sure a group doesn't already exist by this name
 		if ( $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$bp->groups->table_name} WHERE name = %s LIMIT 1", $name ) ) ) {
-			throw new RestException( 409, 'A group exists by this name' );
+			throw new RestException( 409, 'A group by this name already exists.' );
 		}
 
 		$group_id = groups_create_group( array(
