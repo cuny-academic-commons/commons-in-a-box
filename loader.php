@@ -68,6 +68,10 @@ class Commons_In_A_Box {
 	 * @todo Make this nice somehow
 	 */
 	private function includes() {
+		if ( is_admin() ) {
+			require( $this->plugin_dir . 'admin/admin-loader.php' );
+		}
+
 		require( $this->plugin_dir . 'plugins/plugins-loader.php' );
 		$this->plugins = new CIAB_Plugins;
 		
