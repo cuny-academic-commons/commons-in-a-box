@@ -80,7 +80,7 @@ class CIAB_Plugins {
 			'parent_url_slug'  => 'admin.php?page=ciab',           // Default parent URL slug
 			'menu'             => 'ciab-install-required-plugins', // Menu slug
 			'has_notices'      => true,                            // Show admin notices or not
-			'is_automatic'     => false                            // Automatically activate plugins after installation or not
+			'is_automatic'     => false,                            // Automatically activate plugins after installation or not
 			'message'          => '',                              // Message to output right before the plugins table
 			'strings'          => array(
 				'page_title'                     => __( 'Commons in a Box - Install Required Plugins', $textdomain ),
