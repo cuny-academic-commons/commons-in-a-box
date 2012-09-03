@@ -69,6 +69,9 @@ class CIAB_Plugins {
 
 		// validate any settings changes submitted from the Cbox dashboard
 		add_action( 'admin_init',                            array( &$this, 'validate_cbox_dashboard' ) );
+		
+		// load PD on the "Dashboard > Updates" page so we can filter out our CBox plugins
+		add_action( 'load-update-core.php',                  create_function( '', 'Plugin_Dependencies::init();' ) );
 
 		// filter PD's dependency list
 		add_filter( 'scr_plugin_dependency_before_parse',    array( &$this, 'filter_pd_dependencies' ) );
