@@ -13,18 +13,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class CIAB_Plugins {
 
 	/**
-	 * Static variable to hold our required plugins
+	 * Static variable to hold our various plugins
 	 *
 	 * @var array
 	 */
-	private static $required_plugins = array();
-
-	/**
-	 * Static variable to hold our dependency plugins
-	 *
-	 * @var array
-	 */
-	private static $dependency_plugins = array();
+	private static $plugins = array();
 
 	/**
 	 * Constructor
@@ -79,6 +72,18 @@ class CIAB_Plugins {
 	}
 
 	/**
+	 * For expert site managers, we allow them to override Cbox's settings.
+	 *
+	 * @return bool
+	 * @todo this needs to be fleshed out... until then, just manually toggle the boolean!
+	 */
+	public function is_override() {
+		return false;
+	}
+
+	/** PLUGINS-SPECIFIC **********************************************/
+
+	/**
 	 * CBox requires several popular plugins.
 	 *
 	 * We register these plugins here for later use.
@@ -92,29 +97,165 @@ class CIAB_Plugins {
 			'plugin_name'      => 'BuddyPress',
 			'cbox_name'        => 'BuddyPress',
 			'cbox_description' => 'Social networking FTW!',
-			'version'          => '1.5.6'
+			'version'          => '1.6.1'
 		) );
+
+		return self::get_plugins();
+	}
+
+	/**
+	 * CBox recommends several popular plugins.
+	 *
+	 * We register these plugins here for later use.
+	 *
+	 * @return array
+	 */
+	public static function recommended_plugins() {
 
 		// BuddyPress Docs
 		self::register_plugin( array(
 			'plugin_name'      => 'BuddyPress Docs',
+			'type'             => 'recommended',
 			'cbox_name'        => 'Docs',
-			'cbox_description' => "Add yer docs 'ere me matey!",
-			'version'          => '1.1.22',
-			'depends'          => 'BuddyPress (>=1.5), Hello Dolly, Jigoshop',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.22.zip',
+			'cbox_description' => "Adds collaborative Docs to BuddyPress.",
+			'version'          => '1.1.25',
+			'depends'          => 'BuddyPress (>=1.5)',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
 		) );
 
+		// BuddyPress Group Email Subscription
+		self::register_plugin( array(
+			'plugin_name'      => 'BuddyPress Group Email Subscription',
+			'type'             => 'recommended',
+			'cbox_name'        => 'Group Email Subscription',
+			'cbox_description' => 'Allows group members to receive email notifications of activity within a group.',
+			'depends'          => 'BuddyPress (>=1.5)',
+			'version'          => '3.2.1',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
+		) );
+
+		// Invite Anyone
+		self::register_plugin( array(
+			'plugin_name'      => 'Invite Anyone',
+			'type'             => 'recommended',
+			'cbox_name'        => 'Invite Anyone',
+			'cbox_description' => "Makes BuddyPress's invitation features more powerful. ",
+			'version'          => '1.0.15',
+			'depends'          => 'BuddyPress (>=1.5)',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
+		) );
+
+		// Custom Profile Filters for BuddyPress
+		self::register_plugin( array(
+			'plugin_name'      => 'Custom Profile Filters for BuddyPress',
+			'type'             => 'recommended',
+			'cbox_name'        => 'Custom Profile Filters for BuddyPress',
+			'cbox_description' => 'Allows users to take control of the way the links in their Buddypress profiles are handled.',
+			'depends'          => 'BuddyPress (>=1.2)',
+			'version'          => '3.0.1',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
+		) );
+
+		// bbPress
+		self::register_plugin( array(
+			'plugin_name'      => 'bbPress',
+			'type'             => 'recommended',
+			'cbox_name'        => 'bbPress',
+			'cbox_description' => 'Forums made the WordPress way.',
+			'version'          => '2.1.2',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip'
+		) );
+
+		// More Privacy Options
+		// @todo Do a multisite check before adding
+		self::register_plugin( array(
+			'plugin_name'      => 'More Privacy Options',
+			'type'             => 'recommended',
+			'cbox_name'        => 'More Privacy Options',
+			'cbox_description' => 'Add more blog privacy options for your users.',
+			'version'          => '3.2.1.5',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/more-privacy-options.3.2.1.5.zip'
+		) );
+
+		// CAC Featured Content
+		self::register_plugin( array(
+			'plugin_name'      => 'CAC Featured Content',
+			'type'             => 'recommended',
+			'cbox_name'        => 'Featured Content',
+			'cbox_description' => 'Provides a widget that allows you to select among five different content types to feature in a widget area.',
+			'version'          => '0.8.4',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/cac-featured-content.0.8.4.zip'
+		) );
+
+
+		// Other plugins for later:
+		// BP Group Documents (whatever replacement version we've got by that time)
+		// Forum Attachments (ditto);
+
+		return self::get_plugins( 'recommended' );
+	}
+
+	/**
+	 * CBox also lists a few other plugins that can be used to extend functionality.
+	 *
+	 * Although, they are slightly below the recommended level, we've tested these
+	 * plugins and think they're cool enough to be a part of CBox.
+	 *
+	 * We register these plugins here for later use.
+	 *
+	 * @return array
+	 */
+	public static function optional_plugins() {
+
+		// BuddyPress GroupBlog
+		self::register_plugin( array(
+			'plugin_name'      => 'BuddyPress Groupblog',
+			'type'             => 'optional',
+			'cbox_name'        => 'BuddyPress Groupblog',
+			'cbox_description' => 'Enable a BuddyPress group to have a single blog associated with it.',
+			'depends'          => 'BuddyPress (>=1.6)',
+			'version'          => '1.8',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
+		) );
+
+		// BuddyPress GroupBlog
+		self::register_plugin( array(
+			'plugin_name'      => 'BP External Group Blogs',
+			'type'             => 'optional',
+			'cbox_name'        => 'BuddyPress External Group RSS',
+			'cbox_description' => 'Give group creators and administrators on your BuddyPress install the ability to attach external RSS feeds to groups.',
+			'depends'          => 'BuddyPress (>=1.2)',
+			'version'          => '1.2.1',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/external-group-blogs.1.2.1.zip',
+		) );
+
+		// BuddyPress Reply By Email
+		// @todo Add this back when RBE is added in the WP.org plugins repo
+		/*
+		self::register_plugin( array(
+			'plugin_name'      => 'BuddyPress Reply By Email',
+			'type'             => 'optional',
+			'cbox_name'        => 'Reply By Email',
+			'cbox_description' => "Reply to various emails from the comfort of your email inbox",
+			'version'          => '1.0',
+			'depends'          => 'BuddyPress (>=1.5)',
+			'download_url'     => '',
+		) );
+		*/
+
 		// WP Better Emails
+		/*
 		self::register_plugin( array(
 			'plugin_name'      => 'WP Better Emails',
+			'type'             => 'optional',
 			'cbox_name'        => 'HTML Email',
 			'cbox_description' => 'Enable and design HTML emails',
 			'version'          => '0.2.4',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/wp-better-emails.0.2.4.zip'
 		) );
+		*/
 
-		return self::$required_plugins;
+		return self::get_plugins( 'optional' );
 	}
 
 	/**
@@ -135,25 +276,10 @@ class CIAB_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.5.6.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.1.zip'
 		) );
 
-		// Hello Dolly
-		self::register_plugin( array(
-			'plugin_name'  => 'Hello Dolly',
-			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/hello-dolly.1.6.zip'
-		) );
-
-
-		// Jigoshop
-		self::register_plugin( array(
-			'plugin_name'  => 'Jigoshop',
-			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/jigoshop.1.2.3.zip'
-		) );
-
-		return self::$dependency_plugins;
+		return self::get_plugins( 'dependency' );
 	}
 
 	/**
@@ -183,16 +309,18 @@ class CIAB_Plugins {
 
 		switch( $type ) {
 			case 'required' :
-				self::$required_plugins[$plugin_name]['cbox_name']        = $cbox_name;
-				self::$required_plugins[$plugin_name]['cbox_description'] = $cbox_description;
-				self::$required_plugins[$plugin_name]['depends']          = $depends;
-				self::$required_plugins[$plugin_name]['version']          = $version;
-				self::$required_plugins[$plugin_name]['download_url']     = $download_url;
+			case 'recommended' :
+			case 'optional' :
+				self::$plugins[$type][$plugin_name]['cbox_name']        = $cbox_name;
+				self::$plugins[$type][$plugin_name]['cbox_description'] = $cbox_description;
+				self::$plugins[$type][$plugin_name]['depends']          = $depends;
+				self::$plugins[$type][$plugin_name]['version']          = $version;
+				self::$plugins[$type][$plugin_name]['download_url']     = $download_url;
 
 				break;
 
 			case 'dependency' :
-				self::$dependency_plugins[$plugin_name]['download_url'] = $download_url;
+				self::$plugins[$type][$plugin_name]['download_url']     = $download_url;
 
 				break;
 		}
@@ -200,13 +328,16 @@ class CIAB_Plugins {
 	}
 
 	/**
-	 * For expert site managers, we allow them to override Cbox's settings.
+	 * Helper method to grab all CBox plugins of a certain type.
 	 *
-	 * @return bool
-	 * @todo this needs to be fleshed out... until then, just manually toggle the boolean!
+	 * @param string $type Type of CBox plugin. Either 'required', 'recommended', 'optional', 'dependency'.
+	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
-	public function is_override() {
-		return false;
+	public static function get_plugins( $type = 'required' ) {
+		if ( empty( self::$plugins[$type] ) )
+			return false;
+
+		return self::$plugins[$type];
 	}
 
 	/** HOOKS *********************************************************/
@@ -338,53 +469,51 @@ class CIAB_Plugins {
 
 		// admin notices
 		if ( ! empty( $_REQUEST['deactivate'] ) ) {
-			if ( ! empty( $_REQUEST['deactivate'] ) ) {
-				add_action( 'admin_notices', create_function( '', "
-					echo '<div class=\'updated\'><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
-				" ) );
+			add_action( 'admin_notices', create_function( '', "
+				echo '<div class=\'updated\'><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
+			" ) );
 
-				// if PD deactivated any other dependent plugins, show admin notice here
-				// basically a copy-n-paste of Plugin_Dependencies::generate_dep_list()
-				$deactivated = get_transient( 'pd_deactivate_cascade' );
-				delete_transient( 'pd_deactivate_cascade' );
+			// if PD deactivated any other dependent plugins, show admin notice here
+			// basically a copy-n-paste of Plugin_Dependencies::generate_dep_list()
+			$deactivated = get_transient( 'pd_deactivate_cascade' );
+			delete_transient( 'pd_deactivate_cascade' );
 
-				// if no other plugins were deactivated, stop now!
-				if ( empty( $deactivated ) )
-					return;
+			// if no other plugins were deactivated, stop now!
+			if ( empty( $deactivated ) )
+				return;
 
-				Plugin_Dependencies::init();
+			Plugin_Dependencies::init();
 
-				$text = __( 'The following plugins have also been deactivated:', 'cbox' );
+			$text = __( 'The following plugins have also been deactivated:', 'cbox' );
 
-				// render each plugin as a list item
-				$all_plugins = Plugin_Dependencies::$all_plugins;
-				$dep_list = '';
-				foreach ( $deactivated as $dep ) {
-					$plugin_ids = Plugin_Dependencies::get_providers( $dep );
+			// render each plugin as a list item
+			$all_plugins = Plugin_Dependencies::$all_plugins;
+			$dep_list = '';
+			foreach ( $deactivated as $dep ) {
+				$plugin_ids = Plugin_Dependencies::get_providers( $dep );
 
-					if ( empty( $plugin_ids ) ) {
-						$name = html( 'span', esc_html( $dep['Name'] ) );
-					} else {
-						$list = array();
-						foreach ( $plugin_ids as $plugin_id ) {
-							$name = isset( $all_plugins[ $plugin_id ]['Name'] ) ? $all_plugins[ $plugin_id ]['Name'] : $plugin_id;
-							//$list[] = html( 'a', array( 'href' => '#' . sanitize_title( $name ) ), $name );
-							$list[] = $name;
-						}
-						$name = implode( ' or ', $list );
+				if ( empty( $plugin_ids ) ) {
+					$name = html( 'span', esc_html( $dep['Name'] ) );
+				} else {
+					$list = array();
+					foreach ( $plugin_ids as $plugin_id ) {
+						$name = isset( $all_plugins[ $plugin_id ]['Name'] ) ? $all_plugins[ $plugin_id ]['Name'] : $plugin_id;
+						//$list[] = html( 'a', array( 'href' => '#' . sanitize_title( $name ) ), $name );
+						$list[] = $name;
 					}
-
-					$dep_list .= html( 'li', $name );
+					$name = implode( ' or ', $list );
 				}
 
-				// now add the admin notice for any other deactivated plugins by PD
-				add_action( 'admin_notices', create_function( '', "
-					echo
-					html( 'div', array( 'class' => 'updated' ),
-						html( 'p', '$text', html( 'ul', array( 'class' => 'dep-list' ), '$dep_list' ) )
-					);
-				" ) );
+				$dep_list .= html( 'li', $name );
 			}
+
+			// now add the admin notice for any other deactivated plugins by PD
+			add_action( 'admin_notices', create_function( '', "
+				echo
+				html( 'div', array( 'class' => 'updated' ),
+					html( 'p', '$text', html( 'ul', array( 'class' => 'dep-list' ), '$dep_list' ) )
+				);
+			" ) );
 		}
 	}
 
