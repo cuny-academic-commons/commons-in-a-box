@@ -69,7 +69,7 @@ class CIAB_Plugins {
 
 		// validate any settings changes submitted from the Cbox dashboard
 		add_action( 'admin_init',                            array( &$this, 'validate_cbox_dashboard' ) );
-		
+
 		// load PD on the "Dashboard > Updates" page so we can filter out our CBox plugins
 		add_action( 'load-update-core.php',                  create_function( '', 'Plugin_Dependencies::init();' ) );
 
@@ -230,7 +230,7 @@ class CIAB_Plugins {
 			'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
 		) );
 
-		// BuddyPress GroupBlog
+		// BuddyPress External Group Blogs
 		self::register_plugin( array(
 			'plugin_name'      => 'BP External Group Blogs',
 			'type'             => 'optional',
@@ -298,12 +298,11 @@ class CIAB_Plugins {
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
-			'plugin_name'      => false, // the name of the plugin as in the plugin header
-			'type'             => 'required', // types include 'required', 'dependency'
+			'plugin_name'      => false, // (required) the name of the plugin as in the plugin header
+			'type'             => 'required', // types include 'required', 'recommended', 'optional', dependency'
 			'cbox_name'        => false, // CBox's label for the plugin
 			'cbox_description' => false, // CBox's short description of the plugin
 			'depends'          => false, // our own defined dependencies for the plugin; uses same syntax as PD
-			                             // maybe we *don't* want to use PD's syntax because if a plugin isn't installed we'll have to ping the WP.org Plugin Repo API and search for it...
 			'version'          => false, // the version number of the plugin we want to compare the installed version with (if applicable)
 			'download_url'     => false  // the download URL of the plugin used if the active version is not compatible with our version
 		);
@@ -345,7 +344,7 @@ class CIAB_Plugins {
 		// if type is 'all', we want all CBox plugins regardless of type
 		if ( $type == 'all' ) {
 			$plugins = self::$plugins;
-			
+
 			// okay, I lied, we want all plugins except dependencies!
 			unset( $plugins['dependency'] );
 
@@ -417,7 +416,9 @@ class CIAB_Plugins {
 			}
 		}
 
-		/* this might be unnecessary...
+		/*
+		// @todo If we want the "Dashboard > Updates" count to be accurate,
+		// we should resave the 'update_plugins' transient
 		if ( $i > 0 ) {
 			set_site_transient( 'update_plugins', $plugins );
 		}
