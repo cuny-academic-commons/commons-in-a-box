@@ -99,12 +99,9 @@ class Commons_In_A_Box {
 
 		// @todo temporary
 		add_action( 'bp_include', create_function( '', '
-			require( "' . $this->plugin_dir . 'api/class.api-server.php" );
+			require( CIAB_PLUGIN_DIR . "api/class.api-server.php" );
+			require( CIAB_PLUGIN_DIR . "api/class.api-client.php" );
 		' ) );
-
-		// @todo For testing only
-		if ( defined( 'BP_VERSION' ) )
-			require( $this->plugin_dir . 'api/class.api-client.php' );
 	}
 
 	public function get_plugin_dir() {
