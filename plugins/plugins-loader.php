@@ -26,6 +26,9 @@ class CIAB_Plugins {
 		// includes
 		$this->includes();
 
+		// setup globals
+		$this->setup_globals();
+
 		// setup our hooks
 		$this->setup_hooks();
 	}
@@ -45,6 +48,16 @@ class CIAB_Plugins {
 		// make sure to include the WP Update API if it isn't available
 		//if ( ! function_exists( 'get_plugin_updates' ) )
 		//	require( ABSPATH . '/wp-admin/includes/update.php' );
+	}
+
+	/**
+	 * Setup globals.
+	 */
+	private function setup_globals() {
+		$this->register_required_plugins();
+		$this->register_recommended_plugins();
+		$this->register_optional_plugins();
+		$this->register_dependency_plugins();
 	}
 
 	/**
@@ -90,7 +103,7 @@ class CIAB_Plugins {
 	 *
 	 * @return array
 	 */
-	public static function required_plugins() {
+	private function register_required_plugins() {
 
 		// BuddyPress
 		self::register_plugin( array(
@@ -99,8 +112,6 @@ class CIAB_Plugins {
 			'cbox_description' => 'Social networking FTW!',
 			'version'          => '1.6.1'
 		) );
-
-		return self::get_plugins();
 	}
 
 	/**
@@ -110,7 +121,7 @@ class CIAB_Plugins {
 	 *
 	 * @return array
 	 */
-	public static function recommended_plugins() {
+	private function register_recommended_plugins() {
 
 		// BuddyPress Docs
 		self::register_plugin( array(
@@ -191,8 +202,6 @@ class CIAB_Plugins {
 		// Other plugins for later:
 		// BP Group Documents (whatever replacement version we've got by that time)
 		// Forum Attachments (ditto);
-
-		return self::get_plugins( 'recommended' );
 	}
 
 	/**
@@ -205,7 +214,7 @@ class CIAB_Plugins {
 	 *
 	 * @return array
 	 */
-	public static function optional_plugins() {
+	private function register_optional_plugins() {
 
 		// BuddyPress GroupBlog
 		self::register_plugin( array(
@@ -223,7 +232,7 @@ class CIAB_Plugins {
 			'plugin_name'      => 'BP External Group Blogs',
 			'type'             => 'optional',
 			'cbox_name'        => 'BuddyPress External Group RSS',
-			'cbox_description' => 'Give group creators and administrators on your BuddyPress install the ability to attach external RSS feeds to groups.',
+			'cbox_description' => 'Give BuddyPress group creators and administrators the ability to attach external RSS feeds to groups.',
 			'depends'          => 'BuddyPress (>=1.2)',
 			'version'          => '1.2.1',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/external-group-blogs.1.2.1.zip',
@@ -254,8 +263,6 @@ class CIAB_Plugins {
 			'download_url'     => 'http://downloads.wordpress.org/plugin/wp-better-emails.0.2.4.zip'
 		) );
 		*/
-
-		return self::get_plugins( 'optional' );
 	}
 
 	/**
@@ -270,7 +277,7 @@ class CIAB_Plugins {
 	 *
 	 * @return array
 	 */
-	public static function dependency_plugins() {
+	private function register_dependency_plugins() {
 
 		// BuddyPress
 		self::register_plugin( array(
@@ -278,8 +285,6 @@ class CIAB_Plugins {
 			'type'         => 'dependency',
 			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.1.zip'
 		) );
-
-		return self::get_plugins( 'dependency' );
 	}
 
 	/**
@@ -330,10 +335,21 @@ class CIAB_Plugins {
 	/**
 	 * Helper method to grab all CBox plugins of a certain type.
 	 *
-	 * @param string $type Type of CBox plugin. Either 'required', 'recommended', 'optional', 'dependency'.
+	 * @param string $type Type of CBox plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
-	public static function get_plugins( $type = 'required' ) {
+	public static function get_plugins( $type = 'all' ) {
+		// if type is 'all', we want all CBox plugins regardless of type
+		if ( $type == 'all' ) {
+			$plugins = self::$plugins;
+			
+			// okay, I lied, we want all plugins except dependencies!
+			unset( $plugins['dependency'] );
+
+			// flatten associative array
+			return call_user_func_array( 'array_merge', $plugins );
+		}
+
 		if ( empty( self::$plugins[$type] ) )
 			return false;
 
@@ -350,7 +366,7 @@ class CIAB_Plugins {
 	public function filter_pd_dependencies( $plugins ) {
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
-		foreach( $this->required_plugins() as $plugin => $data ) {
+		foreach( self::get_plugins() as $plugin => $data ) {
 			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
@@ -371,7 +387,7 @@ class CIAB_Plugins {
 	public function exclude_cbox_plugins( $plugins ) {
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
-		foreach( $this->required_plugins() as $plugin => $data ) {
+		foreach( self::get_plugins() as $plugin => $data ) {
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
 			if( ! empty( $loader ) && ! empty( $plugins[ $loader ] ) )
@@ -388,7 +404,7 @@ class CIAB_Plugins {
 	public function remove_cbox_plugins_from_updates( $plugins ) {
 		$i = 0;
 
-		foreach ( $this->required_plugins() as $plugin => $data ) {
+		foreach ( self::get_plugins() as $plugin => $data ) {
 			// get the plugin loader file
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
@@ -549,7 +565,7 @@ class CIAB_Plugins {
 			<tbody>
 
 			<?php
-				foreach ( $this->required_plugins() as $plugin => $data ) :
+				foreach ( self::get_plugins() as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
@@ -680,7 +696,7 @@ class CIAB_Plugins {
 	 * Helper method to get the Cbox required plugin's state.
 	 *
 	 * @param str $loader The required plugin's loader filename
- 	 * @param array $data The required plugin's data. See $this->required_plugins().
+ 	 * @param array $data The required plugin's data. See $this->register_required_plugins().
 	 */
 	public function get_plugin_state( $loader, $data ) {
 		$state = false;

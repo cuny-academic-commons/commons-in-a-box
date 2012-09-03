@@ -39,7 +39,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		$current = CIAB_Plugins::required_plugins();
+		$current = CIAB_Plugins::get_plugins();
 
 		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'), 10, 4);
 
@@ -112,7 +112,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	/**
 	 * Bulk install plugins.
 	 *
-	 * Download links for plugins are listed in {@link CIAB_Plugins::required_plugins()}.
+	 * Download links for plugins are listed in {@link CIAB_Plugins::get_plugins()}.
 	 *
 	 * @param str $plugins Array of plugin names
 	 */
@@ -123,8 +123,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->install_strings();
 
 		// download URLs for each plugin should be registered in either the following:
-		$dependency = CIAB_Plugins::dependency_plugins();
-		$required = CIAB_Plugins::required_plugins();
+		$dependency = CIAB_Plugins::get_plugins( 'dependency' );
+		$required = CIAB_Plugins::get_plugins();
 
 		add_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
