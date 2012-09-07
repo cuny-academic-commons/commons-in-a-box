@@ -23,6 +23,7 @@ if ( ! class_exists( 'Plugin_Dependencies' ) )
  *
  * @package Commons_In_A_Box
  * @subpackage Plugins
+ * @since 0.2
  */
 class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
@@ -300,14 +301,14 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php echo '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" title="' . esc_attr__( 'Go to Cbox dashboard' ) . '" target="_parent">' . __('Return to CBox dashboard') . '</a>';?></p>
+			<p><?php $this->the_redirect_link(); ?></p>
  		<?php
 		}
 
 		// process is completed!
 		// show link to Cbox dashboard
 		else {
-			echo '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" title="' . esc_attr__( 'Go to Cbox dashboard' ) . '" target="_parent">' . __('Return to CBox dashboard') . '</a>';
+			$this->the_redirect_link();
 		}
 	}
 
@@ -375,6 +376,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
  *
  * @package Commons_In_A_Box
  * @subpackage Plugins
+ * @since 0.2
  */
 class CBox_Updater {
 
@@ -520,7 +522,7 @@ class CBox_Updater {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php printf( __( 'Return to the <a href="%s">CBox dashboard</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?></p>
+			<p><?php $this->the_redirect_link(); ?></p>
  		<?php
  		}
 
@@ -549,6 +551,18 @@ class CBox_Updater {
 		}
 
 		return $bool;
+	}
+
+	/**
+	 * Outputs the redirect link with localized, anchor text.
+	 *
+	 * This shows up at the end of the update process.
+	 *
+	 * @todo Make this link configurable with parameters.
+	 * @since 0.3
+	 */
+	public function the_redirect_link() {
+		printf( __( 'Return to the <a href="%s">CBox Plugins page</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox-plugins' ) );
 	}
 }
 

@@ -64,37 +64,37 @@ class CIAB_Plugins {
 	 * Setup our hooks.
 	 */
 	private function setup_hooks() {
-		// add our plugins table to the Cbox dashboard
-		add_action( 'cbox_dashboard_form',                   array( &$this, 'cbox_dashboard' ) );
-
-		// validate any settings changes submitted from the Cbox dashboard
-		add_action( 'admin_init',                            array( &$this, 'validate_cbox_dashboard' ) );
+		// setup the CBox plugin menu
+		add_action( 'cbox_admin_menu',                       array( $this, 'setup_plugins_page' ) );
 
 		// load PD on the "Dashboard > Updates" page so we can filter out our CBox plugins
-		add_action( 'load-update-core.php',                  create_function( '', 'Plugin_Dependencies::init();' ) );
+		add_action( 'load-update-core.php',                  array( 'Plugin_Dependencies', 'init' ) );
 
 		// filter PD's dependency list
-		add_filter( 'scr_plugin_dependency_before_parse',    array( &$this, 'filter_pd_dependencies' ) );
+		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );
 
-		// if an admin wants to have full control over the Cbox plugins, set $this->is_override to true
-		// otherwise, we prevent Cbox plugins from being seen in the regular Plugins table and from WP updates
+		// prevent Cbox plugins from being seen in the regular Plugins table and from WP updates
 		if (  ! $this->is_override() ) {
 			// exclude Cbox plugins from the "Plugins" list table
-			add_filter( 'all_plugins',                   array( &$this, 'exclude_cbox_plugins' ) );
+			add_filter( 'all_plugins',                   array( $this, 'exclude_cbox_plugins' ) );
 
 			// remove Cbox plugins from WP's update plugins routine
-			add_filter( 'site_transient_update_plugins', array( &$this, 'remove_cbox_plugins_from_updates' ) );
+			add_filter( 'site_transient_update_plugins', array( $this, 'remove_cbox_plugins_from_updates' ) );
 		}
 	}
 
 	/**
-	 * For expert site managers, we allow them to override Cbox's settings.
+	 * For expert site managers, we allow them to view Cbox plugins in the 
+	 * regular Plugins table and on the WP Updates page.
+	 *
+	 * To do this, add the following code snippet in wp-content/plugins/bp-custom.php:
+	 *
+	 * 	add_filter( 'cbox_override_plugins', '__return_true' );
 	 *
 	 * @return bool
-	 * @todo this needs to be fleshed out... until then, just manually toggle the boolean!
 	 */
 	public function is_override() {
-		return false;
+		return apply_filters( 'cbox_override_plugins', false );
 	}
 
 	/** PLUGINS-SPECIFIC **********************************************/
@@ -112,7 +112,7 @@ class CIAB_Plugins {
 		self::register_plugin( array(
 			'plugin_name'      => 'BuddyPress',
 			'cbox_name'        => 'BuddyPress',
-			'cbox_description' => 'Social networking FTW!',
+			'cbox_description' => 'Build a social network for your company, school, sports team or niche community.',
 			'version'          => '1.6.1'
 		) );
 	}
@@ -142,7 +142,7 @@ class CIAB_Plugins {
 			'plugin_name'      => 'BuddyPress Group Email Subscription',
 			'type'             => 'recommended',
 			'cbox_name'        => 'Group Email Subscription',
-			'cbox_description' => 'Allows group members to receive email notifications of activity within a group.',
+			'cbox_description' => 'Allows BuddyPress group members to receive email notifications of activity from their groups.',
 			'depends'          => 'BuddyPress (>=1.5)',
 			'version'          => '3.2.1',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
@@ -153,7 +153,7 @@ class CIAB_Plugins {
 			'plugin_name'      => 'Invite Anyone',
 			'type'             => 'recommended',
 			'cbox_name'        => 'Invite Anyone',
-			'cbox_description' => "Makes BuddyPress's invitation features more powerful. ",
+			'cbox_description' => "Makes BuddyPress' invitation features more powerful.",
 			'version'          => '1.0.15',
 			'depends'          => 'BuddyPress (>=1.5)',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
@@ -164,7 +164,7 @@ class CIAB_Plugins {
 			'plugin_name'      => 'Custom Profile Filters for BuddyPress',
 			'type'             => 'recommended',
 			'cbox_name'        => 'Custom Profile Filters for BuddyPress',
-			'cbox_description' => 'Allows users to take control of the way the links in their Buddypress profiles are handled.',
+			'cbox_description' => 'Allows users to take control of how their profile links in Buddypress are handled.',
 			'depends'          => 'BuddyPress (>=1.2)',
 			'version'          => '3.0.1',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
@@ -291,10 +291,12 @@ class CIAB_Plugins {
 	}
 
 	/**
-	 * Register a required or dependent plugin for CBox.
+	 * Register a plugin in CBox.
 	 *
-	 * @see CIAB_Plugins::required_plugins()
-	 * @see CIAB_Plugins::dependeny_plugins()
+	 * @see CIAB_Plugins::register_required_plugins()
+	 * @see CIAB_Plugins::register_recommended_plugins()
+	 * @see CIAB_Plugins::register_optional_plugins()
+	 * @see CIAB_Plugins::register_dependency_plugins()
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
@@ -390,8 +392,10 @@ class CIAB_Plugins {
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
 		foreach( self::get_plugins() as $plugin => $data ) {
+			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
+			// if our cbox plugin is found, get rid of it
 			if( ! empty( $loader ) && ! empty( $plugins[ $loader ] ) )
 				unset( $plugins[ $loader ] );
 		}
@@ -410,6 +414,7 @@ class CIAB_Plugins {
 			// get the plugin loader file
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
+			// if our cbox plugin is found, get rid of it
 			if ( ! empty( $plugins->response[ $plugin_loader ] ) ) {
 				unset( $plugins->response[ $plugin_loader ] );
 				++$i;
@@ -427,19 +432,48 @@ class CIAB_Plugins {
 		return $plugins;
 	}
 
-	/** CBOX DASHBOARD-SPECIFIC ***************************************/
+	/** ADMIN-SPECIFIC ************************************************/
 
 	/**
-	 * Before the Cbox dashboard page is rendered, do any validation and checks
+	 * Setup CBox's plugin menu item.
+	 *
+	 * The "Plugins" menu item only appears once CBox is completely setup.
+	 *
+	 * @uses cbox_is_setup() To see if CBox is completely setup.
+	 * @since 0.3
+	 */
+	public function setup_plugins_page() {
+		// see if cbox is fully setup
+		if ( cbox_is_setup() ) {
+			// add our plugins page
+			$plugin_page = add_submenu_page(
+				'cbox',
+				__( 'Commons in a Box Plugins', 'cbox' ),
+				__( 'Plugins', 'cbox' ),
+				'activate_plugins', // todo - map cap?
+				'cbox-plugins',
+				array( $this, 'admin_page' )
+			);
+			
+			// validate any settings changes submitted from the Cbox plugins page
+			add_action( "load-{$plugin_page}",       array( $this, 'validate_cbox_dashboard' ) );
+
+			// load Plugin Dependencies plugin on the Cbox plugins page
+			add_action( "load-{$plugin_page}",       array( 'Plugin_Dependencies', 'init' ) );
+
+			// inline CSS
+			add_action( "admin_head-{$plugin_page}", array( 'CIAB_Admin', 'inline_css' ) );
+			add_action( "admin_head-{$plugin_page}", array( $this, 'inline_css' ) );
+		}
+	}
+
+	/**
+	 * Before the Cbox plugins page is rendered, do any validation and checks
 	 * from form submissions or action links.
+	 *
+	 * @since 0.2
 	 */
 	public function validate_cbox_dashboard() {
-		if ( empty( $_REQUEST['page'] ) )
-			return;
-
-		if ( $_REQUEST['page'] != 'cbox' )
-			return;
-
 		// form submission
 		if ( ! empty( $_REQUEST['cbox-update'] ) ) {
 			// verify nonce
@@ -468,10 +502,6 @@ class CIAB_Plugins {
 						exit;
 					}
 					else {
-						// let PD do it's thing
-						// deactivate any dependent plugins for the plugin in question
-						Plugin_Dependencies::init();
-
 						$deactivated = call_user_func( array( 'Plugin_Dependencies', 'deactivate_cascade' ), (array) $plugin );
 						set_transient( "pd_deactivate_cascade", $deactivated );
 
@@ -479,7 +509,7 @@ class CIAB_Plugins {
 						deactivate_plugins( $plugin );
 						update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
 
-						wp_redirect( self_admin_url("admin.php?page=cbox&deactivate=true") );
+						wp_redirect( self_admin_url("admin.php?page=cbox-plugins&deactivate=true") );
 						exit;
 					}
 
@@ -501,8 +531,6 @@ class CIAB_Plugins {
 			// if no other plugins were deactivated, stop now!
 			if ( empty( $deactivated ) )
 				return;
-
-			Plugin_Dependencies::init();
 
 			$text = __( 'The following plugins have also been deactivated:', 'cbox' );
 
@@ -538,30 +566,217 @@ class CIAB_Plugins {
 	}
 
 	/**
-	 * The plugin table that gets displayed on the Cbox dashboard.
+	 * Renders the CBox plugins page.
+	 *
+	 * @since 0.3
 	 */
-	public function cbox_dashboard() {
+	public function admin_page() {
+		// show this page during update
+		if ( CIAB_Admin::is_update() ) {
+			$this->update_screen();
+		}
+
+		// if upgrade process is finished, show upgrade screen
+		else {
+	?>
+			<div class="wrap">
+				<?php screen_icon( 'plugins' ); ?>
+				<h2><?php _e( 'Commons in a Box Plugins', 'cbox' ); ?></h2>
+
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
+					<div class="welcome-panel">
+						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
+				
+						<p><?php _e( 'Commons in a Box requires the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
+	
+						<?php $this->render_plugin_table( 'required' ); ?>
+					</div>
+
+					<div class="welcome-panel">
+						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
+				
+						<p><?php _e( "The following are plugins we automatically install for you during initial Commons in a Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+	
+						<?php $this->render_plugin_table( 'recommended' ); ?>
+					</div>
+
+					<div class="welcome-panel">
+						<h2><?php _e( '&Agrave; la carte!', 'cbox' ); ?></h2>
+				
+						<p><?php _e( "The following are plugins we do not install automatically for you because they might require a bit more setup than the usual plugins.", 'cbox' ); ?></p>
+						<p><?php _e( "However, we have tested these plugins and they're cool in our books as well!", 'cbox' ); ?></p>
+	
+						<?php $this->render_plugin_table( 'optional' ); ?>
+					</div>
+
+					<?php wp_nonce_field( 'cbox_update' ); ?>
+				</form>
+			</div>
+	<?php
+		}
+	}
+
+	/**
+	 * Screen that shows during an update.
+	 *
+	 * @since 0.2
+	 */
+	private function update_screen() {
+
+		// if we're not in the middle of an update, stop now!
+		if ( empty( cbox()->update ) )
+			return;
+
+		$plugins = $_REQUEST['cbox_plugins'];
+
+		// include the CBox Plugin Upgrade and Install API
+		if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
+			require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
+
+		// some HTML markup!
+		echo '<div class="wrap">';
+		screen_icon('plugins');
+		echo '<h2>' . esc_html__('Update CBox', 'cbox' ) . '</h2>';
+
+		// start the upgrade!
+		$installer = new CBox_Updater( $plugins );
+
+		echo '</div>';
+	}
+
+	/** 
+	 * Inline CSS used on the CBox plugins page.
+	 *
+	 * @since 0.3
+	 */
+	public function inline_css() {
+	?>
+		<style type="text/css">
+		.welcome-panel {border-top:0; margin-top:0; padding:15px 10px 20px;}
+			.welcome-panel h2 {font-size:1.7em; line-height:1; padding-top:0;}
+
+		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
+		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
+
+		.column-cbox-plugin-name {width:220px;}
+
+		span.enabled       {color:#008800;}
+		span.disabled      {color:#880000;}
+		span.not-installed {color:#9f9f9f;}
+		
+		.update-message {margin:5px 0;}
+		
+		.dep-list li {list-style:disc; margin-left:1.5em;}
+		</style>
+	<?php
+	}
+
+	/** HELPERS *******************************************************/
+
+	/**
+	 * Helper method to parse a comma-delimited dependency string.
+	 *
+	 * eg. "BuddyPress (>=1.5), BuddyPress Docs, Invite Anyone"
+	 *
+	 * @param string $dependency_str Comma-delimited list of plugins. Can include version dependencies. See PHPDoc.
+	 * @uses Plugin_Dependencies::parse_field()
+	 * @return array
+	 * @since 0.2
+	 */
+	private function parse_dependency_str( $dependency_str ) {
+		return Plugin_Dependencies::parse_field( $dependency_str );
+	}
+
+	/**
+	 * Helper method to see if a plugin is active.
+	 *
+	 * This is a resource-friendly version that already references the active
+	 * plugins in the Plugin Dependencies variable.
+	 *
+	 * Might remove this entirely...
+	 *
+	 * @param string $loader Plugin loader filename.
+	 * @return bool
+	 * @since 0.2
+	 */
+	public function is_plugin_active( $loader ) {
+		return in_array( $loader, Plugin_Dependencies::$active_plugins ) || is_plugin_active_for_network( $loader );
+	}
+
+	/**
+	 * Helper method to get the Cbox required plugin's state.
+	 *
+	 * @param str $loader The required plugin's loader filename
+ 	 * @param array $data The required plugin's data. See $this->register_required_plugins().
+ 	 * @since 0.2
+	 */
+	public function get_plugin_state( $loader, $data ) {
+		$state = false;
+
+		// plugin exists
+		if ( $loader ) {
+			// if plugin is active, set state to 'deactivate'
+			if ( $this->is_plugin_active( $loader ) )
+				$state = 'deactivate';
+			else
+				$state = 'activate';
+
+			// a required version was passed
+			if ( ! empty( $data['version'] ) ) {
+				// get the current, installed plugin's version
+				$current_version = Plugin_Dependencies::$all_plugins[$loader]['Version'];
+
+				// if current plugin is older than required plugin version, set state to 'upgrade'
+				if ( version_compare( $current_version, $data['version'] ) < 0  )
+					$state = 'upgrade';
+			}
+		}
+		// plugin doesn't exist
+		else {
+			$state = 'install';
+		}
+
+		return $state;
+	}
+
+	/**
+	 * Helper method to output the deactivation URL for a plugin in the CBox dashboard.
+	 *
+	 * @param str $loader The plugin's loader filename
+	 * @since 0.2
+	 */
+	private function deactivate_link( $loader ) {
+		echo self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=deactivate&amp;plugin=' . urlencode( $loader ) . '&amp;_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
+	}
+
+	/**
+	 * Renders a plugin table for CBox's plugins.
+	 *
+	 * @param string $type Type of CBox plugins to output. See CBox_Plugins::register_plugin().
+	 * @since 0.3
+	 */
+	private function render_plugin_table( $type = false ) {
+		if ( ! $type )
+			return false;
+
 
 		// get unfulfilled requirements for all plugins
 		//$requirements = Plugin_Dependencies::get_requirements();
 	?>
-		<h3><?php _e( 'Plugins', 'cbox' ); ?></h3>
 
-		<p><?php _e( 'Commons in a Box recommends the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
-
-		<table class="widefat fixed plugins" cellspacing="0">
+		<table class="widefat fixed plugins">
 			<thead>
 				<tr>
 					<th scope="col" class="manage-column check-column"><input type="checkbox" id="plugins-select-all" /></th>
-					<th scope="col" id="name" class="manage-column column-name" style="width: 190px;"><?php _e( 'Plugin', 'cbox' ); ?></th>
-					<th scope="col" id="description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
+					<th scope="col" id="<?php _e( $type ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
+					<th scope="col" id="<?php _e( $type ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
 				</tr>
 			</thead>
 
 			<tfoot>
 				<tr>
 					<th scope="col" class="manage-column check-column"><input type="checkbox" id="plugins-select-all-2" /></th>
-					<th scope="col" class="manage-column column-name" style="width: 190px;"><?php _e( 'Plugin', 'cbox' ); ?></th>
+					<th scope="col" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
 					<th scope="col" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
 				</tr>
 			</tfoot>
@@ -569,29 +784,38 @@ class CIAB_Plugins {
 			<tbody>
 
 			<?php
-				foreach ( self::get_plugins() as $plugin => $data ) :
+				foreach ( self::get_plugins( $type ) as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
 					// get the required plugin's state
 					$state  = $this->get_plugin_state( $loader, $data );
 			?>
-				<tr>
+				<tr class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( $state != 'deactivate' ) : ?>
-							<input type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" />
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" />
 						<?php else : ?>
-							<img src="<?php echo self_admin_url( 'images/yes.png' ); ?>" alt="" title="Plugin is already active!" style="margin-left:7px;" />
+							<img src="<?php echo self_admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
 						<?php endif; ?>
 					</th>
 
-					<td class="plugin-title" style="width: 190px;">
+					<td class="plugin-title">
+						<?php if ( $state != 'deactivate' ) : ?>
+							<label for="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>">
+						<?php endif; ?>
+						
 						<strong><?php echo $data['cbox_name']; ?></strong>
+
+						<?php if ( $state != 'deactivate' ) : ?>
+							</label>
+						<?php endif; ?>
+
 						<div class="row-actions-visible">
-						<?php if ( $state == 'deactivate' ) : ?>
+						<?php if ( $state == 'deactivate' ) : if ( $type != 'required' || $this->is_override() ) : ?>
 							<a href="<?php $this->deactivate_link( $loader ); ?>"><?php _e( 'Deactivate', 'cbox' ); ?></a>
-						<?php elseif ( $state == 'upgrade' ) : ?>
-							<div class="plugin-update-tr"><p class="update-message" style="margin:5px 0;"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
+						<?php endif; elseif ( $state == 'upgrade' ) : ?>
+							<div class="plugin-update-tr"><p class="update-message"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
 						<?php endif; ?>
 						</div>
 					</td>
@@ -637,109 +861,9 @@ class CIAB_Plugins {
 
 			</tbody>
 		</table>
+
+		<p><input type="submit" value="<?php _e( 'Update', 'cbox' ); ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $type ); ?>" name="cbox-update" /></p>
 	<?php
 	}
 
-	/**
-	 * Screen that shows during an update.
-	 */
-	public function update_screen() {
-
-		// if we're not in the middle of an update, stop now!
-		if ( empty( cbox()->update ) )
-			return;
-
-		$plugins = $_REQUEST['cbox_plugins'];
-
-		// include the CBox Plugin Upgrade and Install API
-		if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
-			require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
-
-		// some HTML markup!
-		echo '<div class="wrap">';
-		screen_icon('plugins');
-		echo '<h2>' . esc_html__('Update CBox', 'cbox' ) . '</h2>';
-
-		// start the upgrade!
-		$installer = new CBox_Updater( $plugins );
-
-		echo '</div>';
-	}
-
-	/** HELPERS *******************************************************/
-
-	/**
-	 * Helper method to parse a comma-delimited dependency string.
-	 *
-	 * eg. "BuddyPress (>=1.5), BuddyPress Docs, Invite Anyone"
-	 *
-	 * @param string $dependency_str Comma-delimited list of plugins. Can include version dependencies. See PHPDoc.
-	 * @uses Plugin_Dependencies::parse_field()
-	 * @return array
-	 */
-	private function parse_dependency_str( $dependency_str ) {
-		return Plugin_Dependencies::parse_field( $dependency_str );
-	}
-
-	/**
-	 * Helper method to see if a plugin is active.
-	 *
-	 * This is a resource-friendly version that already references the active
-	 * plugins in the Plugin Dependencies variable.
-	 *
-	 * Might remove this entirely...
-	 *
-	 * @param string $loader Plugin loader filename.
-	 * @return bool
-	 */
-	public function is_plugin_active( $loader ) {
-		return in_array( $loader, Plugin_Dependencies::$active_plugins ) || is_plugin_active_for_network( $loader );
-	}
-
-	/**
-	 * Helper method to get the Cbox required plugin's state.
-	 *
-	 * @param str $loader The required plugin's loader filename
- 	 * @param array $data The required plugin's data. See $this->register_required_plugins().
-	 */
-	public function get_plugin_state( $loader, $data ) {
-		$state = false;
-
-		// plugin exists
-		if ( $loader ) {
-			// if plugin is active, set state to 'deactivate'
-			if ( $this->is_plugin_active( $loader ) )
-				$state = 'deactivate';
-			else
-				$state = 'activate';
-
-			// a required version was passed
-			if ( ! empty( $data['version'] ) ) {
-				// get the current, installed plugin's version
-				$current_version = Plugin_Dependencies::$all_plugins[$loader]['Version'];
-
-				// if current plugin is older than required plugin version, set state to 'upgrade'
-				if ( version_compare( $current_version, $data['version'] ) < 0  )
-					$state = 'upgrade';
-			}
-		}
-		// plugin doesn't exist
-		else {
-			$state = 'install';
-		}
-
-		return $state;
-	}
-
-	/**
-	 * Helper method to output the deactivation URL for a plugin in the CBox dashboard.
-	 *
-	 * @param str $loader The plugin's loader filename
-	 */
-	private function deactivate_link( $loader ) {
-		echo self_admin_url( 'admin.php?page=cbox&cbox-action=deactivate&plugin=' . urlencode( $loader ) . '&_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
-	}
-
 }
-
-?>
