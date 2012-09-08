@@ -74,6 +74,8 @@ class CIAB_Admin {
 				<h2><?php _e( 'Commons in a Box Dashboard', 'cbox' ); ?></h2>
 
 				<?php $this->welcome_panel(); ?>
+
+				<?php $this->metaboxes(); ?>
 			</div>
 		<?php
 		}
@@ -130,6 +132,8 @@ class CIAB_Admin {
 
 	/**
 	 * The CBox welcome panel.
+	 *
+	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
 	 */
 	private function welcome_panel() {
 		if ( isset( $_GET['welcome'] ) ) {
@@ -137,100 +141,127 @@ class CIAB_Admin {
 			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
 		}
 
+		// default class for our welcome panel container
 		$classes = 'welcome-panel';
 
+		// get our user's welcome panel setting
 		$option = get_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', true );
 
+		// if welcome panel option isn't set, set it to "1" to show the panel by default
 		if ( $option === false )
 			$option = 1;
 
-		/*
-			upgrade routine - todo
-			if ( ! is_multisite() )
-				update_user_meta( $user_id, 'show_cbox_welcome_panel', 1 );
-			elseif ( ! is_super_admin( $user_id ) && ! metadata_exists( 'user', $user_id, 'show_cbox_welcome_panel' ) )
-				update_user_meta( $user_id, 'show_cbox_welcome_panel', 2 );
-		*/
-
-		// 0 = hide, 1 = toggled to show or single site creator, 2 = multisite site owner
-		$hide = 0 == $option || ( 2 == $option && wp_get_current_user()->user_email != get_option( 'admin_email' ) );
-		if ( $hide )
+		// this sets the CSS class needed to hide the welcome panel if needed
+		if ( ! (int) $option )
 			$classes .= ' hidden';
 
 	?>
 		<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
-		<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
-		<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e('Dismiss'); ?></a>
-		<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
+			<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
 
-		<div class="welcome-panel-content">
-		<h3><?php _e( 'Welcome to Commons in a Box! ', 'cbox' ); ?></h3>
-		<p class="about-description"><?php _e( 'If you need help getting started, check out our documentation on <a href="https://github.com/cuny-academic-commons/commons-in-a-box/wiki">our wiki</a>. If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.' ); ?></p>
-		<div class="welcome-panel-column-container">
-		<div class="welcome-panel-column">
-			<h4><span class="icon16 icon-settings"></span> <?php _e( 'Setup Plugins', 'cbox' ); ?></h4>
-			<p><?php _e( 'Here are a few things you can do to get your feet wet.', 'cbox' ); ?></p>
-			<ul>
-			<li><?php echo sprintf(	__( '<a href="%s">Link to screencast?</a>', 'cbox' ), esc_url( admin_url('#') ) ); ?></li>
-			</ul>
-		</div>
-		<div class="welcome-panel-column">
-			<h4><span class="icon16 icon-page"></span> <?php _e( 'More content here!', 'cbox' ); ?></h4>
-			<p><?php _e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nulla dui, luctus ornare condimentum quis, eleifend non leo.', 'cbox' ); ?></p>
-			<ul>
-			<li><?php echo sprintf( __( '<a href="%s">Narf!</a>' ), esc_url( admin_url('#') ) ); ?></li>
-			</ul>
-		</div>
-		<div class="welcome-panel-column welcome-panel-last">
-			<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Customize Your Site' ); ?></h4>
-			<?php
-				$theme = wp_get_theme();
-				if ( $theme->errors() ) :
-					echo '<p>';
-					printf( __( '<a href="%s">Install a theme</a> to get started customizing your site.' ), esc_url( admin_url( 'themes.php' ) ) );
-					echo '</p>';
-				else:
-					$customize_links = array();
-					if ( 'cbox' == $theme->get_stylesheet() )
-						$customize_links[] = sprintf( __( '<a href="%s">Choose light or dark</a>' ), esc_url( admin_url( 'themes.php?page=theme_options' ) ) );
+			<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e('Dismiss'); ?></a>
 
-				if ( current_theme_supports( 'custom-background' ) )
-					$customize_links[] = sprintf( __( '<a href="%s">Set a background color</a>' ), esc_url( admin_url( 'themes.php?page=custom-background' ) ) );
+			<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
-				if ( current_theme_supports( 'custom-header' ) )
-					$customize_links[] = sprintf( __( '<a href="%s">Select a new header image</a>' ), esc_url( admin_url( 'themes.php?page=custom-header' ) ) );
+			<div class="welcome-panel-content">
+				<h3><?php _e( 'Welcome to Commons in a Box! ', 'cbox' ); ?></h3>
 
-				if ( current_theme_supports( 'widgets' ) )
-					$customize_links[] = sprintf( __( '<a href="%s">Add some widgets</a>' ), esc_url( admin_url( 'widgets.php' ) ) );
+				<p class="about-description"><?php _e( 'If you need help getting started, check out our documentation on <a href="https://github.com/cuny-academic-commons/commons-in-a-box/wiki">our wiki</a>. If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.' ); ?></p>
 
-				if ( ! empty( $customize_links ) ) {
-					echo '<p>';
+				<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
+			</div><!-- .welcome-panel-content -->
 
-					if ( $theme->get_stylesheet() != 'cbox' )
-						printf( __( 'Use the current theme &mdash; %1$s &mdash; or <a href="%2$s">use the CBox Default theme</a>. If you stick with %1$s, here are a few ways to make your site look unique.' ), $theme->display('Name'), esc_url( admin_url( 'themes.php' ) ) );
-					else
-						printf( __( "You're using the Cbox Default theme! Good on ya! Here are a few ways to make your site look unique.", 'cbox' ) );
+		</div><!-- #welcome-panel -->
 
-					echo '</p>';
-				?>
-				<ul>
-					<?php foreach ( $customize_links as $customize_link ) : ?>
-					<li><?php echo $customize_link ?></li>
-					<?php endforeach; ?>
-				</ul>
-				<?php
-				} else {
-					echo '<p>';
-					printf( __( 'Use the current theme &mdash; %1$s &mdash; or <a href="%2$s">choose a new one</a>.' ), $ct->title, esc_url( admin_url( 'themes.php' ) ) );
-					echo '</p>';
-				}
-			endif; ?>
-		</div>
-		</div>
-		<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
-		</div>
-		</div>
 	<?php
+	}
+
+	/**
+	 * Metaboxes.
+	 *
+	 * These are quick action links for the admin to do stuff.
+	 * Note: These metaboxes only show up when CBox has finished setting up.
+	 *
+	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @since 0.3
+	 */
+	private function metaboxes() {
+		if ( cbox_is_setup() ) :
+	?>
+
+		<div id="cbox-metaboxes" class="welcome-panel">
+			<h2><?php _e( 'Quick Links', 'cbox' ); ?></h2>
+
+			<div class="welcome-panel-column-container">
+
+				<div class="welcome-panel-column">
+					<h4><span class="icon16 icon-settings"></span> <?php _e( 'Setup Plugins', 'cbox' ); ?></h4>
+					<p><?php _e( 'Here are a few things you can do to get your feet wet.', 'cbox' ); ?></p>
+					<ul>
+					<li><?php echo sprintf(	__( '<a href="%s">Link to screencast?</a>', 'cbox' ), esc_url( admin_url('#') ) ); ?></li>
+					</ul>
+				</div>
+
+				<div class="welcome-panel-column">
+					<h4><span class="icon16 icon-page"></span> <?php _e( 'More content here!', 'cbox' ); ?></h4>
+					<p><?php _e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nulla dui, luctus ornare condimentum quis, eleifend non leo.', 'cbox' ); ?></p>
+					<ul>
+					<li><?php echo sprintf( __( '<a href="%s">Narf!</a>' ), esc_url( admin_url('#') ) ); ?></li>
+					</ul>
+				</div>
+
+				<div class="welcome-panel-column welcome-panel-last">
+					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Customize Your Site' ); ?></h4>
+					<?php
+						$theme = wp_get_theme();
+						if ( $theme->errors() ) :
+							echo '<p>';
+							printf( __( '<a href="%s">Install a theme</a> to get started customizing your site.' ), esc_url( admin_url( 'themes.php' ) ) );
+							echo '</p>';
+						else:
+							$customize_links = array();
+							if ( 'cbox' == $theme->get_stylesheet() )
+								$customize_links[] = sprintf( __( '<a href="%s">Choose light or dark</a>' ), esc_url( admin_url( 'themes.php?page=theme_options' ) ) );
+
+						if ( current_theme_supports( 'custom-background' ) )
+							$customize_links[] = sprintf( __( '<a href="%s">Set a background color</a>' ), esc_url( admin_url( 'themes.php?page=custom-background' ) ) );
+
+						if ( current_theme_supports( 'custom-header' ) )
+							$customize_links[] = sprintf( __( '<a href="%s">Select a new header image</a>' ), esc_url( admin_url( 'themes.php?page=custom-header' ) ) );
+
+						if ( current_theme_supports( 'widgets' ) )
+							$customize_links[] = sprintf( __( '<a href="%s">Add some widgets</a>' ), esc_url( admin_url( 'widgets.php' ) ) );
+
+						if ( ! empty( $customize_links ) ) {
+							echo '<p>';
+
+							if ( $theme->get_stylesheet() != 'cbox' )
+								printf( __( 'Use the current theme &mdash; %1$s &mdash; or <a href="%2$s">use the CBox Default theme</a>. If you stick with %1$s, here are a few ways to make your site look unique.' ), $theme->display('Name'), esc_url( admin_url( 'themes.php' ) ) );
+							else
+								printf( __( "You're using the Cbox Default theme! Good on ya! Here are a few ways to make your site look unique.", 'cbox' ) );
+
+							echo '</p>';
+						?>
+						<ul>
+							<?php foreach ( $customize_links as $customize_link ) : ?>
+							<li><?php echo $customize_link ?></li>
+							<?php endforeach; ?>
+						</ul>
+						<?php
+						} else {
+							echo '<p>';
+							printf( __( 'Use the current theme &mdash; %1$s &mdash; or <a href="%2$s">choose a new one</a>.' ), $ct->title, esc_url( admin_url( 'themes.php' ) ) );
+							echo '</p>';
+						}
+					endif; ?>
+				</div>
+
+			</div><!-- .welcome-panel-column-container -->
+
+		</div><!-- .welcome-panel -->
+
+	<?php
+		endif;
 	}
 
 	/**
@@ -245,6 +276,8 @@ class CIAB_Admin {
 
 			.about-text {margin-right:220px;}
 			.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:210px;}
+
+			#cbox-metaboxes {border-top:0; margin-top:0; padding-top: 0;}
 
 			.wp-badge {
 			        -webkit-box-shadow:  0px 0px 6px 2px rgba(51, 51, 51, .3);
