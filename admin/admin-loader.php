@@ -4,7 +4,7 @@
  *
  * @package Commons_In_A_Box
  * @subpackage Adminstration
- * @since 0.1.1
+ * @since 0.2
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Setup the CBox admin area.
  *
- * @since 0.1.1
+ * @since 0.2
  */
 class CIAB_Admin {
 
@@ -157,12 +157,11 @@ class CIAB_Admin {
 		if ( $hide )
 			$classes .= ' hidden';
 
-		$display_version = constant( 'CBOX_VERSION' );
 	?>
 		<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
 		<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
 		<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e('Dismiss'); ?></a>
-		<div class="wp-badge"><?php printf( __( 'Version %s' ), $display_version ); ?></div>
+		<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
 		<div class="welcome-panel-content">
 		<h3><?php _e( 'Welcome to Commons in a Box! ', 'cbox' ); ?></h3>

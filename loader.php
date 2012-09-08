@@ -47,7 +47,7 @@ class Commons_In_A_Box {
 	/**
 	 * Sets up our constants
 	 *
-	 * @since 0.1.1
+	 * @since 0.2
 	 * @todo Figure out a reliable way to use plugin_dir_path()
 	 */
 	private function constants() {
@@ -57,12 +57,6 @@ class Commons_In_A_Box {
 		if ( ! defined( 'CIAB_LIB_DIR' ) )
 			define( 'CIAB_LIB_DIR',    trailingslashit( CIAB_PLUGIN_DIR . 'lib' ) );
 
-		// the current CBox version number
-		define( 'CBOX_VERSION',    '0.1' );
-
-		// using date for DB version for now
-		// @todo change this to something else perhaps?
-		define( 'CBOX_DB_VERSION', '20120612' );
 	}
 
 	/**
@@ -71,7 +65,18 @@ class Commons_In_A_Box {
 	 * @since 0.1
 	 */
 	private function setup_globals() {
-		$this->plugin_dir = constant( 'CIAB_PLUGIN_DIR' );
+		/** VERSION ***********************************************************/
+
+		// CBox version
+		$this->version       = '0.3-bleeding';
+
+		// UTC date of CBox version release
+		$this->revision_date = '2012-09-07 18:00 UTC';
+
+		/** FILESYSTEM ********************************************************/
+
+		// the absolute directory CBox is running from
+		$this->plugin_dir    = constant( 'CIAB_PLUGIN_DIR' );
 	}
 
 	/**
@@ -104,9 +109,6 @@ class Commons_In_A_Box {
 		' ) );
 	}
 
-	public function get_plugin_dir() {
-		return $this->plugin_dir;
-	}
 }
 add_action( 'plugins_loaded', array( 'Commons_In_A_Box', 'init' ), 1 );
 
@@ -124,5 +126,3 @@ add_action( 'plugins_loaded', array( 'Commons_In_A_Box', 'init' ), 1 );
 function cbox() {
 	return Commons_In_A_Box::init();
 }
-
-?>

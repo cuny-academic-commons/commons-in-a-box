@@ -1,10 +1,10 @@
 
 		<div class="wrap about-wrap">
-			<h1><?php printf( __( 'Welcome to Commons In A Box %s', 'cbox' ), constant( 'CBOX_VERSION' ) ); ?></h1>
+			<h1><?php printf( __( 'Welcome to Commons In A Box %s', 'cbox' ), cbox_get_version() ); ?></h1>
 
-			<div class="about-text"><?php printf( __( 'Thank you for updating to the latest version!', 'cbox' ), constant( 'CBOX_VERSION' ) ); ?></div>
+			<div class="about-text"><?php printf( __( 'Thank you for updating to the latest version!', 'cbox' ), cbox_get_version() ); ?></div>
 
-			<div class="wp-badge"><?php printf( __( 'Version %s' ), constant( 'CBOX_VERSION' ) ); ?></div>
+			<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
 			<?php // change this so it isn't reliant on external pages - basically use a jQuery tab plugin instead  ?>
 			<h2 class="nav-tab-wrapper">
