@@ -159,7 +159,9 @@ class CIAB_Admin {
 		<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
 			<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
 
-			<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e('Dismiss'); ?></a>
+			<?php if ( cbox_is_setup() ) : ?>
+				<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e('Dismiss'); ?></a>
+			<?php endif; ?>
 
 			<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
@@ -168,7 +170,9 @@ class CIAB_Admin {
 
 				<p class="about-description"><?php _e( 'If you need help getting started, check out our documentation on <a href="https://github.com/cuny-academic-commons/commons-in-a-box/wiki">our wiki</a>. If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.' ); ?></p>
 
-				<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
+				<?php if ( cbox_is_setup() ) : ?>
+					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
+				<?php endif; ?>
 			</div><!-- .welcome-panel-content -->
 
 		</div><!-- #welcome-panel -->
