@@ -39,26 +39,44 @@ class Plugin_Dependencies {
 		global $wp_version;
 
 		// setup $active_plugins variable
-		self::$active_plugins = get_option( 'active_plugins', array() );
-
-		// @todo this needs testing...
-		if ( is_multisite() )
-			self::$active_plugins = array_merge( self::$active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+		// if we're in the network admin area, we check for sitewide plugins,
+		// otherwise on single site, check the current site's plugins only
+		self::$active_plugins = ! is_network_admin() ? get_option( 'active_plugins', array() ) : array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
 
 		// get all plugins
 		self::$all_plugins = get_plugins();
 
 		// setup associative array of plugins by name
 		foreach ( self::$all_plugins as $plugin => $plugin_data ) {
-			self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			// we check for duplicate plugins here
+			// and add only the plugin with the highest version number
+			if ( ! empty( self::$plugins_by_name[ $plugin_data['Name'] ] ) ) {
+				$self_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . self::$plugins_by_name[ $plugin_data['Name'] ], false, false );
+
+				// if plugin version in self::$plugins_by_name is older than the version in get_plugins()
+				// replace it the newer version
+				if ( version_compare( $self_plugin_data['Version'], $plugin_data['Version'] ) < 0 )
+					self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			} else {
+				self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			}
+
 		}
 
 		// parse dependencies for all installed plugins
 		// note: the "scr_plugin_dependency_before_parse" filter is so plugins can inject
 		//       their own dependencies before parsing begins
 		foreach ( apply_filters( 'scr_plugin_dependency_before_parse', self::$all_plugins ) as $plugin => $plugin_data ) {
-			// setup associative array of plugins by name
-			self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			// we check for duplicate plugin names here
+			// and add only the plugin with the highest version number
+			if ( ! empty( self::$plugins_by_name[ $plugin_data['Name'] ] ) ) {
+				$self_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . self::$plugins_by_name[ $plugin_data['Name'] ], false, false );
+
+				if ( version_compare( $self_plugin_data['Version'], $plugin_data['Version'] ) < 0 )
+					self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			} else {
+				self::$plugins_by_name[ $plugin_data['Name'] ] = $plugin;
+			}
 
 			// parse "Provides" header from each plugin
 			self::$provides[ $plugin ] = self::parse_field( $plugin_data['Provides'] );
@@ -122,8 +140,6 @@ class Plugin_Dependencies {
 		self::$dependencies = apply_filters( 'scr_plugin_dependency_dependencies', self::$dependencies );
 		self::$requirements = apply_filters( 'scr_plugin_dependency_requirements', self::$requirements );
 
-		//print_r( self::$dependencies );
-
 		//var_dump( self::$requirements );
 	}
 
@@ -175,7 +191,7 @@ class Plugin_Dependencies {
 				$active = true;
 
 				// check network plugins first
-				if ( is_network_admin() && ! is_plugin_active_for_network( $loader ) ) {
+				if ( is_multisite() && ! is_plugin_active_for_network( $loader ) ) {
 					$active = false;
 				}
 				// single site
@@ -302,7 +318,7 @@ class Plugin_Dependencies {
 
 		$conflicting = array();
 
-		$to_check = array_diff( get_option( 'active_plugins', array() ), $to_activate );	// precaution
+		$to_check = array_diff( self::$active_plugins, $to_activate );	// precaution
 
 		foreach ( $to_check as $active_plugin ) {
 			$common = array_intersect( $deps, self::get_provided( $active_plugin ) );
@@ -314,7 +330,7 @@ class Plugin_Dependencies {
 		// TODO: don't deactivate plugins that would still have all dependencies satisfied
 		$deactivated = self::deactivate_cascade( $conflicting );
 
-		deactivate_plugins( $conflicting );
+		deactivate_plugins( $conflicting, false, is_network_admin() );
 
 		return array_merge( $conflicting, $deactivated );
 	}
@@ -357,7 +373,7 @@ class Plugin_Dependencies {
 
 		self::_cascade( $found );
 
-		deactivate_plugins( $found );
+		deactivate_plugins( $found, false, is_network_admin() );
 	}
 
 	/**
@@ -486,11 +502,12 @@ class Plugin_Dependencies_UI {
 	private static $msg;
 
 	function init() {
-		add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
+		add_action( is_network_admin() ? 'network_' : '' . 'admin_notices', array( __CLASS__, 'admin_notices' ) );
+
 		add_action( 'admin_print_styles', array( __CLASS__, 'admin_print_styles' ) );
 		add_action( 'admin_print_footer_scripts', array( __CLASS__, 'footer_script' ), 20 );
 
-		add_filter( 'plugin_action_links', array( __CLASS__, 'plugin_action_links' ), 10, 4 );
+		add_filter( is_network_admin() ? 'network_admin_' : '' . 'plugin_action_links', array( __CLASS__, 'plugin_action_links' ), 10, 4 );
 
 		Plugin_Dependencies::init();
 
@@ -525,10 +542,12 @@ class Plugin_Dependencies_UI {
 		foreach ( self::$msg as $args ) {
 			list( $action, $type ) = $args;
 
+			$set_transient = is_network_admin() ? 'set_site_transient' : 'set_transient';
+
 			if ( $action == $_REQUEST['action'] ) {
 				$deactivated = call_user_func( array( 'Plugin_Dependencies', "deactivate_$type" ), (array) $_REQUEST['plugin'] );
 				//var_dump( $deactivated ); var_dump( $_REQUEST['plugin'] ); die();
-				set_transient( "pd_deactivate_$type", $deactivated );
+				$set_transient( "pd_deactivate_$type", $deactivated );
 			}
 		}
 	}
@@ -540,8 +559,11 @@ class Plugin_Dependencies_UI {
 			if ( !isset( $_REQUEST[ $action ] ) )
 				continue;
 
-			$deactivated = get_transient( "pd_deactivate_$type" );
-			delete_transient( "pd_deactivate_$type" );
+			$get_transient = is_network_admin() ? 'get_site_transient' : 'get_transient';
+			$deactivated = $get_transient( "pd_deactivate_$type" );
+
+			$delete_transient = is_network_admin() ? 'delete_site_transient' : 'delete_transient';
+			$delete_transient( "pd_deactivate_$type" );
 
 			if ( empty( $deactivated ) )
 				continue;
@@ -551,6 +573,10 @@ class Plugin_Dependencies_UI {
 				html( 'p', $text, self::generate_dep_list( $deactivated ) )
 			);
 		}
+
+		// do not show the block below if we return false for the 'pd_show_preactivation_warnings' hook
+		if ( ! apply_filters( 'pd_show_preactivation_warnings', true ) )
+			return;
 
 		$requirements = Plugin_Dependencies::get_requirements();
 
@@ -619,7 +645,6 @@ class Plugin_Dependencies_UI {
 
 		switch( $wp_list_table->current_action() ) {
 			case 'activate-selected':
-			case 'network-activate-selected':
 
 				check_admin_referer( 'bulk-plugins' );
 
@@ -702,12 +727,7 @@ jQuery(function($) {
 
 		// if current plugin has requirements that are unmet, then get rid of the activation link
 		if ( !empty( $requirements[ $plugin_data['Name'] ] ) ) {
-			if ( is_network_admin() ) {
-				unset( $actions['network_activate'] );
-			}
-			else {
-				unset( $actions['activate'] );
-			}
+			unset( $actions['activate'] );
 		}
 
 		return $actions;
