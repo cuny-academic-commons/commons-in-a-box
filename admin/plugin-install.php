@@ -208,15 +208,17 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			}
 
 			// activate the plugin
-			activate_plugin( $plugin_loader );
+			activate_plugin( $plugin_loader, '', is_network_admin() );
 		}
 
-		$recent = (array)get_option('recently_activated');
-		foreach ( $plugins as $plugin => $time)
-			if ( isset($recent[ $plugin ]) )
-				unset($recent[ $plugin ]);
+		if ( ! is_network_admin() ) {
+			$recent = (array) get_option('recently_activated' );
 
-		update_option('recently_activated', $recent);
+			foreach ( $plugins as $plugin )
+				unset( $recent[ $plugin ] );
+
+			update_option( 'recently_activated', $recent );
+		}
 
 		return true;
 	}
@@ -271,6 +273,10 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 				$skin_args['activate_plugins'] = $this->options['activate_plugins'];
 			}
 
+			if (! empty( $this->options['redirect_link'] ) ) {
+				$skin_args['redirect_link'] = $this->options['redirect_link'];
+			}
+
 			$skin_args['install_strings'] = true;
 
 			echo '<p>' . __( 'Plugins updated.', 'cbox' ) . '</p>';
@@ -301,14 +307,14 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php $this->the_redirect_link(); ?></p>
+			<p><?php $this->after_updater(); ?></p>
  		<?php
 		}
 
 		// process is completed!
 		// show link to Cbox dashboard
 		else {
-			$this->the_redirect_link();
+			$this->after_updater();
 		}
 	}
 
@@ -367,6 +373,29 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		$this->reset();
 		$this->flush_output();
 	}
+
+	/**
+	 * Do some stuff after the updater has finished running.
+	 *
+	 * @param string $redirect_link Redirect link with anchor text. This is used if CBox_Bulk_Plugin_Upgrader_Skin doesn't have one.
+	 * @since 0.3
+	 */
+	public function after_updater( $redirect_link = '' ) {
+		// if a redirect link is passed, use it.
+		if ( ! empty( $redirect_link ) )
+			echo $redirect_link;
+
+		// if a redirect link is passed during the class constructor, use it
+		elseif ( ! empty( $this->options['redirect_link'] ) )
+			echo $this->options['redirect_link'];
+
+		// default fallback
+		else
+			printf( __( 'Return to the <a href="%s">CBox Plugins page</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox-plugins' ) );
+
+		// extra hook to do stuff after the updater has run
+		do_action( 'cbox_after_updater' );
+	}
 }
 
 /**
@@ -389,7 +418,7 @@ class CBox_Updater {
 	 *
 	 * @param array $plugins Associative array of plugin names
 	 */
-	function __construct( $plugins = false ) {
+	function __construct( $plugins = false, $settings = array() ) {
 		if ( ! empty( $plugins['upgrade'] ) )
 			self::$is_upgrade  = true;
 
@@ -398,6 +427,9 @@ class CBox_Updater {
 
 		if( ! empty( $plugins['activate'] ) )
 			self::$is_activate = true;
+
+		if ( ! empty( $settings['redirect_link'] ) )
+			$skin_args['redirect_link'] = $this->redirect_link = $settings['redirect_link'];
 
 		// dependency-time!
 		// flatten the associative array to make dependency checks easier
@@ -518,11 +550,12 @@ class CBox_Updater {
 			echo '<h3>' . __( 'Activating Plugins...', 'cbox' ) . '</h3>';
 
  			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
+ 			$redirect_link = ! empty( $settings['redirect_link'] ) ? $settings['redirect_link'] : false;
  		?>
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php $this->the_redirect_link(); ?></p>
+			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $redirect_link ); ?></p>
  		<?php
  		}
 
@@ -535,7 +568,7 @@ class CBox_Updater {
 
 		// activates a plugin post-upgrade
 		if ( ! empty( $hook_extra['plugin'] ) ) {
-			activate_plugin( $hook_extra['plugin'] );
+			activate_plugin( $hook_extra['plugin'], '', is_network_admin() );
 		}
 		// activates a plugin post-install
 		elseif ( ! empty( $result['destination_name'] ) ) {
@@ -547,23 +580,12 @@ class CBox_Updater {
 			wp_cache_flush();
 
 			// now activate the plugin
-			activate_plugin( $result['destination_name'] . '/' . $plugin_loader );
+			activate_plugin( $result['destination_name'] . '/' . $plugin_loader, '', is_network_admin() );
 		}
 
 		return $bool;
 	}
 
-	/**
-	 * Outputs the redirect link with localized, anchor text.
-	 *
-	 * This shows up at the end of the update process.
-	 *
-	 * @todo Make this link configurable with parameters.
-	 * @since 0.3
-	 */
-	public function the_redirect_link() {
-		printf( __( 'Return to the <a href="%s">CBox Plugins page</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox-plugins' ) );
-	}
 }
 
 ?>
