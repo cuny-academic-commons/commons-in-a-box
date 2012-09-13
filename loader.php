@@ -71,7 +71,7 @@ class Commons_In_A_Box {
 		$this->version       = '0.3-bleeding';
 
 		// UTC date of CBox version release
-		$this->revision_date = '2012-09-07 18:00 UTC';
+		$this->revision_date = '2012-09-12 18:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
