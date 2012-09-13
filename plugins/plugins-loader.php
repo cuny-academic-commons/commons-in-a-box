@@ -74,27 +74,30 @@ class CIAB_Plugins {
 		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );
 
 		// prevent Cbox plugins from being seen in the regular Plugins table and from WP updates
-		if (  ! $this->is_override() ) {
+		if ( ! $this->is_override() ) {
 			// exclude Cbox plugins from the "Plugins" list table
 			add_filter( 'all_plugins',                   array( $this, 'exclude_cbox_plugins' ) );
 
 			// remove Cbox plugins from WP's update plugins routine
 			add_filter( 'site_transient_update_plugins', array( $this, 'remove_cbox_plugins_from_updates' ) );
+
+			// do not show PD's pre-activation warnings if admin cannot override CBox plugins
+			add_filter( 'pd_show_preactivation_warnings', '__return_false' );
 		}
 	}
 
 	/**
-	 * For expert site managers, we allow them to view Cbox plugins in the 
+	 * For expert site managers, we allow them to view Cbox plugins in the
 	 * regular Plugins table and on the WP Updates page.
 	 *
-	 * To do this, add the following code snippet in wp-content/plugins/bp-custom.php:
+	 * To do this, add the following code snippet to wp-config.php
 	 *
-	 * 	add_filter( 'cbox_override_plugins', '__return_true' );
+	 * 	define( 'CBOX_OVERRIDE_PLUGINS', true );
 	 *
 	 * @return bool
 	 */
 	public function is_override() {
-		return apply_filters( 'cbox_override_plugins', false );
+		return defined( 'CBOX_OVERRIDE_PLUGINS' ) && constant( 'CBOX_OVERRIDE_PLUGINS' ) === true;
 	}
 
 	/** PLUGINS-SPECIFIC **********************************************/
@@ -113,7 +116,9 @@ class CIAB_Plugins {
 			'plugin_name'      => 'BuddyPress',
 			'cbox_name'        => 'BuddyPress',
 			'cbox_description' => 'Build a social network for your company, school, sports team or niche community.',
-			'version'          => '1.6.1'
+			'version'          => '1.6.1',
+			'admin_settings'   => 'options-general.php?page=bp-components',
+			'network_settings' => 'settings.php?page=bp-components'
 		) );
 	}
 
@@ -135,6 +140,8 @@ class CIAB_Plugins {
 			'version'          => '1.1.25',
 			'depends'          => 'BuddyPress (>=1.5)',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
+			'admin_settings'   => 'edit.php?post_type=bp_doc',
+			'network_settings' => 'root-blog-only'
 		) );
 
 		// BuddyPress Group Email Subscription
@@ -146,6 +153,8 @@ class CIAB_Plugins {
 			'depends'          => 'BuddyPress (>=1.5)',
 			'version'          => '3.2.1',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
+			'admin_settings'   => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
+			'network_settings' => 'admin.php?page=ass_admin_options'
 		) );
 
 		// Invite Anyone
@@ -157,6 +166,8 @@ class CIAB_Plugins {
 			'version'          => '1.0.15',
 			'depends'          => 'BuddyPress (>=1.5)',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
+			'admin_settings'   => 'admin.php?page=invite-anyone',
+			'network_settings' => 'admin.php?page=invite-anyone'
 		) );
 
 		// Custom Profile Filters for BuddyPress
@@ -166,29 +177,21 @@ class CIAB_Plugins {
 			'cbox_name'        => 'Custom Profile Filters for BuddyPress',
 			'cbox_description' => 'Allows users to take control of how their profile links in Buddypress are handled.',
 			'depends'          => 'BuddyPress (>=1.2)',
-			'version'          => '3.0.1',
+			'version'          => '0.3.1',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
 		) );
 
 		// bbPress
+		// @todo if network-activated, this is enabled across all sub-sites... need to limit this
 		self::register_plugin( array(
 			'plugin_name'      => 'bbPress',
 			'type'             => 'recommended',
 			'cbox_name'        => 'bbPress',
 			'cbox_description' => 'Forums made the WordPress way.',
 			'version'          => '2.1.2',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip'
-		) );
-
-		// More Privacy Options
-		// @todo Do a multisite check before adding
-		self::register_plugin( array(
-			'plugin_name'      => 'More Privacy Options',
-			'type'             => 'recommended',
-			'cbox_name'        => 'More Privacy Options',
-			'cbox_description' => 'Add more blog privacy options for your users.',
-			'version'          => '3.2.1.5',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/more-privacy-options.3.2.1.5.zip'
+			'download_url'     => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip',
+			'admin_settings'   => 'options-general.php?page=bbpress',
+			'network_settings' => 'root-blog-only'
 		) );
 
 		// CAC Featured Content
@@ -200,6 +203,20 @@ class CIAB_Plugins {
 			'version'          => '0.8.4',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/cac-featured-content.0.8.4.zip'
 		) );
+
+		// only show the following plugins in network mode
+		if ( is_network_admin() ) :
+			// More Privacy Options
+			self::register_plugin( array(
+				'plugin_name'      => 'More Privacy Options',
+				'type'             => 'recommended',
+				'cbox_name'        => 'More Privacy Options',
+				'cbox_description' => 'Add more blog privacy options for your users.',
+				'version'          => '3.2.1.5',
+				'download_url'     => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
+				'network_settings' => 'settings.php#menu'
+			) );
+		endif;
 
 
 		// Other plugins for later:
@@ -221,18 +238,19 @@ class CIAB_Plugins {
 
 		// BuddyPress GroupBlog
 		self::register_plugin( array(
-			'plugin_name'      => 'BuddyPress Groupblog',
+			'plugin_name'      => 'BP Groupblog',
 			'type'             => 'optional',
 			'cbox_name'        => 'BuddyPress Groupblog',
 			'cbox_description' => 'Enable a BuddyPress group to have a single blog associated with it.',
 			'depends'          => 'BuddyPress (>=1.6)',
 			'version'          => '1.8',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
+			'network_settings' => 'settings.php?page=bp_groupblog_management_page'
 		) );
 
 		// BuddyPress External Group Blogs
 		self::register_plugin( array(
-			'plugin_name'      => 'BP External Group Blogs',
+			'plugin_name'      => 'External Group Blogs',
 			'type'             => 'optional',
 			'cbox_name'        => 'BuddyPress External Group RSS',
 			'cbox_description' => 'Give BuddyPress group creators and administrators the ability to attach external RSS feeds to groups.',
@@ -252,6 +270,8 @@ class CIAB_Plugins {
 			'version'          => '1.0',
 			'depends'          => 'BuddyPress (>=1.5)',
 			'download_url'     => '',
+			'admin_settings'   => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
+			'network_settings' => 'root-blog-only
 		) );
 		*/
 
@@ -306,7 +326,11 @@ class CIAB_Plugins {
 			'cbox_description' => false, // CBox's short description of the plugin
 			'depends'          => false, // our own defined dependencies for the plugin; uses same syntax as PD
 			'version'          => false, // the version number of the plugin we want to compare the installed version with (if applicable)
-			'download_url'     => false  // the download URL of the plugin used if the active version is not compatible with our version
+			'download_url'     => false, // the download URL of the plugin used if the active version is not compatible with our version
+			'admin_settings'   => false, // if applicable, where does the admin settings page reside? should be relative to /wp-admin/
+			'network_settings' => false, // if plugin is network-only and has a settings page, where does the network admin settings page reside?
+			                             // should be relative to /wp-admin/; if plugin's settings resides on the BP_ROOT_BLOG only, mark this as 'root-blog-only'
+			'network'          => true   // should the plugin be activated network-wide? not used at the moment
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -325,6 +349,8 @@ class CIAB_Plugins {
 				self::$plugins[$type][$plugin_name]['depends']          = $depends;
 				self::$plugins[$type][$plugin_name]['version']          = $version;
 				self::$plugins[$type][$plugin_name]['download_url']     = $download_url;
+				self::$plugins[$type][$plugin_name]['admin_settings']   = $admin_settings;
+				self::$plugins[$type][$plugin_name]['network_settings'] = $network_settings;
 
 				break;
 
@@ -342,13 +368,16 @@ class CIAB_Plugins {
 	 * @param string $type Type of CBox plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
-	public static function get_plugins( $type = 'all' ) {
+	public static function get_plugins( $type = 'all', $omit_type = false ) {
 		// if type is 'all', we want all CBox plugins regardless of type
 		if ( $type == 'all' ) {
 			$plugins = self::$plugins;
 
 			// okay, I lied, we want all plugins except dependencies!
 			unset( $plugins['dependency'] );
+
+			if ( ! empty( $omit_type ) )
+				unset( $plugins[$omit_type] );
 
 			// flatten associative array
 			return call_user_func_array( 'array_merge', $plugins );
@@ -358,6 +387,124 @@ class CIAB_Plugins {
 			return false;
 
 		return self::$plugins[$type];
+	}
+
+	/**
+	 * Organize plugins by state.
+	 *
+	 * @param Array of plugins.
+	 * @return Associative array with plugin state as array key
+	 * @since 0.3
+	 */
+	public static function organize_plugins_by_state( $plugins ) {
+		$organized_plugins = array();
+
+		foreach ( $plugins as $plugin => $data ) {
+			// attempt to get the plugin loader file
+			$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+			// get the required plugin's state
+			$state  = self::get_plugin_state( $loader, $data );
+
+			$organized_plugins[$state][] = esc_attr( $plugin );
+		}
+
+		return $organized_plugins;
+	}
+
+	/**
+	 * Get settings links for our installed CBox plugins.
+	 *
+	 * @return Assosicate array with CBox plugin name as key and admin settings URL as the value.
+	 * @since 0.3
+	 */
+	public static function get_settings() {
+		// get all installed cbox plugins
+		$cbox_plugins = self::get_plugins();
+
+		// get active CBox plugins
+		$active = self::organize_plugins_by_state( $cbox_plugins );
+
+		if ( empty( $active ) )
+			return false;
+
+		$active = $active['deactivate'];
+
+		$settings = array();
+
+		foreach ( $active as $plugin ) {
+			// network CBox install and CBox plugin has a network settings page
+			if ( is_network_admin() && ! empty( $cbox_plugins[$plugin]['network_settings'] ) ) {
+				// if network plugin's settings resides on the root blog,
+				// then make sure we use the root blog's domain to generate the admin settings URL
+				if ( $cbox_plugins[$plugin]['network_settings'] == 'root-blog-only' ) {
+					// sanity check!
+					// make sure BP is active so we can use bp_core_get_root_domain()
+					if ( in_array( 'BuddyPress', $active ) ) {
+						$settings[$plugin] = bp_core_get_root_domain() . '/wp-admin/' . $cbox_plugins[$plugin]['admin_settings'];
+					}
+				}
+				// if the network plugin resides in the network area, use network_admin_url()!
+				else {
+					$settings[$plugin] = network_admin_url( $cbox_plugins[$plugin]['network_settings'] );
+				}
+			}
+
+			// single-site CBox install and CBox plugin has an admin settings page
+			elseif( ! is_network_admin() && ! empty( $cbox_plugins[$plugin]['admin_settings'] ) ) {
+				$settings[$plugin] = admin_url( $cbox_plugins[$plugin]['admin_settings'] );
+			}
+
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * Get plugins that require upgrades.
+	 *
+	 * @param string $type The type of plugins to get upgrades for. Either 'all' or 'active'.
+	 * @return array of CBox plugin names that require upgrading
+	 * @since 0.3
+	 */
+	public static function get_upgrades( $type = 'all' ) {
+		// get all CBox plugins that require upgrades
+		$upgrades = self::organize_plugins_by_state( self::get_plugins() );
+
+		if ( empty( $upgrades['upgrade'] ) )
+			return false;
+
+		$upgrades = $upgrades['upgrade'];
+
+		switch ( $type ) {
+			case 'all' :
+				return $upgrades;
+
+				break;
+
+			case 'active' :
+				// get all active plugins
+				$active_plugins = array_flip( Plugin_Dependencies::$active_plugins );
+
+				$plugins = array();
+
+				foreach ( $upgrades as $plugin ) {
+					// attempt to get the plugin loader file
+					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+					// if the plugin is active, add it to our plugin array
+					if ( ! empty( $active_plugins[$loader] ) )
+						$plugins[] = $plugin;
+				}
+
+				if ( empty( $plugins ) )
+					return false;
+
+				return $plugins;
+
+				break;
+		}
+
 	}
 
 	/** HOOKS *********************************************************/
@@ -450,11 +597,11 @@ class CIAB_Plugins {
 				'cbox',
 				__( 'Commons in a Box Plugins', 'cbox' ),
 				__( 'Plugins', 'cbox' ),
-				'activate_plugins', // todo - map cap?
+				'install_plugins', // todo - map cap?
 				'cbox-plugins',
 				array( $this, 'admin_page' )
 			);
-			
+
 			// validate any settings changes submitted from the Cbox plugins page
 			add_action( "load-{$plugin_page}",       array( $this, 'validate_cbox_dashboard' ) );
 
@@ -497,17 +644,21 @@ class CIAB_Plugins {
 			switch( $_REQUEST['cbox-action'] ) {
 				case 'deactivate' :
 					check_admin_referer('deactivate-plugin_' . $plugin);
-					if ( ! is_network_admin() && is_plugin_active_for_network( $plugin ) ) {
+					if ( self::is_plugin_active( $plugin ) ) {
 						wp_redirect( self_admin_url("admin.php?page=cbox") );
 						exit;
 					}
 					else {
-						$deactivated = call_user_func( array( 'Plugin_Dependencies', 'deactivate_cascade' ), (array) $plugin );
-						set_transient( "pd_deactivate_cascade", $deactivated );
+						$set_transient = is_network_admin() ? 'set_site_transient' : 'set_transient';
+
+						$deactivated = call_user_func( array( 'Plugin_Dependencies', "deactivate_cascade" ), (array) $plugin );
+						$set_transient( "pd_deactivate_cascade", $deactivated );
 
 						// now deactivate the plugin
-						deactivate_plugins( $plugin );
-						update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
+						deactivate_plugins( $plugin, false, is_network_admin() );
+
+						if ( ! is_network_admin() )
+							update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
 
 						wp_redirect( self_admin_url("admin.php?page=cbox-plugins&deactivate=true") );
 						exit;
@@ -519,14 +670,20 @@ class CIAB_Plugins {
 
 		// admin notices
 		if ( ! empty( $_REQUEST['deactivate'] ) ) {
-			add_action( 'admin_notices', create_function( '', "
+			// add an admin notice
+			$prefix = is_network_admin() ? 'network_' : '';
+			add_action( $prefix . 'admin_notices', create_function( '', "
 				echo '<div class=\'updated\'><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
 			" ) );
 
 			// if PD deactivated any other dependent plugins, show admin notice here
 			// basically a copy-n-paste of Plugin_Dependencies::generate_dep_list()
-			$deactivated = get_transient( 'pd_deactivate_cascade' );
-			delete_transient( 'pd_deactivate_cascade' );
+
+			$get_transient = is_network_admin() ? 'get_site_transient' : 'get_transient';
+			$deactivated = $get_transient( "pd_deactivate_cascade" );
+
+			$delete_transient = is_network_admin() ? 'delete_site_transient' : 'delete_transient';
+			$delete_transient( "pd_deactivate_cascade" );
 
 			// if no other plugins were deactivated, stop now!
 			if ( empty( $deactivated ) )
@@ -556,7 +713,7 @@ class CIAB_Plugins {
 			}
 
 			// now add the admin notice for any other deactivated plugins by PD
-			add_action( 'admin_notices', create_function( '', "
+			add_action( $prefix . 'admin_notices', create_function( '', "
 				echo
 				html( 'div', array( 'class' => 'updated' ),
 					html( 'p', '$text', html( 'ul', array( 'class' => 'dep-list' ), '$dep_list' ) )
@@ -572,7 +729,7 @@ class CIAB_Plugins {
 	 */
 	public function admin_page() {
 		// show this page during update
-		if ( CIAB_Admin::is_update() ) {
+		if ( self::is_update() ) {
 			$this->update_screen();
 		}
 
@@ -586,27 +743,27 @@ class CIAB_Plugins {
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
 					<div class="welcome-panel">
 						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
-				
+
 						<p><?php _e( 'Commons in a Box requires the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
-	
-						<?php $this->render_plugin_table( 'required' ); ?>
+
+						<?php $this->render_plugin_table(); ?>
 					</div>
 
 					<div class="welcome-panel">
 						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
-				
+
 						<p><?php _e( "The following are plugins we automatically install for you during initial Commons in a Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
-	
-						<?php $this->render_plugin_table( 'recommended' ); ?>
+
+						<?php $this->render_plugin_table( 'type=recommended' ); ?>
 					</div>
 
 					<div class="welcome-panel">
 						<h2><?php _e( '&Agrave; la carte!', 'cbox' ); ?></h2>
-				
-						<p><?php _e( "The following are plugins we do not install automatically for you because they might require a bit more setup than the usual plugins.", 'cbox' ); ?></p>
+
+						<p><?php _e( "The following are plugins we do not automatically install for you because they might require a bit more setup than the usual plugins.", 'cbox' ); ?></p>
 						<p><?php _e( "However, we have tested these plugins and they're cool in our books as well!", 'cbox' ); ?></p>
-	
-						<?php $this->render_plugin_table( 'optional' ); ?>
+
+						<?php $this->render_plugin_table( 'type=optional' ); ?>
 					</div>
 
 					<?php wp_nonce_field( 'cbox_update' ); ?>
@@ -614,6 +771,19 @@ class CIAB_Plugins {
 			</div>
 	<?php
 		}
+	}
+
+	/**
+	 * Are we updating?
+	 *
+	 * @see CIAB_Plugins::validate_cbox_dashboard()
+	 * @return bool
+	 */
+	public static function is_update() {
+		if ( ! empty( cbox()->update ) )
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -644,7 +814,7 @@ class CIAB_Plugins {
 		echo '</div>';
 	}
 
-	/** 
+	/**
 	 * Inline CSS used on the CBox plugins page.
 	 *
 	 * @since 0.3
@@ -652,21 +822,10 @@ class CIAB_Plugins {
 	public function inline_css() {
 	?>
 		<style type="text/css">
-		.welcome-panel {border-top:0; margin-top:0; padding:15px 10px 20px;}
-			.welcome-panel h2 {font-size:1.7em; line-height:1; padding-top:0;}
+			.welcome-panel {border-top:0; margin-top:0; padding:15px 10px 20px;}
 
-		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
-		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
-
-		.column-cbox-plugin-name {width:220px;}
-
-		span.enabled       {color:#008800;}
-		span.disabled      {color:#880000;}
-		span.not-installed {color:#9f9f9f;}
-		
-		.update-message {margin:5px 0;}
-		
-		.dep-list li {list-style:disc; margin-left:1.5em;}
+			tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
+			tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
 		</style>
 	<?php
 	}
@@ -693,14 +852,14 @@ class CIAB_Plugins {
 	 * This is a resource-friendly version that already references the active
 	 * plugins in the Plugin Dependencies variable.
 	 *
-	 * Might remove this entirely...
-	 *
 	 * @param string $loader Plugin loader filename.
 	 * @return bool
 	 * @since 0.2
 	 */
-	public function is_plugin_active( $loader ) {
-		return in_array( $loader, Plugin_Dependencies::$active_plugins ) || is_plugin_active_for_network( $loader );
+	public static function is_plugin_active( $loader ) {
+		$active_plugins = Plugin_Dependencies::$active_plugins;
+
+		return in_array( $loader, Plugin_Dependencies::$active_plugins );
 	}
 
 	/**
@@ -710,13 +869,13 @@ class CIAB_Plugins {
  	 * @param array $data The required plugin's data. See $this->register_required_plugins().
  	 * @since 0.2
 	 */
-	public function get_plugin_state( $loader, $data ) {
+	public static function get_plugin_state( $loader, $data ) {
 		$state = false;
 
 		// plugin exists
 		if ( $loader ) {
 			// if plugin is active, set state to 'deactivate'
-			if ( $this->is_plugin_active( $loader ) )
+			if ( self::is_plugin_active( $loader ) )
 				$state = 'deactivate';
 			else
 				$state = 'activate';
@@ -752,13 +911,18 @@ class CIAB_Plugins {
 	/**
 	 * Renders a plugin table for CBox's plugins.
 	 *
-	 * @param string $type Type of CBox plugins to output. See CBox_Plugins::register_plugin().
+	 * @param mixed $args Querystring or array of parameters. See inline doc for more details.
 	 * @since 0.3
 	 */
-	private function render_plugin_table( $type = false ) {
-		if ( ! $type )
-			return false;
+	public function render_plugin_table( $args = '' ) {
+		$defaults = array(
+			'type'           => 'required', // 'required' (default), 'recommended', 'optional', 'dependency'
+			'omit_activated' => false,      // if set to true, this omits activated plugins from showing up in the plugin table
+			'check_all'      => false,      // if set to true, this will mark all the checkboxes in the plugin table as checked
+		);
 
+		$r = wp_parse_args( $args, $defaults );
+		extract( $r );
 
 		// get unfulfilled requirements for all plugins
 		//$requirements = Plugin_Dependencies::get_requirements();
@@ -787,16 +951,20 @@ class CIAB_Plugins {
 				foreach ( self::get_plugins( $type ) as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+					$settings = self::get_settings();
 
 					// get the required plugin's state
-					$state  = $this->get_plugin_state( $loader, $data );
+					$state  = self::get_plugin_state( $loader, $data );
+
+					if ( $omit_activated && $state == 'deactivate' )
+						continue;
 			?>
 				<tr class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( $state != 'deactivate' ) : ?>
-							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" />
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $check_all ); ?>/>
 						<?php else : ?>
-							<img src="<?php echo self_admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
 						<?php endif; ?>
 					</th>
 
@@ -804,7 +972,7 @@ class CIAB_Plugins {
 						<?php if ( $state != 'deactivate' ) : ?>
 							<label for="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>">
 						<?php endif; ?>
-						
+
 						<strong><?php echo $data['cbox_name']; ?></strong>
 
 						<?php if ( $state != 'deactivate' ) : ?>
@@ -812,6 +980,12 @@ class CIAB_Plugins {
 						<?php endif; ?>
 
 						<div class="row-actions-visible">
+						<?php if ( ! empty( $settings[$plugin] ) ) : ?>
+							<a href="<?php echo $settings[$plugin]; ?>"><?php _e( 'Settings', 'cbox' ); ?></a>
+
+							<?php if ( $type != 'required' || $this->is_override() ) : ?>|<?php endif; ?>
+						<?php endif; ?>
+
 						<?php if ( $state == 'deactivate' ) : if ( $type != 'required' || $this->is_override() ) : ?>
 							<a href="<?php $this->deactivate_link( $loader ); ?>"><?php _e( 'Deactivate', 'cbox' ); ?></a>
 						<?php endif; elseif ( $state == 'upgrade' ) : ?>
@@ -840,7 +1014,7 @@ class CIAB_Plugins {
 										$dep_str    = $dependency;
 										$dep_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin_name );
 
-										if ( $dep_loader && $this->is_plugin_active( $dep_loader ) )
+										if ( $dep_loader && self::is_plugin_active( $dep_loader ) )
 											$dep_str .= ' <span class="enabled">' . __( '(enabled)', 'cbox' ) . '</span>';
 										elseif( $dep_loader )
 											$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'cbox' ) . '</span>';
