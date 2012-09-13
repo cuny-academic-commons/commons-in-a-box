@@ -857,9 +857,9 @@ class CIAB_Plugins {
 	 * @since 0.2
 	 */
 	public static function is_plugin_active( $loader ) {
-		$active_plugins = Plugin_Dependencies::$active_plugins;
+		$active_plugins = (array) Plugin_Dependencies::$active_plugins;
 
-		return in_array( $loader, Plugin_Dependencies::$active_plugins );
+		return in_array( $loader, $active_plugins );
 	}
 
 	/**
