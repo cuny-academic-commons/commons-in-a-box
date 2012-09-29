@@ -444,6 +444,10 @@ class CIAB_Admin {
 				// get recommended plugins that are available to install / upgrade
 				$recommended_plugins = CIAB_Plugins::organize_plugins_by_state( CIAB_Plugins::get_plugins( 'recommended' ) );
 
+				// we don't want already-installed plugins
+				if ( ! empty( $recommended_plugins['deactivate'] ) )
+					unset( $recommended_plugins['deactivate'] );
+
 				if ( ! empty( $recommended_plugins ) ) :
 	?>
 

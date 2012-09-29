@@ -17,6 +17,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since 0.3
  */
 function cbox_is_setup() {
+	// we haven't saved the revision date into the DB yet
+	if ( ! cbox_get_installed_revision_date() )
+		return false;
+
 	// cbox is installed, but we just upgraded to a 
 	// newer version of CBox
 	if ( cbox_is_upgraded() )
