@@ -3,7 +3,7 @@
 Plugin Name: Commons In A Box
 Plugin URI: http://github.com/cuny-academic-commons/
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
-Version: 0.2
+Version: 0.3-bleeding
 Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
@@ -28,7 +28,6 @@ class Commons_In_A_Box {
 			self::$instance = new self();
 			self::$instance->constants();
 			self::$instance->setup_globals();
-			self::$instance->setup_hooks();
 			self::$instance->includes();
 		}
 
@@ -48,6 +47,7 @@ class Commons_In_A_Box {
 	 * Sets up our constants
 	 *
 	 * @since 0.2
+	 *
 	 * @todo Figure out a reliable way to use plugin_dir_path()
 	 */
 	private function constants() {
@@ -65,6 +65,7 @@ class Commons_In_A_Box {
 	 * @since 0.1
 	 */
 	private function setup_globals() {
+
 		/** VERSION ***********************************************************/
 
 		// CBox version
@@ -77,21 +78,16 @@ class Commons_In_A_Box {
 
 		// the absolute directory CBox is running from
 		$this->plugin_dir    = constant( 'CIAB_PLUGIN_DIR' );
-	}
 
-	/**
-	 * Sets up WP hooks
-	 *
-	 * @since 0.1
-	 */
-	private function setup_hooks() {
-
+		// the URL to the CBox directory
+		$this->plugin_url    = plugin_dir_url( __FILE__ );
 	}
 
 	/**
 	 * Includes necessary files
 	 *
 	 * @since 0.1
+	 *
 	 * @todo Make this nice somehow
 	 */
 	private function includes() {
@@ -107,6 +103,16 @@ class Commons_In_A_Box {
 			require( CIAB_PLUGIN_DIR . "api/class.api-server.php" );
 			require( CIAB_PLUGIN_DIR . "api/class.api-client.php" );
 		' ) );
+	}
+
+
+	/** HELPERS *******************************************************/
+
+	public function plugin_url( $path = '' ) {
+		if ( ! empty( $path ) && is_string( $path ) )
+			return cbox()->plugin_url . $path;
+		else
+			return cbox()->plugin_url;
 	}
 
 }
