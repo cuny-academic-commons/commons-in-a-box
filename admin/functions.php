@@ -34,7 +34,7 @@ function cbox_is_setup() {
 
 	// check if BuddyPress is in maintenance mode
 	// this means BuddyPress hasn't finished setting up yet
-	if ( bp_get_maintenance_mode() )
+	if ( cbox_is_bp_maintenance_mode() )
 		return false;
 
 	return true;
@@ -104,9 +104,42 @@ function cbox_get_installed_revision_date() {
  * Bumps the CBox revision date in the DB
  *
  * @since 0.3
+ *
+ * @return mixed String of date on success. Boolean false on failure
  */
 function cbox_bump_revision_date() {
 	update_site_option( '_cbox_revision_date', cbox()->revision_date );
+}
+
+/**
+ * Get the current CBox setup step.
+ *
+ * This should only be used if cbox_is_setup() returns false.
+ *
+ * @since 0.3
+ *
+ * @return string The current CBox setup step.
+ */
+function cbox_get_setup_step() {
+	// see if BuddyPress is activated
+	// @todo BP_VERSION doesn't work in BP 1.7 yet
+	// @todo should also check the BP DB version...
+	if ( ! defined( 'BP_VERSION' ) ) {
+		$step = 'no-buddypress';
+
+	// buddypress is activated
+	} else {
+		// buddypress needs to finish setup
+		if ( cbox_is_bp_maintenance_mode() ) {
+			$step = 'buddypress-wizard';
+
+		// buddypress is setup
+		} else {
+			$step = 'last-step';
+		}
+	}
+
+	return $step;
 }
 
 /**
@@ -174,7 +207,7 @@ function cbox_is_theme_bp_compatible() {
 		return false;
 
 	// if we're on BP 1.7, we don't need to worry about theme compatibility
-	if ( version_compare( BP_VERSION, '1.6.99', '>' ) )
+	if ( function_exists( 'bp_get_template_part' ) )
 		return true;
 
 	// get current theme
