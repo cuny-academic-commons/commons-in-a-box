@@ -277,6 +277,10 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 				$skin_args['redirect_link'] = $this->options['redirect_link'];
 			}
 
+			if (! empty( $this->options['redirect_text'] ) ) {
+				$skin_args['redirect_text'] = $this->options['redirect_text'];
+			}
+
 			$skin_args['install_strings'] = true;
 
 			echo '<p>' . __( 'Plugins updated.', 'cbox' ) . '</p>';
@@ -380,18 +384,24 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	 * @param string $redirect_link Redirect link with anchor text. This is used if CBox_Bulk_Plugin_Upgrader_Skin doesn't have one.
 	 * @since 0.3
 	 */
-	public function after_updater( $redirect_link = '' ) {
+	public function after_updater( $args = array() ) {
 		// if a redirect link is passed, use it.
-		if ( ! empty( $redirect_link ) )
-			echo $redirect_link;
+		if ( ! empty( $args ) ) {
+ 			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : false;
+ 			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : false;
 
 		// if a redirect link is passed during the class constructor, use it
-		elseif ( ! empty( $this->options['redirect_link'] ) )
-			echo $this->options['redirect_link'];
+		} elseif ( ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
+			$redirect_link = $this->options['redirect_link'];
+			$redirect_text = $this->options['redirect_text'];
 
 		// default fallback
-		else
-			printf( __( 'Return to the <a href="%s">CBox Plugins page</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox-plugins' ) );
+		} else {
+			$redirect_link = self_admin_url( 'admin.php?page=cbox' );
+			$redirect_text = __( 'Return to the CBox Plugins page', 'cbox' );
+		}
+
+		echo '<br /><a class="button-primary" href="' . esc_url( $redirect_link ) . '">' . esc_attr( $redirect_text ) . '</a>';
 
 		// extra hook to do stuff after the updater has run
 		do_action( 'cbox_after_updater' );
@@ -429,7 +439,10 @@ class CBox_Updater {
 			self::$is_activate = true;
 
 		if ( ! empty( $settings['redirect_link'] ) )
-			$skin_args['redirect_link'] = $this->redirect_link = $settings['redirect_link'];
+			$skin_args['redirect_link'] = $settings['redirect_link'];
+
+		if ( ! empty( $settings['redirect_text'] ) )
+			$skin_args['redirect_text'] = $settings['redirect_text'];
 
 		// dependency-time!
 		// flatten the associative array to make dependency checks easier
@@ -495,14 +508,14 @@ class CBox_Updater {
 
  		// let's see if upgrades are available; if so, start with that
  		if ( self::$is_upgrade ) {
-			// if installs are available as well, this tells CBox_Plugin_Upgrader 
+			// if installs are available as well, this tells CBox_Plugin_Upgrader
 			// to install plugins after the upgrader is done
 			if ( self::$is_install ) {
 				$skin_args['install_plugins'] = $plugins['install'];
 				$skin_args['install_strings'] = true;
 			}
 
-			// if activations are available as well, this tells CBox_Plugin_Upgrader 
+			// if activations are available as well, this tells CBox_Plugin_Upgrader
 			// to activate plugins after the upgrader is done
 			if ( self::$is_activate ) {
 				$skin_args['activate_plugins'] = $plugins['activate'];
@@ -525,7 +538,7 @@ class CBox_Updater {
 
 		// if no upgrades are available, move on to installs
  		elseif( self::$is_install ) {
-			// if activations are available as well, this tells CBox_Plugin_Upgrader 
+			// if activations are available as well, this tells CBox_Plugin_Upgrader
 			// to activate plugins after the upgrader is done
 			if ( self::$is_activate ) {
 				$skin_args['activate_plugins'] = $plugins['activate'];
@@ -550,12 +563,11 @@ class CBox_Updater {
 			echo '<h3>' . __( 'Activating Plugins...', 'cbox' ) . '</h3>';
 
  			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
- 			$redirect_link = ! empty( $settings['redirect_link'] ) ? $settings['redirect_link'] : false;
  		?>
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $redirect_link ); ?></p>
+			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $settings ); ?></p>
  		<?php
  		}
 

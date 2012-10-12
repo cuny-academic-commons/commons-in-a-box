@@ -24,8 +24,14 @@ class CIAB_Admin {
 		// setup admin menu
 		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu',           array( $this, 'admin_menu' ) );
 
+		// see if an admin notice should be shown
+		add_action( 'admin_init',                                                   array( $this, 'setup_notice' ) );
+
+		// notice inline CSS
+		add_action( 'admin_head',                                                   array( $this, 'notice_css' ) );
+
 		// add an admin notice if CBox isn't setup
-		add_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'notice' ) );
+		add_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
 
 		// add a special header on the admin plugins page
 		add_action( 'pre_current_active_plugins', 	                            array( $this, 'plugins_page_header' ) );
@@ -84,7 +90,7 @@ class CIAB_Admin {
 	 * The main dashboard page.
 	 */
 	public function admin_page() {
-		if ( $this->is_upgraded() ) {
+		if ( $this->is_changelog() ) {
 			require( CIAB_PLUGIN_DIR . 'admin/changelog.php' );
 		}
 
@@ -100,7 +106,7 @@ class CIAB_Admin {
 				<h2><?php _e( 'Commons in a Box Dashboard', 'cbox' ); ?></h2>
 
 				<?php $this->welcome_panel(); ?>
-				<?php $this->instructions(); ?>
+				<?php $this->steps(); ?>
 				<?php $this->upgrades(); ?>
 				<?php $this->metaboxes(); ?>
 				<?php $this->about(); ?>
@@ -197,17 +203,14 @@ class CIAB_Admin {
 	}
 
 	/**
-	 * Did we just finish the upgrade process?
-	 *
-	 * @todo This should be fletched out as soon as we finish the upgrade wizard!
+	 * Should we show the changelog screen?
 	 *
 	 * @return bool
 	 */
-	private function is_upgraded() {
+	private function is_changelog() {
 		if ( ! empty( $_GET['whatsnew'] ) )
 			return true;
 
-		// toggle this to true if you want to see what the upgrade screen looks like!
 		return false;
 	}
 
@@ -237,7 +240,8 @@ class CIAB_Admin {
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => sprintf( __( 'Return to the <a href="%s">CBox Dashboard</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) )
+					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
+					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -259,7 +263,8 @@ class CIAB_Admin {
 
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => sprintf( __( 'Return to the <a href="%s">CBox Dashboard</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) )
+					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
+					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -282,7 +287,8 @@ class CIAB_Admin {
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => sprintf( __( 'Return to the <a href="%s">CBox Dashboard</a>.', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) )
+					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
+					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -431,15 +437,15 @@ class CIAB_Admin {
 	}
 
 	/**
-	 * CBox Instructions.
+	 * CBox setup steps.
 	 *
-	 * This shows up when CBox hasn't finished setup yet.
+	 * This shows up when CBox hasn't completed setup yet.
 	 *
 	 * @since 0.3
 	 *
 	 * @uses cbox_is_setup() To tell if CBox is fully setup.
 	 */
-	private function instructions() {
+	private function steps() {
 		// if cbox is already setup, stop now!
 		if ( cbox_is_setup() )
 			return;
@@ -448,28 +454,32 @@ class CIAB_Admin {
 		if ( cbox_is_upgraded() )
 			return;
 
-		// workflow 1: cbox and buddypress haven't been setup yet
-		if ( ! defined( 'BP_VERSION' ) ) :
-	?>
+		// do something different depending on the setup step
+		switch ( cbox_get_setup_step() ) {
 
-		<h2><?php _e( 'Install BuddyPress!', 'cbox' ); ?></h2>
+			// (1) buddypress isn't activated or isn't installed
+			case 'no-buddypress' :
 
-		<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-			<p class="submitted-on"><?php _e( "Before we can get set up, we'll need to install BuddyPress and some recommended plugins. Click on 'Continue' below to set them up.", 'cbox' ); ?></p>
+			?>
 
-			<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
+				<h2><?php _e( 'Install BuddyPress!', 'cbox' ); ?></h2>
 
-			<p><input type="submit" value="<?php _e( 'Continue &rarr;', 'cbox' ); ?>" class="button-primary" name="cbox-virgin-setup" /></p>
-		</form>
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
+					<p class="submitted-on"><?php _e( "Before we can get set up, we'll need to install BuddyPress and some recommended plugins. Click on 'Continue' below to set them up.", 'cbox' ); ?></p>
 
-	<?php
+					<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
 
-		// workflow 2: cbox hasn't been setup, but buddypress is active
-		else :
+					<p><input type="submit" value="<?php _e( 'Continue &rarr;', 'cbox' ); ?>" class="button-primary" name="cbox-virgin-setup" /></p>
+				</form>
 
-			// buddypress needs to finish setup
-			if ( cbox_is_bp_maintenance_mode() ) :
-	?>
+			<?php
+				break;
+
+			// (2) buddypress is activated, but we just upgraded buddypress
+			case 'buddypress-wizard' :
+
+			?>
+
 				<h2><?php _e( 'Setup BuddyPress!', 'cbox' ); ?></h2>
 
 				<p class="submitted-on"><?php _e( "We're almost there! Now we need to finish setting up BuddyPress.", 'cbox' ); ?></p>
@@ -478,9 +488,12 @@ class CIAB_Admin {
 
 				<p><a class="button-primary" href="<?php cbox_the_bp_admin_wizard_url(); ?>"><?php _e( 'Continue to BuddyPress setup &rarr;', 'cbox' ); ?></a></p>
 
-	<?php
-			// buddypress is setup
-			else :
+			<?php
+				break;
+
+			// (3) we're on the last step!
+			case 'last-step' :
+
 				// get recommended plugins that are available to install / upgrade
 				$recommended_plugins = CIAB_Plugins::organize_plugins_by_state( CIAB_Plugins::get_plugins( 'recommended' ) );
 
@@ -488,8 +501,9 @@ class CIAB_Admin {
 				if ( ! empty( $recommended_plugins['deactivate'] ) )
 					unset( $recommended_plugins['deactivate'] );
 
-				if ( ! empty( $recommended_plugins ) ) :
-	?>
+				// we have some recommended plugins to bug the user about!
+				if ( ! empty( $recommended_plugins ) ) {
+			?>
 
 				<h2><?php _e( 'Install some other cool stuff!', 'cbox' ); ?></h2>
 
@@ -511,18 +525,19 @@ class CIAB_Admin {
 					?>
 				</form>
 
-	<?php
+			<?php
 				// all recommended plugins are already installed
 				// so bump the cbox revision date and reload the page using javascript
 				// @todo make this <noscript> friendly
-				else :
+				} else {
 					cbox_bump_revision_date();
 
 					echo '<script type="text/javascript">window.location = document.URL;</script>';
-				endif;
-			endif;
+				}
 
-		endif;
+				break;
+
+		} // end switch()
 	}
 
 	/**
@@ -722,19 +737,131 @@ class CIAB_Admin {
 	 *
 	 * @since 0.3
 	 */
-	public function notice() {
-		// if cbox is setup or we're on the cbox dashboard page or BP wizard, stop now!
-		if ( cbox_is_setup() || ! empty( $_REQUEST['page'] ) && ( $_REQUEST['page'] == 'cbox' || $_REQUEST['page'] == 'bp-wizard' ) )
+	public function setup_notice() {
+		// if cbox is setup, stop now!
+		if ( cbox_is_setup() )
 			return;
 
 		// only show notice if we're either a super admin on a network or an admin on a single site
 		$show_notice = current_user_can( 'manage_network_plugins' ) || ( ! is_multisite() && current_user_can( 'install_plugins' ) );
 
-		if ( $show_notice ) {
-			echo '<div class="error"><p>';
-			printf( __( "You've successfully activated Commons In A Box. <a href='%s'>Click here to get set up</a>.", 'cbox' ), network_admin_url( 'admin.php?page=cbox' ) );
-			echo '</p></div>';
+		if ( ! $show_notice )
+			return;
+
+		cbox()->show_notice = true;
+	}
+
+	/**
+	 * Show an admin notice if CBox hasn't finished setting up.
+	 *
+	 * @since 0.3
+	 */
+	public function notice_css() {
+		if ( empty( cbox()->show_notice ) )
+			return;
+	?>
+		<style type="text/css">
+		#cbox-nag {
+			position:relative;
+			min-height:42px;
+
+			background: #d9edf7; /* Old browsers */
+			background: -moz-linear-gradient(top,  #d9edf7 59%, #ffffff 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(59%,#d9edf7), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  #d9edf7 59%,#ffffff 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9edf7', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+			color: #666;
+
+			border-radius:6px;
+			border:1px solid #BCE8F1;
+			font-size: 1.45em;
+			padding: 1em 1em .3em;
+			text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
 		}
+
+		#cbox-nag strong {color:#3A87AD;}
+
+		#cbox-nag a {color:#005580; text-decoration:underline;}
+
+		#cbox-nag a.callout {
+			background-color: #FAA732;
+			background-image: -moz-linear-gradient(center top , #FBB450, #F89406);
+			background-repeat: repeat-x;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+			color: #FFFFFF;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+			text-decoration:none;
+			border-radius: 4px 4px 4px 4px;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+			cursor: pointer;
+			display: inline-block;
+			font-size: 14px;
+			line-height: 20px;
+			margin-bottom: 0;
+			padding: 4px 14px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		#cbox-nag a.callout:hover {background-color:#f89406; background-position:0 -15px;}
+		#cbox-nag img {position:absolute; right:10px; bottom:10px;}
+		</style>
+
+	<?php
+	}
+
+	/**
+	 * Show an admin notice if CBox hasn't finished setting up.
+	 *
+	 * @since 0.3
+	 */
+	public function display_notice() {
+		if ( empty( cbox()->show_notice ) )
+			return;
+
+		if ( ! empty( cbox()->setup ) )
+			return;
+
+		switch ( cbox_get_setup_step() ) {
+			case 'no-buddypress' :
+				$notice_text = __( "Let's get started!", 'cbox' );
+				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_text = __( 'Click here to get set up', 'cbox' );
+				$disable_btn = 'cbox';
+				break;
+
+			case 'buddypress-wizard' :
+				$notice_text = __( 'BuddyPress is installed. Now we need you to finish setting up BuddyPress.', 'cbox' );
+				$button_link = cbox_get_the_bp_admin_wizard_url();
+				$button_text = __( 'Finish BuddyPress setup &rarr;', 'cbox' );
+				$disable_btn = 'bp-wizard';
+				break;
+
+			case 'last-step' :
+				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
+				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_text = __( 'Click here to finish up!', 'cbox' );
+				$disable_btn = 'cbox';
+				break;
+		}
+	?>
+
+		<div id="cbox-nag" class="updated">
+			<strong><?php _e( "Commons In A Box is almost ready!", 'cbox' ); ?></strong> <?php echo $notice_text; ?>
+
+			<?php if ( empty( $_REQUEST['page'] ) || ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != $disable_btn ) ) : ?>
+				<p><a class="callout" href="<?php echo $button_link; ?>"><?php echo $button_text; ?></a></p>
+			<?php endif; ?>
+
+			<img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAKBmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6eG1wUmlnaHRzPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvcmlnaHRzLyIKICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgIHhtbG5zOklwdGM0eG1wQ29yZT0iaHR0cDovL2lwdGMub3JnL3N0ZC9JcHRjNHhtcENvcmUvMS4wL3htbG5zLyIKICAgIHhtbG5zOnBsdXNfMV89Imh0dHA6Ly9ucy51c2VwbHVzLm9yZy9sZGYveG1wLzEuMC8iCiAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiCiAgIHhtcFJpZ2h0czpNYXJrZWQ9IlRydWUiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMTEtMDEtMjVUMTM6NTU6MzgrMDE6MDAiCiAgIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDA0NjQxNjg4MjI4RTAxMTk4OUNDMEExQUQwMkI1QzIiCiAgIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDA0NjQxNjg4MjI4RTAxMTk4OUNDMEExQUQwMkI1QzIiCiAgIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowMDQ2NDE2ODgyMjhFMDExOTg5Q0MwQTFBRDAyQjVDMiI+CiAgIDx4bXBSaWdodHM6VXNhZ2VUZXJtcz4KICAgIDxyZGY6QWx0PgogICAgIDxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+Q3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1Ob25Db21tZXJjaWFsIGxpY2Vuc2U8L3JkZjpsaT4KICAgIDwvcmRmOkFsdD4KICAgPC94bXBSaWdodHM6VXNhZ2VUZXJtcz4KICAgPGRjOmNyZWF0b3I+CiAgICA8cmRmOlNlcT4KICAgICA8cmRmOmxpPkdlbnRsZWZhY2UgY3VzdG9tIHRvb2xiYXIgaWNvbnMgZGVzaWduPC9yZGY6bGk+CiAgICA8L3JkZjpTZXE+CiAgIDwvZGM6Y3JlYXRvcj4KICAgPGRjOmRlc2NyaXB0aW9uPgogICAgPHJkZjpBbHQ+CiAgICAgPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5XaXJlZnJhbWUgbW9ubyB0b29sYmFyIGljb25zPC9yZGY6bGk+CiAgICA8L3JkZjpBbHQ+CiAgIDwvZGM6ZGVzY3JpcHRpb24+CiAgIDxkYzpzdWJqZWN0PgogICAgPHJkZjpCYWc+CiAgICAgPHJkZjpsaT5jdXN0b20gaWNvbiBkZXNpZ248L3JkZjpsaT4KICAgICA8cmRmOmxpPnRvb2xiYXIgaWNvbnM8L3JkZjpsaT4KICAgICA8cmRmOmxpPmN1c3RvbSBpY29uczwvcmRmOmxpPgogICAgIDxyZGY6bGk+aW50ZXJmYWNlIGRlc2lnbjwvcmRmOmxpPgogICAgIDxyZGY6bGk+dWkgZGVzaWduPC9yZGY6bGk+CiAgICAgPHJkZjpsaT5ndWkgZGVzaWduPC9yZGY6bGk+CiAgICAgPHJkZjpsaT50YXNrYmFyIGljb25zPC9yZGY6bGk+CiAgICA8L3JkZjpCYWc+CiAgIDwvZGM6c3ViamVjdD4KICAgPGRjOnJpZ2h0cz4KICAgIDxyZGY6QWx0PgogICAgIDxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+Q3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1Ob25Db21tZXJjaWFsIGxpY2Vuc2U8L3JkZjpsaT4KICAgIDwvcmRmOkFsdD4KICAgPC9kYzpyaWdodHM+CiAgIDxJcHRjNHhtcENvcmU6Q3JlYXRvckNvbnRhY3RJbmZvCiAgICBJcHRjNHhtcENvcmU6Q2lVcmxXb3JrPSJodHRwOi8vd3d3LmdlbnRsZWZhY2UuY29tIi8+CiAgIDxwbHVzXzFfOkltYWdlQ3JlYXRvcj4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgcGx1c18xXzpJbWFnZUNyZWF0b3JOYW1lPSJnZW50bGVmYWNlLmNvbSIvPgogICAgPC9yZGY6U2VxPgogICA8L3BsdXNfMV86SW1hZ2VDcmVhdG9yPgogICA8cGx1c18xXzpDb3B5cmlnaHRPd25lcj4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgcGx1c18xXzpDb3B5cmlnaHRPd25lck5hbWU9ImdlbnRsZWZhY2UuY29tIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwvcGx1c18xXzpDb3B5cmlnaHRPd25lcj4KICAgPHhtcE1NOkhpc3Rvcnk+CiAgICA8cmRmOlNlcT4KICAgICA8cmRmOmxpCiAgICAgIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiCiAgICAgIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MDA0NjQxNjg4MjI4RTAxMTk4OUNDMEExQUQwMkI1QzIiCiAgICAgIHN0RXZ0OndoZW49IjIwMTEtMDEtMjVUMTM6NTU6MzgrMDE6MDAiCiAgICAgIHN0RXZ0OmNoYW5nZWQ9Ii9tZXRhZGF0YSIvPgogICAgPC9yZGY6U2VxPgogICA8L3htcE1NOkhpc3Rvcnk+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LtLY2wAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAA8dEVYdEFMVFRhZwBUaGlzIGlzIHRoZSBpY29uIGZyb20gR2VudGxlZmFjZS5jb20gZnJlZSBpY29ucyBzZXQuINhr6MQAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAEVpVFh0RGVzY3JpcHRpb24AAAAAAFRoaXMgaXMgdGhlIGljb24gZnJvbSBHZW50bGVmYWNlLmNvbSBmcmVlIGljb25zIHNldC4gvBH4GgAAAEhpVFh0Q29weXJpZ2h0AAAAAABDcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVzWILLBQAAA15JREFUeNrsWl1S4kAQJluopShE+XkOovjKEbiB6wmIJ/AIlifY5QTiCXRvwA3kVQXJq4oS5FdAst+kJmyAIJkkI1BLV3VBkUx3f909Pd2jPt+KVuSKBF6CNU0T8fETfAwW6c9X4BtBENSF9chgMEiBL8FVsGbBVfo8tTBGf35+imAZfAvWGPiWrhPnkkL9fp948YymiuhCFEmpG3DW7/cXuAPo9XoyPjLI5TSHvUMAZAmgtbU11TMA3W5XgsHE27JLbzNFBYCy6+vrBccAPj4+ZBiewdf0HLdZgQAhgDY2NtSZAGC0RHP7u7zNulcuAESZANDpdIjhl3P2tl3Kg0/9FptoeU5hQbBOoXa7vegplN3c3CzY2sStVksvmfPexEZp3draUpmqkEHNZvO7ozL0diAQcF5GrajRaMgUTIqnt7e3t707yKyoXq973krs7Ow4byXe399/0a/ZYDCo2BWCdUbrzBqVobehT2XQZ6TzPwC1Wo38WDa9p3skFArlWTwC4SmU4q+iotKZgDiJyduwMW2K+GQEVFW1OgRIJC6IUlEUVQZlelQAJmOIh9F/iBw4xbYc2GRE9xwsfZlCUwAYBxxRmiNR2d3dVXiXoGq1Oqx6AC7a2gNYZOsYBhgC5Gpvby/vteFvb29p2qrLzJsYi1n7CL1LDIfDObeGv76+yrRdTzmuQhCiuSiDpJrkAEZhMFqiB+OZ0zI8AqBSqXjRyenpFYlEpqYX9KRpeyK7VTYC4OXlxctWlJTI02g0WjDJT9F23bMT3M+xlSZGXoPjJvnXVqXQDf3gXA2Hxj4/P0teG887AiMUi8WUp6cn39IC4CV/BWAF4H8HwLuMcqdVCi0aAIXHackRgDIO4IT2L9ISACDOPhkBIEkS6Rzj5XJ5YnheIAD6ZUM8Hs/PvBcCEIneMMhOB479/f2hjsfHRzcDU47cZMBwZeo8MI2g2LhhOGdNr0QiMdRRKpVYASgwWr8RgSPUmQONHYIRTOnlEICeJlg789LA8dVisVi0Nc8eHBwIpjWanbkaa2zP1Z78pf7h4cEAMjEqHh4eCqb3tCmjZxbvObrZ8PRfDe7v7yeG9WQyKZiea+PDP57n3ej0ewmAGpO/u7u7oCBCY2X0Nz5qxPijoyPFC51/BRgAIUHrGyaUKh8AAAAASUVORK5CYII=" />
+		</div>
+	<?php
 	}
 
 	/**
