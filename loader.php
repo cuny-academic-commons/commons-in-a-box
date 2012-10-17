@@ -95,14 +95,8 @@ class Commons_In_A_Box {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 
 			require( $this->plugin_dir . 'plugins/plugins-loader.php' );
-			$this->plugins = new CIAB_Plugins;
+			$this->plugins = new CBox_Plugins;
 		}
-
-		// @todo temporary
-		add_action( 'bp_include', create_function( '', '
-			require( CIAB_PLUGIN_DIR . "api/class.api-server.php" );
-			require( CIAB_PLUGIN_DIR . "api/class.api-client.php" );
-		' ) );
 	}
 
 
