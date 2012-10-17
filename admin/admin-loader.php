@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since 0.2
  */
-class CIAB_Admin {
+class CBox_Admin {
 
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ class CIAB_Admin {
 		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
 
 		// require admin functions
-		require( CIAB_PLUGIN_DIR . 'admin/functions.php' );
+		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
 	}
 
 	/**
@@ -91,7 +91,7 @@ class CIAB_Admin {
 	 */
 	public function admin_page() {
 		if ( $this->is_changelog() ) {
-			require( CIAB_PLUGIN_DIR . 'admin/changelog.php' );
+			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
 		}
 
 		elseif( ! empty( cbox()->setup ) ) {
@@ -224,14 +224,14 @@ class CIAB_Admin {
 			// virgin setup - no cbox or BP installed
 			case 'virgin-setup' :
 				// get cbox plugins except optional ones
-				$plugins = CIAB_Plugins::get_plugins( 'all', 'optional' );
+				$plugins = CBox_Plugins::get_plugins( 'all', 'optional' );
 
 				// sort plugins by plugin state
-				$plugins = CIAB_Plugins::organize_plugins_by_state( $plugins );
+				$plugins = CBox_Plugins::organize_plugins_by_state( $plugins );
 
 				// include the CBox Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
-					require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
+					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 				// some HTML markup!
 				echo '<div class="wrap">';
@@ -254,7 +254,7 @@ class CIAB_Admin {
 
 				// include the CBox Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
-					require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
+					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 				// some HTML markup!
 				echo '<div class="wrap">';
@@ -274,11 +274,11 @@ class CIAB_Admin {
 			// upgrading installed plugins
 			case 'upgrade' :
 				// setup our upgrade plugins array
-				$plugins['upgrade'] = CIAB_Plugins::get_upgrades( 'active' );
+				$plugins['upgrade'] = CBox_Plugins::get_upgrades( 'active' );
 
 				// include the CBox Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
-					require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
+					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 				// some HTML markup!
 				echo '<div class="wrap">';
@@ -299,7 +299,7 @@ class CIAB_Admin {
 			case 'install-theme' :
 				// include the CBox Theme Installer
 				if ( ! class_exists( 'CBox_Theme_Installer' ) )
-					require( CIAB_PLUGIN_DIR . 'admin/theme-install.php' );
+					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 
 				$title = sprintf( __( 'Installing %s', 'cbox' ), CBox_Theme_Installer::$cbox_theme['name'] . ' ' . CBox_Theme_Installer::$cbox_theme['version'] );
 
@@ -367,7 +367,7 @@ class CIAB_Admin {
 	 *
 	 * @since 0.3
 	 *
-	 * @see CIAB_Admin::bp_wizard_listener()
+	 * @see CBox_Admin::bp_wizard_listener()
 	 */
 	public function bp_wizard_redirect() {
 		// after the BP wizard completes, it gets redirected back to the BP
@@ -495,7 +495,7 @@ class CIAB_Admin {
 			case 'last-step' :
 
 				// get recommended plugins that are available to install / upgrade
-				$recommended_plugins = CIAB_Plugins::organize_plugins_by_state( CIAB_Plugins::get_plugins( 'recommended' ) );
+				$recommended_plugins = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
 
 				// we don't want already-installed plugins
 				if ( ! empty( $recommended_plugins['deactivate'] ) )
@@ -553,7 +553,7 @@ class CIAB_Admin {
 	 */
 	private function upgrades() {
 		// get activated CBox plugins that need updating
-		$active_cbox_plugins_need_update = CIAB_Plugins::get_upgrades( 'active' );
+		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
 		// if CBox just upgraded and has no plugin updates, bump cbox revision date and reload using JS
 		// yeah, the JS redirect is a little ugly... should probably do this higher up the stack...
@@ -595,7 +595,7 @@ class CIAB_Admin {
 		if ( ! cbox_is_setup() )
 			return;
 
-		$cbox_plugins = CIAB_Plugins::get_plugins();
+		$cbox_plugins = CBox_Plugins::get_plugins();
 	?>
 
 		<div class="welcome-panel secondary-panel">
@@ -610,7 +610,7 @@ class CIAB_Admin {
 					<ul>
 
 					<?php
-						foreach ( CIAB_Plugins::get_settings() as $plugin => $settings_url ) {
+						foreach ( CBox_Plugins::get_settings() as $plugin => $settings_url ) {
 							echo '<li><a href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'] . '</li>';
 						}
 					?>
@@ -990,4 +990,4 @@ class CIAB_Admin {
 }
 
 // initialize admin area
-new CIAB_Admin;
+new CBox_Admin;

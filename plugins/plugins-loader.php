@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-class CIAB_Plugins {
+class CBox_Plugins {
 
 	/**
 	 * Static variable to hold our various plugins
@@ -39,7 +39,7 @@ class CIAB_Plugins {
 	private function includes() {
 		// add the Plugin Dependencies plugin
 		if ( ! class_exists( 'Plugin_Dependencies' ) )
-			require_once( CIAB_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
+			require_once( CBOX_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
 
 		// make sure to include the WP Plugin API if it isn't available
 		//if ( ! function_exists( 'get_plugins' ) )
@@ -313,10 +313,10 @@ class CIAB_Plugins {
 	/**
 	 * Register a plugin in CBox.
 	 *
-	 * @see CIAB_Plugins::register_required_plugins()
-	 * @see CIAB_Plugins::register_recommended_plugins()
-	 * @see CIAB_Plugins::register_optional_plugins()
-	 * @see CIAB_Plugins::register_dependency_plugins()
+	 * @see CBox_Plugins::register_required_plugins()
+	 * @see CBox_Plugins::register_recommended_plugins()
+	 * @see CBox_Plugins::register_optional_plugins()
+	 * @see CBox_Plugins::register_dependency_plugins()
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
@@ -609,7 +609,7 @@ class CIAB_Plugins {
 			add_action( "load-{$plugin_page}",       array( 'Plugin_Dependencies', 'init' ) );
 
 			// inline CSS
-			add_action( "admin_head-{$plugin_page}", array( 'CIAB_Admin', 'inline_css' ) );
+			add_action( "admin_head-{$plugin_page}", array( 'CBox_Admin', 'inline_css' ) );
 			add_action( "admin_head-{$plugin_page}", array( $this, 'inline_css' ) );
 		}
 	}
@@ -776,7 +776,7 @@ class CIAB_Plugins {
 	/**
 	 * Are we updating?
 	 *
-	 * @see CIAB_Plugins::validate_cbox_dashboard()
+	 * @see CBox_Plugins::validate_cbox_dashboard()
 	 * @return bool
 	 */
 	public static function is_update() {
@@ -801,7 +801,7 @@ class CIAB_Plugins {
 
 		// include the CBox Plugin Upgrade and Install API
 		if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
-			require( CIAB_PLUGIN_DIR . 'admin/plugin-install.php' );
+			require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 		// some HTML markup!
 		echo '<div class="wrap">';

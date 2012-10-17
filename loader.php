@@ -51,11 +51,11 @@ class Commons_In_A_Box {
 	 * @todo Figure out a reliable way to use plugin_dir_path()
 	 */
 	private function constants() {
-		if ( ! defined( 'CIAB_PLUGIN_DIR' ) )
-			define( 'CIAB_PLUGIN_DIR', trailingslashit( dirname( __FILE__ ) ) );
+		if ( ! defined( 'CBOX_PLUGIN_DIR' ) )
+			define( 'CBOX_PLUGIN_DIR', trailingslashit( dirname( __FILE__ ) ) );
 
-		if ( ! defined( 'CIAB_LIB_DIR' ) )
-			define( 'CIAB_LIB_DIR',    trailingslashit( CIAB_PLUGIN_DIR . 'lib' ) );
+		if ( ! defined( 'CBOX_LIB_DIR' ) )
+			define( 'CBOX_LIB_DIR',    trailingslashit( CBOX_PLUGIN_DIR . 'lib' ) );
 
 	}
 
@@ -77,7 +77,7 @@ class Commons_In_A_Box {
 		/** FILESYSTEM ********************************************************/
 
 		// the absolute directory CBox is running from
-		$this->plugin_dir    = constant( 'CIAB_PLUGIN_DIR' );
+		$this->plugin_dir    = constant( 'CBOX_PLUGIN_DIR' );
 
 		// the URL to the CBox directory
 		$this->plugin_url    = plugin_dir_url( __FILE__ );

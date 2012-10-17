@@ -14,7 +14,7 @@ require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
 // add the Plugin Dependencies plugin; just in case this file is called outside the admin area
 if ( ! class_exists( 'Plugin_Dependencies' ) )
-	require_once( CIAB_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
+	require_once( CBOX_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
 
 /**
  * CBox's custom plugin upgrader.
@@ -40,7 +40,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		$current = CIAB_Plugins::get_plugins();
+		$current = CBox_Plugins::get_plugins();
 
 		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'), 10, 4);
 
@@ -113,7 +113,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	/**
 	 * Bulk install plugins.
 	 *
-	 * Download links for plugins are listed in {@link CIAB_Plugins::get_plugins()}.
+	 * Download links for plugins are listed in {@link CBox_Plugins::get_plugins()}.
 	 *
 	 * @param str $plugins Array of plugin names
 	 */
@@ -124,8 +124,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->install_strings();
 
 		// download URLs for each plugin should be registered in either the following:
-		$dependency = CIAB_Plugins::get_plugins( 'dependency' );
-		$required = CIAB_Plugins::get_plugins();
+		$dependency = CBox_Plugins::get_plugins( 'dependency' );
+		$required = CBox_Plugins::get_plugins();
 
 		add_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
