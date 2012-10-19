@@ -94,7 +94,7 @@ class Commons_In_A_Box {
 		if ( is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 
-			require( $this->plugin_dir . 'plugins/plugins-loader.php' );
+			require( $this->plugin_dir . 'admin/plugins-loader.php' );
 			$this->plugins = new CBox_Plugins;
 		}
 	}
