@@ -599,5 +599,3 @@ class CBox_Updater {
 	}
 
 }
-
-?>

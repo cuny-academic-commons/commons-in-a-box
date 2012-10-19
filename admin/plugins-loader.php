@@ -107,6 +107,7 @@ class CBox_Plugins {
 	 *
 	 * We register these plugins here for later use.
 	 *
+	 * @see CBox_Plugins::register_plugin()
 	 * @return array
 	 */
 	private function register_required_plugins() {
@@ -127,6 +128,7 @@ class CBox_Plugins {
 	 *
 	 * We register these plugins here for later use.
 	 *
+	 * @see CBox_Plugins::register_plugin()
 	 * @return array
 	 */
 	private function register_recommended_plugins() {
@@ -245,6 +247,7 @@ class CBox_Plugins {
 	 *
 	 * We register these plugins here for later use.
 	 *
+	 * @see CBox_Plugins::register_plugin()
 	 * @return array
 	 */
 	private function register_optional_plugins() {
@@ -299,6 +302,7 @@ class CBox_Plugins {
 	 * This is designed to avoid pinging the WP.org Plugin Repo API multiple times to grab the download URL,
 	 * and is much more efficient for our usage.
 	 *
+	 * @see CBox_Plugins::register_plugin()
 	 * @return array
 	 */
 	private function register_dependency_plugins() {
@@ -393,9 +397,10 @@ class CBox_Plugins {
 	/**
 	 * Organize plugins by state.
 	 *
+	 * @since 0.3
+	 *
 	 * @param Array of plugins.
 	 * @return Associative array with plugin state as array key
-	 * @since 0.3
 	 */
 	public static function organize_plugins_by_state( $plugins ) {
 		$organized_plugins = array();
@@ -416,8 +421,9 @@ class CBox_Plugins {
 	/**
 	 * Get settings links for our installed CBox plugins.
 	 *
-	 * @return Assosicate array with CBox plugin name as key and admin settings URL as the value.
 	 * @since 0.3
+	 *
+	 * @return Assosicate array with CBox plugin name as key and admin settings URL as the value.
 	 */
 	public static function get_settings() {
 		// get all installed cbox plugins
@@ -464,9 +470,10 @@ class CBox_Plugins {
 	/**
 	 * Get plugins that require upgrades.
 	 *
+	 * @since 0.3
+	 *
 	 * @param string $type The type of plugins to get upgrades for. Either 'all' or 'active'.
 	 * @return array of CBox plugin names that require upgrading
-	 * @since 0.3
 	 */
 	public static function get_upgrades( $type = 'all' ) {
 		// get all CBox plugins that require upgrades
@@ -587,8 +594,9 @@ class CBox_Plugins {
 	 *
 	 * The "Plugins" menu item only appears once CBox is completely setup.
 	 *
-	 * @uses cbox_is_setup() To see if CBox is completely setup.
 	 * @since 0.3
+	 *
+	 * @uses cbox_is_setup() To see if CBox is completely setup.
 	 */
 	public function setup_plugins_page() {
 		// see if cbox is fully setup
@@ -693,6 +701,7 @@ class CBox_Plugins {
 			$text = __( 'The following plugins have also been deactivated:', 'cbox' );
 
 			// render each plugin as a list item
+			// not really a fan of the code below, but it's from Plugin Dependencies
 			$all_plugins = Plugin_Dependencies::$all_plugins;
 			$dep_list = '';
 			foreach ( $deactivated as $dep ) {
@@ -838,10 +847,11 @@ class CBox_Plugins {
 	 *
 	 * eg. "BuddyPress (>=1.5), BuddyPress Docs, Invite Anyone"
 	 *
+	 * @since 0.2
+	 *
 	 * @param string $dependency_str Comma-delimited list of plugins. Can include version dependencies. See PHPDoc.
 	 * @uses Plugin_Dependencies::parse_field()
 	 * @return array
-	 * @since 0.2
 	 */
 	private function parse_dependency_str( $dependency_str ) {
 		return Plugin_Dependencies::parse_field( $dependency_str );
@@ -853,9 +863,10 @@ class CBox_Plugins {
 	 * This is a resource-friendly version that already references the active
 	 * plugins in the Plugin Dependencies variable.
 	 *
+	 * @since 0.2
+	 *
 	 * @param string $loader Plugin loader filename.
 	 * @return bool
-	 * @since 0.2
 	 */
 	public static function is_plugin_active( $loader ) {
 		$active_plugins = (array) Plugin_Dependencies::$active_plugins;
@@ -866,9 +877,10 @@ class CBox_Plugins {
 	/**
 	 * Helper method to get the Cbox required plugin's state.
 	 *
+	 * @since 0.2
+	 *
 	 * @param str $loader The required plugin's loader filename
  	 * @param array $data The required plugin's data. See $this->register_required_plugins().
- 	 * @since 0.2
 	 */
 	public static function get_plugin_state( $loader, $data ) {
 		$state = false;
@@ -902,8 +914,9 @@ class CBox_Plugins {
 	/**
 	 * Helper method to output the deactivation URL for a plugin in the CBox dashboard.
 	 *
-	 * @param str $loader The plugin's loader filename
 	 * @since 0.2
+	 *
+	 * @param str $loader The plugin's loader filename
 	 */
 	private function deactivate_link( $loader ) {
 		echo self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=deactivate&amp;plugin=' . urlencode( $loader ) . '&amp;_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
@@ -912,8 +925,9 @@ class CBox_Plugins {
 	/**
 	 * Renders a plugin table for CBox's plugins.
 	 *
-	 * @param mixed $args Querystring or array of parameters. See inline doc for more details.
 	 * @since 0.3
+	 *
+	 * @param mixed $args Querystring or array of parameters. See inline doc for more details.
 	 */
 	public function render_plugin_table( $args = '' ) {
 		$defaults = array(

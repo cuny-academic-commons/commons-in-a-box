@@ -176,6 +176,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 * Why? Because Github names their directories with the Github username,
 	 * repo name and a hash. So we want to rename the theme directory so
 	 * WP can pick up the parent theme and so it's more palatable.
+	 *
+	 * @uses rename() To rename a file or directory.
 	 */
 	public function rename_github_folder( $source, $remote_source ) {
 		// setup our parameters depending if we're installing
@@ -202,6 +204,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 	/**
 	 * Activates the CBox theme post install.
+	 *
+	 * @uses switch_theme() To switch the current theme to something else.
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		if ( ! empty( $result['destination_name'] ) &&
@@ -246,7 +250,9 @@ class CBox_Theme_Installer_Skin extends Theme_Installer_Skin {
 	function header() {
 		if ( $this->done_header )
 			return;
+
 		$this->done_header = true;
+
 		echo '<div class="wrap">';
 
 		// and here's the lousy change!

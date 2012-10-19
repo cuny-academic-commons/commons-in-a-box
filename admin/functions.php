@@ -16,6 +16,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since 0.3
  *
+ * @uses cbox_get_installed_revision_date() Get the CBox revision date from the DB
+ * @uses cbox_is_upgraded() Check to see if CBox just upgraded
+ * @uses cbox_is_bp_maintenance_mode() Check to see if BuddyPress is in maintenance mode
  * @return bool
  */
 function cbox_is_setup() {
@@ -118,6 +121,7 @@ function cbox_bump_revision_date() {
  *
  * @since 0.3
  *
+ * @uses cbox_is_bp_maintenance_mode() Check to see if BuddyPress is in maintenance mode
  * @return string The current CBox setup step.
  */
 function cbox_get_setup_step() {
@@ -147,7 +151,7 @@ function cbox_get_setup_step() {
  *
  * @since 0.3
  *
- * @uses cbox_get_the_bp_admin_wizard_url() To get the URL for the BP Admin Wizard pgae.
+ * @uses cbox_get_the_bp_admin_wizard_url() To get the URL for the BP Admin Wizard page.
  */
 function cbox_the_bp_admin_wizard_url() {
 	echo cbox_get_the_bp_admin_wizard_url();
@@ -160,6 +164,10 @@ function cbox_the_bp_admin_wizard_url() {
 	 * {@link BP_Admin::admin_menus()}.
 	 *
 	 * @since 0.3
+	 *
+	 * @uses is_multisite() Check to see if WP is in network mode.
+	 * @uses bp_is_multiblog() Check to see if BuddyPress is in multiblog mode.
+	 * @return string of the BP wizard URL
 	 */
 	function cbox_get_the_bp_admin_wizard_url() {
 		if ( ! is_multisite() || bp_is_multiblog_mode() ) {

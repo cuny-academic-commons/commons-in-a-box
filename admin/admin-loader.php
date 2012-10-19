@@ -95,7 +95,7 @@ class CBox_Admin {
 		}
 
 		elseif( ! empty( cbox()->setup ) ) {
-			$this->setup_screen( cbox()->setup );
+			$this->setup_screen();
 		}
 
 		// regular screen should go here
@@ -219,8 +219,9 @@ class CBox_Admin {
 	 *
 	 * @since 0.3
 	 */
-	private function setup_screen( $type ) {
-		switch( $type ) {
+	private function setup_screen() {
+		// do something different for each cbox setup condition
+		switch( cbox()->setup ) {
 			// virgin setup - no cbox or BP installed
 			case 'virgin-setup' :
 				// get cbox plugins except optional ones
@@ -444,6 +445,8 @@ class CBox_Admin {
 	 * @since 0.3
 	 *
 	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses cbox_is_upgraded() To check if CBox just upgraded.
+	 * @uses cbox_get_setup_step() Which setup step is CBox at?
 	 */
 	private function steps() {
 		// if cbox is already setup, stop now!
@@ -733,9 +736,13 @@ class CBox_Admin {
 	}
 
 	/**
-	 * Show an admin notice if CBox hasn't finished setting up.
+	 * Setup internal variable if the admin notice should be shown.
 	 *
 	 * @since 0.3
+	 *
+	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses current_user_can() Check if the current user has the permission to do something.
+	 * @uses is_multisite() Check to see if WP is in network mode.
 	 */
 	public function setup_notice() {
 		// if cbox is setup, stop now!
@@ -752,7 +759,7 @@ class CBox_Admin {
 	}
 
 	/**
-	 * Show an admin notice if CBox hasn't finished setting up.
+	 * Inline CSS for the admin notice.
 	 *
 	 * @since 0.3
 	 */
@@ -820,6 +827,8 @@ class CBox_Admin {
 	 * Show an admin notice if CBox hasn't finished setting up.
 	 *
 	 * @since 0.3
+	 *
+	 * @uses cbox_get_setup_step() Which setup step is CBox at?
 	 */
 	public function display_notice() {
 		if ( empty( cbox()->show_notice ) )
@@ -873,6 +882,9 @@ class CBox_Admin {
 	 * @since 0.3
 	 *
 	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses current_user_can() Check if the current user has the permission to do something.
+	 * @uses is_network_admin() Check to see if we're in the network admin area.
+	 * @uses is_multisite() Check to see if WP is in network mode.
 	 */
 	public function plugins_page_header() {
 		if ( cbox_is_setup() ) :
@@ -900,6 +912,8 @@ class CBox_Admin {
 	 * Enqueues JS for the main dashboard page.
 	 *
 	 * @since 0.3
+	 *
+	 * @uses wp_enqueue_script() Enqueues a given JS file in WordPress
 	 */
 	public function enqueue_js() {
 		// enqueue leanModal - lightweight modals
