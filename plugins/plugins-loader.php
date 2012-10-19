@@ -216,6 +216,19 @@ class CBox_Plugins {
 				'download_url'     => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
 				'network_settings' => 'settings.php#menu'
 			) );
+
+			// BuddyPress GroupBlog
+			self::register_plugin( array(
+				'plugin_name'      => 'BP Groupblog',
+				'type'             => 'recommended',
+				'cbox_name'        => 'BuddyPress Groupblog',
+				'cbox_description' => 'Enable a BuddyPress group to have a single blog associated with it.',
+				'depends'          => 'BuddyPress (>=1.6)',
+				'version'          => '1.8',
+				'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
+				'network_settings' => 'settings.php?page=bp_groupblog_management_page'
+			) );
+
 		endif;
 
 
@@ -235,18 +248,6 @@ class CBox_Plugins {
 	 * @return array
 	 */
 	private function register_optional_plugins() {
-
-		// BuddyPress GroupBlog
-		self::register_plugin( array(
-			'plugin_name'      => 'BP Groupblog',
-			'type'             => 'optional',
-			'cbox_name'        => 'BuddyPress Groupblog',
-			'cbox_description' => 'Enable a BuddyPress group to have a single blog associated with it.',
-			'depends'          => 'BuddyPress (>=1.6)',
-			'version'          => '1.8',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
-			'network_settings' => 'settings.php?page=bp_groupblog_management_page'
-		) );
 
 		// BuddyPress External Group Blogs
 		self::register_plugin( array(
