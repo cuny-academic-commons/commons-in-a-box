@@ -340,27 +340,25 @@ class CBox_Plugins {
 
 		$r = wp_parse_args( $args, $defaults );
 
-		extract( $r );
-
-		if ( empty( $plugin_name ) )
+		if ( empty( $r['plugin_name'] ) )
 			return false;
 
-		switch( $type ) {
+		switch( $r['type'] ) {
 			case 'required' :
 			case 'recommended' :
 			case 'optional' :
-				self::$plugins[$type][$plugin_name]['cbox_name']        = $cbox_name;
-				self::$plugins[$type][$plugin_name]['cbox_description'] = $cbox_description;
-				self::$plugins[$type][$plugin_name]['depends']          = $depends;
-				self::$plugins[$type][$plugin_name]['version']          = $version;
-				self::$plugins[$type][$plugin_name]['download_url']     = $download_url;
-				self::$plugins[$type][$plugin_name]['admin_settings']   = $admin_settings;
-				self::$plugins[$type][$plugin_name]['network_settings'] = $network_settings;
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']        = $r['cbox_name'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description'] = $r['cbox_description'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']          = $r['depends'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['version']          = $r['version'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']     = $r['download_url'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']   = $r['admin_settings'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings'] = $r['network_settings'];
 
 				break;
 
 			case 'dependency' :
-				self::$plugins[$type][$plugin_name]['download_url']     = $download_url;
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']     = $r['download_url'];
 
 				break;
 		}
@@ -937,7 +935,6 @@ class CBox_Plugins {
 		);
 
 		$r = wp_parse_args( $args, $defaults );
-		extract( $r );
 
 		// get unfulfilled requirements for all plugins
 		//$requirements = Plugin_Dependencies::get_requirements();
@@ -947,8 +944,8 @@ class CBox_Plugins {
 			<thead>
 				<tr>
 					<th scope="col" class="manage-column check-column"><input type="checkbox" id="plugins-select-all" /></th>
-					<th scope="col" id="<?php _e( $type ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
-					<th scope="col" id="<?php _e( $type ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
+					<th scope="col" id="<?php _e( $r['type'] ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
+					<th scope="col" id="<?php _e( $r['type'] ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
 				</tr>
 			</thead>
 
@@ -963,7 +960,7 @@ class CBox_Plugins {
 			<tbody>
 
 			<?php
-				foreach ( self::get_plugins( $type ) as $plugin => $data ) :
+				foreach ( self::get_plugins( $r['type'] ) as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 					$settings = self::get_settings();
@@ -971,13 +968,13 @@ class CBox_Plugins {
 					// get the required plugin's state
 					$state  = self::get_plugin_state( $loader, $data );
 
-					if ( $omit_activated && $state == 'deactivate' )
+					if ( $r['omit_activated'] && $state == 'deactivate' )
 						continue;
 			?>
 				<tr class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( $state != 'deactivate' ) : ?>
-							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $check_all ); ?>/>
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/>
 						<?php else : ?>
 							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
 						<?php endif; ?>
@@ -998,10 +995,10 @@ class CBox_Plugins {
 						<?php if ( ! empty( $settings[$plugin] ) ) : ?>
 							<a href="<?php echo $settings[$plugin]; ?>"><?php _e( 'Settings', 'cbox' ); ?></a>
 
-							<?php if ( $type != 'required' || $this->is_override() ) : ?>|<?php endif; ?>
+							<?php if ( $r['type'] != 'required' || $this->is_override() ) : ?>|<?php endif; ?>
 						<?php endif; ?>
 
-						<?php if ( $state == 'deactivate' ) : if ( $type != 'required' || $this->is_override() ) : ?>
+						<?php if ( $state == 'deactivate' ) : if ( $r['type'] != 'required' || $this->is_override() ) : ?>
 							<a href="<?php $this->deactivate_link( $loader ); ?>"><?php _e( 'Deactivate', 'cbox' ); ?></a>
 						<?php endif; elseif ( $state == 'upgrade' ) : ?>
 							<div class="plugin-update-tr"><p class="update-message"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
