@@ -444,6 +444,12 @@ class CBox_Updater {
 		if ( ! empty( $settings['redirect_text'] ) )
 			$skin_args['redirect_text'] = $settings['redirect_text'];
 
+		// if no plugins passed, stop the updater now!
+		if ( ! $plugins ) {
+			_doing_it_wrong( __METHOD__, 'first argument, (array) $plugins, cannot be empty.' );
+			return false;
+		}
+
 		// dependency-time!
 		// flatten the associative array to make dependency checks easier
 		$plugin_list = call_user_func_array( 'array_merge', $plugins );
