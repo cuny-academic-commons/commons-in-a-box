@@ -834,9 +834,7 @@ class CBox_Admin {
 		if ( empty( cbox()->show_notice ) )
 			return;
 
-		if ( ! empty( cbox()->setup ) )
-			return;
-
+		// setup some variables depending on the setup step
 		switch ( cbox_get_setup_step() ) {
 			case 'no-buddypress' :
 				$notice_text = __( "Let's get started!", 'cbox' );
@@ -858,6 +856,12 @@ class CBox_Admin {
 				$button_text = __( 'Click here to finish up!', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
+		}
+
+		// change variables if we're still in setup phase
+		if ( ! empty( cbox()->setup ) ) {
+			$notice_text = __( 'Installing plugins...', 'cbox' );
+			$disable_btn = 'cbox';
 		}
 	?>
 
