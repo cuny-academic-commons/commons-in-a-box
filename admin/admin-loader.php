@@ -146,7 +146,7 @@ class CBox_Admin {
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
 
 			// if no plugins to install, redirect back to CBox dashboard
-			if ( empty( $plugins ) ) {
+			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				do_action( 'cbox_after_updater' );
 				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 				exit;
