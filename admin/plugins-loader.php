@@ -322,6 +322,7 @@ class CBox_Plugins {
 	 * @see CBox_Plugins::register_recommended_plugins()
 	 * @see CBox_Plugins::register_optional_plugins()
 	 * @see CBox_Plugins::register_dependency_plugins()
+	 * @param mixed $args An array or querystring of arguments. See inline doc for more details.
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
@@ -369,6 +370,7 @@ class CBox_Plugins {
 	 * Helper method to grab all CBox plugins of a certain type.
 	 *
 	 * @param string $type Type of CBox plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
+	 * @param string $omit_type The type of CBox plugin to omit from returning
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
 	public static function get_plugins( $type = 'all', $omit_type = false ) {
@@ -379,6 +381,7 @@ class CBox_Plugins {
 			// okay, I lied, we want all plugins except dependencies!
 			unset( $plugins['dependency'] );
 
+			// if $omit_type was passed, use it to remove the plugin type we don't want
 			if ( ! empty( $omit_type ) )
 				unset( $plugins[$omit_type] );
 
@@ -397,7 +400,6 @@ class CBox_Plugins {
 	 *
 	 * @since 0.3
 	 *
-	 * @param Array of plugins.
 	 * @return Associative array with plugin state as array key
 	 */
 	public static function organize_plugins_by_state( $plugins ) {
@@ -741,11 +743,12 @@ class CBox_Plugins {
 			$this->update_screen();
 		}
 
-		// if upgrade process is finished, show upgrade screen
+		// if upgrade process is finished, show regular plugins page
 		else {
 	?>
 			<div class="wrap">
 				<?php screen_icon( 'plugins' ); ?>
+
 				<h2><?php _e( 'Commons in a Box Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
