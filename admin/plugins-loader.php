@@ -202,8 +202,8 @@ class CBox_Plugins {
 			'type'             => 'recommended',
 			'cbox_name'        => 'Featured Content',
 			'cbox_description' => 'Provides a widget that allows you to select among five different content types to feature in a widget area.',
-			'version'          => '0.8.4',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/cac-featured-content.0.8.4.zip'
+			'version'          => '1.0.0',
+			'download_url'     => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.0.zip'
 		) );
 
 		// only show the following plugins in network mode
