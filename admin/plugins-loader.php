@@ -114,12 +114,13 @@ class CBox_Plugins {
 
 		// BuddyPress
 		self::register_plugin( array(
-			'plugin_name'      => 'BuddyPress',
-			'cbox_name'        => 'BuddyPress',
-			'cbox_description' => 'Build a social network for your company, school, sports team or niche community.',
-			'version'          => '1.6.1',
-			'admin_settings'   => 'options-general.php?page=bp-components',
-			'network_settings' => 'settings.php?page=bp-components'
+			'plugin_name'       => 'BuddyPress',
+			'cbox_name'         => 'BuddyPress',
+			'cbox_description'  => 'Build a social network for your company, school, sports team or niche community.',
+			'version'           => '1.6.1',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
+			'admin_settings'    => 'options-general.php?page=bp-components',
+			'network_settings'  => 'settings.php?page=bp-components'
 		) );
 	}
 
@@ -135,110 +136,119 @@ class CBox_Plugins {
 
 		// BuddyPress Docs
 		self::register_plugin( array(
-			'plugin_name'      => 'BuddyPress Docs',
-			'type'             => 'recommended',
-			'cbox_name'        => 'Docs',
-			'cbox_description' => "Adds collaborative Docs to BuddyPress.",
-			'version'          => '1.1.25',
-			'depends'          => 'BuddyPress (>=1.5)',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
-			'admin_settings'   => 'edit.php?post_type=bp_doc',
-			'network_settings' => 'root-blog-only'
+			'plugin_name'       => 'BuddyPress Docs',
+			'type'              => 'recommended',
+			'cbox_name'         => 'Docs',
+			'cbox_description'  => "Adds collaborative Docs to BuddyPress.",
+			'version'           => '1.1.25',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
+			'admin_settings'    => 'edit.php?post_type=bp_doc',
+			'network_settings'  => 'root-blog-only'
 		) );
 
 		// BuddyPress Group Email Subscription
 		self::register_plugin( array(
-			'plugin_name'      => 'BuddyPress Group Email Subscription',
-			'type'             => 'recommended',
-			'cbox_name'        => 'Group Email Subscription',
-			'cbox_description' => 'Allows BuddyPress group members to receive email notifications of activity from their groups.',
-			'depends'          => 'BuddyPress (>=1.5)',
-			'version'          => '3.2.1',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
-			'admin_settings'   => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
-			'network_settings' => 'admin.php?page=ass_admin_options'
+			'plugin_name'       => 'BuddyPress Group Email Subscription',
+			'type'              => 'recommended',
+			'cbox_name'         => 'Group Email Subscription',
+			'cbox_description'  => 'Allows BuddyPress group members to receive email notifications of activity from their groups.',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'version'           => '3.2.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
+			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
+			'network_settings'  => 'admin.php?page=ass_admin_options'
 		) );
 
 		// Invite Anyone
 		self::register_plugin( array(
-			'plugin_name'      => 'Invite Anyone',
-			'type'             => 'recommended',
-			'cbox_name'        => 'Invite Anyone',
-			'cbox_description' => "Makes BuddyPress' invitation features more powerful.",
-			'version'          => '1.0.15',
-			'depends'          => 'BuddyPress (>=1.5)',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
-			'admin_settings'   => 'admin.php?page=invite-anyone',
-			'network_settings' => 'admin.php?page=invite-anyone'
+			'plugin_name'       => 'Invite Anyone',
+			'type'              => 'recommended',
+			'cbox_name'         => 'Invite Anyone',
+			'cbox_description'  => "Makes BuddyPress' invitation features more powerful.",
+			'version'           => '1.0.15',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
+			'admin_settings'    => 'admin.php?page=invite-anyone',
+			'network_settings'  => 'admin.php?page=invite-anyone'
 		) );
 
 		// Custom Profile Filters for BuddyPress
 		self::register_plugin( array(
-			'plugin_name'      => 'Custom Profile Filters for BuddyPress',
-			'type'             => 'recommended',
-			'cbox_name'        => 'Custom Profile Filters for BuddyPress',
-			'cbox_description' => 'Allows users to take control of how their profile links in Buddypress are handled.',
-			'depends'          => 'BuddyPress (>=1.2)',
-			'version'          => '0.3.1',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
+			'plugin_name'       => 'Custom Profile Filters for BuddyPress',
+			'type'              => 'recommended',
+			'cbox_name'         => 'Custom Profile Filters for BuddyPress',
+			'cbox_description'  => 'Allows users to take control of how their profile links in Buddypress are handled.',
+			'depends'           => 'BuddyPress (>=1.2)',
+			'version'           => '0.3.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/custom-profile-filters-for-buddypress',
 		) );
 
 		// bbPress
 		// @todo if network-activated, this is enabled across all sub-sites... need to limit this
 		self::register_plugin( array(
-			'plugin_name'      => 'bbPress',
-			'type'             => 'recommended',
-			'cbox_name'        => 'bbPress',
-			'cbox_description' => 'Forums made the WordPress way.',
-			'version'          => '2.1.2',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip',
-			'admin_settings'   => 'options-general.php?page=bbpress',
-			'network_settings' => 'root-blog-only'
+			'plugin_name'       => 'bbPress',
+			'type'              => 'recommended',
+			'cbox_name'         => 'bbPress',
+			'cbox_description'  => 'Forums made the WordPress way.',
+			'version'           => '2.1.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
+			'admin_settings'    => 'options-general.php?page=bbpress',
+			'network_settings'  => 'root-blog-only'
 		) );
 
 		// CAC Featured Content
 		self::register_plugin( array(
-			'plugin_name'      => 'CAC Featured Content',
-			'type'             => 'recommended',
-			'cbox_name'        => 'Featured Content',
-			'cbox_description' => 'Provides a widget that allows you to select among five different content types to feature in a widget area.',
-			'version'          => '1.0.0',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.0.zip'
+			'plugin_name'       => 'CAC Featured Content',
+			'type'              => 'recommended',
+			'cbox_name'         => 'Featured Content',
+			'cbox_description'  => 'Provides a widget that allows you to select among five different content types to feature in a widget area.',
+			'version'           => '1.0.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.0.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
 		// only show the following plugins in network mode
 		if ( is_network_admin() ) :
 			// More Privacy Options
 			self::register_plugin( array(
-				'plugin_name'      => 'More Privacy Options',
-				'type'             => 'recommended',
-				'cbox_name'        => 'More Privacy Options',
-				'cbox_description' => 'Add more blog privacy options for your users.',
-				'version'          => '3.2.1.5',
-				'download_url'     => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
-				'network_settings' => 'settings.php#menu'
+				'plugin_name'       => 'More Privacy Options',
+				'type'              => 'recommended',
+				'cbox_name'         => 'More Privacy Options',
+				'cbox_description'  => 'Add more blog privacy options for your users.',
+				'version'           => '3.2.1.5',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
+				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
+				'network_settings'  => 'settings.php#menu'
 			) );
 
 			// BP MPO Activity Filter
 			self::register_plugin( array(
-				'plugin_name'      => 'BP MPO Activity Filter',
-				'type'             => 'recommended',
-				'cbox_name'        => 'Activity Privacy',
-				'cbox_description' => 'Works with More Privacy Options to keep private blog content out of public activity feeds.',
-				'version'          => '1.2',
-				'download_url'     => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
+				'plugin_name'       => 'BP MPO Activity Filter',
+				'type'              => 'recommended',
+				'cbox_name'         => 'Activity Privacy',
+				'cbox_description'  => 'Works with More Privacy Options to keep private blog content out of public activity feeds.',
+				'version'           => '1.2',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
+				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
 			// BuddyPress GroupBlog
 			self::register_plugin( array(
-				'plugin_name'      => 'BP Groupblog',
-				'type'             => 'recommended',
-				'cbox_name'        => 'BuddyPress Groupblog',
-				'cbox_description' => 'Enable a BuddyPress group to have a single blog associated with it.',
-				'depends'          => 'BuddyPress (>=1.6)',
-				'version'          => '1.8',
-				'download_url'     => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
-				'network_settings' => 'settings.php?page=bp_groupblog_management_page'
+				'plugin_name'       => 'BP Groupblog',
+				'type'              => 'recommended',
+				'cbox_name'         => 'BuddyPress Groupblog',
+				'cbox_description'  => 'Enable a BuddyPress group to have a single blog associated with it.',
+				'depends'           => 'BuddyPress (>=1.6)',
+				'version'           => '1.8',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
+				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
+				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
 
 		endif;
@@ -264,28 +274,30 @@ class CBox_Plugins {
 
 		// BuddyPress External Group Blogs
 		self::register_plugin( array(
-			'plugin_name'      => 'External Group Blogs',
-			'type'             => 'optional',
-			'cbox_name'        => 'BuddyPress External Group RSS',
-			'cbox_description' => 'Give BuddyPress group creators and administrators the ability to attach external RSS feeds to groups.',
-			'depends'          => 'BuddyPress (>=1.2)',
-			'version'          => '1.2.1',
-			'download_url'     => 'http://downloads.wordpress.org/plugin/external-group-blogs.1.2.1.zip',
+			'plugin_name'       => 'External Group Blogs',
+			'type'              => 'optional',
+			'cbox_name'         => 'BuddyPress External Group RSS',
+			'cbox_description'  => 'Give BuddyPress group creators and administrators the ability to attach external RSS feeds to groups.',
+			'depends'           => 'BuddyPress (>=1.2)',
+			'version'           => '1.2.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/external-group-blogs.1.2.1.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
 		) );
 
 		// BuddyPress Reply By Email
 		// @todo Add this back when RBE is added in the WP.org plugins repo
 		/*
 		self::register_plugin( array(
-			'plugin_name'      => 'BuddyPress Reply By Email',
-			'type'             => 'optional',
-			'cbox_name'        => 'Reply By Email',
-			'cbox_description' => "Reply to various emails from the comfort of your email inbox",
-			'version'          => '1.0',
-			'depends'          => 'BuddyPress (>=1.5)',
-			'download_url'     => '',
-			'admin_settings'   => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
-			'network_settings' => 'root-blog-only
+			'plugin_name'       => 'BuddyPress Reply By Email',
+			'type'              => 'optional',
+			'cbox_name'         => 'Reply By Email',
+			'cbox_description'  => "Reply to various emails from the comfort of your email inbox",
+			'version'           => '1.0',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'download_url'      => '',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
+			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
+			'network_settings'  => 'root-blog-only
 		) );
 		*/
 
@@ -336,17 +348,18 @@ class CBox_Plugins {
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
-			'plugin_name'      => false, // (required) the name of the plugin as in the plugin header
-			'type'             => 'required', // types include 'required', 'recommended', 'optional', dependency'
-			'cbox_name'        => false, // CBox's label for the plugin
-			'cbox_description' => false, // CBox's short description of the plugin
-			'depends'          => false, // our own defined dependencies for the plugin; uses same syntax as PD
-			'version'          => false, // the version number of the plugin we want to compare the installed version with (if applicable)
-			'download_url'     => false, // the download URL of the plugin used if the active version is not compatible with our version
-			'admin_settings'   => false, // if applicable, where does the admin settings page reside? should be relative to /wp-admin/
-			'network_settings' => false, // if plugin is network-only and has a settings page, where does the network admin settings page reside?
-			                             // should be relative to /wp-admin/; if plugin's settings resides on the BP_ROOT_BLOG only, mark this as 'root-blog-only'
-			'network'          => true   // should the plugin be activated network-wide? not used at the moment
+			'plugin_name'       => false, // (required) the name of the plugin as in the plugin header
+			'type'              => 'required', // types include 'required', 'recommended', 'optional', dependency'
+			'cbox_name'         => false, // CBox's label for the plugin
+			'cbox_description'  => false, // CBox's short description of the plugin
+			'depends'           => false, // our own defined dependencies for the plugin; uses same syntax as PD
+			'version'           => false, // the version number of the plugin we want to compare the installed version with (if applicable)
+			'download_url'      => false, // the download URL of the plugin used if the active version is not compatible with our version
+			'documentation_url' => false, // the documentation URL for the plugin
+			'admin_settings'    => false, // if applicable, where does the admin settings page reside? should be relative to /wp-admin/
+			'network_settings'  => false, // if plugin is network-only and has a settings page, where does the network admin settings page reside?
+			                              // should be relative to /wp-admin/; if plugin's settings resides on the BP_ROOT_BLOG only, mark this as 'root-blog-only'
+			'network'           => true   // should the plugin be activated network-wide? not used at the moment
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -358,13 +371,14 @@ class CBox_Plugins {
 			case 'required' :
 			case 'recommended' :
 			case 'optional' :
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']        = $r['cbox_name'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description'] = $r['cbox_description'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']          = $r['depends'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['version']          = $r['version'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']     = $r['download_url'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']   = $r['admin_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings'] = $r['network_settings'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']         = $r['cbox_name'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description']  = $r['cbox_description'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']           = $r['depends'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['version']           = $r['version'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']      = $r['download_url'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['documentation_url'] = $r['documentation_url'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
 
 				break;
 
@@ -1004,19 +1018,30 @@ class CBox_Plugins {
 							</label>
 						<?php endif; ?>
 
+						<!-- start - plugin row links -->
 						<div class="row-actions-visible">
+						<?php /* SETTINGS LINK */ ?>
 						<?php if ( ! empty( $settings[$plugin] ) ) : ?>
-							<a href="<?php echo $settings[$plugin]; ?>"><?php _e( 'Settings', 'cbox' ); ?></a>
+							<a title="<?php _e( "Click here to view this plugin's settings page", 'cbox' ); ?>" href="<?php echo $settings[$plugin]; ?>"><?php _e( 'Settings', 'cbox' ); ?></a>
 
 							<?php if ( $r['type'] != 'required' || $this->is_override() ) : ?>|<?php endif; ?>
 						<?php endif; ?>
 
+						<?php /* INFO LINK */ ?>
+						<?php if ( ! empty( $data['documentation_url'] ) && $state != 'upgrade' ) : ?>
+							<a title="<?php _e( "For more info on this plugin, click on this link", 'cbox' ); ?>" href="<?php echo esc_url( $data['documentation_url'] ); ?>" target="_blank"><?php _e( 'Info', 'cbox' ); ?></a>
+
+							<?php if ( $state == 'deactivate' ) : ?> |<?php endif; ?>
+						<?php endif; ?>
+
+						<?php /* DEACTIVATE LINK */ ?>
 						<?php if ( $state == 'deactivate' ) : if ( $r['type'] != 'required' || $this->is_override() ) : ?>
 							<a href="<?php $this->deactivate_link( $loader ); ?>"><?php _e( 'Deactivate', 'cbox' ); ?></a>
 						<?php endif; elseif ( $state == 'upgrade' ) : ?>
 							<div class="plugin-update-tr"><p class="update-message"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
 						<?php endif; ?>
 						</div>
+						<!-- end - plugin row links -->
 					</td>
 
 					<td class="column-description desc">

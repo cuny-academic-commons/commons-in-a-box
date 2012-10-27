@@ -621,7 +621,12 @@ class CBox_Admin {
 
 					<?php
 						foreach ( CBox_Plugins::get_settings() as $plugin => $settings_url ) {
-							echo '<li><a href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'] . '</li>';
+							echo '<li><a title="' . __( "Click here to view this plugin's settings page", 'cbox' ) . '" href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'];
+
+							if ( ! empty( $cbox_plugins[$plugin]['documentation_url'] ) )
+								echo ' [<a title="' . __( "For more info on this plugin, click on this link", 'cbox' ) . '" href="' . esc_url( $cbox_plugins[$plugin]['documentation_url'] ) . '" target="_blank">' . __( 'Info...', 'cbox' ) . '</a>]';
+
+							echo '</li>';
 						}
 					?>
 					</ul>
