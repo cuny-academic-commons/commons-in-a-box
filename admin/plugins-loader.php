@@ -219,6 +219,16 @@ class CBox_Plugins {
 				'network_settings' => 'settings.php#menu'
 			) );
 
+			// BP MPO Activity Filter
+			self::register_plugin( array(
+				'plugin_name'      => 'BP MPO Activity Filter',
+				'type'             => 'recommended',
+				'cbox_name'        => 'Activity Privacy',
+				'cbox_description' => 'Works with More Privacy Options to keep private blog content out of public activity feeds.',
+				'version'          => '1.2',
+				'download_url'     => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
+			) );
+
 			// BuddyPress GroupBlog
 			self::register_plugin( array(
 				'plugin_name'      => 'BP Groupblog',
