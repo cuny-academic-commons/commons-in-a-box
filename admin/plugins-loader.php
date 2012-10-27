@@ -108,7 +108,6 @@ class CBox_Plugins {
 	 * We register these plugins here for later use.
 	 *
 	 * @see CBox_Plugins::register_plugin()
-	 * @return array
 	 */
 	private function register_required_plugins() {
 
@@ -130,7 +129,6 @@ class CBox_Plugins {
 	 * We register these plugins here for later use.
 	 *
 	 * @see CBox_Plugins::register_plugin()
-	 * @return array
 	 */
 	private function register_recommended_plugins() {
 
@@ -268,7 +266,6 @@ class CBox_Plugins {
 	 * We register these plugins here for later use.
 	 *
 	 * @see CBox_Plugins::register_plugin()
-	 * @return array
 	 */
 	private function register_optional_plugins() {
 
@@ -325,7 +322,6 @@ class CBox_Plugins {
 	 * and is much more efficient for our usage.
 	 *
 	 * @see CBox_Plugins::register_plugin()
-	 * @return array
 	 */
 	private function register_dependency_plugins() {
 
@@ -340,11 +336,12 @@ class CBox_Plugins {
 	/**
 	 * Register a plugin in CBox.
 	 *
+	 * Updates our private, static $plugins variable in the process.
+	 *
 	 * @see CBox_Plugins::register_required_plugins()
 	 * @see CBox_Plugins::register_recommended_plugins()
 	 * @see CBox_Plugins::register_optional_plugins()
 	 * @see CBox_Plugins::register_dependency_plugins()
-	 * @param mixed $args An array or querystring of arguments. See inline doc for more details.
 	 */
 	private function register_plugin( $args = '' ) {
 		$defaults = array(
