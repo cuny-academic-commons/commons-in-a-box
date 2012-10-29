@@ -1086,7 +1086,7 @@ class CBox_Plugins {
 			</tbody>
 		</table>
 
-		<p><input type="submit" value="<?php _e( 'Update', 'cbox' ); ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $type ); ?>" name="cbox-update" /></p>
+		<p><input type="submit" value="<?php _e( 'Update', 'cbox' ); ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
 	<?php
 	}
 
