@@ -51,7 +51,7 @@ class CBox_Admin {
 	 */
 	public function admin_menu() {
 		$page = add_menu_page(
-			__( 'Commons in a Box', 'cbox' ),
+			__( 'Commons In A Box', 'cbox' ),
 			__( 'CBox', 'cbox' ),
 			'install_plugins', // todo - map cap?
 			'cbox',
@@ -61,7 +61,7 @@ class CBox_Admin {
 
 		$subpage = add_submenu_page(
 			'cbox',
-			__( 'Commons in a Box Dashboard', 'cbox' ),
+			__( 'Commons In A Box Dashboard', 'cbox' ),
 			__( 'Dashboard', 'cbox' ),
 			'install_plugins', // todo - map cap?
 			'cbox',
@@ -103,7 +103,7 @@ class CBox_Admin {
 		?>
 			<div class="wrap">
 				<?php screen_icon( 'index' ); ?>
-				<h2><?php _e( 'Commons in a Box Dashboard', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
 
 				<?php $this->welcome_panel(); ?>
 				<?php $this->steps(); ?>
@@ -430,9 +430,10 @@ class CBox_Admin {
 			<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
 
 			<div class="welcome-panel-content">
-				<h3><?php _e( 'Welcome to Commons in a Box! ', 'cbox' ); ?></h3>
+				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
 
-				<p class="about-description"><?php _e( 'If you need help getting started, check out our documentation on <a href="https://github.com/cuny-academic-commons/commons-in-a-box/wiki">our wiki</a>. If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.', 'cbox' ); ?></p>
+				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBox users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
+				<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.', 'cbox' ); ?></p>
 
 				<?php if ( cbox_is_setup() ) : ?>
 					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
@@ -616,7 +617,7 @@ class CBox_Admin {
 				<!-- SETTINGS -->
 				<div class="welcome-panel-column">
 					<h4><span class="icon16 icon-settings"></span> <?php _e( 'Settings', 'cbox' ); ?></h4>
-					<p><?php _e( "CBox works by pulling together a number of WordPress and BuddyPress plugins. Customize your site by exploring the settings pages for these plugins below.", 'cbox' ); ?></p>
+					<p><?php _e( "Commons In A Box works by pulling together a number of independent WordPress and BuddyPress plugins. Customize your site by exploring the settings pages for these plugins below.", 'cbox' ); ?></p>
 					<ul>
 
 					<?php
@@ -624,7 +625,7 @@ class CBox_Admin {
 							echo '<li><a title="' . __( "Click here to view this plugin's settings page", 'cbox' ) . '" href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'];
 
 							if ( ! empty( $cbox_plugins[$plugin]['documentation_url'] ) )
-								echo ' [<a title="' . __( "For more info on this plugin, click on this link", 'cbox' ) . '" href="' . esc_url( $cbox_plugins[$plugin]['documentation_url'] ) . '" target="_blank">' . __( 'Info...', 'cbox' ) . '</a>]';
+								echo ' [<a title="' . __( "Click here for plugin documentation at commonsinabox.org", 'cbox' ) . '" href="' . esc_url( $cbox_plugins[$plugin]['documentation_url'] ) . '" target="_blank">' . __( 'Info...', 'cbox' ) . '</a>]';
 
 							echo '</li>';
 						}
@@ -740,7 +741,7 @@ class CBox_Admin {
 			<ul>
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
 				<li><a href="#"><?php _e( 'Credits (todo)', 'cbox' ); ?></a></li>
-				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/wiki"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
+				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
 				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/master/"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
 			</ul>
 		</div>
