@@ -628,7 +628,7 @@ class CBox_Plugins {
 			// add our plugins page
 			$plugin_page = add_submenu_page(
 				'cbox',
-				__( 'Commons in a Box Plugins', 'cbox' ),
+				__( 'Commons In A Box Plugins', 'cbox' ),
 				__( 'Plugins', 'cbox' ),
 				'install_plugins', // todo - map cap?
 				'cbox-plugins',
@@ -773,13 +773,13 @@ class CBox_Plugins {
 			<div class="wrap">
 				<?php screen_icon( 'plugins' ); ?>
 
-				<h2><?php _e( 'Commons in a Box Plugins', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Commons In A Box Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
 					<div class="welcome-panel">
 						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
-						<p><?php _e( 'Commons in a Box requires the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
+						<p><?php _e( 'Commons In A Box requires the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table(); ?>
 					</div>
@@ -787,7 +787,7 @@ class CBox_Plugins {
 					<div class="welcome-panel">
 						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-						<p><?php _e( "The following are plugins we automatically install for you during initial Commons in a Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+						<p><?php _e( "The following are plugins we automatically install for you during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table( 'type=recommended' ); ?>
 					</div>
