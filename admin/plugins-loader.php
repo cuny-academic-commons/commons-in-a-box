@@ -115,8 +115,8 @@ class CBox_Plugins {
 		// BuddyPress
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress',
-			'cbox_name'         => 'BuddyPress',
-			'cbox_description'  => 'Build a social network for your company, school, sports team or niche community.',
+			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
+			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, include groups and user profiles.', 'cbox' ),
 			'version'           => '1.6.1',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
@@ -138,8 +138,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress Docs',
 			'type'              => 'recommended',
-			'cbox_name'         => 'Docs',
-			'cbox_description'  => "Adds collaborative Docs to BuddyPress.",
+			'cbox_name'         => __( 'Docs', 'cbox' ),
+			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
 			'version'           => '1.1.25',
 			'depends'           => 'BuddyPress (>=1.5)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
@@ -152,8 +152,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress Group Email Subscription',
 			'type'              => 'recommended',
-			'cbox_name'         => 'Group Email Subscription',
-			'cbox_description'  => 'Allows BuddyPress group members to receive email notifications of activity from their groups.',
+			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
+			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
 			'version'           => '3.2.1',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.2.1.zip',
@@ -166,8 +166,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'Invite Anyone',
 			'type'              => 'recommended',
-			'cbox_name'         => 'Invite Anyone',
-			'cbox_description'  => "Makes BuddyPress' invitation features more powerful.",
+			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
+			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
 			'version'           => '1.0.15',
 			'depends'           => 'BuddyPress (>=1.5)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
@@ -180,8 +180,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'Custom Profile Filters for BuddyPress',
 			'type'              => 'recommended',
-			'cbox_name'         => 'Custom Profile Filters for BuddyPress',
-			'cbox_description'  => 'Allows users to take control of how their profile links in Buddypress are handled.',
+			'cbox_name'         => __( 'Custom Profile Filters', 'cbox' ),
+			'cbox_description'  => __( 'Let your members specify what profile content they\'d like to become search links, by wrapping the content in brackets.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.2)',
 			'version'           => '0.3.1',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
@@ -193,8 +193,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'bbPress',
 			'type'              => 'recommended',
-			'cbox_name'         => 'bbPress',
-			'cbox_description'  => 'Forums made the WordPress way.',
+			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
+			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
 			'version'           => '2.1.2',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.1.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
@@ -206,8 +206,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'CAC Featured Content',
 			'type'              => 'recommended',
-			'cbox_name'         => 'Featured Content',
-			'cbox_description'  => 'Provides a widget that allows you to select among five different content types to feature in a widget area.',
+			'cbox_name'         => __( 'Featured Content Widget', 'cbox' ),
+			'cbox_description'  => __( 'Provides a widget that allows you to select among five different content types to feature in a widget area.', 'cbox' ),
 			'version'           => '1.0.0',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
@@ -219,8 +219,8 @@ class CBox_Plugins {
 			self::register_plugin( array(
 				'plugin_name'       => 'More Privacy Options',
 				'type'              => 'recommended',
-				'cbox_name'         => 'More Privacy Options',
-				'cbox_description'  => 'Add more blog privacy options for your users.',
+				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
+				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
 				'version'           => '3.2.1.5',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
 				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
@@ -231,8 +231,8 @@ class CBox_Plugins {
 			self::register_plugin( array(
 				'plugin_name'       => 'BP MPO Activity Filter',
 				'type'              => 'recommended',
-				'cbox_name'         => 'Activity Privacy',
-				'cbox_description'  => 'Works with More Privacy Options to keep private blog content out of public activity feeds.',
+				'cbox_name'         => __( 'Activity Privacy', 'cbox' ),
+				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'cbox' ),
 				'version'           => '1.2',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
 				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
@@ -242,8 +242,8 @@ class CBox_Plugins {
 			self::register_plugin( array(
 				'plugin_name'       => 'BP Groupblog',
 				'type'              => 'recommended',
-				'cbox_name'         => 'BuddyPress Groupblog',
-				'cbox_description'  => 'Enable a BuddyPress group to have a single blog associated with it.',
+				'cbox_name'         => __( 'Group Blogs', 'cbox' ),
+				'cbox_description'  => 'Enables a BuddyPress group to be associated with a blog, by placing a Blog link in the group navigation and, optionally, syncing group membership with blog roles.',
 				'depends'           => 'BuddyPress (>=1.6)',
 				'version'           => '1.8',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
@@ -276,8 +276,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'External Group Blogs',
 			'type'              => 'optional',
-			'cbox_name'         => 'BuddyPress External Group RSS',
-			'cbox_description'  => 'Give BuddyPress group creators and administrators the ability to attach external RSS feeds to groups.',
+			'cbox_name'         => __( 'External RSS Feeds for Groups', 'cbox' ),
+			'cbox_description'  => 'Gives group creators and administrators the ability to attach external RSS feeds to groups.',
 			'depends'           => 'BuddyPress (>=1.2)',
 			'version'           => '1.2.1',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/external-group-blogs.1.2.1.zip',
@@ -290,8 +290,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress Reply By Email',
 			'type'              => 'optional',
-			'cbox_name'         => 'Reply By Email',
-			'cbox_description'  => "Reply to various emails from the comfort of your email inbox",
+			'cbox_name'         => __( 'Reply By Email', 'cbox' ),
+			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'cbox' ),
 			'version'           => '1.0',
 			'depends'           => 'BuddyPress (>=1.5)',
 			'download_url'      => '',
@@ -306,8 +306,8 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'      => 'WP Better Emails',
 			'type'             => 'optional',
-			'cbox_name'        => 'HTML Email',
-			'cbox_description' => 'Enable and design HTML emails',
+			'cbox_name'        => __( 'HTML Email' ),
+			'cbox_description' => __( 'Enable and design HTML emails', 'cbox' ),
 			'version'          => '0.2.4',
 			'download_url'     => 'http://downloads.wordpress.org/plugin/wp-better-emails.0.2.4.zip'
 		) );
