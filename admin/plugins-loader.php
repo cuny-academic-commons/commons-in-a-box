@@ -942,9 +942,10 @@ class CBox_Plugins {
 	 * @since 0.2
 	 *
 	 * @param str $loader The plugin's loader filename
+	 * @return str Deactivation link
 	 */
 	private function deactivate_link( $loader ) {
-		echo self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=deactivate&amp;plugin=' . urlencode( $loader ) . '&amp;_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
+		return self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=deactivate&amp;plugin=' . urlencode( $loader ) . '&amp;_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
 	}
 
 	/**
@@ -1019,27 +1020,42 @@ class CBox_Plugins {
 						<?php endif; ?>
 
 						<!-- start - plugin row links -->
+						<?php
+							$plugin_row_links = array();
+							if ( ! empty( $settings[ $plugin ] ) ) {
+								$plugin_row_links[] = sprintf(
+									'<a title="%s" href="%s">%s</a>',
+									__( "Click here to view this plugin's settings page", 'cbox' ),
+									$settings[ $plugin ],
+									__( "Settings", 'cbox' )
+								);
+							}
+
+							if ( ! empty( $data['documentation_url'] ) && $state != 'upgrade' ) {
+								$plugin_row_links[] = sprintf(
+									'<a title="%s" href="%s" target="_blank">%s</a>',
+									__( "Click here for documentation on this plugin, from commonsinabox.org", 'cbox' ),
+									esc_html( $data['documentation_url'] ),
+									__( "Info", 'cbox' )
+								);
+							}
+
+							if ( $state == 'deactivate' ) {
+								if ( $r['type'] != 'required' || $this->is_override() ) {
+									$plugin_row_links[] = sprintf(
+										'<a title="%s" href="%s">%s</a>',
+										__( "Deactivate this plugin.", 'cbox' ),
+										$this->deactivate_link( $loader ),
+										__( "Deactivate", 'cbox' )
+									);
+								} else if ( $state == 'upgrade' ) {
+									$plugin_row_links[] = '<div class="plugin-update-tr"><p class="update-message">' . __( 'Update available.', 'cbox' ) . '</p></div>';
+								}
+							}
+						?>
+
 						<div class="row-actions-visible">
-						<?php /* SETTINGS LINK */ ?>
-						<?php if ( ! empty( $settings[$plugin] ) ) : ?>
-							<a title="<?php _e( "Click here to view this plugin's settings page", 'cbox' ); ?>" href="<?php echo $settings[$plugin]; ?>"><?php _e( 'Settings', 'cbox' ); ?></a>
-
-							<?php if ( $r['type'] != 'required' || $this->is_override() ) : ?>|<?php endif; ?>
-						<?php endif; ?>
-
-						<?php /* INFO LINK */ ?>
-						<?php if ( ! empty( $data['documentation_url'] ) && $state != 'upgrade' ) : ?>
-							<a title="<?php _e( "For more info on this plugin, click on this link", 'cbox' ); ?>" href="<?php echo esc_url( $data['documentation_url'] ); ?>" target="_blank"><?php _e( 'Info', 'cbox' ); ?></a>
-
-							<?php if ( $state == 'deactivate' ) : ?> |<?php endif; ?>
-						<?php endif; ?>
-
-						<?php /* DEACTIVATE LINK */ ?>
-						<?php if ( $state == 'deactivate' ) : if ( $r['type'] != 'required' || $this->is_override() ) : ?>
-							<a href="<?php $this->deactivate_link( $loader ); ?>"><?php _e( 'Deactivate', 'cbox' ); ?></a>
-						<?php endif; elseif ( $state == 'upgrade' ) : ?>
-							<div class="plugin-update-tr"><p class="update-message"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
-						<?php endif; ?>
+							<?php echo implode( ' | ', $plugin_row_links ); ?>
 						</div>
 						<!-- end - plugin row links -->
 					</td>
