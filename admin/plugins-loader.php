@@ -934,7 +934,8 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Helper method to output the deactivation URL for a plugin in the CBox dashboard.
+	 * Helper method to return the deactivation URL for a plugin on the CBox
+	 * plugins page.
 	 *
 	 * @since 0.2
 	 *
@@ -1019,6 +1020,8 @@ class CBox_Plugins {
 						<!-- start - plugin row links -->
 						<?php
 							$plugin_row_links = array();
+
+							// settings link
 							if ( ! empty( $settings[ $plugin ] ) ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s">%s</a>',
@@ -1028,31 +1031,39 @@ class CBox_Plugins {
 								);
 							}
 
+							// info link
 							if ( ! empty( $data['documentation_url'] ) && $state != 'upgrade' ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s" target="_blank">%s</a>',
 									__( "Click here for documentation on this plugin, from commonsinabox.org", 'cbox' ),
-									esc_html( $data['documentation_url'] ),
+									esc_url( $data['documentation_url'] ),
 									__( "Info", 'cbox' )
 								);
 							}
 
+							// deactivate link
 							if ( $state == 'deactivate' ) {
-								if ( $r['type'] != 'required' || $this->is_override() ) {
+								// If override is on, we must still not allow BuddyPress to be deactivated
+								// through the CBox plugins page. It can still be deactivated through the
+								// regular WP plugins page though
+								if ( $r['type'] != 'required' || ( $this->is_override() && $data['cbox_name'] != 'BuddyPress' ) ) {
 									$plugin_row_links[] = sprintf(
 										'<a title="%s" href="%s">%s</a>',
 										__( "Deactivate this plugin.", 'cbox' ),
 										$this->deactivate_link( $loader ),
 										__( "Deactivate", 'cbox' )
 									);
-								} else if ( $state == 'upgrade' ) {
-									$plugin_row_links[] = '<div class="plugin-update-tr"><p class="update-message">' . __( 'Update available.', 'cbox' ) . '</p></div>';
 								}
 							}
 						?>
 
 						<div class="row-actions-visible">
-							<?php echo implode( ' | ', $plugin_row_links ); ?>
+							<p><?php echo implode( ' | ', $plugin_row_links ); ?></p>
+
+							<?php /* upgrade notice */ ?>
+							<?php if ( $state == 'upgrade' ) : ?>
+								<div class="plugin-update-tr"><p class="update-message" title="<?php _e( "Select the checkbox and click on 'Update' to upgrade this plugin.", 'cbox' ); ?>"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
+							<?php endif; ?>
 						</div>
 						<!-- end - plugin row links -->
 					</td>
