@@ -21,6 +21,25 @@ class CBox_Admin {
 	 * Constructor.
 	 */
 	public function __construct() {
+		// includes
+		$this->includes();
+
+		// setup our hooks
+		$this->setup_hooks();
+	}
+
+	/**
+	 * Includes.
+	 */
+	private function includes() {
+		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
+		require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+	}
+
+	/**
+	 * Setup hooks.
+	 */
+	private function setup_hooks() {
 		// setup admin menu
 		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu',           array( $this, 'admin_menu' ) );
 
@@ -41,79 +60,9 @@ class CBox_Admin {
 
 		// after the BP wizard completes, redirect to the CBox dashboard
 		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
-
-		// require admin functions
-		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
 	}
 
-	/**
-	 * Setup admin menu and any dependent page hooks.
-	 */
-	public function admin_menu() {
-		$page = add_menu_page(
-			__( 'Commons In A Box', 'cbox' ),
-			__( 'CBox', 'cbox' ),
-			'install_plugins', // todo - map cap?
-			'cbox',
-			array( $this, 'admin_page' ),
-			self::icon_16_black() // temp icon; i think it looks neat...
-		);
-
-		$subpage = add_submenu_page(
-			'cbox',
-			__( 'Commons In A Box Dashboard', 'cbox' ),
-			__( 'Dashboard', 'cbox' ),
-			'install_plugins', // todo - map cap?
-			'cbox',
-			array( $this, 'admin_page' )
-		);
-
-		do_action( 'cbox_admin_menu' );
-
-		// inline CSS
-		add_action( "admin_head-{$subpage}",          array( $this, 'inline_css' ) );
-
-		// enqueue JS
-		add_action( "admin_print_scripts-{$subpage}", array( $this, 'enqueue_js' ) );
-
-		// load PD
-		add_action( "load-{$subpage}",                array( 'Plugin_Dependencies', 'init' ) );
-
-		// catch form submission
-		add_action( "load-{$subpage}",                array( $this, 'catch_form_submission' ) );
-
-		// contextual help
-		add_action( "load-{$subpage}",                array( $this, 'contextual_help' ) );
-	}
-
-	/**
-	 * The main dashboard page.
-	 */
-	public function admin_page() {
-		if ( $this->is_changelog() ) {
-			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
-		}
-
-		elseif( ! empty( cbox()->setup ) ) {
-			$this->setup_screen();
-		}
-
-		// regular screen should go here
-		else {
-		?>
-			<div class="wrap">
-				<?php screen_icon( 'index' ); ?>
-				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
-
-				<?php $this->welcome_panel(); ?>
-				<?php $this->steps(); ?>
-				<?php $this->upgrades(); ?>
-				<?php $this->metaboxes(); ?>
-				<?php $this->about(); ?>
-			</div>
-		<?php
-		}
-	}
+	/** ACTIONS / SCREENS *********************************************/
 
 	/**
 	 * Catches form submissions from the CBox dashboard and sets
@@ -132,10 +81,9 @@ class CBox_Admin {
 
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
-		}
 
 		// bp installed, but no cbox
-		elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
+		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_bp_installed', 'cbox-recommended-nonce' );
 
@@ -151,22 +99,23 @@ class CBox_Admin {
 				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 				exit;
 			}
-		}
 
-		// upgrades available
-		elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'upgrade' ) {
+		// plugin upgrades available
+		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'upgrade' ) {
 			// verify nonce
 			check_admin_referer( 'cbox_upgrade' );
 
 			// set reference pointer for later use
 			cbox()->setup = 'upgrade';
 
+			if ( $_REQUEST['cbox-themes'] )
+				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
+
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
-		}
 
 		// install cbox theme
-		elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {
+		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {
 			// verify nonce
 			check_admin_referer( 'cbox_install_theme' );
 
@@ -184,41 +133,16 @@ class CBox_Admin {
 
 			// cbox theme doesn't exist, so set reference pointer for later use
 			cbox()->setup = 'install-theme';
+
+		// theme upgrades available
+		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'upgrade-theme' ) {
+			// verify nonce
+			check_admin_referer( 'cbox_upgrade_theme' );
+
+			// set reference pointers for later use
+			cbox()->setup = 'upgrade-theme';
+			cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 		}
-
-	}
-
-	/**
-	 * Registers contextual help for the Cbox dashboard page
-	 */
-	public function contextual_help() {
-		// about
-		get_current_screen()->add_help_tab( array(
-			'id'      => 'cbox-about',
-			'title'   => __( 'About', 'cbox' ),
-			'content' =>
-				'<p>' . sprintf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ) . '</p>' .
-				'<p>' . __( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ) . '</p>'
-		) );
-
-		// sidebar links
-		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'Useful Links:', 'cbox' ) . '</strong></p>' .
-			'<p>' . sprintf( __( '<a href="%s">Changelog</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&whatsnew=1' ) ) ) . '</p>' .
-			'<p>' . sprintf( __( '<a href="%s">Show Welcome Message</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&welcome=1' ) ) ) . '</p>'
-		);
-	}
-
-	/**
-	 * Should we show the changelog screen?
-	 *
-	 * @return bool
-	 */
-	private function is_changelog() {
-		if ( ! empty( $_GET['whatsnew'] ) )
-			return true;
-
-		return false;
 	}
 
 	/**
@@ -284,6 +208,22 @@ class CBox_Admin {
 				// setup our upgrade plugins array
 				$plugins['upgrade'] = CBox_Plugins::get_upgrades( 'active' );
 
+				// if theme upgrades are available, let's add an extra button to the end of
+				// the plugin upgrader, so we can proceed with upgrading the theme
+				if ( ! empty( cbox()->theme_upgrades ) ) {
+					$title = esc_html__( 'Upgrading CBox Plugins and Themes', 'cbox' );
+
+					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
+					$redirect_text = __( "Now, let's upgrade the CBox Default theme &rarr;", 'cbox' );
+
+
+				} else {
+					$title = esc_html__( 'Upgrading CBox Plugins', 'cbox' );
+
+					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
+					$redirect_text = __( 'Return to the CBox Dashboard', 'cbox' );
+				}
+
 				// include the CBox Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
@@ -291,12 +231,12 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('plugins');
-				echo '<h2>' . esc_html__('Upgrading CBox Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . $title . '</h2>';
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
+					'redirect_link' => $redirect_link,
+					'redirect_text' => $redirect_text
 				) );
 
 				echo '</div>';
@@ -305,14 +245,32 @@ class CBox_Admin {
 
 			// install the cbox theme
 			case 'install-theme' :
-				// include the CBox Theme Installer
-				if ( ! class_exists( 'CBox_Theme_Installer' ) )
-					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+				// get cbox theme specs
+				$theme = CBox_Theme_Specs::init()->get( 'cbox_theme' );
 
-				$title = sprintf( __( 'Installing %s', 'cbox' ), CBox_Theme_Installer::$cbox_theme['name'] . ' ' . CBox_Theme_Installer::$cbox_theme['version'] );
+				$title = sprintf( _x( 'Installing %s', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
 
 				$cbox_theme = new CBox_Theme_Installer( new CBox_Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
+
+				break;
+
+			// upgrade cbox themes
+			case 'upgrade-theme' :
+				// Modifies the theme action links that get displayed after theme installation
+				// is complete.
+				add_filter( 'update_bulk_theme_complete_actions', array( 'CBox_Theme_Installer', 'remove_theme_actions' ) );
+
+				// some HTML markup!
+				echo '<div class="wrap">';
+				screen_icon('themes');
+				echo '<h2>' . esc_html__('Upgrading CBox Themes', 'cbox' ) . '</h2>';
+
+				// get cbox theme specs
+				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
+				$upgrader->bulk_upgrade( cbox()->theme_upgrades );
+
+				echo '</div>';
 
 				break;
 		}
@@ -392,6 +350,112 @@ class CBox_Admin {
 			// redirect to the CBox dashboard
 			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 		}
+	}
+
+	/** ADMIN PAGE-SPECIFIC *******************************************/
+
+	/**
+	 * Setup admin menu and any dependent page hooks.
+	 */
+	public function admin_menu() {
+		$page = add_menu_page(
+			__( 'Commons In A Box', 'cbox' ),
+			__( 'CBox', 'cbox' ),
+			'install_plugins', // todo - map cap?
+			'cbox',
+			array( $this, 'admin_page' ),
+			self::icon_16_black() // temp icon; i think it looks neat...
+		);
+
+		$subpage = add_submenu_page(
+			'cbox',
+			__( 'Commons In A Box Dashboard', 'cbox' ),
+			__( 'Dashboard', 'cbox' ),
+			'install_plugins', // todo - map cap?
+			'cbox',
+			array( $this, 'admin_page' )
+		);
+
+		do_action( 'cbox_admin_menu' );
+
+		// inline CSS
+		add_action( "admin_head-{$subpage}",          array( $this, 'inline_css' ) );
+
+		// enqueue JS
+		add_action( "admin_print_scripts-{$subpage}", array( $this, 'enqueue_js' ) );
+
+		// load PD
+		add_action( "load-{$subpage}",                array( 'Plugin_Dependencies', 'init' ) );
+
+		// catch form submission
+		add_action( "load-{$subpage}",                array( $this, 'catch_form_submission' ) );
+
+		// contextual help
+		add_action( "load-{$subpage}",                array( $this, 'contextual_help' ) );
+	}
+
+	/**
+	 * The main dashboard page.
+	 */
+	public function admin_page() {
+		if ( $this->is_changelog() ) {
+			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
+		}
+
+		elseif( ! empty( cbox()->setup ) ) {
+			$this->setup_screen();
+		}
+
+		// regular screen should go here
+		else {
+		?>
+			<div class="wrap">
+				<?php screen_icon( 'index' ); ?>
+				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
+
+				<?php $this->welcome_panel(); ?>
+				<?php $this->steps(); ?>
+				<?php $this->upgrades(); ?>
+				<?php $this->metaboxes(); ?>
+				<?php $this->about(); ?>
+			</div>
+		<?php
+		}
+	}
+
+	/**
+	 * Registers contextual help for the Cbox dashboard page.
+	 *
+	 * @uses get_current_screen() Gets info about the current screen.
+	 */
+	public function contextual_help() {
+		// about
+		get_current_screen()->add_help_tab( array(
+			'id'      => 'cbox-about',
+			'title'   => __( 'About', 'cbox' ),
+			'content' =>
+				'<p>' . sprintf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ) . '</p>' .
+				'<p>' . __( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ) . '</p>'
+		) );
+
+		// sidebar links
+		get_current_screen()->set_help_sidebar(
+			'<p><strong>' . __( 'Useful Links:', 'cbox' ) . '</strong></p>' .
+			'<p>' . sprintf( __( '<a href="%s">Changelog</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&whatsnew=1' ) ) ) . '</p>' .
+			'<p>' . sprintf( __( '<a href="%s">Show Welcome Message</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&welcome=1' ) ) ) . '</p>'
+		);
+	}
+
+	/**
+	 * Should we show the changelog screen?
+	 *
+	 * @return bool
+	 */
+	private function is_changelog() {
+		if ( ! empty( $_GET['whatsnew'] ) )
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -566,30 +630,64 @@ class CBox_Admin {
 		// get activated CBox plugins that need updating
 		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
-		// if CBox just upgraded and has no plugin updates, bump cbox revision date and reload using JS
-		// yeah, the JS redirect is a little ugly... should probably do this higher up the stack...
-		if ( cbox_is_upgraded() && ! $active_cbox_plugins_need_update ) {
-			cbox_bump_revision_date();
-			echo '<script type="text/javascript">window.location = document.URL;</script>';
+		// check for theme upgrades
+		$is_theme_upgrade = CBox_Theme_Specs::get_upgrades();
+
+		// no available upgrades, so stop!
+		if ( ! $active_cbox_plugins_need_update && ! $is_theme_upgrade ) {
+
+			// if CBox just upgraded and has no plugin updates, bump cbox revision date and reload using JS
+			// yeah, the JS redirect is a little ugly... should probably do this higher up the stack...
+			if ( cbox_is_upgraded() ) {
+				cbox_bump_revision_date();
+				echo '<script type="text/javascript">window.location = document.URL;</script>';
+			}
+
 			return;
 		}
 
-		if ( $active_cbox_plugins_need_update ) :
-			$upgrade_count = count( $active_cbox_plugins_need_update );
+		/* we have upgrades available! */
+
+		// plugin count
+		$plugin_count = $total_count = count( $active_cbox_plugins_need_update );
+
+		// setup default querystring
+		$querystring = 'admin.php?page=cbox&amp;cbox-action=upgrade';
+
+		// theme is available for upgrade
+		if ( ! empty( $active_cbox_plugins_need_update ) && ! empty( $is_theme_upgrade ) ) {
+			++$total_count;
+
+			// theme has update, so add an extra parameter to the querystring
+			$querystring .= '&amp;cbox-themes=' . $is_theme_upgrade;
+
+			$message = sprintf( _n( '%d installed plugin and the CBox Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBox Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+
+		// just plugins
+		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
+			$message = sprintf( _n( '%d installed plugin has an update available. Click on the button below to upgrade.', '%d installed plugins have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+
+		// just themes
+		} else {
+			// theme has update, so add an extra parameter to the querystring
+			$querystring .= '&amp;cbox-themes=' . $is_theme_upgrade;
+
+			$message = __( 'The CBox Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
+		}
+
 	?>
 		<div class="welcome-panel secondary-panel">
-			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $upgrade_count, 'cbox' ), $upgrade_count ); ?></h2>
+			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'cbox' ), $total_count ); ?></h2>
 
 			<div class="login">
 				<div class="message">
-					<p><?php printf( _n( '%d installed plugin has an update available. Click on the button below to upgrade.', '%d installed plugins have updates available. Click on the button below to upgrade.', $upgrade_count, 'cbox' ), $upgrade_count ); ?>
+					<p><?php echo $message; ?>
 					<br />
-					<a class="button-secondary" href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' ); ?>"><?php _e( 'Upgrade', 'cbox' ); ?></a></p>
+					<a class="button-secondary" href="<?php echo wp_nonce_url( network_admin_url( $querystring ), 'cbox_upgrade' ); ?>"><?php _e( 'Upgrade', 'cbox' ); ?></a></p>
 				</div>
 			</div>
 		</div>
 	<?php
-		endif;
 	}
 
 	/**
@@ -651,6 +749,7 @@ class CBox_Admin {
 							echo '</p>';
 						else:
 
+							// current theme is not the cbox default theme
 							if ( $theme->get_stylesheet() != 'cbox-theme' ) {
 								$is_bp_compatible = cbox_is_theme_bp_compatible();
 
@@ -692,12 +791,25 @@ class CBox_Admin {
 								?>
 
 							<?php
+							// current theme is the cbox default theme
 							} else {
+								// check for upgrades
+								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
 							?>
 								<p><?php _e( "You're using the <strong>CBox Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
 
+								<?php /* HIDE THIS FOR NOW ?>
+								<?php if ( $is_upgrade ) : ?>
+									<div class="login">
+										<div id="login_error" class="message">
+											<?php _e( 'Update available.', 'cbox' ); ?> <strong><a href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_upgrade ), 'cbox_upgrade_theme' ); ?>"><?php _e( 'Update now!', 'cbox' ); ?></a></strong>
+										</div>
+									</div>
+								<?php endif; ?>
+								<?php */ ?>
+
 								<div class="login">
-									<div class="message" style="text-align:center;">
+									<div class="message">
 										<strong><?php printf( __( '<a href="%s">Configure the CBox Theme here!</a>', 'cbox' ), esc_url( admin_url( 'themes.php?page=infinity-theme' ) ) ); ?></strong>
 									</div>
 								</div>
@@ -748,6 +860,8 @@ class CBox_Admin {
 	<?php
 	}
 
+	/** HEADER INJECTIONS *********************************************/
+
 	/**
 	 * Setup internal variable if the admin notice should be shown.
 	 *
@@ -777,6 +891,7 @@ class CBox_Admin {
 	 * @since 0.3
 	 */
 	public function notice_css() {
+		// if our notice marker isn't set, stop now!
 		if ( empty( cbox()->show_notice ) )
 			return;
 	?>
@@ -844,6 +959,7 @@ class CBox_Admin {
 	 * @uses cbox_get_setup_step() Which setup step is CBox at?
 	 */
 	public function display_notice() {
+		// if our notice marker isn't set, stop now!
 		if ( empty( cbox()->show_notice ) )
 			return;
 
@@ -890,6 +1006,7 @@ class CBox_Admin {
 	<?php
 	}
 
+
 	/**
 	 * Add a special header before the admin plugins table is rendered
 	 * to remind admins that CBox plugins are on their own, special page.
@@ -925,6 +1042,8 @@ class CBox_Admin {
 		endif;
 	}
 
+	/** CSS / JS / ASSETS *********************************************/
+
 	/**
 	 * Enqueues JS for the main dashboard page.
 	 *
@@ -956,7 +1075,7 @@ class CBox_Admin {
 			.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:210px;}
 			.welcome-panel .welcome-panel-column {width:47%;}
 
-			.login .message {margin:15px 0;}
+			#wpbody .login .message {margin:15px 0; text-align:center;}
 			.login .message a.button-secondary {display:inline-block; margin:10px 0 0;}
 
 			.secondary-panel {border-top:0; margin-top:0; padding:0 10px 20px;}

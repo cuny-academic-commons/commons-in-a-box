@@ -760,7 +760,7 @@ class CBox_Plugins {
 	 */
 	public function admin_page() {
 		// show this page during update
-		if ( self::is_update() ) {
+		if ( ! empty( cbox()->update ) ) {
 			$this->update_screen();
 		}
 
@@ -803,19 +803,6 @@ class CBox_Plugins {
 			</div>
 	<?php
 		}
-	}
-
-	/**
-	 * Are we updating?
-	 *
-	 * @see CBox_Plugins::validate_cbox_dashboard()
-	 * @return bool
-	 */
-	public static function is_update() {
-		if ( ! empty( cbox()->update ) )
-			return true;
-
-		return false;
 	}
 
 	/**

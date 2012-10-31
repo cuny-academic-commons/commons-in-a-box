@@ -77,16 +77,14 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 			$this->skin->plugin_active = is_plugin_active( $plugin_loader );
 
-			$result = $this->run(array(
-						'package' => $current[$plugin]['download_url'],
-						'destination' => WP_PLUGIN_DIR,
-						'clear_destination' => true,
-						'clear_working' => true,
-						'is_multi' => true,
-						'hook_extra' => array(
-									'plugin' => $plugin_loader
-						)
-					));
+			$result = $this->run( array(
+				'package'           => $current[$plugin]['download_url'],
+				'destination'       => WP_PLUGIN_DIR,
+				'clear_destination' => true,
+				'clear_working'     => true,
+				'is_multi'          => true,
+				'hook_extra'        => array( 'plugin' => $plugin_loader )
+			) );
 
 			$results[$plugin_loader] = $this->result;
 
@@ -106,6 +104,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
+		wp_cache_delete( 'plugins', 'plugins' );
 
 		return $results;
 	}
@@ -156,14 +155,14 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			else
 				$download_url = false;
 
-			$result = $this->run(array(
-						'package' => $download_url,
-						'destination' => WP_PLUGIN_DIR,
-						'clear_destination' => false, //Do not overwrite files.
-						'clear_working' => true,
-						'is_multi' => true,
-						'hook_extra' => array()
-					));
+			$result = $this->run( array(
+				'package'           => $download_url,
+				'destination'       => WP_PLUGIN_DIR,
+				'clear_destination' => false, //Do not overwrite files.
+				'clear_working'     => true,
+				'is_multi'          => true,
+				'hook_extra'        => array()
+			) );
 
 			//$results[$plugin_loader] = $this->result;
 
@@ -181,6 +180,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
+		wp_cache_delete( 'plugins', 'plugins' );
 
 		return $results;
 	}
@@ -318,6 +318,8 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		// process is completed!
 		// show link to Cbox dashboard
 		else {
+			usleep(500000);
+
 			$this->after_updater();
 		}
 	}
