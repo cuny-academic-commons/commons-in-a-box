@@ -651,15 +651,15 @@ class CBox_Admin {
 		// plugin count
 		$plugin_count = $total_count = count( $active_cbox_plugins_need_update );
 
-		// setup default querystring
-		$querystring = 'admin.php?page=cbox&amp;cbox-action=upgrade';
+		// setup default upgrade URL
+		$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
 
 		// theme is available for upgrade
 		if ( ! empty( $active_cbox_plugins_need_update ) && ! empty( $is_theme_upgrade ) ) {
 			++$total_count;
 
 			// theme has update, so add an extra parameter to the querystring
-			$querystring .= '&amp;cbox-themes=' . $is_theme_upgrade;
+			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
 			$message = sprintf( _n( '%d installed plugin and the CBox Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBox Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
 
@@ -669,8 +669,8 @@ class CBox_Admin {
 
 		// just themes
 		} else {
-			// theme has update, so add an extra parameter to the querystring
-			$querystring .= '&amp;cbox-themes=' . $is_theme_upgrade;
+			// theme has update, so switch up the upgrade URL
+			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
 			$message = __( 'The CBox Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
 		}
@@ -683,7 +683,7 @@ class CBox_Admin {
 				<div class="message">
 					<p><?php echo $message; ?>
 					<br />
-					<a class="button-secondary" href="<?php echo wp_nonce_url( network_admin_url( $querystring ), 'cbox_upgrade' ); ?>"><?php _e( 'Upgrade', 'cbox' ); ?></a></p>
+					<a class="button-secondary" href="<?php echo $url; ?>"><?php _e( 'Upgrade', 'cbox' ); ?></a></p>
 				</div>
 			</div>
 		</div>
