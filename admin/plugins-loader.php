@@ -597,13 +597,10 @@ class CBox_Plugins {
 			}
 		}
 
-		/*
-		// @todo If we want the "Dashboard > Updates" count to be accurate,
-		// we should resave the 'update_plugins' transient
+		// update the "Dashboard > Updates" count to be accurate
 		if ( $i > 0 ) {
 			set_site_transient( 'update_plugins', $plugins );
 		}
-		*/
 
 		return $plugins;
 	}
