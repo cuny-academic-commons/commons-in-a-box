@@ -138,8 +138,22 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.1.25',
+			'version'           => '1.2',
 			'depends'           => 'BuddyPress (>=1.5)',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs/archive/1.2.x.zip', // @todo Change to stable when released
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
+			'admin_settings'    => 'edit.php?post_type=bp_doc',
+			'network_settings'  => 'root-blog-only'
+		) );
+
+		// BuddyPress Docs Wiki
+		self::register_plugin( array(
+			'plugin_name'       => 'BuddyPress Docs Wiki',
+			'type'              => 'recommended',
+			'cbox_name'         => __( 'Wiki', 'cbox' ),
+			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'cbox' ),
+			'version'           => '1.0',
+			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
