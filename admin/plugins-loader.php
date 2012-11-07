@@ -155,8 +155,7 @@ class CBox_Plugins {
 			'version'           => '1.0',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
-			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
-			'admin_settings'    => 'edit.php?post_type=bp_doc',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only'
 		) );
 
