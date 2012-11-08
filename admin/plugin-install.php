@@ -42,7 +42,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
 		$current = CBox_Plugins::get_plugins();
 
-		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'), 10, 4);
+		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',         1,  3 );
+		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ), 10, 4 );
+		add_filter( 'http_request_args',          'cbox_disable_ssl_verification',     10, 2 );
 
 		$this->skin->header();
 
@@ -72,6 +74,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		foreach ( $plugins as $plugin ) {
 			$this->update_current++;
 			$this->skin->plugin_info['Title'] = $plugin;
+			$this->skin->options['url']       = $current[$plugin]['download_url'];
 
 			// see if plugin is active
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
@@ -100,7 +103,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'));
+		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',     1,  3 );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ) );
+		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification', 10, 2 );
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
@@ -126,7 +131,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 		$required = CBox_Plugins::get_plugins();
 
-		add_filter('upgrader_source_selection', array(&$this, 'check_package') );
+		add_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1,  3 );
+		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		add_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
 
 		$this->skin->header();
 
@@ -155,6 +162,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			else
 				$download_url = false;
 
+			$this->skin->options['url'] = $download_url;
+
 			$result = $this->run( array(
 				'package'           => $download_url,
 				'destination'       => WP_PLUGIN_DIR,
@@ -176,7 +185,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter('upgrader_source_selection', array(&$this, 'check_package') );
+		remove_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1,  3 );
+		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
+		remove_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');

@@ -243,3 +243,98 @@ function cbox_is_theme_bp_compatible() {
 
 	return $retval;
 }
+
+/** HOOK-RELATED ***************************************************/
+
+/**
+ * Turn off SSL certificate verification when downloading from Github.
+ *
+ * Github uses HTTPS links, so we need to turn off SSL verification otherwise
+ * WordPress kills the download.
+ *
+ * Hooked to the 'http_request_args' filter.
+ * We use this function during plugin / theme installation.
+ *
+ * @since 0.3
+ *
+ * @param array $args Request args.
+ * @param str $url The URL we want to download.
+ * @return array Request args.
+ */
+function cbox_disable_ssl_verification( $args, $url ) {
+	// disable SSL verification for Github links
+	if ( strpos( $url, 'github.com' ) !== false )
+		$args['sslverify'] = false;
+
+	return $args;
+}
+
+/**
+ * Renames downloaded Github folder to a cleaner directory name.
+ *
+ * Why? Because Github names their directories with the Github repo name and
+ * branch name. So we want to rename the theme directory so WP can pick up the
+ * parent theme and so it's more palatable.
+ *
+ * Hooked to the 'upgrader_source_selection' filter.
+ * We use this function during plugin / theme installation.
+ *
+ * @since 0.3
+ *
+ * @param str $source The temporary folder where the ZIP file was extracted.
+ * @param str $remote_source The filepath to the temporary ZIP file.
+ * @param obj $obj The object initiating the download.
+ * @uses get_class() To find out what object is initiating the download.
+ * @uses rename() To rename a file or directory.
+ * @return str Filepath to temporary folder.
+ */
+function cbox_rename_github_folder( $source, $remote_source, $obj ) {
+	$class_name = get_class( $obj );
+
+	switch ( $class_name ) {
+		case 'CBox_Theme_Installer' :
+			// all themes are from github
+			$is_github = true;
+		
+			// detect theme based on URL
+			if ( strpos( $obj->options['url'], 'infinity' ) !== false ) {
+				$theme = 'infinity';
+			} else {
+				$theme = 'cbox-theme';
+			}
+
+			// split the file path
+			$path_parts = explode( '/', trailingslashit( $source ) );
+
+			// remake the new location omitting the last directory and adding our theme name
+			// this is done because infinity's tagging uses multiple hyphens
+			$new_location = trailingslashit( implode( '/', array_slice( $path_parts, 0, -2 ) ) ) . $theme . '/';
+
+			break;
+			
+		case 'CBox_Plugin_Upgrader' :
+			// if download url is not from github, stop now!
+			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false )
+				return $source;
+		
+			// get position of last hyphen in github directory
+			$pos = strrpos( $source, '-' );
+
+			// get rid of branch name in github directory
+			$new_location = trailingslashit( substr( $source, 0, $pos ) );
+
+			break;
+
+		// not a cbox install? return the regular $source now!
+		default :
+			return $source;
+
+			break;
+	}
+
+	// now rename the folder
+	@rename( $source, $new_location );
+
+	// and return the new location
+	return $new_location;
+}

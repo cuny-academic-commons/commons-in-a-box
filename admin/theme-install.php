@@ -45,7 +45,7 @@ class CBox_Theme_Specs {
 		'directory_name' => 'cbox-theme',
 
 		// @todo need a tagged version... until then, we use the bleeding version
-		'download_url' => 'https://github.com/cuny-academic-commons/cbox-theme/zipball/master'
+		'download_url' => 'https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip'
 	);
 
 	/**
@@ -64,7 +64,7 @@ class CBox_Theme_Specs {
 		// this is set to use the bleeding 'buddypress' branch to get the latest
 		// Infinity bug fixes
 		// @todo When 1.1 hits, use tagged version
-		'download_url'   => 'https://github.com/PressCrew/infinity/zipball/buddypress'
+		'download_url'   => 'https://github.com/PressCrew/infinity/archive/buddypress.zip'
 	);
 
 	/**
@@ -149,7 +149,7 @@ class CBox_Theme_Specs {
 }
 
 /**
- * CBox's custom theme installer.
+ * CBox's custom theme upgrader.
  *
  * Extends the {@link Theme_Upgrader} class to allow for our custom required spec.
  *
@@ -198,6 +198,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		// Don't show any actions after installing the theme.
 		add_filter( 'install_theme_complete_actions', '__return_false', 999 );
 
+		$this->options['url'] = $infinity['download_url'];
+
 		// Install the parent theme
 		$parent_result = $this->run( array(
 			'package'           => $infinity['download_url'],
@@ -229,12 +231,14 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->init();
 		$this->install_strings();
 
-		add_filter( 'upgrader_source_selection',      array( $this, 'rename_github_folder' ),      1,  2 );
+		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
 		add_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
 		add_filter( 'upgrader_post_install',          array( $this, 'check_parent_theme_filter' ), 10, 3 );
 		add_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
-		add_action( 'http_request_args',              array( $this, 'disable_ssl_verification' ) );
+		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		add_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
+
+		$this->options['url'] = CBox_Theme_Specs::init()->get( 'cbox_theme', 'download_url' );
 
 		$this->run( array(
 			// get download URL for the Cbox theme
@@ -248,11 +252,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 			'clear_working'     => true
 		) );
 
-		remove_filter( 'upgrader_source_selection',      array( $this, 'rename_github_folder' ),      1,  2 );
+		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
 		remove_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
 		remove_filter( 'upgrader_post_install',          array( $this, 'check_parent_theme_filter' ), 10, 3 );
 		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
-		remove_action( 'http_request_args',              array( $this, 'disable_ssl_verification' ) );
+		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		remove_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
 		if ( ! $this->result || is_wp_error($this->result) )
@@ -284,11 +288,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		add_filter( 'upgrader_source_selection',  array( $this, 'rename_github_folder' ),      1,  2 );
-		add_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),            10, 2 );
-		add_filter( 'upgrader_post_install',      array( $this, 'current_after' ),             10, 2 );
-		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ),          10, 4 );
-		add_action( 'http_request_args',          array( $this, 'disable_ssl_verification' ) );
+		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
+		add_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
+		add_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
+		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
+		add_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
 
 		$this->skin->header();
 
@@ -335,6 +339,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		foreach ( $themes as $theme ) {
 			$this->update_current++;
 			$this->skin->theme_info = $this->theme_info( $theme['directory_name'] );
+			$this->options['url']   = $theme['download_url'];
 
 			$result = $this->run( array(
 				'package'           => $theme['download_url'],
@@ -358,11 +363,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_source_selection',  array( $this, 'rename_github_folder' ),      1,  2 );
-		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),            10, 2 );
-		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),             10, 2 );
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ),          10, 4 );
-		remove_action( 'http_request_args',          array( $this, 'disable_ssl_verification' ) );
+		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
+		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
+		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
+		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
 
 		// Force refresh of theme update information
 		delete_site_transient('update_themes');
@@ -375,54 +380,6 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	}
 
 	/** CUSTOM HOOKS **************************************************/
-
-	/**
-	 * Make sure we turn off SSL certificate verification when downloading.
-	 *
-	 * Github uses HTTPS links, so we need to turn off SSL verification
-	 * otherwise WP kills the download.
-	 */
-	public function disable_ssl_verification( $args ) {
-		$args['sslverify'] = false;
-		return $args;
-	}
-
-	/**
-	 * Renames downloaded Github folder to a cleaner directory name.
-	 *
-	 * Why? Because Github names their directories with the Github username,
-	 * repo name and a hash. So we want to rename the theme directory so
-	 * WP can pick up the parent theme and so it's more palatable.
-	 *
-	 * @uses rename() To rename a file or directory.
-	 */
-	public function rename_github_folder( $source, $remote_source ) {
-		// get our preferred theme directory names
-		$theme_specs        = CBox_Theme_Specs::init();
-		$cbox_theme_dir     = $theme_specs->get( 'cbox_theme', 'directory_name' );
-		$infinity_theme_dir = $theme_specs->get( 'infinity',   'directory_name' );
-
-		// setup our parameters depending if we're installing
-		// the cbox or infinity theme
-		if ( strpos( $source, 'cuny' ) !== false ) {
-			$lookup  = 'cuny';
-			$new_dir = $cbox_theme_dir;
-		} else {
-			$lookup  = 'PressCrew';
-			$new_dir = $infinity_theme_dir;
-		}
-
-		// setup the new location
-		$pos = strpos( $source, $lookup );
-		$new_location = substr( $source, 0, $pos ) . $new_dir . '/';
-
-		// now rename the folder
-		@rename( $source, $new_location );
-
-		// and return the new location
-		return $new_location;
-	}
-
 
 	/**
 	 * Activates the CBox theme post install.
