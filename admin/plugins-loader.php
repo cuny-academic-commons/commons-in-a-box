@@ -115,7 +115,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
-			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, include groups and user profiles.', 'cbox' ),
+			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
 			'version'           => '1.6.1',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
@@ -148,13 +148,13 @@ class CBox_Plugins {
 
 		// BuddyPress Docs Wiki
 		self::register_plugin( array(
-			'plugin_name'       => 'BuddyPress Docs Wiki',
+			'plugin_name'       => 'BuddyPress Docs Wiki add-on',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'cbox' ),
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'cbox' ),
 			'version'           => '1.0',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.1.25.zip',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/master.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only'
 		) );
@@ -179,9 +179,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.0.15',
+			'version'           => '1.0.17',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.15.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.17.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone'
