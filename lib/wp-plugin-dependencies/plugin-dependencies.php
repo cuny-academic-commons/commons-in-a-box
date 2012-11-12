@@ -96,7 +96,7 @@ class Plugin_Dependencies {
 
 				// if core is incompatible, add requirement
 				if ( ! empty( $core_incompatible ) )  {
-					$core_incompatible = rtrim( substr( $core_incompatible, 2 ), ')' );
+					$core_incompatible = rtrim( substr( $core_incompatible, 1 ), ')' );
 
 					$requirement = array(
 						'title' => __( 'WordPress Core version incompatible', 'plugin-dependencies' ),
@@ -140,6 +140,7 @@ class Plugin_Dependencies {
 		self::$dependencies = apply_filters( 'scr_plugin_dependency_dependencies', self::$dependencies );
 		self::$requirements = apply_filters( 'scr_plugin_dependency_requirements', self::$requirements );
 
+		//var_dump( self::$dependencies );
 		//var_dump( self::$requirements );
 	}
 
@@ -181,7 +182,8 @@ class Plugin_Dependencies {
 
 			// if dependent plugin is incompatible, add requirement
 			if ( ! empty( $incompatible ) )  {
-				$incompatible = rtrim( substr( $incompatible, 2 ), ')' );
+
+				$incompatible = rtrim( substr( $incompatible, 1 ), ')' );
 
 				$requirements['incompatible'][0]['name'] = $plugin_name;
 				$requirements['incompatible'][0]['compatible_version'] = $incompatible;
@@ -214,7 +216,7 @@ class Plugin_Dependencies {
 			// add required version if available
 			// this needs reworking
 			if ( ! empty( $dependency ) && ! empty( $dependency['original_version'] ) ) {
-				$requirements['version'] = rtrim( substr( $dependency['original_version'], 2 ), ')' );
+				$requirements['version'] = rtrim( substr( $dependency['original_version'], 1 ), ')' );
 			}
 
 			$requirements['not-installed'][] = $plugin_name;
@@ -379,11 +381,10 @@ class Plugin_Dependencies {
 	/**
 	 * Parses a dependency for comparison with {@link Plugin_Dependencies::check_incompatibility()}.
 	 *
-	 * Note: You *cannot* pass a maintenance release number.
-	 *   For example, 1.1.1 will not work; 1.1 works; 1.x also works (this targets any version 1 release).
-	 *
 	 * @param $dependency
-	 *   A dependency string, for example 'foo (>=7.x-4.5-beta5, 3.x)'.
+	 *   A dependency string, for example:
+	 *    'foo (>=1.5)'
+	 *    'foo (>=1.5 / <1.8)'
 	 *
 	 * @return
 	 *   An associative array with three keys:
@@ -395,69 +396,35 @@ class Plugin_Dependencies {
 	 *     '<=', '>', or '>='. 'version' is one piece like '4.5-beta3'.
 	 *   Callers should pass this structure to {@link Plugin_Dependencies::check_incompatibility()}.
 	 *
-	 * This function is pretty much copied and pasted with love from Drupal's "drupal_parse_dependency()" function with a few mods.
+	 * This function is based from Drupal's "drupal_parse_dependency()" function with a few mods.
 	 * Drupal is licensed under the GPLv2 {@link http://api.drupal.org/api/drupal/LICENSE.txt/7}.
 	 *
 	 * @see {@link Plugin_Dependencies::check_incompatibility()}
 	 */
 	public function parse_dependency( $dependency ) {
-		global $wp_version;
-
 		// We use named subpatterns and support every op that version_compare
 		// supports. Also, op is optional and defaults to equals.
 		$p_op = '(?P<operation>!=|==|=|<|<=|>|>=|<>)?';
 
-		// WP Core version is optional: 3.x-2.x and 2.x are treated the same.
-		// @todo - using the major release version number only as the core compatibility
-		//         version number is a little limited
-		//       - perhaps allow branch numbers in a future release?
-		// @todo - remove this altogether; we're going to deviate from Drupal here
-		$version = substr( $wp_version, 0, strpos( $wp_version, '.' ) ) . '.x';
-		$p_core = '(?:' . preg_quote($version) . '-)?';
-
-		$p_major = '(?P<major>\d+)';
-
-		// By setting the minor version to x, branches can be matched.
-		// @todo - WP uses maintenance release numbers more than Drupal
-		//       - perhaps add support for maintenance release numbers
-		$p_minor = '(?P<minor>(?:\d+|x)(?:-[A-Za-z]+\d+)?)';
+		$p_version = '(?P<version>[A-Za-z0-9_.-]+)';
 
 		$value = array();
 		$parts = explode( '(', $dependency, 2 );
 		$value['name'] = trim( $parts[0] );
 
 		if ( isset( $parts[1] ) ) {
-			$value['original_version'] = ' (' . $parts[1];
+			// version number with parentheses and operator
+			// eg. (>=1.5)
+			$value['original_version'] = '(' . $parts[1];
 
 			foreach ( explode( '/', $parts[1] ) as $version ) {
-				if ( preg_match( "/^\s*$p_op\s*$p_core$p_major\.$p_minor/", $version, $matches ) ) {
+
+				if ( preg_match( "/^\s*$p_op\s*$p_version/", $version, $matches ) ) {
 					$op = !empty( $matches['operation'] ) ? $matches['operation'] : '=';
-
-					if ( $matches['minor'] == 'x' ) {
-						// We consider "2.x" to mean any version that begins with
-						// "2" (e.g. 2.0, 2.9 are all "2.x"). PHP's version_compare(),
-						// on the other hand, treats "x" as a string; so to
-						// version_compare(), "2.x" is considered less than 2.0. This
-						// means that >=2.x and <2.x are handled by version_compare()
-						// as we need, but > and <= are not.
-						if ( $op == '>' || $op == '<=' ) {
-							$matches['major']++;
-						}
-
-						// Equivalence can be checked by adding two restrictions.
-						if ( $op == '=' || $op == '==' ) {
-							$value['versions'][] = array(
-								'op'      => '<',
-								'version' => ($matches['major'] + 1) . '.x'
-							);
-
-							$op = '>=';
-						}
-					}
 
 					$value['versions'][] = array(
 						'op'      => $op,
-						'version' => $matches['major'] . '.' . $matches['minor']
+						'version' => $matches['version']
 					);
 				}
 			}
