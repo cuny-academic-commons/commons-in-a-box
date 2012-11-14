@@ -360,7 +360,7 @@ class CBox_Admin {
 	public function admin_menu() {
 		$page = add_menu_page(
 			__( 'Commons In A Box', 'cbox' ),
-			__( 'CBox', 'cbox' ),
+			__( 'Commons In A Box', 'cbox' ),
 			'install_plugins', // todo - map cap?
 			'cbox',
 			array( $this, 'admin_page' ),
