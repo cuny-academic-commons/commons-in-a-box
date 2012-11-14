@@ -798,7 +798,7 @@ class CBox_Plugins {
 					<div class="welcome-panel">
 						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
-						<p><?php _e( 'Commons In A Box requires the following plugins for use with your WordPress site.', 'cbox' ); ?></p>
+						<p><?php _e( 'Commons In A Box requires the following plugins.', 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table(); ?>
 					</div>
@@ -806,16 +806,16 @@ class CBox_Plugins {
 					<div class="welcome-panel">
 						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-						<p><?php _e( "The following are plugins we automatically install for you during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+						<p><?php _e( "The following plugins are installed automatically during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table( 'type=recommended' ); ?>
 					</div>
 
 					<div class="welcome-panel">
-						<h2><?php _e( '&Agrave; la carte!', 'cbox' ); ?></h2>
+						<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
 
-						<p><?php _e( "The following are plugins we do not automatically install for you because they might require a bit more setup than the usual plugins.", 'cbox' ); ?></p>
-						<p><?php _e( "However, we have tested these plugins and they're cool in our books as well!", 'cbox' ); ?></p>
+						<p><?php _e( "The following plugins work well with Commons In A Box, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ); ?></p>
+						<p><?php _e( "To install, check the plugins you want to install and click 'Update'.", 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table( 'type=optional' ); ?>
 					</div>
