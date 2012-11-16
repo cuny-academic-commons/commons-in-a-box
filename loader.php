@@ -104,7 +104,7 @@ class Commons_In_A_Box {
 
 	public function plugin_url( $path = '' ) {
 		if ( ! empty( $path ) && is_string( $path ) )
-			return cbox()->plugin_url . $path;
+			return esc_url( cbox()->plugin_url . $path );
 		else
 			return cbox()->plugin_url;
 	}
