@@ -661,7 +661,7 @@ class CBox_Plugins {
 			add_action( "load-{$plugin_page}",       array( 'Plugin_Dependencies', 'init' ) );
 
 			// inline CSS
-			add_action( "admin_head-{$plugin_page}", array( 'CBox_Admin', 'inline_css' ) );
+			add_action( "admin_head-{$plugin_page}", array( 'CBox_Admin', 'dashboard_css' ) );
 			add_action( "admin_head-{$plugin_page}", array( $this, 'inline_css' ) );
 		}
 	}
