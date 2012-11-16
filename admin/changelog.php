@@ -2,7 +2,7 @@
 		<div class="wrap about-wrap">
 			<h1><?php printf( __( 'Welcome to Commons In A Box %s', 'cbox' ), cbox_get_version() ); ?></h1>
 
-			<div class="about-text"><?php printf( __( 'Thank you for updating to the latest version!', 'cbox' ), cbox_get_version() ); ?></div>
+			<div class="about-text" style="min-height:90px;"><?php printf( __( 'Thank you for updating to the latest version!', 'cbox' ), cbox_get_version() ); ?></div>
 
 			<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
