@@ -132,7 +132,7 @@ class CBox_Admin {
 			// cbox theme exists! so let's activate it and redirect to the
 			// CBox Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
-				switch_theme( 'infinity', 'cbox-theme' );
+				switch_theme( 'cbox-theme', 'cbox-theme' );
 
                                // Mark the theme as having just been activated
                                // so that we can run the setup on next pageload
@@ -275,7 +275,7 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('themes');
-				echo '<h2>' . esc_html__('Upgrading CBox Themes', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Upgrading CBox Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
@@ -366,7 +366,7 @@ class CBox_Admin {
 	/**
          * Trigger Infinity's activation hook, if necessary
          *
-	  * Infinity, and therefore cbox-theme, run certain setup routines at
+	 * Infinity, and therefore cbox-theme, run certain setup routines at
          * 'infinity_dashboard_activated'. However, this hook doesn't fire
          * properly when CBOX uses switch_theme() to set the current theme.
          * Instread, we set a flag at activation, and then check on each admin

@@ -293,35 +293,16 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 
 	switch ( $class_name ) {
 		case 'CBox_Theme_Installer' :
-			// all themes are from github
-			$is_github = true;
-		
-			// detect theme based on URL
-			if ( strpos( $obj->options['url'], 'infinity' ) !== false ) {
-				$theme = 'infinity';
-			} else {
-				$theme = 'cbox-theme';
-			}
-
-			// split the file path
-			$path_parts = explode( '/', trailingslashit( $source ) );
-
-			// remake the new location omitting the last directory and adding our theme name
-			// this is done because infinity's tagging uses multiple hyphens
-			$new_location = trailingslashit( implode( '/', array_slice( $path_parts, 0, -2 ) ) ) . $theme . '/';
+			// if download url is not from github, stop now!
+			if ( strpos( $obj->options['url'], 'github.com' ) === false )
+				return $source;
 
 			break;
-			
+
 		case 'CBox_Plugin_Upgrader' :
 			// if download url is not from github, stop now!
 			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false )
 				return $source;
-		
-			// get position of last hyphen in github directory
-			$pos = strrpos( $source, '-' );
-
-			// get rid of branch name in github directory
-			$new_location = trailingslashit( substr( $source, 0, $pos ) );
 
 			break;
 
@@ -331,6 +312,12 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 
 			break;
 	}
+
+	// get position of last hyphen in github directory
+	$pos = strrpos( $source, '-' );
+
+	// get rid of branch name in github directory
+	$new_location = trailingslashit( substr( $source, 0, $pos ) );
 
 	// now rename the folder
 	@rename( $source, $new_location );

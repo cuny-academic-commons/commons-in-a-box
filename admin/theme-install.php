@@ -15,17 +15,16 @@ require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 /**
  * Sets up our CBox theme requirements.
  *
- * In this class, we setup our required specs for the CBox Default theme
- * and its parent theme, Infinity.
+ * In this class, we setup our required specs for the CBox Default theme.
  *
  * Use the init() method to construct the class.
  *
  * Is chainable, so you can do something like this:
  *      // get infinity theme specs
- *      CBox_Theme_Specs::init()->get( 'infinity' );
+ *      CBox_Theme_Specs::init()->get( 'cbox-theme' );
  *
  *      // get our version for infinity'
- *      CBox_Theme_Specs::init()->get( 'infinity', 'version' );
+ *      CBox_Theme_Specs::init()->get( 'cbox-theme', 'version' );
  *
  * @package Commons_In_A_Box
  * @subpackage Themes
@@ -44,27 +43,8 @@ class CBox_Theme_Specs {
 		'version'        => '1.0',
 		'directory_name' => 'cbox-theme',
 
-		// @todo need a tagged version... until then, we use the bleeding version
-		'download_url' => 'https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip'
-	);
-
-	/**
-	 * Setup our parent theme info.
-	 *
-	 * The CBox theme uses the Infinity theme as a parent.
-	 * This variable is referenced if Infinity isn't already installed.
-	 *
-	 * @static
-	 */
-	private static $infinity = array(
-		'name'           => '&#8734; Infinity',
-		'version'        => '1.1a',
-		'directory_name' => 'infinity',
-
-		// this is set to use the bleeding 'buddypress' branch to get the latest
-		// Infinity bug fixes
-		// @todo When 1.1 hits, use tagged version
-		'download_url'   => 'https://github.com/PressCrew/infinity/archive/buddypress.zip'
+		// @todo need a tagged version... until then, we use the 'builds' branch
+		'download_url'   => 'https://github.com/cuny-academic-commons/cbox-theme/archive/builds.zip'
 	);
 
 	/**
@@ -77,7 +57,7 @@ class CBox_Theme_Specs {
 	/**
 	 * Fetch our theme info depending on the passed variables.
 	 *
-	 * @param str $theme The theme we want specs for. Only 'infinity', 'cbox_theme' will work.
+	 * @param str $theme The theme we want specs for. Only 'cbox_theme' will work.
 	 * @param str $param The theme parameter we want to fetch. 'name', 'version', 'directory_name', 'download_url' will work.
 	 * @return mixed Array of theme specs if $param isn't passed. String if $param is successfully passed.
 	 */
@@ -114,34 +94,14 @@ class CBox_Theme_Specs {
 
 		// get our internal theme specs
 		$cbox_theme_specs = self::$cbox_theme;
-		$infinity_specs   = self::$infinity;
-
-		// get parent infinity theme info
-		$infinity_current = wp_get_theme( 'infinity' );
 
 		// version checking
-		$retval = $cbox_theme_update = $infinity_update = false;
+		$retval = false;
 
 		// check if current cbox theme is less than our internal spec
+		// if so, we want to update it!
 		if ( version_compare( $current_theme->Version, $cbox_theme_specs['version'] ) < 0 )
-			$cbox_theme_update = true;
-
-		// check if infinity theme is less than our internal spec
-		if ( version_compare( $infinity_current->Version, $infinity_specs['version'] ) < 0 )
-			$infinity_update = true;
-
-		// setup our $retval variable
-		if ( $cbox_theme_update && $infinity_update ) {
-			$retval = 'all';
-
-		// only one of the themes has an update
-		} else {
-			if ( $cbox_theme_update ) {
-				$retval = 'cbox';
-			} elseif ( $infinity_update ) {
-				$retval = 'infinity';
-			}
-		}
+			$retval = $cbox_theme_specs['directory_name'];
 
 		return $retval;
 	}
@@ -161,67 +121,6 @@ class CBox_Theme_Specs {
 class CBox_Theme_Installer extends Theme_Upgrader {
 
 	/**
-	 * Overrides the {@link Theme_Upgrader::parent check_parent_theme_filter()} method.
-	 *
-	 * Why? So we can use our custom download URL for the Infinity parent theme.
-	 */
-	function check_parent_theme_filter( $install_result, $hook_extra, $child_result ) {
-		// Check to see if we need to install a parent theme
-		$theme_info = $this->theme_info();
-
-		// if no theme errors, stop now!
-		if ( ! $theme_info->errors() )
-			return $install_result;
-
-		// get child theme errors
-		// doing something different than the parent class method since that didn't work properly
-		$errors = $theme_info->errors()->errors;
-
-		// if parent theme is installed, stop now!
-		if ( empty( $errors['theme_no_parent'] ) )
-			return $install_result;
-
-		// get our specs for Infinity
-		$infinity = CBox_Theme_Specs::init()->get( 'infinity' );
-
-		// Override parent theme search string
-		$this->strings['parent_theme_search'] = sprintf( __( 'Installing required parent theme, <strong>%s</strong>.', 'cbox' ), $infinity['name'] . ' ' . $infinity['version'] );
-		$this->skin->feedback( 'parent_theme_search' );
-
-		// Backup strings we're going to override:
-		$child_success_message = $this->strings['process_success'];
-
-		// Override theme success string
-		$this->strings['process_success'] = __('Successfully installed the parent theme.', 'cbox' );
-		$this->skin->feedback('parent_theme_prepare_install', $infinity['name'], $infinity['version'] );
-
-		// Don't show any actions after installing the theme.
-		add_filter( 'install_theme_complete_actions', '__return_false', 999 );
-
-		$this->options['url'] = $infinity['download_url'];
-
-		// Install the parent theme
-		$parent_result = $this->run( array(
-			'package'           => $infinity['download_url'],
-			'destination'       => WP_CONTENT_DIR . '/themes',
-			'clear_destination' => true,
-			'clear_working'     => true
-		) );
-
-		if ( is_wp_error( $parent_result ) )
-			add_filter('install_theme_complete_actions', array( $this, 'hide_activate_preview_actions' ) );
-
-		// Start cleaning up after the parents installation
-		remove_filter( 'install_theme_complete_actions', '__return_false', 999 );
-
-		// Reset child's result and data
-		$this->result = $child_result;
-		$this->strings['process_success'] = $child_success_message;
-
-		return $install_result;
-	}
-
-	/**
 	 * Overrides the {@link Theme_Upgrader::install()} method.
 	 *
 	 * Why? So we can use our custom download URLs for the CBox and
@@ -233,7 +132,6 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
 		add_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
-		add_filter( 'upgrader_post_install',          array( $this, 'check_parent_theme_filter' ), 10, 3 );
 		add_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		add_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
@@ -254,7 +152,6 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
 		remove_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_post_install',          array( $this, 'check_parent_theme_filter' ), 10, 3 );
 		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
 		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		remove_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
@@ -316,19 +213,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		// setup our themes to upgrade
 		switch ( $upgrades ) {
-			case 'all' :
-				$themes[] = $theme_specs->get( 'infinity' );
+			case 'cbox-theme' :
 				$themes[] = $theme_specs->get( 'cbox_theme' );
-
-				break;
-
-			case 'cbox' :
-				$themes[] = $theme_specs->get( 'cbox_theme' );
-
-				break;
-
-			case 'infinity' :
-				$themes[] = $theme_specs->get( 'infinity' );
 
 				break;
 		}
@@ -390,13 +276,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		// get our theme directory names
 		$theme_specs        = CBox_Theme_Specs::init();
 		$cbox_theme_dir     = $theme_specs->get( 'cbox_theme', 'directory_name' );
-		$infinity_theme_dir = $theme_specs->get( 'infinity',   'directory_name' );
 
-		if ( ! empty( $result['destination_name'] ) &&
-			( $result['destination_name'] == $cbox_theme_dir || $result['destination_name'] == $infinity_theme_dir )
-		) {
+		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $cbox_theme_dir ) {
 			// switch the theme to the cbox theme!
-			switch_theme( $infinity_theme_dir, $cbox_theme_dir );
+			switch_theme( $cbox_theme_dir, $cbox_theme_dir );
 			
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload
