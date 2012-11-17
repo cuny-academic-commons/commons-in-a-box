@@ -397,6 +397,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		) {
 			// switch the theme to the cbox theme!
 			switch_theme( $infinity_theme_dir, $cbox_theme_dir );
+			
+			// Mark the theme as having just been activated
+			// so that we can run the setup on next pageload
+			bp_update_option( '_cbox_theme_activated', '1' );
 		}
 
 		return $bool;

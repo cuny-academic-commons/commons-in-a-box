@@ -63,6 +63,9 @@ class CBox_Admin {
 
 		// after the BP wizard completes, redirect to the CBox dashboard
 		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
+
+		// after installing the cbox-theme, run the activation hook
+		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
 	}
 
 	/** ACTIONS / SCREENS *********************************************/
@@ -130,6 +133,11 @@ class CBox_Admin {
 			// CBox Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
 				switch_theme( 'infinity', 'cbox-theme' );
+
+                               // Mark the theme as having just been activated
+                               // so that we can run the setup on next pageload
+				bp_update_option( '_cbox_theme_activated', '1' );
+
 				wp_redirect( admin_url( 'themes.php?page=infinity-theme' ) );
 				return;
 			}
@@ -352,6 +360,23 @@ class CBox_Admin {
 
 			// redirect to the CBox dashboard
 			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+		}
+	}
+
+	/**
+         * Trigger Infinity's activation hook, if necessary
+         *
+	  * Infinity, and therefore cbox-theme, run certain setup routines at
+         * 'infinity_dashboard_activated'. However, this hook doesn't fire
+         * properly when CBOX uses switch_theme() to set the current theme.
+         * Instread, we set a flag at activation, and then check on each admin
+         * pageload to see if the theme was just activated; if so, we run the
+         * activation hook.
+         */
+	public function theme_activation_hook() {
+		if ( get_option( '_cbox_theme_activated' ) ) {
+			delete_option( '_cbox_theme_activated' );
+			do_action( 'infinity_dashboard_activated' );
 		}
 	}
 
