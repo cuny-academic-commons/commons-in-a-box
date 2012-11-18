@@ -11,7 +11,7 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Setup the CBox admin area.
+ * Setup the CBOX admin area.
  *
  * @since 0.2
  */
@@ -52,7 +52,7 @@ class CBox_Admin {
 		// notice inline CSS
 		add_action( 'admin_head',                                                   array( $this, 'notice_css' ) );
 
-		// add an admin notice if CBox isn't setup
+		// add an admin notice if CBOX isn't setup
 		add_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
 
 		// add a special header on the admin plugins page
@@ -61,7 +61,7 @@ class CBox_Admin {
 		// add a hook to manipulate BP's wizard steps
 		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_listener' ) );
 
-		// after the BP wizard completes, redirect to the CBox dashboard
+		// after the BP wizard completes, redirect to the CBOX dashboard
 		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
 
 		// after installing the cbox-theme, run the activation hook
@@ -71,13 +71,13 @@ class CBox_Admin {
 	/** ACTIONS / SCREENS *********************************************/
 
 	/**
-	 * Catches form submissions from the CBox dashboard and sets
+	 * Catches form submissions from the CBOX dashboard and sets
 	 * some reference pointers depending on the type of submission.
 	 *
 	 * @since 0.3
 	 */
 	public function catch_form_submission() {
-		// virgin setup - no cbox or BP installed
+		// virgin setup - no CBOX or BP installed
 		if ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_virgin_setup', 'cbox-virgin-nonce' );
@@ -88,7 +88,7 @@ class CBox_Admin {
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
 
-		// bp installed, but no cbox
+		// BP installed, but no CBOX
 		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_bp_installed', 'cbox-recommended-nonce' );
@@ -99,7 +99,7 @@ class CBox_Admin {
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
 
-			// if no plugins to install, redirect back to CBox dashboard
+			// if no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				do_action( 'cbox_after_updater' );
 				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
@@ -120,7 +120,7 @@ class CBox_Admin {
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
 
-		// install cbox theme
+		// install CBOX theme
 		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {
 			// verify nonce
 			check_admin_referer( 'cbox_install_theme' );
@@ -129,8 +129,8 @@ class CBox_Admin {
 			$cbox_theme = wp_get_theme( 'cbox-theme' );
 			$errors = $cbox_theme->errors()->errors;
 
-			// cbox theme exists! so let's activate it and redirect to the
-			// CBox Theme options page!
+			// CBOX theme exists! so let's activate it and redirect to the
+			// CBOX Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
 				switch_theme( 'cbox-theme', 'cbox-theme' );
 
@@ -142,7 +142,7 @@ class CBox_Admin {
 				return;
 			}
 
-			// cbox theme doesn't exist, so set reference pointer for later use
+			// CBOX theme doesn't exist, so set reference pointer for later use
 			cbox()->setup = 'install-theme';
 
 		// theme upgrades available
@@ -162,52 +162,52 @@ class CBox_Admin {
 	 * @since 0.3
 	 */
 	private function setup_screen() {
-		// do something different for each cbox setup condition
+		// do something different for each CBOX setup condition
 		switch( cbox()->setup ) {
-			// virgin setup - no cbox or BP installed
+			// virgin setup - no CBOX or BP installed
 			case 'virgin-setup' :
-				// get cbox plugins except optional ones
+				// get CBOX plugins except optional ones
 				$plugins = CBox_Plugins::get_plugins( 'all', 'optional' );
 
 				// sort plugins by plugin state
 				$plugins = CBox_Plugins::organize_plugins_by_state( $plugins );
 
-				// include the CBox Plugin Upgrade and Install API
+				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('plugins');
-				echo '<h2>' . esc_html__('Setup CBox Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Setup CBOX Plugins', 'cbox' ) . '</h2>';
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
 					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
+					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
 
 				break;
 
-			// bp installed, but no cbox
+			// BP installed, but no CBOX
 			case 'install' :
 				$plugins = $_REQUEST['cbox_plugins'];
 
-				// include the CBox Plugin Upgrade and Install API
+				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('plugins');
-				echo '<h2>' . esc_html__('Install CBox Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Install CBOX Plugins', 'cbox' ) . '</h2>';
 
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
 					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBox Dashboard', 'cbox' )
+					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -222,20 +222,20 @@ class CBox_Admin {
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
 				if ( ! empty( cbox()->theme_upgrades ) ) {
-					$title = esc_html__( 'Upgrading CBox Plugins and Themes', 'cbox' );
+					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
 					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
-					$redirect_text = __( "Now, let's upgrade the CBox Default theme &rarr;", 'cbox' );
+					$redirect_text = __( "Now, let's upgrade the CBOX Default theme &rarr;", 'cbox' );
 
 
 				} else {
-					$title = esc_html__( 'Upgrading CBox Plugins', 'cbox' );
+					$title = esc_html__( 'Upgrading CBOX Plugins', 'cbox' );
 
 					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-					$redirect_text = __( 'Return to the CBox Dashboard', 'cbox' );
+					$redirect_text = __( 'Return to the CBOX Dashboard', 'cbox' );
 				}
 
-				// include the CBox Plugin Upgrade and Install API
+				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
@@ -256,7 +256,7 @@ class CBox_Admin {
 
 			// install the cbox theme
 			case 'install-theme' :
-				// get cbox theme specs
+				// get CBOX theme specs
 				$theme = CBox_Theme_Specs::init()->get( 'cbox_theme' );
 
 				$title = sprintf( _x( 'Installing %s', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
@@ -266,7 +266,7 @@ class CBox_Admin {
 
 				break;
 
-			// upgrade cbox themes
+			// upgrade CBOX themes
 			case 'upgrade-theme' :
 				// Modifies the theme action links that get displayed after theme installation
 				// is complete.
@@ -275,7 +275,7 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('themes');
-				echo '<h2>' . esc_html__('Upgrading CBox Theme', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Upgrading CBOX Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
@@ -289,11 +289,11 @@ class CBox_Admin {
 
 	/**
 	 * If we're on the BuddyPress Wizard, we do a couple of things to
-	 * manipulate BP for CBox UX reasons.
+	 * manipulate BP for CBOX UX reasons.
 	 *
 	 * 1) Alter BuddyPress' wizard to remove the "Theme" step.
 	 * 2) Set a cookie if we're on the last step of the BP wizard. This
-	 *    is done so we can redirect back to the CBox dashboard after BP
+	 *    is done so we can redirect back to the CBOX dashboard after BP
 	 *    wizard has done its thang.
 	 *
 	 * Warning: hackety-hack-hack!
@@ -340,7 +340,7 @@ class CBox_Admin {
 
 	/**
 	 * Catch BP wizard's redirect after completion and redirect to the
-	 * CBox dashboard.
+	 * CBOX dashboard.
 	 *
 	 * @since 0.3
 	 *
@@ -358,7 +358,7 @@ class CBox_Admin {
 			// remove the cookie
 			@setcookie( 'cbox-bp-finish-wizard', '', time() - 3600, COOKIEPATH );
 
-			// redirect to the CBox dashboard
+			// redirect to the CBOX dashboard
 			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 		}
 	}
@@ -451,7 +451,7 @@ class CBox_Admin {
 	}
 
 	/**
-	 * Registers contextual help for the Cbox dashboard page.
+	 * Registers contextual help for the CBOX dashboard page.
 	 *
 	 * @uses get_current_screen() Gets info about the current screen.
 	 */
@@ -486,7 +486,7 @@ class CBox_Admin {
 	}
 
 	/**
-	 * The CBox welcome panel.
+	 * The CBOX welcome panel.
 	 *
 	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
 	 */
@@ -523,8 +523,8 @@ class CBox_Admin {
 			<div class="welcome-panel-content">
 				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
 
-				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBox users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
-				<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBox site.', 'cbox' ); ?></p>
+				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBOX users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
+				<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBOX site.', 'cbox' ); ?></p>
 
 				<?php if ( cbox_is_setup() ) : ?>
 					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
@@ -537,22 +537,22 @@ class CBox_Admin {
 	}
 
 	/**
-	 * CBox setup steps.
+	 * CBOX setup steps.
 	 *
-	 * This shows up when CBox hasn't completed setup yet.
+	 * This shows up when CBOX hasn't completed setup yet.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To tell if CBox is fully setup.
-	 * @uses cbox_is_upgraded() To check if CBox just upgraded.
-	 * @uses cbox_get_setup_step() Which setup step is CBox at?
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
+	 * @uses cbox_is_upgraded() To check if CBOX just upgraded.
+	 * @uses cbox_get_setup_step() Which setup step is CBOX at?
 	 */
 	private function steps() {
-		// if cbox is already setup, stop now!
+		// if CBOX is already setup, stop now!
 		if ( cbox_is_setup() )
 			return;
 
-		// stop if CBox just upgraded
+		// stop if CBOX just upgraded
 		if ( cbox_is_upgraded() )
 			return;
 
@@ -629,7 +629,7 @@ class CBox_Admin {
 
 			<?php
 				// all recommended plugins are already installed
-				// so bump the cbox revision date and reload the page using javascript
+				// so bump the CBOX revision date and reload the page using javascript
 				// @todo make this <noscript> friendly
 				} else {
 					cbox_bump_revision_date();
@@ -645,16 +645,16 @@ class CBox_Admin {
 	/**
 	 * Upgrade notice.
 	 *
-	 * This shows up when CBox is upgraded through the WP updates panel and
-	 * when installed CBox plugins have updates.
+	 * This shows up when CBOX is upgraded through the WP updates panel and
+	 * when installed CBOX plugins have updates.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_upgraded() To tell if CBox has just upgraded.
-	 * @uses cbox_bump_revision_date() To bump the CBox revision date in the DB.
+	 * @uses cbox_is_upgraded() To tell if CBOX has just upgraded.
+	 * @uses cbox_bump_revision_date() To bump the CBOX revision date in the DB.
 	 */
 	private function upgrades() {
-		// get activated CBox plugins that need updating
+		// get activated CBOX plugins that need updating
 		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
 		// check for theme upgrades
@@ -663,7 +663,7 @@ class CBox_Admin {
 		// no available upgrades, so stop!
 		if ( ! $active_cbox_plugins_need_update && ! $is_theme_upgrade ) {
 
-			// if CBox just upgraded and has no plugin updates, bump cbox revision date and reload using JS
+			// if CBOX just upgraded and has no plugin updates, bump CBOX revision date and reload using JS
 			// yeah, the JS redirect is a little ugly... should probably do this higher up the stack...
 			if ( cbox_is_upgraded() ) {
 				cbox_bump_revision_date();
@@ -688,7 +688,7 @@ class CBox_Admin {
 			// theme has update, so add an extra parameter to the querystring
 			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
-			$message = sprintf( _n( '%d installed plugin and the CBox Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBox Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+			$message = sprintf( _n( '%d installed plugin and the CBOX Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBOX Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
 
 		// just plugins
 		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
@@ -699,7 +699,7 @@ class CBox_Admin {
 			// theme has update, so switch up the upgrade URL
 			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
-			$message = __( 'The CBox Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
+			$message = __( 'The CBOX Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
 		}
 
 	?>
@@ -721,11 +721,11 @@ class CBox_Admin {
 	 * Metaboxes.
 	 *
 	 * These are quick action links for the admin to do stuff.
-	 * Note: These metaboxes only show up when CBox has finished setting up.
+	 * Note: These metaboxes only show up when CBOX has finished setting up.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
 	 */
 	private function metaboxes() {
 		if ( ! cbox_is_setup() )
@@ -759,7 +759,7 @@ class CBox_Admin {
 
 					<div class="login">
 						<div class="message" style="text-align:center;">
-							<strong><?php printf( __( '<a href="%s">Manage all your CBox plugins here!</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
+							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here!</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
 						</div>
 					</div>
 				</div>
@@ -772,11 +772,11 @@ class CBox_Admin {
 
 						if ( $theme->errors() ) :
 							echo '<p>';
-							printf( __( '<a href="%s">Install the CBox Default theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) );
+							printf( __( '<a href="%s">Install the CBOX Default theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) );
 							echo '</p>';
 						else:
 
-							// current theme is not the cbox default theme
+							// current theme is not the CBOX default theme
 							if ( $theme->get_stylesheet() != 'cbox-theme' ) {
 								$is_bp_compatible = cbox_is_theme_bp_compatible();
 
@@ -791,13 +791,13 @@ class CBox_Admin {
 									}
 								?>
 
-								<p><?php _e( 'Did you know that <strong>CBox</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
+								<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
 
-								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBox theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
+								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
 
 								<div class="login">
 									<div class="message" style="text-align:center;">
-										<strong><?php printf( __( '<a href="%s">Like the CBox Theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) ); ?></strong>
+										<strong><?php printf( __( '<a href="%s">Like the CBOX Theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) ); ?></strong>
 									</div>
 								</div>
 
@@ -818,12 +818,12 @@ class CBox_Admin {
 								?>
 
 							<?php
-							// current theme is the cbox default theme
+							// current theme is the CBOX default theme
 							} else {
 								// check for upgrades
 								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
 							?>
-								<p><?php _e( "You're using the <strong>CBox Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
+								<p><?php _e( "You're using the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
 
 								<?php /* HIDE THIS FOR NOW ?>
 								<?php if ( $is_upgrade ) : ?>
@@ -837,7 +837,7 @@ class CBox_Admin {
 
 								<div class="login">
 									<div class="message">
-										<strong><?php printf( __( '<a href="%s">Configure the CBox Theme here!</a>', 'cbox' ), esc_url( admin_url( 'themes.php?page=infinity-theme' ) ) ); ?></strong>
+										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( admin_url( 'themes.php?page=infinity-theme' ) ) ); ?></strong>
 									</div>
 								</div>
 
@@ -858,11 +858,11 @@ class CBox_Admin {
 	/**
 	 * About section.
 	 *
-	 * This only shows up when CBox is fully setup.
+	 * This only shows up when CBOX is fully setup.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
 	 */
 	private function about() {
 		if ( ! cbox_is_setup() )
@@ -894,12 +894,12 @@ class CBox_Admin {
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
 	 * @uses current_user_can() Check if the current user has the permission to do something.
 	 * @uses is_multisite() Check to see if WP is in network mode.
 	 */
 	public function setup_notice() {
-		// if cbox is setup, stop now!
+		// if CBOX is setup, stop now!
 		if ( cbox_is_setup() )
 			return;
 
@@ -1000,11 +1000,11 @@ class CBox_Admin {
 	}
 
 	/**
-	 * Show an admin notice if CBox hasn't finished setting up.
+	 * Show an admin notice if CBOX hasn't finished setting up.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_get_setup_step() Which setup step is CBox at?
+	 * @uses cbox_get_setup_step() Which setup step is CBOX at?
 	 */
 	public function display_notice() {
 		// if our notice marker isn't set, stop now!
@@ -1057,13 +1057,13 @@ class CBox_Admin {
 
 	/**
 	 * Add a special header before the admin plugins table is rendered
-	 * to remind admins that CBox plugins are on their own, special page.
+	 * to remind admins that CBOX plugins are on their own, special page.
 	 *
-	 * This only shows up when CBox is fully setup.
+	 * This only shows up when CBOX is fully setup.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To tell if CBox is fully setup.
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
 	 * @uses current_user_can() Check if the current user has the permission to do something.
 	 * @uses is_network_admin() Check to see if we're in the network admin area.
 	 * @uses is_multisite() Check to see if WP is in network mode.
@@ -1073,14 +1073,14 @@ class CBox_Admin {
 			$single_site = ( current_user_can( 'manage_network_plugins' ) && ! is_network_admin() ) || ( ! is_multisite() && current_user_can( 'install_plugins' ) );
 
 			if ( $single_site )
-				echo '<h3>' . __( 'CBox Plugins', 'cbox' ) . '</h3>';
+				echo '<h3>' . __( 'CBOX Plugins', 'cbox' ) . '</h3>';
 			else
-				echo '<h3>' . __( 'CBox Network Plugins', 'cbox' ) . '</h3>';
+				echo '<h3>' . __( 'CBOX Network Plugins', 'cbox' ) . '</h3>';
 
 			if ( $single_site )
-				echo '<p>' . __( "Don't forget that CBox plugins can be managed from the CBox plugins page!", 'cbox' ) .'</p>';
+				echo '<p>' . __( "Don't forget that CBOX plugins can be managed from the CBOX plugins page!", 'cbox' ) .'</p>';
 
-			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBox plugins here</a>.', 'cbox' ), network_admin_url( 'admin.php?page=cbox-plugins' ) ) . '</p>';
+			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), network_admin_url( 'admin.php?page=cbox-plugins' ) ) . '</p>';
 
 			if ( $single_site )
 				echo '<h3>' . sprintf( __( 'Plugins on %s', 'cbox' ), get_bloginfo( 'name' ) ) . '</h3>';

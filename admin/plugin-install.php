@@ -1,6 +1,6 @@
 <?php
 /**
- * CBox's Plugin Upgrade and Install API
+ * CBOX's Plugin Upgrade and Install API
  *
  * @package Commons_In_A_Box
  * @subpackage Plugins
@@ -17,7 +17,7 @@ if ( ! class_exists( 'Plugin_Dependencies' ) )
 	require_once( CBOX_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
 
 /**
- * CBox's custom plugin upgrader.
+ * CBOX's custom plugin upgrader.
  *
  * Extends the {@link Plugin_Upgrader} class to allow for our custom required spec.
  *
@@ -30,7 +30,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	/**
 	 * Overrides the parent {@link Plugin_Upgrader::bulk_upgrader()} method.
 	 *
-	 * Uses CBox's own registered upgrade links.
+	 * Uses CBOX's own registered upgrade links.
 	 *
 	 * @param str $plugins Array of plugin names
 	 */
@@ -237,7 +237,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 }
 
 /**
- * The UI for CBox's updater.
+ * The UI for CBOX's updater.
  *
  * Extends the {@link Bulk_Plugin_Upgrader_Skin} class.
  *
@@ -327,7 +327,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		}
 
 		// process is completed!
-		// show link to Cbox dashboard
+		// show link to CBOX dashboard
 		else {
 			usleep(500000);
 
@@ -411,7 +411,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		// default fallback
 		} else {
 			$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-			$redirect_text = __( 'Return to the CBox Plugins page', 'cbox' );
+			$redirect_text = __( 'Return to the CBOX Plugins page', 'cbox' );
 		}
 
 		echo '<br /><a class="button-primary" href="' . esc_url( $redirect_link ) . '">' . esc_attr( $redirect_text ) . '</a>';
@@ -422,7 +422,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 }
 
 /**
- * CBox Updater.
+ * CBOX Updater.
  *
  * Wraps the bulk-upgrading, bulk-installing and bulk-activating process into one!
  *

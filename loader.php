@@ -12,7 +12,7 @@ Network: true
 
 class Commons_In_A_Box {
 	/**
-	 * Holds the single-running CBox object
+	 * Holds the single-running CBOX object
 	 *
 	 * @var Commons_In_A_Box
 	 */
@@ -68,18 +68,18 @@ class Commons_In_A_Box {
 
 		/** VERSION ***********************************************************/
 
-		// CBox version
+		// CBOX version
 		$this->version       = '0.3-bleeding';
 
-		// UTC date of CBox version release
+		// UTC date of CBOX version release
 		$this->revision_date = '2012-09-12 18:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
-		// the absolute directory CBox is running from
+		// the absolute directory CBOX is running from
 		$this->plugin_dir    = constant( 'CBOX_PLUGIN_DIR' );
 
-		// the URL to the CBox directory
+		// the URL to the CBOX directory
 		$this->plugin_url    = plugin_dir_url( __FILE__ );
 	}
 

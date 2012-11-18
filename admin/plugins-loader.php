@@ -64,30 +64,30 @@ class CBox_Plugins {
 	 * Setup our hooks.
 	 */
 	private function setup_hooks() {
-		// setup the CBox plugin menu
+		// setup the CBOX plugin menu
 		add_action( 'cbox_admin_menu',                       array( $this, 'setup_plugins_page' ) );
 
-		// load PD on the "Dashboard > Updates" page so we can filter out our CBox plugins
+		// load PD on the "Dashboard > Updates" page so we can filter out our CBOX plugins
 		add_action( 'load-update-core.php',                  array( 'Plugin_Dependencies', 'init' ) );
 
 		// filter PD's dependency list
 		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );
 
-		// prevent Cbox plugins from being seen in the regular Plugins table and from WP updates
+		// prevent CBOX plugins from being seen in the regular Plugins table and from WP updates
 		if ( ! $this->is_override() ) {
-			// exclude Cbox plugins from the "Plugins" list table
+			// exclude CBOX plugins from the "Plugins" list table
 			add_filter( 'all_plugins',                   array( $this, 'exclude_cbox_plugins' ) );
 
-			// remove Cbox plugins from WP's update plugins routine
+			// remove CBOX plugins from WP's update plugins routine
 			add_filter( 'site_transient_update_plugins', array( $this, 'remove_cbox_plugins_from_updates' ) );
 
-			// do not show PD's pre-activation warnings if admin cannot override CBox plugins
+			// do not show PD's pre-activation warnings if admin cannot override CBOX plugins
 			add_filter( 'pd_show_preactivation_warnings', '__return_false' );
 		}
 	}
 
 	/**
-	 * For expert site managers, we allow them to view Cbox plugins in the
+	 * For expert site managers, we allow them to view CBOX plugins in the
 	 * regular Plugins table and on the WP Updates page.
 	 *
 	 * To do this, add the following code snippet to wp-config.php
@@ -103,7 +103,7 @@ class CBox_Plugins {
 	/** PLUGINS-SPECIFIC **********************************************/
 
 	/**
-	 * CBox requires several popular plugins.
+	 * CBOX requires several popular plugins.
 	 *
 	 * We register these plugins here for later use.
 	 *
@@ -124,7 +124,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * CBox recommends several popular plugins.
+	 * CBOX recommends several popular plugins.
 	 *
 	 * We register these plugins here for later use.
 	 *
@@ -271,10 +271,10 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * CBox also lists a few other plugins that can be used to extend functionality.
+	 * CBOX also lists a few other plugins that can be used to extend functionality.
 	 *
 	 * Although, they are slightly below the recommended level, we've tested these
-	 * plugins and think they're cool enough to be a part of CBox.
+	 * plugins and think they're cool enough to be a part of CBOX.
 	 *
 	 * We register these plugins here for later use.
 	 *
@@ -337,7 +337,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Register CBox's dependency plugins internally.
+	 * Register CBOX's dependency plugins internally.
 	 *
 	 * The reason why this is done is Plugin Dependencies (PD) does not know the download URL for dependent plugins.
 	 * So if a dependent plugin is deemed incompatible by PD (either not installed or incompatible version),
@@ -359,7 +359,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Register a plugin in CBox.
+	 * Register a plugin in CBOX.
 	 *
 	 * Updates our private, static $plugins variable in the process.
 	 *
@@ -372,8 +372,8 @@ class CBox_Plugins {
 		$defaults = array(
 			'plugin_name'       => false, // (required) the name of the plugin as in the plugin header
 			'type'              => 'required', // types include 'required', 'recommended', 'optional', dependency'
-			'cbox_name'         => false, // CBox's label for the plugin
-			'cbox_description'  => false, // CBox's short description of the plugin
+			'cbox_name'         => false, // CBOX's label for the plugin
+			'cbox_description'  => false, // CBOX's short description of the plugin
 			'depends'           => false, // our own defined dependencies for the plugin; uses same syntax as PD
 			'version'           => false, // the version number of the plugin we want to compare the installed version with (if applicable)
 			'download_url'      => false, // the download URL of the plugin used if the active version is not compatible with our version
@@ -413,14 +413,14 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Helper method to grab all CBox plugins of a certain type.
+	 * Helper method to grab all CBOX plugins of a certain type.
 	 *
-	 * @param string $type Type of CBox plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
-	 * @param string $omit_type The type of CBox plugin to omit from returning
+	 * @param string $type Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
+	 * @param string $omit_type The type of CBOX plugin to omit from returning
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
 	public static function get_plugins( $type = 'all', $omit_type = false ) {
-		// if type is 'all', we want all CBox plugins regardless of type
+		// if type is 'all', we want all CBOX plugins regardless of type
 		if ( $type == 'all' ) {
 			$plugins = self::$plugins;
 
@@ -465,17 +465,17 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Get settings links for our installed CBox plugins.
+	 * Get settings links for our installed CBOX plugins.
 	 *
 	 * @since 0.3
 	 *
-	 * @return Assosicate array with CBox plugin name as key and admin settings URL as the value.
+	 * @return Assosicate array with CBOX plugin name as key and admin settings URL as the value.
 	 */
 	public static function get_settings() {
-		// get all installed cbox plugins
+		// get all installed CBOX plugins
 		$cbox_plugins = self::get_plugins();
 
-		// get active CBox plugins
+		// get active CBOX plugins
 		$active = self::organize_plugins_by_state( $cbox_plugins );
 
 		if ( empty( $active ) )
@@ -486,7 +486,7 @@ class CBox_Plugins {
 		$settings = array();
 
 		foreach ( $active as $plugin ) {
-			// network CBox install and CBox plugin has a network settings page
+			// network CBOX install and CBOX plugin has a network settings page
 			if ( is_network_admin() && ! empty( $cbox_plugins[$plugin]['network_settings'] ) ) {
 				// if network plugin's settings resides on the root blog,
 				// then make sure we use the root blog's domain to generate the admin settings URL
@@ -503,7 +503,7 @@ class CBox_Plugins {
 				}
 			}
 
-			// single-site CBox install and CBox plugin has an admin settings page
+			// single-site CBOX install and CBOX plugin has an admin settings page
 			elseif( ! is_network_admin() && ! empty( $cbox_plugins[$plugin]['admin_settings'] ) ) {
 				$settings[$plugin] = admin_url( $cbox_plugins[$plugin]['admin_settings'] );
 			}
@@ -519,10 +519,10 @@ class CBox_Plugins {
 	 * @since 0.3
 	 *
 	 * @param string $type The type of plugins to get upgrades for. Either 'all' or 'active'.
-	 * @return array of CBox plugin names that require upgrading
+	 * @return array of CBOX plugin names that require upgrading
 	 */
 	public static function get_upgrades( $type = 'all' ) {
-		// get all CBox plugins that require upgrades
+		// get all CBOX plugins that require upgrades
 		$upgrades = self::organize_plugins_by_state( self::get_plugins() );
 
 		if ( empty( $upgrades['upgrade'] ) )
@@ -585,7 +585,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Exclude CBox's plugins from the "Plugins" list table.
+	 * Exclude CBOX's plugins from the "Plugins" list table.
 	 *
 	 * @return array
 	 */
@@ -596,7 +596,7 @@ class CBox_Plugins {
 			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
-			// if our cbox plugin is found, get rid of it
+			// if our CBOX plugin is found, get rid of it
 			if( ! empty( $loader ) && ! empty( $plugins[ $loader ] ) )
 				unset( $plugins[ $loader ] );
 		}
@@ -606,7 +606,7 @@ class CBox_Plugins {
 
 
 	/**
-	 * Cbox plugins should be removed from WP's update plugins routine.
+	 * CBOX plugins should be removed from WP's update plugins routine.
 	 */
 	public function remove_cbox_plugins_from_updates( $plugins ) {
 		$i = 0;
@@ -615,7 +615,7 @@ class CBox_Plugins {
 			// get the plugin loader file
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
-			// if our cbox plugin is found, get rid of it
+			// if our CBOX plugin is found, get rid of it
 			if ( ! empty( $plugins->response[ $plugin_loader ] ) ) {
 				unset( $plugins->response[ $plugin_loader ] );
 				++$i;
@@ -633,16 +633,16 @@ class CBox_Plugins {
 	/** ADMIN-SPECIFIC ************************************************/
 
 	/**
-	 * Setup CBox's plugin menu item.
+	 * Setup CBOX's plugin menu item.
 	 *
-	 * The "Plugins" menu item only appears once CBox is completely setup.
+	 * The "Plugins" menu item only appears once CBOX is completely setup.
 	 *
 	 * @since 0.3
 	 *
-	 * @uses cbox_is_setup() To see if CBox is completely setup.
+	 * @uses cbox_is_setup() To see if CBOX is completely setup.
 	 */
 	public function setup_plugins_page() {
-		// see if cbox is fully setup
+		// see if CBOX is fully setup
 		if ( cbox_is_setup() ) {
 			// add our plugins page
 			$plugin_page = add_submenu_page(
@@ -654,10 +654,10 @@ class CBox_Plugins {
 				array( $this, 'admin_page' )
 			);
 
-			// validate any settings changes submitted from the Cbox plugins page
+			// validate any settings changes submitted from the CBOX plugins page
 			add_action( "load-{$plugin_page}",       array( $this, 'validate_cbox_dashboard' ) );
 
-			// load Plugin Dependencies plugin on the Cbox plugins page
+			// load Plugin Dependencies plugin on the CBOX plugins page
 			add_action( "load-{$plugin_page}",       array( 'Plugin_Dependencies', 'init' ) );
 
 			// inline CSS
@@ -667,7 +667,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Before the Cbox plugins page is rendered, do any validation and checks
+	 * Before the CBOX plugins page is rendered, do any validation and checks
 	 * from form submissions or action links.
 	 *
 	 * @since 0.2
@@ -679,13 +679,13 @@ class CBox_Plugins {
 			check_admin_referer( 'cbox_update' );
 
 			// see if any plugins were submitted
-			// if so, set a reference variable to note that CBox is updating
+			// if so, set a reference variable to note that CBOX is updating
 			if ( ! empty( $_REQUEST['cbox_plugins'] ) ) {
 				cbox()->update = true;
 			}
 		}
 
-		// deactivate a single plugin from the Cbox dashboard
+		// deactivate a single plugin from the CBOX dashboard
 		// basically a copy and paste of the code available in /wp-admin/plugins.php
 		if ( ! empty( $_REQUEST['cbox-action'] ) && ! empty( $_REQUEST['plugin'] ) ) {
 			$plugin = $_REQUEST['plugin'];
@@ -776,7 +776,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Renders the CBox plugins page.
+	 * Renders the CBOX plugins page.
 	 *
 	 * @since 0.3
 	 */
@@ -840,14 +840,14 @@ class CBox_Plugins {
 
 		$plugins = $_REQUEST['cbox_plugins'];
 
-		// include the CBox Plugin Upgrade and Install API
+		// include the CBOX Plugin Upgrade and Install API
 		if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 			require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
 
 		// some HTML markup!
 		echo '<div class="wrap">';
 		screen_icon('plugins');
-		echo '<h2>' . esc_html__('Update CBox', 'cbox' ) . '</h2>';
+		echo '<h2>' . esc_html__('Update CBOX', 'cbox' ) . '</h2>';
 
 		// start the upgrade!
 		$installer = new CBox_Updater( $plugins );
@@ -856,7 +856,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Inline CSS used on the CBox plugins page.
+	 * Inline CSS used on the CBOX plugins page.
 	 *
 	 * @since 0.3
 	 */
@@ -906,7 +906,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Helper method to get the Cbox required plugin's state.
+	 * Helper method to get the CBOX required plugin's state.
 	 *
 	 * @since 0.2
 	 *
@@ -943,7 +943,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Helper method to return the deactivation URL for a plugin on the CBox
+	 * Helper method to return the deactivation URL for a plugin on the CBOX
 	 * plugins page.
 	 *
 	 * @since 0.2
@@ -956,7 +956,7 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Renders a plugin table for CBox's plugins.
+	 * Renders a plugin table for CBOX's plugins.
 	 *
 	 * @since 0.3
 	 *
@@ -1053,7 +1053,7 @@ class CBox_Plugins {
 							// deactivate link
 							if ( $state == 'deactivate' ) {
 								// If override is on, we must still not allow BuddyPress to be deactivated
-								// through the CBox plugins page. It can still be deactivated through the
+								// through the CBOX plugins page. It can still be deactivated through the
 								// regular WP plugins page though
 								if ( $r['type'] != 'required' || ( $this->is_override() && $data['cbox_name'] != 'BuddyPress' ) ) {
 									$plugin_row_links[] = sprintf(

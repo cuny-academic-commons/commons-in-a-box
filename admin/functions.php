@@ -1,6 +1,6 @@
 <?php
 /**
- * CBox Admin Common Functions
+ * CBOX Admin Common Functions
  *
  * @since 0.3
  *
@@ -12,12 +12,12 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Check to see if CBox is correctly setup.
+ * Check to see if CBOX is correctly setup.
  *
  * @since 0.3
  *
- * @uses cbox_get_installed_revision_date() Get the CBox revision date from the DB
- * @uses cbox_is_upgraded() Check to see if CBox just upgraded
+ * @uses cbox_get_installed_revision_date() Get the CBOX revision date from the DB
+ * @uses cbox_is_upgraded() Check to see if CBOX just upgraded
  * @uses cbox_is_bp_maintenance_mode() Check to see if BuddyPress is in maintenance mode
  * @return bool
  */
@@ -26,8 +26,8 @@ function cbox_is_setup() {
 	if ( ! cbox_get_installed_revision_date() )
 		return false;
 
-	// cbox is installed, but we just upgraded to a
-	// newer version of CBox
+	// CBOX is installed, but we just upgraded to a
+	// newer version of CBOX
 	if ( cbox_is_upgraded() )
 		return false;
 
@@ -44,12 +44,12 @@ function cbox_is_setup() {
 }
 
 /**
- * Check to see if CBox has just upgraded.
+ * Check to see if CBOX has just upgraded.
  *
  * @since 0.3
  *
- * @uses cbox_get_installed_revision_date() Gets the CBox revision date from the DB
- * @uses cbox_get_current_revision_date() Gets the current CBox revision date from Commons_In_A_Box::setup_globals()
+ * @uses cbox_get_installed_revision_date() Gets the CBOX revision date from the DB
+ * @uses cbox_get_current_revision_date() Gets the current CBOX revision date from Commons_In_A_Box::setup_globals()
  * @return bool
  */
 function cbox_is_upgraded() {
@@ -60,51 +60,51 @@ function cbox_is_upgraded() {
 }
 
 /**
- * Outputs the CBox version
+ * Outputs the CBOX version
  *
  * @since 0.3
  *
- * @uses cbox_get_version() To get the CBox version
+ * @uses cbox_get_version() To get the CBOX version
  */
 function cbox_version() {
 	echo cbox_get_version();
 }
 	/**
-	 * Return the CBox version
+	 * Return the CBOX version
 	 *
 	 * @since 0.3
 	 *
-	 * @return string The CBox version
+	 * @return string The CBOX version
 	 */
 	function cbox_get_version() {
 		return cbox()->version;
 	}
 
 /**
- * Returns the current CBox revision date as set in
+ * Returns the current CBOX revision date as set in
  * {@link Commons_In_A_Box::setup_globals()}.
  *
  * @since 0.3
  *
- * @return int The current CBox revision date as a unix timestamp.
+ * @return int The current CBOX revision date as a unix timestamp.
  */
 function cbox_get_current_revision_date() {
 	return strtotime( cbox()->revision_date );
 }
 
 /**
- * Returns the CBox revision date from the current CBox install.
+ * Returns the CBOX revision date from the current CBOX install.
  *
  * @since 0.3
  *
- * @return mixed Integer of the installed CBox unix timestamp on success.  Boolean false on failure.
+ * @return mixed Integer of the installed CBOX unix timestamp on success.  Boolean false on failure.
  */
 function cbox_get_installed_revision_date() {
 	return strtotime( get_site_option( '_cbox_revision_date' ) );
 }
 
 /**
- * Bumps the CBox revision date in the DB
+ * Bumps the CBOX revision date in the DB
  *
  * @since 0.3
  *
@@ -115,14 +115,14 @@ function cbox_bump_revision_date() {
 }
 
 /**
- * Get the current CBox setup step.
+ * Get the current CBOX setup step.
  *
- * This should only be used if cbox_is_setup() returns false.
+ * This should only be used if {@link cbox_is_setup()} returns false.
  *
  * @since 0.3
  *
  * @uses cbox_is_bp_maintenance_mode() Check to see if BuddyPress is in maintenance mode
- * @return string The current CBox setup step.
+ * @return string The current CBOX setup step.
  */
 function cbox_get_setup_step() {
 	// see if BuddyPress is activated
@@ -306,7 +306,7 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 
 			break;
 
-		// not a cbox install? return the regular $source now!
+		// not a CBOX install? return the regular $source now!
 		default :
 			return $source;
 
