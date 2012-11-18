@@ -929,23 +929,16 @@ class CBox_Admin {
 		<style type="text/css">
 		#cbox-nag {
 			position:relative;
-			min-height:42px;
+			min-height:69px;
 
-			background: #d9edf7; /* Old browsers */
-			background: -moz-linear-gradient(top,  #d9edf7 59%, #ffffff 100%); /* FF3.6+ */
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(59%,#d9edf7), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-			background: -webkit-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-			background: -o-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* Opera 11.10+ */
-			background: -ms-linear-gradient(top,  #d9edf7 59%,#ffffff 100%); /* IE10+ */
-			background: linear-gradient(to bottom,  #d9edf7 59%,#ffffff 100%); /* W3C */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9edf7', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+			background: #fff; /* Old browsers */
 
 			color: #666;
 
-			border-radius:6px;
+			border-radius:3px;
 			border:1px solid #BCE8F1;
 			font-size: 1.45em;
-			padding: 1em 1em .3em;
+			padding: 1em 1em .3em 80px;
 			text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);
 		}
 
@@ -978,7 +971,7 @@ class CBox_Admin {
 		#cbox-nag a.callout:hover {background-color:#f89406; background-position:0 -15px;}
 
 		#cbox-nag .cbox-icon {
-			position:absolute; right:10px; bottom:10px;
+			position:absolute; left:15px; top:20px;
 			display:block; width:48px; height:47px;
 			background:url(<?php echo $icon_url; ?>) no-repeat;
 		}
