@@ -114,7 +114,7 @@ class CBox_Admin {
 			// set reference pointer for later use
 			cbox()->setup = 'upgrade';
 
-			if ( $_REQUEST['cbox-themes'] )
+			if ( ! empty( $_REQUEST['cbox-themes'] ) )
 				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 
 			// bump the revision date in the DB after updating
