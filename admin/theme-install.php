@@ -44,7 +44,7 @@ class CBox_Theme_Specs {
 		'directory_name' => 'cbox-theme',
 
 		// @todo need a tagged version... until then, we use the 'builds' branch
-		'download_url'   => 'https://github.com/cuny-academic-commons/cbox-theme/archive/builds.zip'
+		'download_url'   => 'https://github.com/cuny-academic-commons/cbox-theme/archive/1.0.zip'
 	);
 
 	/**
