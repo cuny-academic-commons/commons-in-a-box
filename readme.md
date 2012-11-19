@@ -1,4 +1,4 @@
-# Commons in a Box
+# Commons In A Box
 
 [Commons In A Box](http://commonsinabox.org) is a suite of WordPress and BuddyPress plugins and themes for community communication and collaboration, put into a single package that is easy to install, customize, and maintain.
 
