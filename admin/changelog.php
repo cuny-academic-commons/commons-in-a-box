@@ -6,12 +6,12 @@
 
 			<div class="wp-badge"><?php printf( __( 'Version %s' ), cbox_get_version() ); ?></div>
 
-			<?php // change this so it isn't reliant on external pages - basically use a jQuery tab plugin instead  ?>
 			<h2 class="nav-tab-wrapper">
 				<a href="<?php echo self_admin_url( 'admin.php?page=cbox&whatsnew=1' ); ?>" class="nav-tab nav-tab-active">
 					<?php _e( 'What&#8217;s New', 'cbox' ); ?>
-				</a><a href="#" class="nav-tab">
-					<?php _e( 'Credits (to-do)', 'cbox' ); ?>
+				</a>
+				<a href="<?php echo self_admin_url( 'admin.php?page=cbox&credits=1' ); ?>" class="nav-tab">
+					<?php _e( 'Credits', 'cbox' ); ?>
 				</a>
 			</h2>
 			

@@ -425,16 +425,20 @@ class CBox_Admin {
 	 * The main dashboard page.
 	 */
 	public function admin_page() {
+		// what's new page
 		if ( $this->is_changelog() ) {
 			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
-		}
 
-		elseif( ! empty( cbox()->setup ) ) {
+		// credits page
+		} elseif ( $this->is_credits() ) {
+			require( CBOX_PLUGIN_DIR . 'admin/credits.php' );
+
+		// setup screen
+		} elseif( ! empty( cbox()->setup ) ) {
 			$this->setup_screen();
-		}
 
 		// regular screen should go here
-		else {
+		} else {
 		?>
 			<div class="wrap">
 				<?php screen_icon( 'index' ); ?>
@@ -480,6 +484,18 @@ class CBox_Admin {
 	 */
 	private function is_changelog() {
 		if ( ! empty( $_GET['whatsnew'] ) )
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Should we show the credits screen?
+	 *
+	 * @return bool
+	 */
+	private function is_credits() {
+		if ( ! empty( $_GET['credits'] ) )
 			return true;
 
 		return false;
@@ -879,7 +895,7 @@ class CBox_Admin {
 
 			<ul>
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
-				<li><a href="#"><?php _e( 'Credits (todo)', 'cbox' ); ?></a></li>
+				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
 				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
 				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/master/"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
 			</ul>
