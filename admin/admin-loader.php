@@ -179,7 +179,7 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon('plugins');
-				echo '<h2>' . esc_html__('Setup CBOX Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Set Up CBOX Plugins', 'cbox' ) . '</h2>';
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
@@ -524,9 +524,9 @@ class CBox_Admin {
 				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
 
 				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBOX users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
-				<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBOX site.', 'cbox' ); ?></p>
 
 				<?php if ( cbox_is_setup() ) : ?>
+					<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBOX site.', 'cbox' ); ?></p>
 					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
 				<?php endif; ?>
 			</div><!-- .welcome-panel-content -->
@@ -564,10 +564,10 @@ class CBox_Admin {
 
 			?>
 
-				<h2><?php _e( 'Install BuddyPress!', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Install BuddyPress', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "Before we can get set up, we'll need to install BuddyPress and some recommended plugins. Click on 'Continue' below to set them up.", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "Before you can use Commons In A Box, we'll need to install BuddyPress and some recommended plugins. Click 'Continue' to get set up.", 'cbox' ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
 
@@ -582,7 +582,7 @@ class CBox_Admin {
 
 			?>
 
-				<h2><?php _e( 'Setup BuddyPress!', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Set Up BuddyPress', 'cbox' ); ?></h2>
 
 				<p class="submitted-on"><?php _e( "We're almost there! Now we need to finish setting up BuddyPress.", 'cbox' ); ?></p>
 
@@ -1014,7 +1014,7 @@ class CBox_Admin {
 				break;
 
 			case 'buddypress-wizard' :
-				$notice_text = __( 'BuddyPress is installed. Now we need you to finish setting up BuddyPress.', 'cbox' );
+				$notice_text = __( 'BuddyPress is installed, but needs some additional setup.', 'cbox' );
 				$button_link = cbox_get_the_bp_admin_wizard_url();
 				$button_text = __( 'Finish BuddyPress setup &rarr;', 'cbox' );
 				$disable_btn = 'bp-wizard';
