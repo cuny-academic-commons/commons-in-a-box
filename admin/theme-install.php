@@ -40,7 +40,7 @@ class CBox_Theme_Specs {
 	 */
 	private static $cbox_theme = array(
 		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0',
+		'version'        => '1.0-beta1',
 		'directory_name' => 'cbox-theme',
 
 		// @todo need a tagged version... until then, we use the 'builds' branch
@@ -278,7 +278,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $cbox_theme_dir ) {
 			// switch the theme to the CBOX theme!
 			switch_theme( $cbox_theme_dir, $cbox_theme_dir );
-			
+
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload
 			bp_update_option( '_cbox_theme_activated', '1' );
