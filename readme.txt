@@ -13,9 +13,9 @@ A platform for easy and powerful community websites. Powered by BuddyPress
 
 Commons In A Box dramatically lowers the barrier to building community sites on WordPress. CBOX helps you to install BuddyPress along with a number of carefully selected and vetted BuddyPress plugins, so that you don't have to worry about which plugins are best and which are compatible with each other.
 
-CBOX also comes with a beautiful and flexible BuddyPress theme, designed from the bottom up for fostering community engagement. Powered by the (Infinity Theme Engine)[http://infinity.presscrew.com], the CBOX default theme gets you from zero to a fully-functional community theme in minutes, and also contains extensive tools for customization.
+CBOX also comes with a beautiful and flexible BuddyPress theme, designed from the bottom up for fostering community engagement. Powered by the [Infinity Theme Engine](http://infinity.presscrew.com), the CBOX default theme gets you from zero to a fully-functional community theme in minutes, and also contains extensive tools for customization.
 
-CBOX puts unique community sites within the reach of all users, no matter their technical aptitude. Visit (commonsinabox.org)[http://commonsinabox.org] for support, documentation, and a growing user community.
+CBOX puts unique community sites within the reach of all users, no matter their technical aptitude. Visit [commonsinabox.org](http://commonsinabox.org) for support, documentation, and a growing user community.
 
 == Installation ==
 
@@ -26,7 +26,7 @@ CBOX puts unique community sites within the reach of all users, no matter their 
 
 = Where do I get support? =
 
-Support forums and robust documentation are available at (commonsinabox.org)[http://commonsinabox.org].
+Support forums and robust documentation are available at [commonsinabox.org](http://commonsinabox.org).
 
 = Can I use Commons In A Box if I'm already using BuddyPress? =
 
@@ -44,6 +44,6 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Credits ==
 
-Commons In A Box is a generalized, distributable version of the platform powering the (CUNY Academic Commons)[http://commons.gc.cuny.edu].
+Commons In A Box is a generalized, distributable version of the platform powering the [CUNY Academic Commons](http://commons.gc.cuny.edu).
 
-Commons In A Box is made possible by a grant from the (Alfred P. Sloan Foundation)[http://sloan.org].
+Commons In A Box is made possible by a grant from the [Alfred P. Sloan Foundation](http://sloan.org).
