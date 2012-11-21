@@ -219,8 +219,8 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Featured Content Widget', 'cbox' ),
 			'cbox_description'  => __( 'Provides a widget that allows you to select among five different content types to feature in a widget area.', 'cbox' ),
-			'version'           => '1.0.2',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.2.zip',
+			'version'           => '1.0.3',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.3.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
