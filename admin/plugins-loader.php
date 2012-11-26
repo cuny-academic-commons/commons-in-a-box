@@ -224,6 +224,18 @@ class CBox_Plugins {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
+		// BuddyPress Group Email Subscription
+		self::register_plugin( array(
+			'plugin_name'       => 'BP Group Announcements',
+			'type'              => 'recommended',
+			'cbox_name'         => __( 'Group Announcements', 'cbox' ),
+			'cbox_description'  => __( 'Repurposes group activity updates, using an Announcements tab to groups.', 'cbox' ),
+			'depends'           => 'BuddyPress (>=1.5)',
+			'version'           => '1.0',
+			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
+		) );
+
 		// only show the following plugins in network mode
 		if ( is_network_admin() ) :
 			// More Privacy Options
