@@ -246,7 +246,7 @@ class CBox_Plugins {
 				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
 				'version'           => '3.2.1.5',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
-				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
+				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
 				'network_settings'  => 'settings.php#menu'
 			) );
 
@@ -258,7 +258,7 @@ class CBox_Plugins {
 				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'cbox' ),
 				'version'           => '1.2',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
-				//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
+				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
 			// BuddyPress GroupBlog
