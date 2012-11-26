@@ -152,9 +152,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'cbox' ),
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'cbox' ),
-			'version'           => '1.0',
+			'version'           => '1.0.1',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.zip',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.1.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only'
 		) );
