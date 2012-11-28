@@ -110,7 +110,6 @@ class Commons_In_A_Box {
 			require( $this->plugin_dir . 'admin/plugins-loader.php' );
 			require( $this->plugin_dir . 'admin/settings-loader.php' );
 
-			require( $this->plugin_dir . 'includes/frontend.php' );
 		// frontend
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
