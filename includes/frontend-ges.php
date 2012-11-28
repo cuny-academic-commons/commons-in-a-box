@@ -21,7 +21,7 @@ cbox()->frontend->ges->is_setup = function_exists( 'ass_loader' );
  * @todo Not working properly... see inline doc.
  */
 class CBox_GES_All_Mail {
-	public static function &init() {
+	public static function init() {
 		new self();
 	}
 

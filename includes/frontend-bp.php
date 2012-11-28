@@ -20,7 +20,7 @@ cbox()->frontend->bp->is_setup = function_exists( 'bp_include' );
  * @since 1.0-beta2
  */
 class CBox_BP_Profile_Tab {
-	public static function &init() {
+	public static function init() {
 		new self();
 	}
 
