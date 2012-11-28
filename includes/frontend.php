@@ -18,9 +18,6 @@ class CBox_Frontend {
 		if ( empty( $this->settings ) )
 			return;
 
-		// Set up the frontend class where plugins will register themselves
-		cbox()->frontend = new stdClass;
-
 		// setup includes
 		$this->includes();
 
