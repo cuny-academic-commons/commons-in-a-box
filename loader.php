@@ -29,6 +29,14 @@ class Commons_In_A_Box {
 			self::$instance->constants();
 			self::$instance->setup_globals();
 			self::$instance->includes();
+
+			if ( cbox_is_admin() ) {
+				self::$instance->admin    = new CBox_Admin;
+				self::$instance->plugins  = new CBox_Plugins;
+				self::$instance->settings = new CBox_Settings;
+			} else {
+				self::$instance->frontend = new CBox_Frontend;
+			}
 		}
 
 		return self::$instance;
@@ -81,7 +89,7 @@ class Commons_In_A_Box {
 
 		// the URL to the CBOX directory
 		$this->plugin_url    = plugin_dir_url( __FILE__ );
-		
+
 		// the settings options key used on the "CBOX Settings" page
 		$this->settings_key  = '_cbox_admin_settings';
 	}
@@ -94,12 +102,15 @@ class Commons_In_A_Box {
 	 * @todo Make this nice somehow
 	 */
 	private function includes() {
+		require( $this->plugin_dir . 'includes/functions.php' );
+
 		// admin area
-		if ( is_admin() ) {
+		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 			require( $this->plugin_dir . 'admin/plugins-loader.php' );
 			require( $this->plugin_dir . 'admin/settings-loader.php' );
 
+			require( $this->plugin_dir . 'includes/frontend.php' );
 		// frontend
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
@@ -117,7 +128,6 @@ class Commons_In_A_Box {
 	}
 
 }
-//add_action( 'plugins_loaded', array( 'Commons_In_A_Box', 'init' ), 1 );
 
 /**
  * The main function responsible for returning the Commons In A Box instance
@@ -134,13 +144,5 @@ function cbox() {
 	return Commons_In_A_Box::init();
 }
 
-/**
- * Load up CBOX!
- */
-if ( is_admin() ) {
-	cbox()->admin    = new CBox_Admin;
-	cbox()->plugins  = new CBox_Plugins;
-	cbox()->settings = new CBox_Settings;
-} else {
-	cbox()->frontend = new CBox_Frontend;
-}
+// Vroom!
+cbox();
