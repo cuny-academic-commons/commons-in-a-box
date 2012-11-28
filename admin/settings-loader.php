@@ -149,7 +149,7 @@ class CBox_Settings {
 
 		// get submitted values
 		$submitted = (array) $_REQUEST['cbox_settings'];
-		
+
 		// update settings
 		update_option( cbox()->settings_key, $submitted );
 
