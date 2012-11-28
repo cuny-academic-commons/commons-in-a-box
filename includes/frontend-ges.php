@@ -29,7 +29,7 @@ class CBox_GES_All_Mail {
 		// changes the default group subscription level
 		// doesn't work! :(
 		add_filter( 'ass_default_subscription_level', array( $this, 'default_group_email_setting' ) );
-		
+
 		// this works, but only changes the setting under a group's "Admin > Members"
 		// specifically the "Site Admin Only" block
 		// this is here temporarily just to prove that filters work!

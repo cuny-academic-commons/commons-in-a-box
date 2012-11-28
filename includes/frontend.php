@@ -31,12 +31,12 @@ class CBox_Frontend {
 	/**
 	 * Includes.
 	 *
-	 * We conditionally load up specific PHP files depending if a setting was 
+	 * We conditionally load up specific PHP files depending if a setting was
 	 * saved under the CBOX admin settings page.
 	 */
 	private function includes() {
 		$plugins = array_keys( $this->settings );
-		
+
 		foreach ( $plugins as $plugin ) {
 			require( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" );
 		}
@@ -45,7 +45,7 @@ class CBox_Frontend {
 	/**
 	 * Setup our hooks.
 	 *
-	 * We conditionally add our hooks depending if a setting was saved under the 
+	 * We conditionally add our hooks depending if a setting was saved under the
 	 * CBOX admin settings page.
 	 */
 	private function setup_hooks() {
@@ -59,7 +59,7 @@ class CBox_Frontend {
 				// make sure our hook is available
 				if ( ! is_callable( array( $class, 'init' ) ) )
 					continue;
-				
+
 				// load our hook
 				// @todo this hook might need to be configured at the settings level
 				add_action( 'bp_include', array( $class, 'init' ), 20 );
