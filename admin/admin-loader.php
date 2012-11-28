@@ -1235,6 +1235,3 @@ class CBox_Admin {
 	}
 
 }
-
-// initialize admin area
-new CBox_Admin;
