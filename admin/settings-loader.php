@@ -236,7 +236,8 @@ class CBox_Settings {
 	 * Helper function to see if an option is checked.
 	 */
 	private function is_checked( $class_name, $settings, $key ) {
-		if ( in_array( $class_name, $settings[$key] ) )
+		if ( isset( $settings[ $key ] ) && is_array( $settings[ $key ] ) && in_array( $class_name, $settings[$key] ) ) {
 			echo 'checked="checked"';
+		}
 	}
 }
