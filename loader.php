@@ -29,14 +29,7 @@ class Commons_In_A_Box {
 			self::$instance->constants();
 			self::$instance->setup_globals();
 			self::$instance->includes();
-
-			if ( cbox_is_admin() ) {
-				self::$instance->admin    = new CBox_Admin;
-				self::$instance->plugins  = new CBox_Plugins;
-				self::$instance->settings = new CBox_Settings;
-			} else {
-				self::$instance->frontend = new CBox_Frontend;
-			}
+			self::$instance->load_components();
 		}
 
 		return self::$instance;
@@ -90,6 +83,8 @@ class Commons_In_A_Box {
 		// the URL to the CBOX directory
 		$this->plugin_url    = plugin_dir_url( __FILE__ );
 
+		/** SETTINGS **********************************************************/
+
 		// the settings options key used on the "CBOX Settings" page
 		$this->settings_key  = '_cbox_admin_settings';
 	}
@@ -98,10 +93,9 @@ class Commons_In_A_Box {
 	 * Includes necessary files
 	 *
 	 * @since 0.1
-	 *
-	 * @todo Make this nice somehow
 	 */
 	private function includes() {
+		// pertinent functions used everywhere
 		require( $this->plugin_dir . 'includes/functions.php' );
 
 		// admin area
@@ -116,6 +110,23 @@ class Commons_In_A_Box {
 		}
 	}
 
+	/**
+	 * Load up our components.
+	 *
+	 * @since 1.0-beta2
+	 */
+	private function load_components() {
+		// admin area
+		if ( cbox_is_admin() ) {
+			$this->admin    = new CBox_Admin;
+			$this->plugins  = new CBox_Plugins;
+			$this->settings = new CBox_Settings;
+
+		// frontend
+		} else {
+			$this->frontend = new CBox_Frontend;
+		}
+	}
 
 	/** HELPERS *******************************************************/
 
