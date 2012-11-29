@@ -58,29 +58,29 @@ class CBox_Settings {
 	 * Used to render the checkboxes as well as the format to load these settings
 	 * on the frontend.
 	 *
-	 * @see CBox_Admin_Settings::register_setting()
+	 * @see CBox_Settings::register_setting()
 	 */
 	private function register_settings() {
 		// BuddyPress
 		self::register_setting( array(
-			'plugin_name'  => 'BuddyPress',
-			'settings'     =>
+			'plugin_name' => 'BuddyPress',
+			'key'         => 'bp',
+			'settings'    =>
 				array(
 					'label'       => __( 'Member Profile Default Tab', 'cbox' ),
 					'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
-					'key'         => 'bp',                  // this is used to identify the plugin and as the filename suffix
 					'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
 				)
 		) );
 
 		// BuddyPress Group Email Subscription
 		self::register_setting( array(
-			'plugin_name'  => 'BuddyPress Group Email Subscription',
-			'settings'     =>
+			'plugin_name' => 'BuddyPress Group Email Subscription',
+			'key'         => 'ges',
+			'settings'    =>
 				array(
 					'label'       => __( 'All Mail', 'cbox' ),
 					'description' => __( 'By default, when a member joins a group, email subscriptions are set to "No Mail".  Check this box to change the default subscription setting to "All Mail".', 'cbox' ),
-					'key'         => 'ges',
 					'class_name'  => 'CBox_GES_All_Mail'
 				)
 		) );
@@ -95,15 +95,18 @@ class CBox_Settings {
 	 */
 	private function register_setting( $args = '' ) {
 		$defaults = array(
-			'plugin_name'       => false,   // (required) the name of the plugin as in the plugin header
-			'settings'          => array(), // (required) multidimensional array
+			'plugin_name' => false,   // (required) the name of the plugin as in the plugin header
+			'key'         => false,   // (required) this is used to identify the plugin;
+			                          //            also used for the filename suffix, see /includes/frontend.php
+			'settings'    => array(), // (required) multidimensional array
 		);
 
 		$r = wp_parse_args( $args, $defaults );
 
-		if ( empty( $r['plugin_name'] ) || empty( $r['settings'] ) )
+		if ( empty( $r['plugin_name'] ) || empty( $r['key'] ) || empty( $r['settings'] ) )
 			return false;
 
+		self::$settings[ $r['plugin_name'] ]['key']      = $r['key'];
 		self::$settings[ $r['plugin_name'] ]['settings'] = $r['settings'];
 
 	}
@@ -203,14 +206,17 @@ class CBox_Settings {
 		// get saved settings
 		$cbox_settings = get_option( cbox()->settings_key );
 
-		if ( empty( $settings ) )
-			$settings = array();
-
 		// parse and output settings
 		foreach( self::$settings as $plugin => $settings ) {
 			// if plugin doesn't exist, don't show the settings for that plugin
 			if( ! isset( $active[$plugin] ) )
 				continue;
+			
+			// grab the key so we can reference it later
+			$key = $settings['key'];
+
+			// drop the key for the $settings loop
+			unset( $settings['key'] );
 		?>
 			<h3><?php echo $plugin; ?></h3>
 
@@ -220,7 +226,7 @@ class CBox_Settings {
 				<tr valign="top">
 					<th scope="row"><?php echo $setting['label']; ?></th>
 					<td>
-						<input id="<?php echo sanitize_title( $setting['label'] ); ?>" name="cbox_settings[<?php echo $setting['key'];?>][]" type="checkbox" value="<?php echo $setting['class_name']; ?>" <?php $this->is_checked( $setting['class_name'], $cbox_settings, $setting['key'] ); ?>  />
+						<input id="<?php echo sanitize_title( $setting['label'] ); ?>" name="cbox_settings[<?php echo $key;?>][]" type="checkbox" value="<?php echo $setting['class_name']; ?>" <?php $this->is_checked( $setting['class_name'], $cbox_settings, $key ); ?>  />
 						<label for="<?php echo sanitize_title( $setting['label'] ); ?>"><?php echo $setting['description']; ?></label>
 					</td>
 				</tr>
@@ -236,7 +242,7 @@ class CBox_Settings {
 	 * Helper function to see if an option is checked.
 	 */
 	private function is_checked( $class_name, $settings, $key ) {
-		if ( isset( $settings[ $key ] ) && is_array( $settings[ $key ] ) && in_array( $class_name, $settings[$key] ) ) {
+		if ( in_array( $class_name, (array) $settings[$key] ) ) {
 			echo 'checked="checked"';
 		}
 	}
