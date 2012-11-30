@@ -2,9 +2,10 @@
 /**
  * Set up the settings page.
  *
+ * @since 1.0-beta2
+ *
  * @package Commons_In_A_Box
  * @subpackage Adminstration
- * @since 1.0-beta2
  */
 
 // Exit if accessed directly

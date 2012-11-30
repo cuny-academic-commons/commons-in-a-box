@@ -2,9 +2,10 @@
 /**
  * Set up plugin management
  *
+ * @since 0.1
+ *
  * @package Commons_In_A_Box
  * @subpackage Plugins
- * @since 0.1
  */
 
 // Exit if accessed directly

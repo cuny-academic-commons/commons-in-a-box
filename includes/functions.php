@@ -1,10 +1,15 @@
 <?php
-
 /**
- * Miscellaneous functions needed throughout Commons In A Box
+ * Global functions needed throughout Commons In A Box.
  *
  * @since 1.0
+ *
+ * @package Commons_In_A_Box
+ * @subpackage Functions
  */
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * Are we looking at the WordPress admin?

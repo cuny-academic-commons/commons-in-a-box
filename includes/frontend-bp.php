@@ -5,9 +5,10 @@
  * If BuddyPress settings are toggled under the CBOX admin settings page,
  * setup the code for each setting here.
  *
+ * @since 1.0-beta2
+ *
  * @package Commons_In_A_Box
  * @subpackage Frontend
- * @since 1.0-beta2
  */
 
 // setup globals for BuddyPress

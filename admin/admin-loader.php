@@ -2,9 +2,10 @@
 /**
  * Set up the admin area
  *
+ * @since 0.2
+ *
  * @package Commons_In_A_Box
  * @subpackage Adminstration
- * @since 0.2
  */
 
 // Exit if accessed directly

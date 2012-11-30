@@ -1,4 +1,12 @@
 <?php
+/**
+ * CBOX Frontend.
+ *
+ * @since 1.0-beta2
+ *
+ * @package Commons_In_A_Box
+ * @subpackage Frontend
+ */
 
 /**
  * Things CBOX does on the frontend of the site.
