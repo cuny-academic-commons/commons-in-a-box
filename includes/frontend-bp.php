@@ -11,6 +11,9 @@
  * @subpackage Frontend
  */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 // setup globals for BuddyPress
 cbox()->frontend->bp = new stdClass;
 cbox()->frontend->bp->is_setup = function_exists( 'bp_include' );

@@ -8,6 +8,9 @@
  * @subpackage Frontend
  */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /**
  * Things CBOX does on the frontend of the site.
  *

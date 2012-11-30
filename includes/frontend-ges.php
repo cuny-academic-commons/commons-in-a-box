@@ -11,6 +11,9 @@
  * @subpackage Frontend
  */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 // setup globals for GES
 cbox()->frontend->ges = new stdClass;
 cbox()->frontend->ges->is_setup = function_exists( 'ass_loader' );
