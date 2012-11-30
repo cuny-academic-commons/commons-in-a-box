@@ -666,11 +666,11 @@ class CBox_Plugins {
 				array( $this, 'admin_page' )
 			);
 
-			// validate any settings changes submitted from the CBOX plugins page
-			add_action( "load-{$plugin_page}",       array( $this, 'validate_cbox_dashboard' ) );
-
 			// load Plugin Dependencies plugin on the CBOX plugins page
 			add_action( "load-{$plugin_page}",       array( 'Plugin_Dependencies', 'init' ) );
+
+			// validate any settings changes submitted from the CBOX plugins page
+			add_action( "load-{$plugin_page}",       array( $this, 'validate_cbox_dashboard' ) );
 
 			// inline CSS
 			add_action( "admin_head-{$plugin_page}", array( 'CBox_Admin', 'dashboard_css' ) );
@@ -708,11 +708,14 @@ class CBox_Plugins {
 			switch( $_REQUEST['cbox-action'] ) {
 				case 'deactivate' :
 					check_admin_referer('deactivate-plugin_' . $plugin);
-					if ( self::is_plugin_active( $plugin ) ) {
+
+					// if plugin is already deactivated, redirect to CBOX dashboard and stop!
+					if ( ! self::is_plugin_active( $plugin ) ) {
 						wp_redirect( self_admin_url("admin.php?page=cbox") );
 						exit;
-					}
-					else {
+
+					// start deactivating!
+					} else {
 						$set_transient = is_network_admin() ? 'set_site_transient' : 'set_transient';
 
 						$deactivated = call_user_func( array( 'Plugin_Dependencies', "deactivate_cascade" ), (array) $plugin );
