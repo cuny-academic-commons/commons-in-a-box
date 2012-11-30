@@ -559,7 +559,7 @@ class CBox_Plugins {
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
 					// if the plugin is active, add it to our plugin array
-					if ( ! empty( $active_plugins[$loader] ) )
+					if ( isset( $active_plugins[$loader] ) )
 						$plugins[] = $plugin;
 				}
 
