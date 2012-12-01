@@ -21,9 +21,10 @@ if ( ! class_exists( 'Plugin_Dependencies' ) )
  *
  * Extends the {@link Plugin_Upgrader} class to allow for our custom required spec.
  *
+ * @since 0.2
+ *
  * @package Commons_In_A_Box
  * @subpackage Plugins
- * @since 0.2
  */
 class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
@@ -426,9 +427,10 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
  *
  * Wraps the bulk-upgrading, bulk-installing and bulk-activating process into one!
  *
+ * @since 0.2
+ *
  * @package Commons_In_A_Box
  * @subpackage Plugins
- * @since 0.2
  */
 class CBox_Updater {
 
@@ -517,6 +519,9 @@ class CBox_Updater {
 				}
 			}
 		}
+
+		// setup our plugin defaults - not used at the moment
+		//CBox_Plugin_Defaults::init();
 
 		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
 		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
@@ -617,4 +622,62 @@ class CBox_Updater {
 		return $bool;
 	}
 
+}
+
+/**
+ * Set some defaults for certain CBOX plugins after their activation.
+ *
+ * Not currently used at the moment.
+ *
+ * @since 1.0-beta2
+ *
+ * @package Commons_In_A_Box
+ * @subpackage Plugins
+ */
+class CBox_Plugin_Defaults {
+	/**
+	 * Alternate method to initialize the class.
+	 */
+	public static function init() {
+		new self();
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		// setup our hooks
+		$this->setup_hooks();
+	}
+
+	/**
+	 * Setup our hooks.
+	 */
+	public function setup_hooks() {
+		add_action( 'activated_plugin', array( $this, 'plugin_defaults' ), 10, 2 );
+	}
+
+	/**
+	 * At the moment, we hardcode any defaults for our CBOX plugins here and fire
+	 * them after that plugin is activated.
+	 *
+	 * We are not doing anything special here like looking for plugins by name b/c
+	 * that would require parsing that plugin's header metadata and this might not
+	 * be efficient when activating plugins in a loop.
+	 *
+	 * Instead, we just take the plugin loader file as-is and do our checks there.
+	 *
+	 * @todo Might be nice to separate each plugin's defaults into its own PHP file.
+	 *       We'll cross that bridge once we have a ton of defaults!
+	 */
+	public function plugin_defaults( $plugin, $network_wide ) {
+		switch ( $plugin ) {
+			// BuddyPress
+			// this is where we would add some default options.
+			// at the moment, we have none!
+			case 'buddypress/bp-loader.php' :
+
+				break;
+		}
+	}
 }
