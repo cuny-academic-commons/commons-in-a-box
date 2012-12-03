@@ -44,7 +44,7 @@ class CBox_Theme_Specs {
 		'directory_name' => 'cbox-theme',
 
 		// Note the url 1.0beta2 - this is a workaround for a limitation in the way the theme folder is named
-		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0beta2.zip'
+		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0-beta2.zip'
 	);
 
 	/**
