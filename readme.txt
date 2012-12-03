@@ -42,7 +42,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0-beta2 =
 * Feature: New settings page
 * Plugins added - BP Reply By Email, BP Group Announcements
-* Updated plugins: bbPress 2.2.2, BuddyPress Docs 1.2.6, BuddyPress Docs Wiki 1.0.2, BuddyPress Group Email Subscription 3.2.2, CAC Featured Content 1.0.3, External Group Blogs 1.5
+* Updated plugins: bbPress 2.2.2, BuddyPress Docs 1.2.6, BuddyPress Docs Wiki 1.0.2, BuddyPress Group Email Subscription 3.2.3, CAC Featured Content 1.0.3, External Group Blogs 1.5
 * Theme improvements: Improvements to theme option performance, fixed slider bugs, improved performance on IIS, better responsive styling, improved navigation styling, improved bbPress 2.2.x forum styling
 
 = 1.0-beta1 =

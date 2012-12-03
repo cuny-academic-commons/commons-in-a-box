@@ -49,7 +49,7 @@
 						<li>bbPress 2.2.2</li>
 						<li>BuddyPress Docs 1.2.6</li>
 						<li>BuddyPress Docs Wiki 1.0.2</li>
-						<li>BuddyPress Group Email Subscription 3.2.2</li>
+						<li>BuddyPress Group Email Subscription 3.2.3</li>
 						<li>CAC Featured Content 1.0.3</li>
 						<li>External Group Blogs 1.5</li>
 					</ul>
