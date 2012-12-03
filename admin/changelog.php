@@ -57,6 +57,26 @@
 				</div>
 			</div>
 
+			<div class="changelog">
+				<h3><?php _e( 'Theme Improvements', 'cbox' ); ?></h3>
+
+				<div class="feature-section">
+					<h4><?php _e( 'The following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
+					<ul>
+						<li><?php _e( 'Fixed problem with theme options that caused them not to work on setups that forbid certain kinds of browser cookies', 'cbox' ) ?></li>
+						<li><?php _e( 'Better slider performance', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved responsiveness', 'cbox' ) ?></li>
+						<li><?php _e( 'Better theme admin performance on Windows IIS servers', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved current-page highlighting on BuddyPress item navigation', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed some broken image links', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved styling for bbPress 2.2.x forum threads', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved default menu configuration', 'cbox' ) ?></li>
+						<li><?php _e( 'Added a login/logout link to mobile navigation', 'cbox' ) ?></li>
+					</ul>
+
+				</div>
+			</div>
+
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
 			</div>
