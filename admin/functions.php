@@ -297,12 +297,34 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			if ( strpos( $obj->options['url'], 'github.com' ) === false )
 				return $source;
 
+
+			// rename the theme folder to get rid of github's funky naming
+			$new_location = $remote_source . '/cbox-theme/';
+
+			// now rename the folder
+			@rename( $source, $new_location );
+
+			// and return the new location
+			return $new_location;
+
 			break;
 
 		case 'CBox_Plugin_Upgrader' :
 			// if download url is not from github, stop now!
 			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false )
 				return $source;
+
+			// get position of last hyphen in github directory
+			$pos = strrpos( $source, '-' );
+
+			// get rid of branch name in github directory
+			$new_location = trailingslashit( substr( $source, 0, $pos ) );
+
+			// now rename the folder
+			@rename( $source, $new_location );
+
+			// and return the new location
+			return $new_location;
 
 			break;
 
@@ -313,15 +335,4 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			break;
 	}
 
-	// get position of last hyphen in github directory
-	$pos = strrpos( $source, '-' );
-
-	// get rid of branch name in github directory
-	$new_location = trailingslashit( substr( $source, 0, $pos ) );
-
-	// now rename the folder
-	@rename( $source, $new_location );
-
-	// and return the new location
-	return $new_location;
 }
