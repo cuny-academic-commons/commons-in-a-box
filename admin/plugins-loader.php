@@ -320,21 +320,19 @@ class CBox_Plugins {
 		) );
 
 		// BuddyPress Reply By Email
-		// @todo Add this back when RBE is added in the WP.org plugins repo
-		/*
+		// @todo Still need to add it in the wp.org plugin repo! Using Github for now.
 		self::register_plugin( array(
 			'plugin_name'       => 'BuddyPress Reply By Email',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'cbox' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'cbox' ),
-			'version'           => '1.0',
+			'version'           => '1.0-RC1',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => '',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/master.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
-			'network_settings'  => 'root-blog-only
+			'network_settings'  => 'root-blog-only'
 		) );
-		*/
 
 		// WP Better Emails
 		/*
