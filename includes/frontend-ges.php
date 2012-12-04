@@ -35,9 +35,6 @@ class CBox_GES_All_Mail {
 		// changes the setting under a group's "Admin > Members"
 		// specifically the "Site Admin Only" block
 		add_filter( 'ass_get_default_subscription',         array( $this, 'default_group_email_setting' ) );
-
-		// Use the full text of forum topics and replies in bbPress 2.x
-		add_filter( 'bp_ass_activity_notification_content', array( $this, 'full_text_bbpress2' ), 10, 2 );
 	}
 
 	/**
@@ -46,6 +43,23 @@ class CBox_GES_All_Mail {
 	 */
 	public function default_group_email_setting( $setting ) {
 		return 'supersub';
+	}
+}
+
+/**
+ * When activity is created by bbPress 2.x, swap out the BP activity content
+ * with the reply/topic full text
+ *
+ * @since 1.0-beta4
+ */
+class CBox_GES_bbPress2_Full_Text {
+	public static function init() {
+		new self();
+	}
+
+	public function __construct() {
+		// Use the full text of forum topics and replies in bbPress 2.x
+		add_filter( 'bp_ass_activity_notification_content', array( $this, 'full_text_bbpress2' ), 10, 2 );
 	}
 
 	/**
@@ -75,4 +89,3 @@ class CBox_GES_All_Mail {
 		return $content;
 	}
 }
-

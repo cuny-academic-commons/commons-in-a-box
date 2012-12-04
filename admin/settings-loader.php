@@ -66,24 +66,32 @@ class CBox_Settings {
 		self::register_setting( array(
 			'plugin_name' => 'BuddyPress',
 			'key'         => 'bp',
-			'settings'    =>
+			'settings'    => array(
 				array(
 					'label'       => __( 'Member Profile Default Tab', 'cbox' ),
 					'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
 					'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
-				)
+				),
+			),
 		) );
 
 		// BuddyPress Group Email Subscription
 		self::register_setting( array(
 			'plugin_name' => 'BuddyPress Group Email Subscription',
 			'key'         => 'ges',
-			'settings'    =>
+			'settings'    => array(
 				array(
 					'label'       => __( 'All Mail', 'cbox' ),
 					'description' => __( 'By default, when a member joins a group, email subscriptions are set to "No Mail".  Check this box to change the default subscription setting to "All Mail".', 'cbox' ),
 					'class_name'  => 'CBox_GES_All_Mail'
+				),
+
+				array(
+					'label'       => __( 'Forum Full Text', 'cbox' ),
+					'description' => __( 'Check this box if you would like the full text of bbPress forum posts to appear in email notifications.', 'cbox' ),
+					'class_name'  => 'CBox_GES_bbPress2_Full_Text'
 				)
+			),
 		) );
 	}
 
@@ -212,7 +220,7 @@ class CBox_Settings {
 			// if plugin doesn't exist, don't show the settings for that plugin
 			if( ! isset( $active[$plugin] ) )
 				continue;
-			
+
 			// grab the key so we can reference it later
 			$key = $settings['key'];
 
@@ -222,7 +230,7 @@ class CBox_Settings {
 			<h3><?php echo $plugin; ?></h3>
 
 			<table class="form-table">
-			<?php foreach ( $settings as $setting ) : ?>
+			<?php foreach ( $settings['settings'] as $setting ) : ?>
 
 				<tr valign="top">
 					<th scope="row"><?php echo $setting['label']; ?></th>
