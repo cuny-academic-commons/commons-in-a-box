@@ -76,15 +76,3 @@ class CBox_Frontend {
 	}
 
 }
-
-/**
- * If we were using PHP 5.3, each of our custom classes would extend this one.
- *
- * However, we can't rely on hosts using PHP 5.3+ :(
- * So at the moment, each class needs to define an init() method.
- */
-class CBox_Frontend_Init {
-	public static function &init() {
-		new static();
-	}
-}
