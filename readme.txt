@@ -39,6 +39,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0-beta3 =
+* Fixes bug when running PHP < 5.3
+
 = 1.0-beta2 =
 * Feature: New settings page
 * Plugins added - BP Reply By Email, BP Group Announcements
