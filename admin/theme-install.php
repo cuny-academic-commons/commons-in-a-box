@@ -10,7 +10,8 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 // require the WP_Upgrader class so we can extend it!
-require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+if ( ! class_exists( 'Plugin_Upgrader' ) )
+	require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
 /**
  * Sets up our CBOX theme requirements.

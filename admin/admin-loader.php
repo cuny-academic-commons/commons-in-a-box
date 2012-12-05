@@ -34,7 +34,6 @@ class CBox_Admin {
 	 */
 	private function includes() {
 		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
-		require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 	}
 
 	/**
@@ -257,6 +256,10 @@ class CBox_Admin {
 
 			// install the cbox theme
 			case 'install-theme' :
+				// include the CBOX Theme Installer
+				if ( ! class_exists( 'CBox_Theme_Installer' ) )
+					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+
 				// get CBOX theme specs
 				$theme = CBox_Theme_Specs::init()->get( 'cbox_theme' );
 
@@ -269,6 +272,10 @@ class CBox_Admin {
 
 			// upgrade CBOX themes
 			case 'upgrade-theme' :
+				// include the CBOX Theme Installer
+				if ( ! class_exists( 'CBox_Theme_Installer' ) )
+					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+
 				// Modifies the theme action links that get displayed after theme installation
 				// is complete.
 				add_filter( 'update_bulk_theme_complete_actions', array( 'CBox_Theme_Installer', 'remove_theme_actions' ) );
@@ -671,6 +678,10 @@ class CBox_Admin {
 	 * @uses cbox_bump_revision_date() To bump the CBOX revision date in the DB.
 	 */
 	private function upgrades() {
+		// include the CBOX Theme Installer
+		if ( ! class_exists( 'CBox_Theme_Installer' ) )
+			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+
 		// get activated CBOX plugins that need updating
 		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
