@@ -51,7 +51,7 @@ class CBox_Theme_Specs {
 	/**
 	 * Static bootstrapping init method.
 	 */
-	public static function &init() {
+	public static function init() {
 		return new self();
 	}
 
