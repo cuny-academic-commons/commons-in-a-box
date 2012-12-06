@@ -1145,17 +1145,15 @@ class CBox_Admin {
 	?>
 
 		<style type="text/css">
-		#toplevel_page_cbox .wp-menu-image,
-		#toplevel_page_cbox:hover .wp-menu-image,
-		#toplevel_page_cbox.wp-has-current-submenu .wp-menu-image {
+		#adminmenu #toplevel_page_cbox .wp-menu-image {
 			background: url('<?php echo $menu_icon_url; ?>');
 			background-repeat: no-repeat;
 		}
 
-		#toplevel_page_cbox .wp-menu-image {background-position:0 -33px;}
+		#adminmenu #toplevel_page_cbox .wp-menu-image {background-position:0 -33px;}
 
-		#toplevel_page_cbox:hover .wp-menu-image,
-		#toplevel_page_cbox.wp-has-current-submenu .wp-menu-image {background-position:0 -2px;}
+		#adminmenu #toplevel_page_cbox:hover .wp-menu-image,
+		#adminmenu #toplevel_page_cbox.wp-has-current-submenu .wp-menu-image {background-position:0 -2px;}
 
 		#toplevel_page_cbox .wp-menu-image img {display:none;}
 
