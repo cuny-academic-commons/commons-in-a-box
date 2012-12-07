@@ -29,6 +29,7 @@ class Commons_In_A_Box {
 			self::$instance->constants();
 			self::$instance->setup_globals();
 			self::$instance->includes();
+			self::$instance->setup_actions();
 			self::$instance->load_components();
 		}
 
@@ -111,6 +112,18 @@ class Commons_In_A_Box {
 	}
 
 	/**
+	 * Setup actions.
+	 *
+	 * @since 1.0-beta4
+	 */
+	private function setup_actions() {
+		// localization
+		// we only fire this in the admin area, since we have no strings to localize
+		// on the frontend... yet!
+		add_action( 'admin_init', array( $this, 'localization' ), 0 );
+	}
+
+	/**
 	 * Load up our components.
 	 *
 	 * @since 1.0-beta2
@@ -128,8 +141,52 @@ class Commons_In_A_Box {
 		}
 	}
 
+	/** HOOKS *********************************************************/
+
+	/**
+	 * Custom textdomain loader.
+	 *
+	 * Checks WP_LANG_DIR for the .mo file first, then the plugin's language folder.
+	 * Allows for a custom language file other than those packaged with the plugin.
+	 *
+	 * @since 1.0-beta4
+	 *
+	 * @uses get_locale() To get the current locale
+	 * @uses load_textdomain() Loads a .mo file into WP
+	 * @return bool True on success, false on failure
+	 */
+	public function localization() {
+		// Use the WP plugin locale filter from load_plugin_textdomain()
+		$locale        = apply_filters( 'plugin_locale', get_locale(), 'cbox' );
+		$mofile        = sprintf( '%1$s-%2$s.mo', 'cbox', $locale );
+
+		$mofile_global = trailingslashit( constant( 'WP_LANG_DIR' ) ) . $mofile;
+		$mofile_local  = $this->plugin_dir . 'languages/' . $mofile;
+
+		// look in /wp-content/languages/ first
+		if ( is_readable( $mofile_global ) ) {
+			return load_textdomain( 'cbox', $mofile_global );
+
+		// if that doesn't exist, check for bundled language file
+		} elseif ( is_readable( $mofile_local ) ) {
+			return load_textdomain( 'cbox', $mofile_local );
+
+		// no language file exists
+		} else {
+			return false;
+		}
+	}
+
 	/** HELPERS *******************************************************/
 
+	/**
+	 * Get the plugin URL for CBOX.
+	 *
+	 * @since 1.0-beta1
+	 *
+	 * @param str $path Path relative to the CBOX plugin URL.
+	 * @return str CBOX plugin URL with optional path appended.
+	 */
 	public function plugin_url( $path = '' ) {
 		if ( ! empty( $path ) && is_string( $path ) )
 			return esc_url( cbox()->plugin_url . $path );
