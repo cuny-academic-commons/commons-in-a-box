@@ -178,7 +178,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon('plugins');
+				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__('Set Up CBOX Plugins', 'cbox' ) . '</h2>';
 
 				// start the upgrade!
@@ -201,7 +201,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon('plugins');
+				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__('Install CBOX Plugins', 'cbox' ) . '</h2>';
 
 				// start the install!
@@ -241,7 +241,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon('plugins');
+				screen_icon( 'cbox' );
 				echo '<h2>' . $title . '</h2>';
 
 				// start the upgrade!
@@ -282,7 +282,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon('themes');
+				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__('Upgrading CBOX Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
@@ -449,7 +449,7 @@ class CBox_Admin {
 		} else {
 		?>
 			<div class="wrap">
-				<?php screen_icon( 'index' ); ?>
+				<?php screen_icon( 'cbox' ); ?>
 				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
 
 				<?php $this->welcome_panel(); ?>
@@ -1181,6 +1181,7 @@ class CBox_Admin {
 	public function dashboard_css() {
 		$badge_url        = cbox()->plugin_url( 'admin/images/logo-cbox_vert.png?ver='    . cbox()->version );
 		$badge_url_2x     = cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png?ver=' . cbox()->version );
+		$icon32_url       = cbox()->plugin_url( 'admin/images/icon32.png?ver='            . cbox()->version );
 	?>
 
 		<style type="text/css">
@@ -1215,6 +1216,10 @@ class CBox_Admin {
 		        background-color:#fff; background-position:22px 10px;
 		        background-image: url( <?php echo $badge_url; ?> );
 		        color:#999; text-shadow:none;
+		}
+
+		#icon-cbox {
+			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
 		/* Retina */

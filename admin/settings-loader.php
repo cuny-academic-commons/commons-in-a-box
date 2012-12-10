@@ -147,6 +147,7 @@ class CBox_Settings {
 		add_action( "load-{$page}", array( $this, 'validate_settings' ) );
 
 		// inline CSS
+		add_action( "admin_head-{$page}", array( 'CBox_Admin', 'dashboard_css' ) );
 		//add_action( "admin_head-{$page}", array( $this, 'inline_css' ) );
 	}
 
@@ -178,7 +179,7 @@ class CBox_Settings {
 	public function admin_page() {
 	?>
 		<div class="wrap">
-			<?php screen_icon( 'options-general' ); ?>
+			<?php screen_icon( 'cbox' ); ?>
 			<h2><?php _e( 'Commons In A Box Settings', 'cbox' ); ?></h2>
 
 			<p><?php _e( 'CBOX can configure some important options for certain plugins.', 'cbox' ); ?>
