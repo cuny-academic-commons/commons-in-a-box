@@ -520,6 +520,8 @@ class CBox_Admin {
 			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
 		}
 
+		global $wp_version;
+
 		// default class for our welcome panel container
 		$classes = 'welcome-panel';
 
@@ -542,7 +544,9 @@ class CBox_Admin {
 				<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e( 'Dismiss', 'cbox' ); ?></a>
 			<?php endif; ?>
 
-			<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
+			<?php if ( version_compare( $wp_version, '3.4.3' ) < 0 ) : ?>
+				<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
+			<?php endif; ?>
 
 			<div class="welcome-panel-content">
 				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
@@ -731,7 +735,7 @@ class CBox_Admin {
 		}
 
 	?>
-		<div class="welcome-panel secondary-panel">
+		<div id="cbox-upgrades" class="secondary-panel">
 			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'cbox' ), $total_count ); ?></h2>
 
 			<div class="login">
@@ -762,7 +766,7 @@ class CBox_Admin {
 		$cbox_plugins = CBox_Plugins::get_plugins();
 	?>
 
-		<div class="welcome-panel secondary-panel">
+		<div id="cbox-links" class="secondary-panel">
 			<h2><?php _e( 'Quick Links', 'cbox' ); ?></h2>
 
 			<div class="welcome-panel-column-container">
@@ -896,7 +900,7 @@ class CBox_Admin {
 		if ( ! cbox_is_setup() )
 			return;
 	?>
-		<div class="welcome-panel secondary-panel">
+		<div id="cbox-about" class="secondary-panel">
 			<h2><?php _e( 'About', 'cbox' ); ?></h2>
 
 			<p><?php printf( __( "You're currently using <strong>Commons In A Box %s</strong>", 'cbox' ), cbox_get_version() ); ?>.</p>
@@ -1185,41 +1189,76 @@ class CBox_Admin {
 	?>
 
 		<style type="text/css">
+		#icon-cbox {
+			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
+		}
+
 		#welcome-panel {overflow:visible;}
 
 		.about-text {margin-right:220px;}
-		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:180px;}
-		.welcome-panel .welcome-panel-column {width:47%;}
+		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:180px; margin-bottom:.5em;}
+		.welcome-panel-dismiss {margin-bottom:0;}
 
 		#wpbody .login .message {margin:15px 0; text-align:center;}
 		.login .message a.button-secondary {display:inline-block; margin:10px 0 0;}
 
-		.secondary-panel {border-top:0; margin-top:0; padding:0 10px 20px;}
+		.secondary-panel {
+			padding:20px 10px 0px;
+			line-height:1.6em;
+			margin:0 8px 20px 8px;
+		}
+
+		#cbox-upgrades, #cbox-links {padding-bottom:2.4em;}
+
+		#cbox-upgrades, #cbox-links {border-bottom: 1px solid #dfdfdf;}
+
+		#cbox-about p {color:#777;}
+
 		.secondary-panel h2 {line-height:1;}
 
-		.submitted-on {font-size:1.3em; line-height:1.4;}
+		.secondary-panel h4 {font-size:14px;}
+			.secondary-panel h4 .icon16 {margin-left: -32px;}
 
-		.column-cbox-plugin-name {width:220px;}
+		.secondary-panel .welcome-panel-column-container {
+		    clear: both;
+		    overflow: hidden;
+		    padding-left: 26px;
+		    position: relative;
+		}
 
-		span.enabled       {color:#008800;}
-		span.disabled      {color:#880000;}
-		span.not-installed {color:#9f9f9f;}
+		.secondary-panel .welcome-panel-column {
+		    float: left;
+		    margin: 0 5% 0 -25px;
+		    min-width: 200px;
+		    padding-left: 25px;
+		    width: 47%;
+		}
+			.secondary-panel .welcome-panel-last {margin-right:0;}
+
+
+		.secondary-panel .welcome-panel-column ul {
+			margin: 1.6em 1em 1em 1.3em;
+		}
+
+		.secondary-panel .welcome-panel-column li {
+			list-style-type: disc;
+			padding-left: 2px;
+		}
 
 		.update-message {margin:5px 0;}
 
-		.dep-list li {list-style:disc; margin-left:1.5em;}
+		.submitted-on {font-size:1.3em; line-height:1.4;}
+
+		#wpbody .wp-badge {background-size:auto;}
 
 		.wp-badge {
 		        position:absolute; top:30px; right:0;
 		        width:190px; height:30px;
-			padding-top:200px;
-		        background-color:#fff; background-position:22px 10px;
+		        background-color:#fff;
 		        background-image: url( <?php echo $badge_url; ?> );
+			background-position:22px 10px;
+			padding-top:200px;
 		        color:#999; text-shadow:none;
-		}
-
-		#icon-cbox {
-			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
 		/* Retina */

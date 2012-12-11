@@ -809,7 +809,7 @@ class CBox_Plugins {
 				<h2><?php _e( 'Commons In A Box Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
-					<div class="welcome-panel">
+					<div id="required" class="cbox-plugins-section">
 						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
 						<p><?php _e( 'Commons In A Box requires the following plugins.', 'cbox' ); ?></p>
@@ -817,7 +817,7 @@ class CBox_Plugins {
 						<?php $this->render_plugin_table(); ?>
 					</div>
 
-					<div class="welcome-panel">
+					<div id="recommended" class="cbox-plugins-section">
 						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
 						<p><?php _e( "The following plugins are installed automatically during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
@@ -825,7 +825,7 @@ class CBox_Plugins {
 						<?php $this->render_plugin_table( 'type=recommended' ); ?>
 					</div>
 
-					<div class="welcome-panel">
+					<div id="a-la-carte" class="cbox-plugins-section">
 						<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
 
 						<p><?php _e( "The following plugins work well with Commons In A Box, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ); ?></p>
@@ -877,10 +877,19 @@ class CBox_Plugins {
 	public function inline_css() {
 	?>
 		<style type="text/css">
-			.welcome-panel {border-top:0; margin-top:0; padding:15px 10px 20px;}
+			.cbox-plugins-section {margin-top:0; padding:20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+			.cbox-plugins-section p {color:#777;}
 
 			tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
 			tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
+
+			.column-cbox-plugin-name {width:220px;}
+
+			span.enabled       {color:#008800;}
+			span.disabled      {color:#880000;}
+			span.not-installed {color:#9f9f9f;}
+
+			.dep-list li {list-style:disc; margin-left:1.5em;}
 		</style>
 	<?php
 	}
@@ -1020,10 +1029,10 @@ class CBox_Plugins {
 					if ( $r['omit_activated'] && $state == 'deactivate' )
 						continue;
 			?>
-				<tr class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
+				<tr id="<?php echo sanitize_title( $plugin ); ?>" class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( $state != 'deactivate' ) : ?>
-							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/>
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/>
 						<?php else : ?>
 							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
 						<?php endif; ?>
@@ -1031,7 +1040,7 @@ class CBox_Plugins {
 
 					<td class="plugin-title">
 						<?php if ( $state != 'deactivate' ) : ?>
-							<label for="cbox_plugins_<?php echo sanitize_key( $plugin ); ?>">
+							<label for="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>">
 						<?php endif; ?>
 
 						<strong><?php echo $data['cbox_name']; ?></strong>
