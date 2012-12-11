@@ -521,7 +521,7 @@ class CBox_Updater {
 		}
 
 		// setup our plugin defaults - not used at the moment
-		//CBox_Plugin_Defaults::init();
+		CBox_Plugin_Defaults::init();
 
 		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
 		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
@@ -654,7 +654,7 @@ class CBox_Plugin_Defaults {
 	 * Setup our hooks.
 	 */
 	public function setup_hooks() {
-		add_action( 'activated_plugin', array( $this, 'plugin_defaults' ), 10, 2 );
+		add_action( 'activated_plugin', array( $this, 'plugin_defaults' ), 999, 2 );
 	}
 
 	/**
@@ -677,6 +677,12 @@ class CBox_Plugin_Defaults {
 			// at the moment, we have none!
 			case 'buddypress/bp-loader.php' :
 
+				break;
+
+			// bbPress
+			case 'bbpress/bbpress.php' :
+				// don't let bbPress redirect to its about page after activating
+				delete_transient( '_bbp_activation_redirect' );
 				break;
 		}
 	}
