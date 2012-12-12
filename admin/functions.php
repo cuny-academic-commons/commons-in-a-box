@@ -336,3 +336,78 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 	}
 
 }
+
+/**
+ * Check if certain plugins are installed during CBOX activation.
+ *
+ * @since 1.0-beta4
+ */
+function cbox_plugin_check() {
+
+	/** BuddyPress ****************************************************/
+
+	// if BP was never installed, save a marker so we can reference later
+	if ( false === get_site_option( 'bp-active-components' ) ) {
+		update_option( '_cbox_bp_never_installed', 1 );
+	}
+
+}
+add_action( 'cbox_activation', 'cbox_plugin_check' );
+
+/**
+ * Do stuff after BuddyPress is installed.
+ *
+ * After we've updated the permalink structure in the BP wizard, we do our
+ * checks to remove the Forums component and the Forums page from BuddyPress.
+ *
+ * We have to hook into the 'permalink_structure' option due to a lack of
+ * hooks in the BP wizard.
+ *
+ * @since 1.0-beta4
+ */
+function cbox_bp_after_version_bump( $option ) {
+	// if this isn't a new BP install, stop now!
+	if ( ! get_option( '_cbox_bp_never_installed' ) )
+		return;
+
+	/** remove forums component ***************************************/
+
+	// get active BP components
+	$active_components = bp_get_option( 'bp-active-components' );
+
+	// get rid of forums component if it's enabled
+	if ( isset( $active_components['forums'] ) ) {
+		unset( $active_components['forums'] );
+
+		// update active components
+		bp_update_option( 'bp-active-components', $active_components );
+	}
+
+	/** remove forums directory page **********************************/
+
+	// get all BP directory pages
+	$bp_pages = bp_core_get_directory_page_ids();
+
+	// get rid of forums page if it exists
+	if ( isset( $bp_pages['forums'] ) ) {
+		// if bbPress is installed, let's use the bbPress forum shortcode
+		// for the now-orphaned BP forums directory page
+		if ( function_exists( 'bbpress' ) ) {
+			wp_update_post( array(
+				'ID'           => $bp_pages['forums'],
+				'post_content' => '[bbp-forum-index]'
+			) );
+		}
+
+		// remove the forums component
+		unset( $bp_pages['forums'] );
+
+		// update active components
+		bp_update_option( 'bp-pages', $bp_pages );
+	}
+
+	// remove DB marker
+	delete_option( '_cbox_bp_never_installed' );
+
+}
+add_action( 'update_option_permalink_structure', 'cbox_bp_after_version_bump' );

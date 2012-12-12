@@ -520,7 +520,7 @@ class CBox_Updater {
 			}
 		}
 
-		// setup our plugin defaults - not used at the moment
+		// setup our plugin defaults
 		CBox_Plugin_Defaults::init();
 
 		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
@@ -683,7 +683,55 @@ class CBox_Plugin_Defaults {
 			case 'bbpress/bbpress.php' :
 				// don't let bbPress redirect to its about page after activating
 				delete_transient( '_bbp_activation_redirect' );
+
+				// if BP bundled forums exists, stop now!
+				$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
+
+				if ( false !== get_blog_option( $bp_root_blog, 'bb-config-location' ) )
+					return;
+
+				/** See if a bbPress forum named 'Group Forums' exists *********/
+
+				// add a filter to WP_Query so we can search by post title
+				add_filter( 'posts_where', array( $this, 'search_by_post_title' ), 10, 2 );
+
+				// do our search
+				$search = new WP_Query( array(
+					'post_type'       => bbp_get_forum_post_type(),
+					'cbox_post_title' => __( 'Group Forums', 'bbpress' )
+				) );
+
+				/** No match, create our forum! ********************************/
+
+				if ( ! $search->have_posts() ) {
+					// create a forum for BP groups
+					$forum_id = bbp_insert_forum( array(
+						'post_title'   => __( 'Group Forums', 'bbpress' ),
+						'post_content' => __( 'All forums created in groups can be found here.', 'cbox' )
+					) );
+
+					// update the bbP marker for group forums
+					update_option( '_bbp_group_forums_root_id', $forum_id );
+				}
+
 				break;
 		}
+	}
+
+	/** HELPERS *******************************************************/
+
+	/**
+	 * Filter WP_Query to allow searching by post title.
+	 *
+	 * @since 1.0-beta4
+	 */
+	public function search_by_post_title( $where, $wp_query ) {
+		global $wpdb;
+
+		if ( $post_title = $wp_query->get( 'cbox_post_title' ) ) {
+			$where .= " AND {$wpdb->posts}.post_title = '" . esc_sql( $post_title ) . "'";
+		}
+
+		return $where;
 	}
 }
