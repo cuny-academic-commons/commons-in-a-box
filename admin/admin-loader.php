@@ -366,6 +366,9 @@ class CBox_Admin {
 			// remove the cookie
 			@setcookie( 'cbox-bp-finish-wizard', '', time() - 3600, COOKIEPATH );
 
+			// do some stuff after CBOX is installed
+			cbox_bp_after_version_bump();
+
 			// redirect to the CBOX dashboard
 			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 		}
