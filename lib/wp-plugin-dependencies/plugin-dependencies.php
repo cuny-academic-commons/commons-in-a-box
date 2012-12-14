@@ -98,15 +98,9 @@ class Plugin_Dependencies {
 				if ( ! empty( $core_incompatible ) )  {
 					$core_incompatible = rtrim( substr( $core_incompatible, 1 ), ')' );
 
-					$requirement = array(
-						'title' => __( 'WordPress Core version incompatible', 'plugin-dependencies' ),
-						//'version' => sprintf( __( 'Currently using version %s', 'plugin-dependencies' ), $wp_version ),
-						'description' => sprintf( __( 'Version %s required', 'plugin-dependencies' ), $core_incompatible )
-					);
+					$requirements['core'] = $core_incompatible;
 				}
 
-				if ( ! empty( $requirement ) )
-					$requirements[] = $requirement;
 			}
 
 			// parse "Depends" header from each plugin
@@ -554,10 +548,10 @@ class Plugin_Dependencies_UI {
 				echo '<p id="warnings-' . sanitize_title( $plugin_name ) . '">' . sprintf( __( '%s requires the following issues to be addressed before it can be activated: ' , 'plugin-dependencies' ), "<strong>{$plugin_name}</strong>" ) . '</p><ul>';
 
 				// @todo The following strings need to be better localized instead of using concatenation
-				foreach ( $data as $state => $plugins ) {
+				foreach ( $data as $state => $value ) {
 					switch ( $state ) {
 						case 'inactive' :
-							foreach ( $plugins as $plugin ) {
+							foreach ( $value as $plugin ) {
 								$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
 								echo '<li>' . __( 'Unactivated plugin', 'plugin-dependencies' ) . ' - ' . $plugin;
@@ -571,7 +565,7 @@ class Plugin_Dependencies_UI {
 							break;
 
 						case 'not-installed' :
-							foreach ( $plugins as $plugin ) {
+							foreach ( $value as $plugin ) {
 								echo '<li>' . __( 'Missing plugin', 'plugin-dependencies' ) . ' - ' . $plugin;
 
 								echo ' ' . sprintf( __( '(<a href="%s">Try to find the plugin and install it here</a>)', 'plugin-dependencies' ), self_admin_url( 'plugin-install.php?tab=search&amp;type=term&s=' . $plugin ) );
@@ -583,7 +577,7 @@ class Plugin_Dependencies_UI {
 							break;
 
 						case 'incompatible' :
-							foreach ( $plugins as $plugin ) {
+							foreach ( $value as $plugin ) {
 								echo '<li>' . __( 'Incorrect plugin version installed', 'plugin-dependencies' ) . ' - ';
 
 								if ( ! empty( $plugin['compatible_version'] ) )
@@ -594,6 +588,12 @@ class Plugin_Dependencies_UI {
 								echo '</li>';
 
 							}
+
+							break;
+
+						case 'core' :
+							echo '<li>' . sprintf( __( 'WordPress version %s required', 'plugin-dependencies' ), $value );
+							echo ' <a href="' . network_admin_url( 'update-core.php' ) . '">' . __( '(Upgrade now!)', 'plugin-dependencies' ) . '</a></li>';
 
 							break;
 					};
