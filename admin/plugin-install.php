@@ -41,7 +41,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		$current = CBox_Plugins::get_plugins();
+		// download URLs for each plugin should be registered in either the following:
+		$dependency = CBox_Plugins::get_plugins( 'dependency' );
+		$current    = CBox_Plugins::get_plugins();
 
 		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',         1,  3 );
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ), 10, 4 );
@@ -75,14 +77,23 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		foreach ( $plugins as $plugin ) {
 			$this->update_current++;
 			$this->skin->plugin_info['Title'] = $plugin;
-			$this->skin->options['url']       = $current[$plugin]['download_url'];
+
+			// set the download URL
+			if ( ! empty( $dependency[$plugin]['download_url'] ) )
+				$download_url = $dependency[$plugin]['download_url'];
+			elseif ( ! empty( $current[$plugin]['download_url'] ) )
+				$download_url = $current[$plugin]['download_url'];
+			else
+				$download_url = false;
+
+			$this->skin->options['url'] = $download_url;
 
 			// see if plugin is active
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 			$this->skin->plugin_active = is_plugin_active( $plugin_loader );
 
 			$result = $this->run( array(
-				'package'           => $current[$plugin]['download_url'],
+				'package'           => $download_url,
 				'destination'       => WP_PLUGIN_DIR,
 				'clear_destination' => true,
 				'clear_working'     => true,
