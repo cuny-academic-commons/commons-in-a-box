@@ -688,6 +688,35 @@ class CBox_Admin {
 	 * @uses cbox_bump_revision_date() To bump the CBOX revision date in the DB.
 	 */
 	private function upgrades() {
+		/** check if WordPress needs upgrading **********************************/
+
+		// get plugin dependency requirements
+		$requirements = Plugin_Dependencies::get_requirements();
+
+		// check CBOX plugin header's 'Core' header for version requirements
+		// if exists, WordPress needs to be upgraded
+		if ( ! empty( $requirements['Commons In A Box']['core'] ) ) {
+			$version = $requirements['Commons In A Box']['core'];
+		?>
+
+			<div id="cbox-upgrades" class="secondary-panel">
+				<h2><?php _e( 'Upgrade Available', 'cbox' ); ?></h2>
+
+				<div class="login">
+					<div class="message">
+						<p><?php printf( __( 'Commons In A Box %s requires WordPress %s', 'cbox' ), cbox_get_version(), $version ); ?>
+						<br />
+						<a class="button-secondary" href="<?php echo network_admin_url( 'update-core.php' ); ?>"><?php _e( 'Upgrade now!', 'cbox' ); ?></a></p>
+					</div>
+				</div>
+			</div>
+
+		<?php
+			return;
+		}
+
+		/** check if CBOX modules have updates **********************************/
+
 		// include the CBOX Theme Installer
 		if ( ! class_exists( 'CBox_Theme_Installer' ) )
 			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
