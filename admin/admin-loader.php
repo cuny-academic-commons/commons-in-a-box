@@ -1262,7 +1262,7 @@ class CBox_Admin {
 
 		#cbox-upgrades, #cbox-links {border-bottom: 1px solid #dfdfdf;}
 
-		#cbox-about p {color:#777;}
+		#cbox-about p, .cbox-plugins-section p {color:#777;}
 
 		.secondary-panel h2 {line-height:1;}
 
@@ -1323,6 +1323,7 @@ class CBox_Admin {
 				}
 		}
 
+		/* modal */
 		#lean_overlay {
 			position: fixed;
 			z-index:100;
@@ -1333,6 +1334,18 @@ class CBox_Admin {
 			background: #000;
 			display: none;
 		}
+
+		/* plugins table */
+		.cbox-plugins-section {margin-top:0; padding:20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+
+		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
+		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
+
+		.column-cbox-plugin-name {width:220px;}
+
+		span.enabled       {color:#008800;}
+		span.disabled      {color:#880000;}
+		span.not-installed {color:#9f9f9f;}
 		</style>
 
 	<?php

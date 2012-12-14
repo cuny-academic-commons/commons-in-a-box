@@ -877,18 +877,6 @@ class CBox_Plugins {
 	public function inline_css() {
 	?>
 		<style type="text/css">
-			.cbox-plugins-section {margin-top:0; padding:20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
-			.cbox-plugins-section p {color:#777;}
-
-			tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
-			tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
-
-			.column-cbox-plugin-name {width:220px;}
-
-			span.enabled       {color:#008800;}
-			span.disabled      {color:#880000;}
-			span.not-installed {color:#9f9f9f;}
-
 			.dep-list li {list-style:disc; margin-left:1.5em;}
 		</style>
 	<?php
