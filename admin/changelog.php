@@ -49,7 +49,7 @@
 						<h4><?php _e( 'Behind The Scenes Forum Integration', 'cbox' ); ?></h4>
 						<p><?php _e( "If you're installing CBOX and BuddyPress for the first time, CBOX will automatically configure the best forums setup for you.", 'cbox' ); ?></p>
 
-						<p><?php printf( __( "If you have an existing BuddyPress site and are using BP's Discussion Forums component, <a href='%s'>please read this article</a>.", 'cbox' ), 'https://github.com/cuny-academic-commons/commons-in-a-box' ); ?></p>
+						<p><?php printf( __( "If you have an existing BuddyPress site and are using BP's Discussion Forums component, <a href='%s'>please read this article</a>.", 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ); ?></p>
 					</div>
 
 
