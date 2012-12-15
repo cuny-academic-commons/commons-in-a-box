@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Commons In A Box
-Plugin URI: http://github.com/cuny-academic-commons/
+Plugin URI: http://commonsinabox.org
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
 Version: 1.0-beta3
 Author: CUNY Academic Commons
