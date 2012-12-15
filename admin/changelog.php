@@ -24,6 +24,7 @@
 						<li>BuddyPress 1.6.2</li>
 						<li>BuddyPress Group Email Subscription 3.3</li>
 						<li>bbPress 2.2.3</li>
+						<li>BP External Group Blogs 1.5.1</li>
 					</ul>
 
 				</div>
@@ -35,7 +36,11 @@
 				<div class="feature-section">
 					<h4><?php _e( 'The following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>TODO</li>
+						<li>Compatibility with WordPress 3.5</li>
+						<li>Better customizability in the Networkwide Blog Posts widget</li>
+						<li>Fixed avatar cropping</li>,
+						<li>Improved slider performance and customizability</li>
+						<li>Updated control panel tabs implementation for compatibility with latest jQuery UI</li>
 					</ul>
 
 				</div>
