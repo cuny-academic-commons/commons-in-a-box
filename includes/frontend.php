@@ -29,6 +29,10 @@ class CBox_Frontend {
 		if ( empty( $this->settings ) )
 			return;
 
+		// setup our CBOX plugins object
+		// this will hold some plugin-specific references
+		cbox()->plugins = new stdClass;
+
 		// setup includes
 		$this->includes();
 
@@ -59,7 +63,7 @@ class CBox_Frontend {
 	private function setup_hooks() {
 		foreach( $this->settings as $plugin => $classes ) {
 			// if our plugin is not setup, stop loading hooks now!
-			if ( empty( cbox()->frontend->$plugin->is_setup ) )
+			if ( empty( cbox()->plugins->$plugin->is_setup ) )
 				continue;
 
 			foreach ( $classes as $class ) {
