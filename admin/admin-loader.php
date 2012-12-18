@@ -844,7 +844,7 @@ class CBox_Admin {
 						else:
 
 							// current theme is not the CBOX default theme
-							if ( $theme->get_stylesheet() != 'cbox-theme' ) {
+							if ( $theme->get_template() != 'cbox-theme' ) {
 								$is_bp_compatible = cbox_is_theme_bp_compatible();
 
 							?>
@@ -890,7 +890,12 @@ class CBox_Admin {
 								// check for upgrades
 								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
 							?>
-								<p><?php _e( "You're using the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
+
+								<?php if ( $theme->get_stylesheet() != 'cbox-theme' ) : ?>
+									<p><?php _e( "You're using a child theme of the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
+								<?php else : ?>
+									<p><?php _e( "You're using the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
+								<?php endif; ?>
 
 								<?php /* HIDE THIS FOR NOW ?>
 								<?php if ( $is_upgrade ) : ?>

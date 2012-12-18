@@ -87,12 +87,18 @@ class CBox_Theme_Specs {
 		if ( empty( $current_theme ) || ! is_object( $current_theme ) )
 			$current_theme = wp_get_theme();
 
+		// get our CBOX theme specs
+		$cbox_theme_specs = self::$cbox_theme;
+
 		// if current theme is not the CBOX theme, no need to proceed!
-		if ( $current_theme->get_stylesheet() != 'cbox-theme' )
+		if ( $current_theme->get_template() != $cbox_theme_specs['directory_name'] )
 			return false;
 
-		// get our internal theme specs
-		$cbox_theme_specs = self::$cbox_theme;
+		// child theme support
+		// if child theme, we need to grab the CBOX parent theme's data
+		if ( $current_theme->get_stylesheet() != $cbox_theme_specs['directory_name'] ) {
+			$current_theme = wp_get_theme( $cbox_theme_specs['directory_name'] );
+		}
 
 		// version checking
 		$retval = false;
