@@ -695,10 +695,21 @@ class CBox_Plugin_Defaults {
 				// don't let bbPress redirect to its about page after activating
 				delete_transient( '_bbp_activation_redirect' );
 
-				// if BP bundled forums exists, stop now!
-				$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
+				/** If BP bundled forums exists, stop now! *********************/
 
-				if ( false !== get_blog_option( $bp_root_blog, 'bb-config-location' ) )
+				// do check for multisite
+				if ( is_multisite() ) {
+					$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
+
+					$option = get_blog_option( $bp_root_blog, 'bb-config-location' );
+
+				// single WP
+				} else {
+					$option = get_option( 'bb-config-location' );
+				}
+
+				// stop if our bb-config-location was found
+				if ( false !== $option )
 					return;
 
 				/** See if a bbPress forum named 'Group Forums' exists *********/
