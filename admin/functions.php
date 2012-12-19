@@ -402,8 +402,19 @@ function cbox_plugin_check() {
 
 	/** BuddyPress ****************************************************/
 
+	// do check for multisite
+	if ( is_multisite() ) {
+		$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
+
+		$option = get_blog_option( $bp_root_blog, 'bp-active-components' );
+
+	// single WP
+	} else {
+		$option = get_option( 'bp-active-components' );
+	}
+
 	// if BP was never installed, save a marker so we can reference later
-	if ( false === get_site_option( 'bp-active-components' ) ) {
+	if ( false === $option ) {
 		update_option( '_cbox_bp_never_installed', 1 );
 	}
 
