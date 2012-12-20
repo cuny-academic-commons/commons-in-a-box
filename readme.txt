@@ -7,7 +7,7 @@ Stable tag: 1.0-beta4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-A platform for easy and powerful community websites. Powered by BuddyPress
+A platform for easy and powerful community websites. Powered by BuddyPress.
 
 == Description ==
 
@@ -38,6 +38,12 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 2. The Commons In A Box default theme
 
 == Changelog ==
+
+= 1.0 =
+* Updated plugins: BuddyPress Group Email Subscription 3.3.1, BuddyPress Docs 1.2.8
+* Better support for child themes of cbox-theme
+* Fixed fatal error that sometimes occurred when activating Commons In A Box
+* Better PHP 5.4 support
 
 = 1.0-beta4 =
 * Requires WordPress 3.5
