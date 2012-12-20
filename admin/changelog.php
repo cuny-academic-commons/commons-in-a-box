@@ -19,12 +19,10 @@
 				<h3><?php _e( 'Plugin Updates', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
-					<h4><?php _e( 'The following plugins were updated in CBOX:', 'cbox' ); ?></h4>
+					<h4><?php _e( 'Since the last major version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress 1.6.2</li>
-						<li>BuddyPress Group Email Subscription 3.3</li>
-						<li>bbPress 2.2.3</li>
-						<li>BP External Group Blogs 1.5.1</li>
+						<li>BuddyPress Group Email Subscription 3.3.1</li>
+						<li>BuddyPress Docs 1.2.8</li>
 					</ul>
 
 				</div>
@@ -34,13 +32,10 @@
 				<h3><?php _e( 'Theme Improvements', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
-					<h4><?php _e( 'The following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
+					<h4><?php _e( 'Since the last major version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>Compatibility with WordPress 3.5</li>
-						<li>Better customizability in the Networkwide Blog Posts widget</li>
-						<li>Fixed avatar cropping</li>,
-						<li>Improved slider performance and customizability</li>
-						<li>Updated control panel tabs implementation for compatibility with latest jQuery UI</li>
+						<li>Improved appearance for the Messages panel</li>
+						<li>Improved support for BuddyPress plugins that introduce sub-navigation, such as Bebop</li>
 					</ul>
 
 				</div>
@@ -57,11 +52,9 @@
 						<p><?php printf( __( "If you have an existing BuddyPress site and are using BP's Discussion Forums component, <a href='%s'>please read this article</a>.", 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ); ?></p>
 					</div>
 
-
-
 					<div class="last-feature">
-						<h4><?php _e( 'WordPress Version Requirements', 'cbox' ); ?></h4>
-						<p><?php _e( "If you haven't updated WordPress, CBOX will show an upgrade notice in the CBOX dashboard asking you to upgrade to the latest compatible version.", 'cbox' ); ?></p>
+						<h4><?php _e( 'Improved Support for Child Themes', 'cbox' ); ?></h4>
+						<p><?php _e( "Running a child theme of cbox-theme? Cool! Commons In A Box now does a better job recognizing your child theme, and upgrading the parent theme seamlessly in the background.", 'cbox' ); ?></p>
 					</div>
 				</div>
 
