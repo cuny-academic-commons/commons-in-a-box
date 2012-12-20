@@ -44,6 +44,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Better support for child themes of cbox-theme
 * Fixed fatal error that sometimes occurred when activating Commons In A Box
 * Better PHP 5.4 support
+* Theme improvements: Better support for third-party plugin navigation, improved styling on the Messages panel
 
 = 1.0-beta4 =
 * Requires WordPress 3.5
