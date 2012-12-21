@@ -550,9 +550,7 @@ class CBox_Admin {
 				<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e( 'Dismiss', 'cbox' ); ?></a>
 			<?php endif; ?>
 
-			<?php if ( version_compare( $wp_version, '3.4.3' ) < 0 ) : ?>
-				<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
-			<?php endif; ?>
+			<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
 
 			<div class="welcome-panel-content">
 				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
@@ -1277,7 +1275,7 @@ class CBox_Admin {
 			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
-		#welcome-panel {overflow:visible;}
+		#welcome-panel {overflow:visible;min-height: 240px;}
 
 		.about-text {margin-right:220px;}
 		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:180px; margin-bottom:.5em;}
