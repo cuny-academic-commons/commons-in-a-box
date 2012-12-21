@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commons-in-a-box\n"
-"POT-Creation-Date: 2012-12-15 14:55:14+00:00\n"
+"POT-Creation-Date: 2012-12-20 20:04:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Upgrading CBOX Theme"
 msgstr ""
 
-#: admin/admin-loader.php:327 admin/admin-loader.php:836
+#: admin/admin-loader.php:327 admin/admin-loader.php:834
 msgid "Theme"
 msgstr ""
 
@@ -62,18 +62,18 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: admin/admin-loader.php:480 admin/admin-loader.php:939
+#: admin/admin-loader.php:480 admin/admin-loader.php:942
 msgid "About"
 msgstr ""
 
-#: admin/admin-loader.php:482 admin/admin-loader.php:943
+#: admin/admin-loader.php:482 admin/admin-loader.php:946
 msgid ""
 "<strong>Commons In A Box</strong> is a software project aimed at turning the "
 "infrastructure that successfully powers the <a href=\"%s\">CUNY Academic "
 "Commons</a> into a free, distributable, easy-to-install package."
 msgstr ""
 
-#: admin/admin-loader.php:483 admin/admin-loader.php:945
+#: admin/admin-loader.php:483 admin/admin-loader.php:948
 msgid ""
 "Commons In A Box is made possible by a generous grant from the Alfred P. "
 "Sloan Foundation."
@@ -95,103 +95,103 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: admin/admin-loader.php:554 admin/changelog.php:7 admin/credits.php:7
+#: admin/admin-loader.php:553 admin/changelog.php:7 admin/credits.php:7
 msgid "Version %s"
 msgstr ""
 
-#: admin/admin-loader.php:558
+#: admin/admin-loader.php:556
 msgid "Welcome to Commons In A Box! "
 msgstr ""
 
-#: admin/admin-loader.php:560
+#: admin/admin-loader.php:558
 msgid ""
 "Need help getting started? Looking for support or ideas? Check out our "
 "documentation and join the community of CBOX users at <a href=\"http://"
 "commonsinabox.org\">commonsinabox.org</a>."
 msgstr ""
 
-#: admin/admin-loader.php:563
+#: admin/admin-loader.php:561
 msgid ""
 "If you&#8217;d rather dive right in, here are a few things most people do "
 "first when they set up a new CBOX site."
 msgstr ""
 
-#: admin/admin-loader.php:564
+#: admin/admin-loader.php:562
 msgid ""
 "Already know what you&#8217;re doing? <a href=\"%s\">Dismiss this message</"
 "a>."
 msgstr ""
 
-#: admin/admin-loader.php:601
+#: admin/admin-loader.php:599
 msgid "Install BuddyPress"
 msgstr ""
 
-#: admin/admin-loader.php:604
+#: admin/admin-loader.php:602
 msgid ""
 "Before you can use Commons In A Box, we'll need to install BuddyPress and "
 "some recommended plugins. Click 'Continue' to get set up."
 msgstr ""
 
-#: admin/admin-loader.php:608
+#: admin/admin-loader.php:606
 msgid "Continue &rarr;"
 msgstr ""
 
-#: admin/admin-loader.php:619
+#: admin/admin-loader.php:617
 msgid "Set Up BuddyPress"
 msgstr ""
 
-#: admin/admin-loader.php:621
+#: admin/admin-loader.php:619
 msgid "We're almost there! Now we need to finish setting up BuddyPress."
 msgstr ""
 
-#: admin/admin-loader.php:623
+#: admin/admin-loader.php:621
 msgid ""
 "Don't worry! BuddyPress has a simple wizard to guide you through the "
 "process.  However, if you want more help, check out this <a href='%s'>codex "
 "article</a>."
 msgstr ""
 
-#: admin/admin-loader.php:625
+#: admin/admin-loader.php:623
 msgid "Continue to BuddyPress setup &rarr;"
 msgstr ""
 
-#: admin/admin-loader.php:644
+#: admin/admin-loader.php:642
 msgid "Install some other cool stuff!"
 msgstr ""
 
-#: admin/admin-loader.php:647
+#: admin/admin-loader.php:645
 msgid ""
 "It looks like you're already running BuddyPress. Cool! You're almost "
 "finished the setup process!"
 msgstr ""
 
-#: admin/admin-loader.php:649
+#: admin/admin-loader.php:647
 msgid ""
 "Did you know Commons In A Box comes prebundled with a few, recommended "
 "plugins?  These plugins help to add functionality to your existing WordPress "
 "and BuddyPress site. "
 msgstr ""
 
-#: admin/admin-loader.php:651
+#: admin/admin-loader.php:649
 msgid ""
 "We have automatically selected the following plugins to install for you. "
 "However, feel free to uncheck some of these plugins based on your site's "
 "needs."
 msgstr ""
 
-#: admin/admin-loader.php:703 admin/admin-loader.php:774
+#: admin/admin-loader.php:701 admin/admin-loader.php:772
 msgid "Upgrade Available"
 msgstr ""
 
-#: admin/admin-loader.php:707
+#: admin/admin-loader.php:705
 msgid "Commons In A Box %s requires WordPress %s"
 msgstr ""
 
-#: admin/admin-loader.php:709
+#: admin/admin-loader.php:707
 msgid "Upgrade now!"
 msgstr ""
 
-#: admin/admin-loader.php:758
+#: admin/admin-loader.php:756
 msgid ""
 "%d installed plugin and the CBOX Default theme have an update available. "
 "Click on the button below to upgrade."
@@ -201,7 +201,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/admin-loader.php:762
+#: admin/admin-loader.php:760
 msgid ""
 "%d installed plugin has an update available. Click on the button below to "
 "upgrade."
@@ -211,162 +211,168 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/admin-loader.php:769
+#: admin/admin-loader.php:767
 msgid ""
 "The CBOX Default theme has an update available. Click on the button below to "
 "upgrade."
 msgstr ""
 
-#: admin/admin-loader.php:780
+#: admin/admin-loader.php:778
 msgid "Upgrade"
 msgstr ""
 
-#: admin/admin-loader.php:805
+#: admin/admin-loader.php:803
 msgid "Quick Links"
 msgstr ""
 
-#: admin/admin-loader.php:811 admin/plugins-loader.php:1050
+#: admin/admin-loader.php:809 admin/plugins-loader.php:1050
 #: admin/settings-loader.php:137
 msgid "Settings"
 msgstr ""
 
-#: admin/admin-loader.php:812
+#: admin/admin-loader.php:810
 msgid ""
 "Commons In A Box works by pulling together a number of independent WordPress "
 "and BuddyPress plugins. Customize your site by exploring the settings pages "
 "for these plugins below."
 msgstr ""
 
-#: admin/admin-loader.php:817 admin/plugins-loader.php:1048
+#: admin/admin-loader.php:815 admin/plugins-loader.php:1048
 msgid "Click here to view this plugin's settings page"
 msgstr ""
 
-#: admin/admin-loader.php:820
+#: admin/admin-loader.php:818
 msgid "Click here for plugin documentation at commonsinabox.org"
 msgstr ""
 
-#: admin/admin-loader.php:820
+#: admin/admin-loader.php:818
 msgid "Info..."
 msgstr ""
 
-#: admin/admin-loader.php:829
+#: admin/admin-loader.php:827
 msgid "<a href=\"%s\">Manage all your CBOX plugins here!</a>"
 msgstr ""
 
-#: admin/admin-loader.php:842
+#: admin/admin-loader.php:840
 msgid "<a href=\"%s\">Install the CBOX Default theme to get started</a>."
 msgstr ""
 
-#: admin/admin-loader.php:851
+#: admin/admin-loader.php:849
 msgid "Your current theme is %s."
 msgstr ""
 
-#: admin/admin-loader.php:856
+#: admin/admin-loader.php:854
 msgid "It looks like this theme is not compatible with BuddyPress."
 msgstr ""
 
-#: admin/admin-loader.php:861
+#: admin/admin-loader.php:859
 msgid ""
 "Did you know that <strong>CBOX</strong> comes with a cool theme? Check it "
 "out below!"
 msgstr ""
 
-#: admin/admin-loader.php:863
+#: admin/admin-loader.php:861
 msgid "View a larger screenshot of the CBOX theme"
 msgstr ""
 
-#: admin/admin-loader.php:867
+#: admin/admin-loader.php:865
 msgid "<a href=\"%s\">Like the CBOX Theme? Install it!</a>"
 msgstr ""
 
-#: admin/admin-loader.php:882
+#: admin/admin-loader.php:880
 msgid ""
 "You can also make your theme compatible with the <a href='%s'>BuddyPress "
 "Template Pack</a>."
 msgstr ""
 
 #: admin/admin-loader.php:893
+msgid ""
+"You're using a child theme of the <strong>CBOX Default</strong> theme! Good "
+"on ya!"
+msgstr ""
+
+#: admin/admin-loader.php:895
 msgid "You're using the <strong>CBOX Default</strong> theme! Good on ya!"
 msgstr ""
 
-#: admin/admin-loader.php:907
+#: admin/admin-loader.php:910
 msgid "<a href=\"%s\">Configure the CBOX Theme here!</a>"
 msgstr ""
 
-#: admin/admin-loader.php:941
+#: admin/admin-loader.php:944
 msgid "You're currently using <strong>Commons In A Box %s</strong>"
 msgstr ""
 
-#: admin/admin-loader.php:948
+#: admin/admin-loader.php:951
 msgid "What's New"
 msgstr ""
 
-#: admin/admin-loader.php:949 admin/changelog.php:14 admin/credits.php:14
+#: admin/admin-loader.php:952 admin/changelog.php:14 admin/credits.php:14
 msgid "Credits"
 msgstr ""
 
-#: admin/admin-loader.php:950
+#: admin/admin-loader.php:953
 msgid "Documentation"
 msgstr ""
 
-#: admin/admin-loader.php:951
+#: admin/admin-loader.php:954
 msgid "Dev tracker"
 msgstr ""
 
-#: admin/admin-loader.php:1077
+#: admin/admin-loader.php:1080
 msgid "Let's get started!"
 msgstr ""
 
-#: admin/admin-loader.php:1079
+#: admin/admin-loader.php:1082
 msgid "Click here to get set up"
 msgstr ""
 
-#: admin/admin-loader.php:1084
+#: admin/admin-loader.php:1087
 msgid "BuddyPress is installed, but needs some additional setup."
 msgstr ""
 
-#: admin/admin-loader.php:1086
+#: admin/admin-loader.php:1089
 msgid "Finish BuddyPress setup &rarr;"
 msgstr ""
 
-#: admin/admin-loader.php:1091
+#: admin/admin-loader.php:1094
 msgid "You only have one last thing to do. We promise!"
 msgstr ""
 
-#: admin/admin-loader.php:1093
+#: admin/admin-loader.php:1096
 msgid "Click here to finish up!"
 msgstr ""
 
-#: admin/admin-loader.php:1100
+#: admin/admin-loader.php:1103
 msgid "Installing plugins..."
 msgstr ""
 
-#: admin/admin-loader.php:1106
+#: admin/admin-loader.php:1109
 msgid "Commons In A Box is almost ready!"
 msgstr ""
 
-#: admin/admin-loader.php:1180
+#: admin/admin-loader.php:1183
 msgid "CBOX Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:1182
+#: admin/admin-loader.php:1185
 msgid "CBOX Network Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:1185
+#: admin/admin-loader.php:1188
 msgid ""
 "Don't forget that CBOX plugins can be managed from the CBOX plugins page!"
 msgstr ""
 
-#: admin/admin-loader.php:1187
+#: admin/admin-loader.php:1190
 msgid "You can <a href=\"%s\">manage your CBOX plugins here</a>."
 msgstr ""
 
-#: admin/admin-loader.php:1190
+#: admin/admin-loader.php:1193
 msgid "Plugins on %s"
 msgstr ""
 
-#: admin/admin-loader.php:1192
+#: admin/admin-loader.php:1195
 msgid "Other Network Plugins"
 msgstr ""
 
@@ -387,58 +393,61 @@ msgid "Plugin Updates"
 msgstr ""
 
 #: admin/changelog.php:22
-msgid "The following plugins were updated in CBOX:"
+msgid ""
+"Since the last major version release, the following plugins were updated in "
+"CBOX:"
 msgstr ""
 
-#: admin/changelog.php:34
+#: admin/changelog.php:32
 msgid "Theme Improvements"
 msgstr ""
 
-#: admin/changelog.php:37
+#: admin/changelog.php:35
 msgid ""
-"The following bugfixes and enhancements were added to the Commons In A Box "
-"theme:"
+"Since the last major version release, the following bugfixes and "
+"enhancements were added to the Commons In A Box theme:"
 msgstr ""
 
-#: admin/changelog.php:50
+#: admin/changelog.php:45
 msgid "Under the Hood"
 msgstr ""
 
-#: admin/changelog.php:54
+#: admin/changelog.php:49
 msgid "Behind The Scenes Forum Integration"
 msgstr ""
 
-#: admin/changelog.php:55
+#: admin/changelog.php:50
 msgid ""
 "If you're installing CBOX and BuddyPress for the first time, CBOX will "
 "automatically configure the best forums setup for you."
 msgstr ""
 
-#: admin/changelog.php:57
+#: admin/changelog.php:52
 msgid ""
 "If you have an existing BuddyPress site and are using BP's Discussion Forums "
 "component, <a href='%s'>please read this article</a>."
 msgstr ""
 
-#: admin/changelog.php:63
-msgid "WordPress Version Requirements"
+#: admin/changelog.php:56
+msgid "Improved Support for Child Themes"
 msgstr ""
 
-#: admin/changelog.php:64
+#: admin/changelog.php:57
 msgid ""
-"If you haven't updated WordPress, CBOX will show an upgrade notice in the "
-"CBOX dashboard asking you to upgrade to the latest compatible version."
+"Running a child theme of cbox-theme? Cool! Commons In A Box now does a "
+"better job recognizing your child theme, and upgrading the parent theme "
+"seamlessly in the background."
 msgstr ""
 
-#: admin/changelog.php:70
+#: admin/changelog.php:63
 msgid "Localization Support"
 msgstr ""
 
-#: admin/changelog.php:71
+#: admin/changelog.php:64
 msgid "CBOX is now fully localized."
 msgstr ""
 
-#: admin/changelog.php:73
+#: admin/changelog.php:66
 msgid ""
 "If you want to translate CBOX to another language, please <a "
 "href='%s'>contact us</a> or <a href='%s'>send us a pull request on Github</"
@@ -446,7 +455,7 @@ msgid ""
 "the plugin."
 msgstr ""
 
-#: admin/changelog.php:80 admin/credits.php:98
+#: admin/changelog.php:73 admin/credits.php:98
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -564,11 +573,11 @@ msgstr ""
 msgid "Activating Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:712 admin/plugin-install.php:720
+#: admin/plugin-install.php:723 admin/plugin-install.php:731
 msgid "Group Forums"
 msgstr ""
 
-#: admin/plugin-install.php:721
+#: admin/plugin-install.php:732
 msgid "All forums created in groups can be found here."
 msgstr ""
 
@@ -865,7 +874,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: admin/theme-install.php:296
+#: admin/theme-install.php:302
 msgid "Return to CBOX Dashboard &rarr;"
 msgstr ""
 
