@@ -41,9 +41,9 @@ class CBox_Theme_Specs {
 	 */
 	private static $cbox_theme = array(
 		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0-beta4',
+		'version'        => '1.0',
 		'directory_name' => 'cbox-theme',
-		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0-beta4.zip'
+		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.zip'
 	);
 
 	/**
