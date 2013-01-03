@@ -81,12 +81,6 @@ class CBox_Settings {
 			'key'         => 'ges',
 			'settings'    => array(
 				array(
-					'label'       => __( 'All Mail', 'cbox' ),
-					'description' => __( 'By default, when a member joins a group, email subscriptions are set to "No Mail".  Check this box to change the default subscription setting to "All Mail".', 'cbox' ),
-					'class_name'  => 'CBox_GES_All_Mail'
-				),
-
-				array(
 					'label'       => __( 'Forum Full Text', 'cbox' ),
 					'description' => __( 'Check this box if you would like the full text of bbPress forum posts to appear in email notifications.', 'cbox' ),
 					'class_name'  => 'CBox_GES_bbPress2_Full_Text'
