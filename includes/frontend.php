@@ -22,8 +22,8 @@ class CBox_Frontend {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// get our CBOX admin settings
-		$this->settings = get_option( cbox()->settings_key );
+		// setup globals
+		$this->setup_globals();
 
 		// if no settings exist, stop now!
 		if ( empty( $this->settings ) )
@@ -40,6 +40,28 @@ class CBox_Frontend {
 		$this->setup_hooks();
 	}
 
+
+	/**
+	 * Setup globals.
+	 *
+	 * @since 1.0.1
+	 */
+	private function setup_globals() {
+		// get our CBOX admin settings
+		$this->settings = (array) get_option( cbox()->settings_key );
+
+		// setup internal autoload variable
+		// will hold plugins and classes that need to be autoloaded by CBOX
+		$this->autoload = array();
+
+		// Group Email Subscription
+		$this->autoload['ges'] = array();
+		$this->autoload['ges'][] = 'CBox_GES_All_Mail';
+
+		// merge admin settings with autoloaded ones
+		$this->settings = array_merge_recursive( $this->settings, $this->autoload );
+	}
+
 	/**
 	 * Includes.
 	 *
@@ -47,10 +69,13 @@ class CBox_Frontend {
 	 * saved under the CBOX admin settings page.
 	 */
 	private function includes() {
+		// get plugins from CBOX settings
 		$plugins = array_keys( $this->settings );
 
 		foreach ( $plugins as $plugin ) {
-			require( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" );
+			if ( file_exists( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" ) ) {
+				require( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" );
+			}
 		}
 	}
 
@@ -58,14 +83,19 @@ class CBox_Frontend {
 	 * Setup our hooks.
 	 *
 	 * We conditionally add our hooks depending if a setting was saved under the
-	 * CBOX admin settings page.
+	 * CBOX admin settings page or if it is explicitly autoloaded by CBOX.
 	 */
 	private function setup_hooks() {
+
 		foreach( $this->settings as $plugin => $classes ) {
 			// if our plugin is not setup, stop loading hooks now!
 			if ( empty( cbox()->plugins->$plugin->is_setup ) )
 				continue;
 
+			// sanity check
+			$classes = array_unique( $classes );
+
+			// load our classes
 			foreach ( $classes as $class ) {
 				// sanity check!
 				// make sure our hook is available
