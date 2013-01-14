@@ -50,6 +50,19 @@ class CBox_Frontend {
 		// get our CBOX admin settings
 		$this->settings = (array) get_option( cbox()->settings_key );
 
+		// setup autoload classes
+		$this->setup_autoload();
+
+		// merge admin settings with autoloaded ones
+		$this->settings = array_merge_recursive( $this->settings, $this->autoload );
+	}
+
+	/**
+	 * Setup autoload classes.
+	 *
+	 * @since 1.0.1
+	 */
+	private function setup_autoload() {
 		// setup internal autoload variable
 		// will hold plugins and classes that need to be autoloaded by CBOX
 		$this->autoload = array();
@@ -57,9 +70,6 @@ class CBox_Frontend {
 		// Group Email Subscription
 		$this->autoload['ges'] = array();
 		$this->autoload['ges'][] = 'CBox_GES_All_Mail';
-
-		// merge admin settings with autoloaded ones
-		$this->settings = array_merge_recursive( $this->settings, $this->autoload );
 	}
 
 	/**
