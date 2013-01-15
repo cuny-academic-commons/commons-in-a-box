@@ -67,8 +67,12 @@ class CBox_Frontend {
 		// will hold plugins and classes that need to be autoloaded by CBOX
 		$this->autoload = array();
 
+		// bbPress
+		$this->autoload['bbpress']   = array();
+		$this->autoload['bbpress'][] = 'CBox_BBP_Site_Public';
+
 		// Group Email Subscription
-		$this->autoload['ges'] = array();
+		$this->autoload['ges']   = array();
 		$this->autoload['ges'][] = 'CBox_GES_All_Mail';
 	}
 
