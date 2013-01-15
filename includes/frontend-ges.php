@@ -1,9 +1,8 @@
 <?php
 /**
- * BuddyPress Group Email Subscription Mods
+ * BuddyPress Group Email Subscription (GES) Mods
  *
- * If GES settings are toggled under the CBOX admin settings page,
- * setup the code for each setting here.
+ * The following are modifications that CBOX does to GES.
  *
  * @since 1.0-beta2
  *
