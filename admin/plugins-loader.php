@@ -314,8 +314,8 @@ class CBox_Plugins {
 			'cbox_name'         => __( 'Bebop', 'cbox' ),
 			'cbox_description'  => __( 'Allow your users to import and curate their open educational resources (OERs) from popular services like Flickr, Twitter, and YouTube.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.6)',
-			'version'           => '1.1.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bebop.1.1.1.zip',
+			'version'           => '1.2.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bebop.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bebop',
 		) );
 
