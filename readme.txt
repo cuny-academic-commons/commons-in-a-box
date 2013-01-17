@@ -39,6 +39,11 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.1 =
+* Updated plugins: BuddyPress 1.6.3, BuddyPress Docs 1.2.9, Bebop 1.2.2
+* Fixed bug that prevented bbPress from posting activity items when site is set to private
+* Forces "All Email" default for group email subscription
+
 = 1.0 =
 * Updated plugins: BuddyPress Group Email Subscription 3.3.1, BuddyPress Docs 1.2.8
 * Better support for child themes of cbox-theme
