@@ -3,7 +3,7 @@
 Plugin Name: Commons In A Box
 Plugin URI: http://commonsinabox.org
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
-Version: 1.0.1
+Version: 1.0.2
 Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
@@ -72,10 +72,10 @@ class Commons_In_A_Box {
 		/** VERSION ***********************************************************/
 
 		// CBOX version
-		$this->version       = '1.0.1';
+		$this->version       = '1.0.2';
 
 		// UTC date of CBOX version release
-		$this->revision_date = '2013-01-17 21:00 UTC';
+		$this->revision_date = '2013-02-18 17:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
