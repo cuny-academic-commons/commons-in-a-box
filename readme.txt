@@ -39,6 +39,10 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.2 =
+* Updated plugins: BuddyPress 1.6.4, BuddyPress Docs 1.2.10, BuddyPress Docs Wiki 1.0.3, BP Group Announcements 1.0.2
+* Fixes inconsistent Updates count in toolbar
+
 = 1.0.1 =
 * Updated plugins: BuddyPress 1.6.3, BuddyPress Docs 1.2.9, Bebop 1.2.2
 * Fixed bug that prevented bbPress from posting activity items when site is set to private
