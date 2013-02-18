@@ -365,7 +365,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.3.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.4.zip'
 		) );
 	}
 
