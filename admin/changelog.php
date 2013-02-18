@@ -21,8 +21,11 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last major version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress Group Email Subscription 3.3.1</li>
-						<li>BuddyPress Docs 1.2.8</li>
+						<li>BuddyPress 1.6.4</li>
+						<li>BuddyPress Docs 1.2.10</li>
+						<li>BuddyPress Docs Wiki 1.0.2</li>
+						<li>BP Group Announcements 1.0.2</li>
+						<li>Bebop 1.2.2</li>
 					</ul>
 
 				</div>
@@ -34,6 +37,10 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last major version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
+						<li>Better performance of the Activity tour for users with no groups/friends/favorites</li>
+						<li>Better compatibility when using Markdown</li>
+						<li>Fixed bug in Superfish menu</li>
+						<li>Improved appearance on mobile devices</li>
 						<li>Improved appearance for the Messages panel</li>
 						<li>Improved support for BuddyPress plugins that introduce sub-navigation, such as Bebop</li>
 					</ul>

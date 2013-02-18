@@ -67,6 +67,10 @@ class CBox_Frontend {
 		// will hold plugins and classes that need to be autoloaded by CBOX
 		$this->autoload = array();
 
+		// WordPress
+		$this->autoload['wp']   = array();
+		$this->autoload['wp'][] = 'CBox_WP_Toolbar_Updates';
+
 		// bbPress
 		$this->autoload['bbpress']   = array();
 		$this->autoload['bbpress'][] = 'CBox_BBP_Site_Public';

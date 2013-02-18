@@ -1,14 +1,14 @@
-# Copyright (C) 2012 
+# Copyright (C) 2013 
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commons-in-a-box\n"
-"POT-Creation-Date: 2012-12-20 20:04:00+00:00\n"
+"POT-Creation-Date: 2013-02-18 17:16:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -226,7 +226,7 @@ msgid "Quick Links"
 msgstr ""
 
 #: admin/admin-loader.php:809 admin/plugins-loader.php:1050
-#: admin/settings-loader.php:137
+#: admin/settings-loader.php:131
 msgid "Settings"
 msgstr ""
 
@@ -398,56 +398,56 @@ msgid ""
 "CBOX:"
 msgstr ""
 
-#: admin/changelog.php:32
+#: admin/changelog.php:35
 msgid "Theme Improvements"
 msgstr ""
 
-#: admin/changelog.php:35
+#: admin/changelog.php:38
 msgid ""
 "Since the last major version release, the following bugfixes and "
 "enhancements were added to the Commons In A Box theme:"
 msgstr ""
 
-#: admin/changelog.php:45
+#: admin/changelog.php:52
 msgid "Under the Hood"
 msgstr ""
 
-#: admin/changelog.php:49
+#: admin/changelog.php:56
 msgid "Behind The Scenes Forum Integration"
 msgstr ""
 
-#: admin/changelog.php:50
+#: admin/changelog.php:57
 msgid ""
 "If you're installing CBOX and BuddyPress for the first time, CBOX will "
 "automatically configure the best forums setup for you."
 msgstr ""
 
-#: admin/changelog.php:52
+#: admin/changelog.php:59
 msgid ""
 "If you have an existing BuddyPress site and are using BP's Discussion Forums "
 "component, <a href='%s'>please read this article</a>."
 msgstr ""
 
-#: admin/changelog.php:56
+#: admin/changelog.php:63
 msgid "Improved Support for Child Themes"
 msgstr ""
 
-#: admin/changelog.php:57
+#: admin/changelog.php:64
 msgid ""
 "Running a child theme of cbox-theme? Cool! Commons In A Box now does a "
 "better job recognizing your child theme, and upgrading the parent theme "
 "seamlessly in the background."
 msgstr ""
 
-#: admin/changelog.php:63
+#: admin/changelog.php:70
 msgid "Localization Support"
 msgstr ""
 
-#: admin/changelog.php:64
+#: admin/changelog.php:71
 msgid "CBOX is now fully localized."
 msgstr ""
 
-#: admin/changelog.php:66
+#: admin/changelog.php:73
 msgid ""
 "If you want to translate CBOX to another language, please <a "
 "href='%s'>contact us</a> or <a href='%s'>send us a pull request on Github</"
@@ -455,7 +455,7 @@ msgid ""
 "the plugin."
 msgstr ""
 
-#: admin/changelog.php:73 admin/credits.php:98
+#: admin/changelog.php:80 admin/credits.php:98
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -842,40 +842,33 @@ msgid ""
 msgstr ""
 
 #: admin/settings-loader.php:84
-msgid "All Mail"
-msgstr ""
-
-#: admin/settings-loader.php:85
-msgid ""
-"By default, when a member joins a group, email subscriptions are set to \"No "
-"Mail\".  Check this box to change the default subscription setting to \"All "
-"Mail\"."
-msgstr ""
-
-#: admin/settings-loader.php:90
 msgid "Forum Full Text"
 msgstr ""
 
-#: admin/settings-loader.php:91
+#: admin/settings-loader.php:85
 msgid ""
 "Check this box if you would like the full text of bbPress forum posts to "
 "appear in email notifications."
 msgstr ""
 
-#: admin/settings-loader.php:136 admin/settings-loader.php:183
+#: admin/settings-loader.php:130 admin/settings-loader.php:177
 msgid "Commons In A Box Settings"
 msgstr ""
 
-#: admin/settings-loader.php:185
+#: admin/settings-loader.php:179
 msgid "CBOX can configure some important options for certain plugins."
 msgstr ""
 
-#: admin/settings-loader.php:192
+#: admin/settings-loader.php:186
 msgid "Save Changes"
 msgstr ""
 
 #: admin/theme-install.php:302
 msgid "Return to CBOX Dashboard &rarr;"
+msgstr ""
+
+#: includes/frontend-wp.php:61
+msgid "Updates available."
 msgstr ""
 
 #: lib/wp-plugin-dependencies/plugin-dependencies.php:497

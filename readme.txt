@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
-Tested up to: 3.5
-Stable tag: 1.0
+Tested up to: 3.5.1
+Stable tag: 1.0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,17 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 2. The Commons In A Box default theme
 
 == Changelog ==
+
+= 1.0.2 =
+* Updated plugins: BuddyPress 1.6.4, BuddyPress Docs 1.2.10, BuddyPress Docs Wiki 1.0.3, BP Group Announcements 1.0.2
+* Fixes inconsistent Updates count in toolbar
+* Theme improvements: Better appearance on mobile devices; fixes bug in Superfish menu; better compatibility with Markdown plugin;more intelligent activity tour display for members with no groups/friends/favorites
+
+= 1.0.1 =
+* Updated plugins: BuddyPress 1.6.3, BuddyPress Docs 1.2.9, Bebop 1.2.2
+* Fixed bug that prevented bbPress from posting activity items when site is set to private
+* Forces "All Email" default for group email subscription
+* Improved responsive performance for theme
 
 = 1.0 =
 * Updated plugins: BuddyPress Group Email Subscription 3.3.1, BuddyPress Docs 1.2.8

@@ -117,7 +117,7 @@ class CBox_Plugins {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '1.6.3',
+			'version'           => '1.6.4',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -139,9 +139,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.2.9',
+			'version'           => '1.2.10',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.2.9.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.2.10.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only'
@@ -153,9 +153,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'cbox' ),
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'cbox' ),
-			'version'           => '1.0.2',
+			'version'           => '1.0.3',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.2.zip',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.3.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only'
 		) );
@@ -232,8 +232,8 @@ class CBox_Plugins {
 			'cbox_name'         => __( 'Group Announcements', 'cbox' ),
 			'cbox_description'  => __( 'Repurposes group activity updates, using an Announcements tab to groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '1.0.1',
-			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.1.zip',
+			'version'           => '1.0.2',
+			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
 		) );
 
@@ -365,7 +365,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.3.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.4.zip'
 		) );
 	}
 
