@@ -42,6 +42,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0.2 =
 * Updated plugins: BuddyPress 1.6.4, BuddyPress Docs 1.2.10, BuddyPress Docs Wiki 1.0.3, BP Group Announcements 1.0.2
 * Fixes inconsistent Updates count in toolbar
+* Theme improvements: Better appearance on mobile devices; fixes bug in Superfish menu; better compatibility with Markdown plugin;more intelligent activity tour display for members with no groups/friends/favorites
 
 = 1.0.1 =
 * Updated plugins: BuddyPress 1.6.3, BuddyPress Docs 1.2.9, Bebop 1.2.2
