@@ -833,7 +833,17 @@ class CBox_Admin {
 				<div class="welcome-panel-column welcome-panel-last">
 					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'cbox' ); ?></h4>
 					<?php
+						// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
+						if ( ! bp_is_root_blog() ) {
+							switch_to_blog( bp_get_root_blog_id() );
+						}
+
 						$theme = wp_get_theme();
+
+						// restore blog after switching
+						if ( is_multisite() ) {
+							restore_current_blog();
+						}
 
 						if ( $theme->errors() ) :
 							echo '<p>';
@@ -907,7 +917,7 @@ class CBox_Admin {
 
 								<div class="login">
 									<div class="message">
-										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( admin_url( 'themes.php?page=infinity-theme' ) ) ); ?></strong>
+										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), 'themes.php?page=infinity-theme' ) ) ); ?></strong>
 									</div>
 								</div>
 
