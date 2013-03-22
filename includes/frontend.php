@@ -73,7 +73,7 @@ class CBox_Frontend {
 
 		// bbPress
 		$this->autoload['bbpress']   = array();
-		$this->autoload['bbpress'][] = 'CBox_BBP_Site_Public';
+		$this->autoload['bbpress'][] = 'CBox_BBP_Autoload';
 
 		// Group Email Subscription
 		$this->autoload['ges']   = array();
