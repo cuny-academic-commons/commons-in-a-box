@@ -961,7 +961,7 @@ class CBox_Admin {
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
 				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
-				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/master/"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
+				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/1.0.x"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
 			</ul>
 		</div>
 	<?php
