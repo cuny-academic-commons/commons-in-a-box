@@ -39,6 +39,12 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.3 =
+* Updated plugins: BuddyPress 1.6.5, bbPress 2.2.4, Invite Anyone 1.0.19, Bebop 1.3.2, More Privacy Options 3.5
+* Properly activate the CBOX Theme when installing BuddyPress on a secondary site
+* Workaround a bbPress 2.2.x role permissions bug when a user creates a new site in BuddyPress
+* Theme improvements: TBA
+
 = 1.0.2 =
 * Updated plugins: BuddyPress 1.6.4, BuddyPress Docs 1.2.10, BuddyPress Docs Wiki 1.0.3, BP Group Announcements 1.0.2
 * Fixes inconsistent Updates count in toolbar
