@@ -21,11 +21,14 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress 1.6.5</li>
-						<li>bbPress 2.2.4</li>
-						<li>Invite Anyone 1.0.19</li>
-						<li>Bebop 1.3.2</li>
+						<li>BuddyPress 1.7.1</li>
+						<li>BuddyPress Docs 1.3.4</li>
+						<li>BuddyPress Group Email Subscription 3.3.2</li>
+						<li>Invite Anyone 1.0.21</li>
+						<li>bbPress 2.3.2</li>
 						<li>More Privacy Options 3.5</li>
+						<li>BP Groupblog 1.8.2</li>
+						<li>Bebop 1.3.2</li>
 					</ul>
 
 				</div>
@@ -37,7 +40,8 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>TBA</li>
+						<li>Compatibility with BuddyPress 1.7.x</li>
+						<li>Removed the limitation of 8 Site Features on the home page slider</li>
 					</ul>
 
 				</div>
