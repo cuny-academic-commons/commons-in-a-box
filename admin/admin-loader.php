@@ -833,7 +833,17 @@ class CBox_Admin {
 				<div class="welcome-panel-column welcome-panel-last">
 					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'cbox' ); ?></h4>
 					<?php
+						// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
+						if ( ! bp_is_root_blog() ) {
+							switch_to_blog( bp_get_root_blog_id() );
+						}
+
 						$theme = wp_get_theme();
+
+						// restore blog after switching
+						if ( is_multisite() ) {
+							restore_current_blog();
+						}
 
 						if ( $theme->errors() ) :
 							echo '<p>';
@@ -907,7 +917,7 @@ class CBox_Admin {
 
 								<div class="login">
 									<div class="message">
-										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( admin_url( 'themes.php?page=infinity-theme' ) ) ); ?></strong>
+										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), 'themes.php?page=infinity-theme' ) ) ); ?></strong>
 									</div>
 								</div>
 
@@ -951,7 +961,7 @@ class CBox_Admin {
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
 				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
-				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/master/"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
+				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/1.0.x"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
 			</ul>
 		</div>
 	<?php
@@ -1278,7 +1288,7 @@ class CBox_Admin {
 		#welcome-panel {overflow:visible;min-height: 240px;}
 
 		.about-text {margin-right:220px;}
-		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:180px; margin-bottom:.5em;}
+		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:210px; margin-bottom:.5em;}
 		.welcome-panel-dismiss {margin-bottom:0;}
 
 		#wpbody .login .message {margin:15px 0; text-align:center;}
@@ -1331,16 +1341,21 @@ class CBox_Admin {
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
 
-		#wpbody .wp-badge {background-size:auto;}
-
 		.wp-badge {
-		        position:absolute; top:30px; right:0;
+		        position:absolute;
 		        width:190px; height:30px;
 		        background-color:#fff;
 		        background-image: url( <?php echo $badge_url; ?> );
 			background-position:22px 10px;
+			background-size:auto;
 			padding-top:200px;
 		        color:#999; text-shadow:none;
+		}
+		
+		#welcome-panel .wp-badge {
+			border: 1px solid #DFDFDF;
+			border-radius: 4px;
+			top:30px; right: 20px;
 		}
 
 		/* Retina */

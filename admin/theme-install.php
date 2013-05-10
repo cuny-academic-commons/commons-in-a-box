@@ -41,9 +41,9 @@ class CBox_Theme_Specs {
 	 */
 	private static $cbox_theme = array(
 		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0.2',
+		'version'        => '1.0.3',
 		'directory_name' => 'cbox-theme',
-		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.2.zip'
+		'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.3.zip'
 	);
 
 	/**
@@ -281,8 +281,18 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$cbox_theme_dir     = $theme_specs->get( 'cbox_theme', 'directory_name' );
 
 		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $cbox_theme_dir ) {
+			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
+			if ( ! bp_is_root_blog() ) {
+				switch_to_blog( bp_get_root_blog_id() );
+			}
+
 			// switch the theme to the CBOX theme!
 			switch_theme( $cbox_theme_dir, $cbox_theme_dir );
+
+			// restore blog after switching
+			if ( is_multisite() ) {
+				restore_current_blog();
+			}
 
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload

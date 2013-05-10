@@ -215,33 +215,29 @@ function cbox_is_theme_bp_compatible() {
 		return false;
 
 	// if we're on BP 1.7, we don't need to worry about theme compatibility
-	if ( function_exists( 'bp_get_template_part' ) )
+	if ( class_exists( 'BP_Theme_Compat' ) )
 		return true;
 
-	// get current theme
-	$theme = wp_get_theme();
+	// If the theme supports 'buddypress', we're good!
+	if ( current_theme_supports( 'buddypress' ) ) {
+		return true;
 
-	$theme_tags = ! empty( $theme->tags ) ? $theme->tags : array();
+	// If the theme doesn't support BP, do some additional checks
+	} else {
+		// Bail if theme is a derivative of bp-default
+		if ( in_array( 'bp-default', array( get_template(), get_stylesheet() ) ) ) {
+			return true;
+		}
 
-	// BP is < 1.7, check to see if the 'buddypress' tag is in the theme or if
-	// stylesheet is 'bp-default'
-	$retval = in_array( 'buddypress', $theme_tags ) || $theme->get_stylesheet() == 'bp-default';
-
-	// still false? do some other checks
-	if ( empty( $retval ) ) {
-		// BP Template Pack check
-		if ( function_exists( 'bp_tpack_theme_setup' ) )
-			$retval = true;
-
-		// some themes might have did a straight-out copy and paste of bp-default
-		// without declaring themselves as a child theme of bp-default
-		// to detect these instances, we check to see if the members loop template exists
-		// this is done because the members component is required
-		elseif ( file_exists( $theme->get_stylesheet_directory() . '/members/members-loop.php' ) )
-			$retval = true;
+		// Bruteforce check for a BP template
+		// Examples are clones of bp-default
+		if ( locate_template( 'members/members-loop.php', false, false ) ) {
+			return true;
+		}
 	}
 
-	return $retval;
+	// Theme doesn't support BP
+	return false;
 }
 
 /**

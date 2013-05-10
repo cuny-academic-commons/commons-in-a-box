@@ -74,6 +74,9 @@ class CBox_Plugins {
 		// filter PD's dependency list
 		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );
 
+		// Make sure BuddyPress is installed with all components enabled
+		add_filter( 'bp_new_install_default_components',     array( $this, 'bp_default_components' ) );
+
 		// prevent CBOX plugins from being seen in the regular Plugins table and from WP updates
 		if ( ! $this->is_override() ) {
 			// exclude CBOX plugins from the "Plugins" list table
@@ -117,7 +120,7 @@ class CBox_Plugins {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '1.6.4',
+			'version'           => '1.7.1',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -139,9 +142,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.2.10',
+			'version'           => '1.3.4',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.2.10.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.3.4.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only'
@@ -167,8 +170,8 @@ class CBox_Plugins {
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '3.3.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.3.1.zip',
+			'version'           => '3.3.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.3.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'admin.php?page=ass_admin_options'
@@ -180,9 +183,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.0.17',
+			'version'           => '1.0.21',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.17.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.21.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone'
@@ -207,8 +210,8 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
-			'version'           => '2.2.3',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.2.3.zip',
+			'version'           => '2.3.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.3.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only'
@@ -245,7 +248,7 @@ class CBox_Plugins {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
 				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
-				'version'           => '3.2.1.5',
+				'version'           => '3.5',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
 				'network_settings'  => 'settings.php#menu'
@@ -269,8 +272,8 @@ class CBox_Plugins {
 				'cbox_name'         => __( 'Group Blogs', 'cbox' ),
 				'cbox_description'  => 'Enables a BuddyPress group to be associated with a blog, by placing a Blog link in the group navigation and, optionally, syncing group membership with blog roles.',
 				'depends'           => 'BuddyPress (>=1.6)',
-				'version'           => '1.8',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.zip',
+				'version'           => '1.8.2',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.2.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
@@ -314,7 +317,7 @@ class CBox_Plugins {
 			'cbox_name'         => __( 'Bebop', 'cbox' ),
 			'cbox_description'  => __( 'Allow your users to import and curate their open educational resources (OERs) from popular services like Flickr, Twitter, and YouTube.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.6)',
-			'version'           => '1.2.2',
+			'version'           => '1.3.2',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/bebop.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bebop',
 		) );
@@ -365,7 +368,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.6.4.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.1.7.1.zip'
 		) );
 	}
 
@@ -639,6 +642,33 @@ class CBox_Plugins {
 		}
 
 		return $plugins;
+	}
+
+	/**
+	 * Return an array of all BP components to be activated by default
+	 *
+	 * Since BuddyPress 1.7, BP has only activated the Profile and Activity
+	 * components on new installations. For Commons In A Box, we want to
+	 * keep the old behavior of turning all components on.
+	 *
+	 * BuddyPress's filter 'bp_new_install_default_components' allows us to
+	 * modify the standard BP behavior, but it's run on the admin pageload
+	 * after BP is initially activated. That means that we have to add the
+	 * filter here in the general plugin loader class.
+	 *
+	 * @since 1.0.2
+	 */
+	public function bp_default_components( $components ) {
+		return array(
+			'activity' => 1,
+			'blogs'    => 1,
+			'friends'  => 1,
+			'groups'   => 1,
+			'members'  => 1,
+			'messages' => 1,
+			'settings' => 1,
+			'xprofile' => 1,
+		);
 	}
 
 	/** ADMIN-SPECIFIC ************************************************/
