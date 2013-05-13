@@ -15,6 +15,7 @@
 				</a>
 			</h2>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Plugin Updates', 'cbox' ); ?></h3>
 
@@ -33,6 +34,7 @@
 
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="changelog">
 				<h3><?php _e( 'Theme Improvements', 'cbox' ); ?></h3>
@@ -47,33 +49,23 @@
 				</div>
 			</div>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
 				<div class="feature-section col two-col">
 					<div>
-						<h4><?php _e( 'Behind The Scenes Forum Integration', 'cbox' ); ?></h4>
-						<p><?php _e( "If you're installing CBOX and BuddyPress for the first time, CBOX will automatically configure the best forums setup for you.", 'cbox' ); ?></p>
-
-						<p><?php printf( __( "If you have an existing BuddyPress site and are using BP's Discussion Forums component, <a href='%s'>please read this article</a>.", 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ); ?></p>
-					</div>
-
-					<div class="last-feature">
-						<h4><?php _e( 'Improved Support for Child Themes', 'cbox' ); ?></h4>
-						<p><?php _e( "Running a child theme of cbox-theme? Cool! Commons In A Box now does a better job recognizing your child theme, and upgrading the parent theme seamlessly in the background.", 'cbox' ); ?></p>
 					</div>
 				</div>
 
 				<div class="feature-section col two-col">
 					<div>
-						<h4><?php _e( 'Localization Support', 'cbox' ); ?></h4>
-						<p><?php _e( 'CBOX is now fully localized.', 'cbox' ); ?></p>
 
-						<p><?php printf( __( "If you want to translate CBOX to another language, please <a href='%s'>contact us</a> or <a href='%s'>send us a pull request on Github</a> with your translation files and we will bundle it in the next version of the plugin.", 'cbox' ), 'mailto:commons@gc.cuny.edu', 'https://github.com/cuny-academic-commons/commons-in-a-box' ); ?></p>
 					</div>
 				</div>
 
 			</div>
+			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
