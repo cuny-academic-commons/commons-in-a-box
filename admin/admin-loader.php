@@ -1350,7 +1350,7 @@ class CBox_Admin {
 			padding-top:200px;
 		        color:#999; text-shadow:none;
 		}
-		
+
 		#welcome-panel .wp-badge {
 			border: 1px solid #DFDFDF;
 			border-radius: 4px;
