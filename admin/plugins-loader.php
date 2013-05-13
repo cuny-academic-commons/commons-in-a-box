@@ -310,18 +310,6 @@ class CBox_Plugins {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
 		) );
 
-		// Bebop
-		self::register_plugin( array(
-			'plugin_name'       => 'Bebop',
-			'type'              => 'optional',
-			'cbox_name'         => __( 'Bebop', 'cbox' ),
-			'cbox_description'  => __( 'Allow your users to import and curate their open educational resources (OERs) from popular services like Flickr, Twitter, and YouTube.', 'cbox' ),
-			'depends'           => 'BuddyPress (>=1.6)',
-			'version'           => '1.3.2',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bebop.zip',
-			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bebop',
-		) );
-
 		// BuddyPress Reply By Email
 		// @todo Still need to add it in the wp.org plugin repo! Using Github for now.
 		self::register_plugin( array(

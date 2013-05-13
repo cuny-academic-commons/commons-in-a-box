@@ -39,6 +39,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.4 =
+* Removed Bebop from Optional plugin list, due to uncertainty about future upgrades
+
 = 1.0.3 =
 * Updated plugins: BuddyPress 1.7.1, BuddyPress Docs 1.3.4, BuddyPress Group Email Subscription 3.3.2, Invite Anyone 1.0.21, bbPress 2.3.2, More Privacy Options 3.5, BP Groupblog 1.8.2, Bebop 1.3.2
 * Properly activate the CBOX Theme when installing BuddyPress on a secondary site
