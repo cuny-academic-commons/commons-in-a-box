@@ -988,20 +988,29 @@ class CBox_Admin {
 	 */
 	public function dashboard_forums_notice() {
 		// if CBOX isn't setup yet, stop now!
-		if ( ! cbox_is_setup() )
+		if ( ! cbox_is_setup() ) {
 			return;
+		}
 
 		// make sure BuddyPress is active
-		if ( ! defined( 'BP_VERSION' ) )
+		if ( ! defined( 'BP_VERSION' ) ) {
 			return;
+		}
 
 		// if bundled forums are not active stop now!
-		if ( ! class_exists( 'BP_Forums_Component' ) )
+		if ( ! class_exists( 'BP_Forums_Component' ) ) {
 			return;
+		}
 
 		// if bbPress isn't active, stop now!
-		if ( ! function_exists( 'bbpress' ) )
+		if ( ! function_exists( 'bbpress' ) ) {
 			return;
+		}
+
+		// only super admins can view this notice
+		if ( ! is_super_admin( bp_loggedin_user_id() ) ) {
+			return;
+		}
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
