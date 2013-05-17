@@ -42,8 +42,9 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>Compatibility with BuddyPress 1.7.x</li>
-						<li>Removed the limitation of 8 Site Features on the home page slider</li>
+						<li>Fixed bug introduced in 1.0.3 that caused some widget areas not to appear</li>
+						<li>Improved CSS handling on nav menus</li>
+						<li>fixed bug in the appearance of the slider widget</li>
 					</ul>
 
 				</div>
