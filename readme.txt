@@ -40,6 +40,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.4 =
+* Updated plugin: BuddyPress 1.7.2
 * Removed Bebop from Optional plugin list, due to uncertainty about future upgrades
 * Theme improvements: Fixed bug introduced in 1.0.3 that caused some widget areas not to appear; improved CSS handling on nav menus and on the registration page; fixed bug in the appearance of the slider widget
 

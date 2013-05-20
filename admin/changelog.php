@@ -15,26 +15,17 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Plugin Updates', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress 1.7.1</li>
-						<li>BuddyPress Docs 1.3.4</li>
-						<li>BuddyPress Group Email Subscription 3.3.2</li>
-						<li>Invite Anyone 1.0.21</li>
-						<li>bbPress 2.3.2</li>
-						<li>More Privacy Options 3.5</li>
-						<li>BP Groupblog 1.8.2</li>
-						<li>Bebop 1.3.2</li>
+						<li>BuddyPress 1.7.2</li>
 					</ul>
 
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php _e( 'Theme Improvements', 'cbox' ); ?></h3>
