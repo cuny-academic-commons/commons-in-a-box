@@ -43,6 +43,9 @@ class CBox_Admin {
 		// setup admin menu
 		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu',           array( $this, 'admin_menu' ) );
 
+		// dashboard forums notice
+		add_action( "admin_init",                                                   array( $this, 'dashboard_forums_notice' ) );
+
 		// see if an admin notice should be shown
 		add_action( 'admin_init',                                                   array( $this, 'setup_notice' ) );
 
@@ -430,9 +433,6 @@ class CBox_Admin {
 
 		// contextual help
 		add_action( "load-{$subpage}",                array( $this, 'contextual_help' ) );
-
-		// dashboard forums notice
-		add_action( "load-{$subpage}",                array( $this, 'dashboard_forums_notice' ) );
 	}
 
 	/**
@@ -970,6 +970,59 @@ class CBox_Admin {
 	/** HEADER INJECTIONS *********************************************/
 
 	/**
+	 * Show a notice about BuddyPress' forums.
+	 *
+	 * The bundled forums component in BuddyPress combined with bbPress 2 leads to
+	 * conflicts between the two plugins.
+	 *
+	 * We show a notice if both BuddyPress' bundled forums and bbPress are enabled
+	 * so site admins are aware of the potential conflict with instructions of
+	 * what they can do to address the issue.
+	 *
+	 * This only shows up when CBOX is fully setup.
+	 *
+	 * @since 1.0-beta4
+	 *
+	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
+	 * @uses is_network_admin() Check to see if we're in the network admin area.
+	 */
+	public function dashboard_forums_notice() {
+		// if CBOX isn't setup yet, stop now!
+		if ( ! cbox_is_setup() ) {
+			return;
+		}
+
+		// make sure BuddyPress is active
+		if ( ! defined( 'BP_VERSION' ) ) {
+			return;
+		}
+
+		// if bundled forums are not active stop now!
+		if ( ! class_exists( 'BP_Forums_Component' ) ) {
+			return;
+		}
+
+		// if bbPress isn't active, stop now!
+		if ( ! function_exists( 'bbpress' ) ) {
+			return;
+		}
+
+		// only super admins can view this notice
+		if ( ! is_super_admin( bp_loggedin_user_id() ) ) {
+			return;
+		}
+
+		// add an admin notice
+		$prefix = is_network_admin() ? 'network_' : '';
+		add_action( $prefix . 'admin_notices', create_function( '', "
+			echo '<div class=\'error\'>';
+			echo '<p>' . __( 'We see you\'re running BuddyPress\' bundled forums. Commons In A Box comes with bbPress 2.2, an upgraded and improved forum tool.', 'cbox' ) . '</p>';
+			echo '<p>' . sprintf( __( 'However, we don\'t recommend running BP\'s bundled forums alongside bbPress 2.2. <a href=\'%s\'>Click here</a> to learn more about your options.', 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ) . '</p>';
+			echo '</div>';
+		" ) );
+	}
+
+	/**
 	 * Setup internal variable if the admin notice should be shown.
 	 *
 	 * @since 0.3
@@ -1126,51 +1179,6 @@ class CBox_Admin {
 		</div>
 	<?php
 	}
-
-	/**
-	 * Show a notice about BuddyPress' forums.
-	 *
-	 * The bundled forums component in BuddyPress combined with bbPress 2 leads to
-	 * conflicts between the two plugins.
-	 *
-	 * We show a notice if both BuddyPress' bundled forums and bbPress are enabled
-	 * so site admins are aware of the potential conflict with instructions of
-	 * what they can do to address the issue.
-	 *
-	 * This only shows up when CBOX is fully setup.
-	 *
-	 * @since 1.0-beta4
-	 *
-	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
-	 * @uses is_network_admin() Check to see if we're in the network admin area.
-	 */
-	public function dashboard_forums_notice() {
-		// if CBOX isn't setup yet, stop now!
-		if ( ! cbox_is_setup() )
-			return;
-
-		// make sure BuddyPress is active
-		if ( ! defined( 'BP_VERSION' ) )
-			return;
-
-		// if bundled forums are not active stop now!
-		if ( ! class_exists( 'BP_Forums_Component' ) )
-			return;
-
-		// if bbPress isn't active, stop now!
-		if ( ! function_exists( 'bbpress' ) )
-			return;
-
-		// add an admin notice
-		$prefix = is_network_admin() ? 'network_' : '';
-		add_action( $prefix . 'admin_notices', create_function( '', "
-			echo '<div class=\'error\'>';
-			echo '<p>' . __( 'We see you\'re running BuddyPress\' bundled forums. Commons In A Box comes with bbPress 2.2, an upgraded and improved forum tool.', 'cbox' ) . '</p>';
-			echo '<p>' . sprintf( __( 'However, we don\'t recommend running BP\'s bundled forums alongside bbPress 2.2. <a href=\'%s\'>Click here</a> to learn more about your options.', 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ) . '</p>';
-			echo '</div>';
-		" ) );
-	}
-
 
 	/**
 	 * Add a special header before the admin plugins table is rendered
@@ -1351,7 +1359,7 @@ class CBox_Admin {
 			padding-top:200px;
 		        color:#999; text-shadow:none;
 		}
-		
+
 		#welcome-panel .wp-badge {
 			border: 1px solid #DFDFDF;
 			border-radius: 4px;
