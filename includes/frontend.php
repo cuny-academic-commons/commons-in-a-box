@@ -33,6 +33,10 @@ class CBox_Frontend {
 		// this will hold some plugin-specific references
 		cbox()->plugins = new stdClass;
 
+		add_action( 'plugins_loaded', array( $this, 'setup' ) );
+	}
+
+	public function setup() {
 		// setup includes
 		$this->includes();
 
@@ -78,6 +82,10 @@ class CBox_Frontend {
 		// Group Email Subscription
 		$this->autoload['ges']   = array();
 		$this->autoload['ges'][] = 'CBox_GES_All_Mail';
+
+		// Custom Profile Filters for BuddyPress
+		$this->autoload['cpf']   = array();
+		$this->autoload['cpf'][] = 'CBox_CPF_Rehook_Social_Fields';
 	}
 
 	/**
@@ -120,9 +128,10 @@ class CBox_Frontend {
 				if ( ! is_callable( array( $class, 'init' ) ) )
 					continue;
 
+				call_user_func( array( $class, 'init' ) );
 				// load our hook
 				// @todo this hook might need to be configured at the settings level
-				add_action( 'bp_include', array( $class, 'init' ), 20 );
+//				add_action( 'bp_include', array( $class, 'init' ), 20 );
 			}
 		}
 	}
