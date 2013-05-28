@@ -39,6 +39,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.5 =
+* Updated plugins: BuddyPress Docs 1.4.3
+
 = 1.0.4 =
 * Updated plugin: BuddyPress 1.7.2
 * Removed Bebop from Optional plugin list, due to uncertainty about future upgrades
