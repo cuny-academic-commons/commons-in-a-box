@@ -41,12 +41,14 @@
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
 				<div class="feature-section col two-col">
 					<div>
+
+						<p>Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly.</p>
+
 					</div>
 				</div>
 
@@ -57,7 +59,6 @@
 				</div>
 
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
