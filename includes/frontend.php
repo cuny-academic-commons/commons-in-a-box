@@ -33,13 +33,24 @@ class CBox_Frontend {
 		// this will hold some plugin-specific references
 		cbox()->plugins = new stdClass;
 
+		add_action( 'plugins_loaded', array( $this, 'setup' ), 100 );
+	}
+
+	/**
+	 * Include the plugin mods and set up any necessary hooks
+	 *
+	 * Hooked to plugins_loaded to ensure that plugins have had a chance
+	 * to fully initialize
+	 *
+	 * @since 1.0.5
+	 */
+	public function setup() {
 		// setup includes
 		$this->includes();
 
 		// setup our hooks
 		$this->setup_hooks();
 	}
-
 
 	/**
 	 * Setup globals.
@@ -122,7 +133,7 @@ class CBox_Frontend {
 
 				// load our hook
 				// @todo this hook might need to be configured at the settings level
-				add_action( 'bp_include', array( $class, 'init' ), 20 );
+				call_user_func( array( $class, 'init' ) );
 			}
 		}
 	}
