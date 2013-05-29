@@ -89,6 +89,10 @@ class CBox_Frontend {
 		// Group Email Subscription
 		$this->autoload['ges']   = array();
 		$this->autoload['ges'][] = 'CBox_GES_All_Mail';
+
+		// Custom Profile Filters for BuddyPress
+		$this->autoload['cpf']   = array();
+		$this->autoload['cpf'][] = 'CBox_CPF_Rehook_Social_Fields';
 	}
 
 	/**
