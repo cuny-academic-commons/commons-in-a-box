@@ -33,9 +33,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>Fixed bug introduced in 1.0.3 that caused some widget areas not to appear</li>
-						<li>Improved CSS handling on nav menus and on the registration page</li>
-						<li>fixed bug in the appearance of the slider widget</li>
+						<li>Theme improvements: Fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages</li>
 					</ul>
 
 				</div>

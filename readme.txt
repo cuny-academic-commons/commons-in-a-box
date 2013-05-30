@@ -42,6 +42,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0.5 =
 * Updated plugins: BuddyPress Docs 1.4.3
 * Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly
+* Theme improvements: Fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages
 
 = 1.0.4 =
 * Updated plugin: BuddyPress 1.7.2
