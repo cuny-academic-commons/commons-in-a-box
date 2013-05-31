@@ -11,6 +11,9 @@ Network: true
 Core: >=3.5.1
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 class Commons_In_A_Box {
 	/**
 	 * Holds the single-running CBOX object
