@@ -59,7 +59,7 @@ class CBox_Frontend {
 	 */
 	private function setup_globals() {
 		// get our CBOX admin settings
-		$this->settings = (array) get_option( cbox()->settings_key );
+		$this->settings = (array) bp_get_option( cbox()->settings_key );
 
 		// setup autoload classes
 		$this->setup_autoload();

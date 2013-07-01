@@ -158,7 +158,7 @@ class CBox_Settings {
 		$submitted = (array) $_REQUEST['cbox_settings'];
 
 		// update settings
-		update_option( cbox()->settings_key, $submitted );
+		bp_update_option( cbox()->settings_key, $submitted );
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
@@ -208,7 +208,7 @@ class CBox_Settings {
 		$active = array_flip( $active['deactivate'] );
 
 		// get saved settings
-		$cbox_settings = get_option( cbox()->settings_key );
+		$cbox_settings = bp_get_option( cbox()->settings_key );
 
 		// parse and output settings
 		foreach( self::$settings as $plugin => $settings ) {

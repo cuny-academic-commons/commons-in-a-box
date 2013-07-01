@@ -733,7 +733,11 @@ class CBox_Plugin_Defaults {
 					) );
 
 					// update the bbP marker for group forums
-					update_option( '_bbp_group_forums_root_id', $forum_id );
+					if ( is_multisite() ) {
+						update_blog_option( $bp_root_blog, '_bbp_group_forums_root_id', $forum_id );
+					} else {
+						update_option( '_bbp_group_forums_root_id', $forum_id );
+					}
 				}
 
 				break;
