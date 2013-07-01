@@ -29,29 +29,30 @@ class CBox_Settings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// setup globals
-		$this->setup_globals();
-
 		// setup our hooks
 		$this->setup_hooks();
-	}
-
-	/**
-	 * Setup globals.
-	 */
-	private function setup_globals() {
-		$this->register_settings();
 	}
 
 	/**
 	 * Setup our hooks.
 	 */
 	private function setup_hooks() {
+		add_action( 'admin_init',      array( $this, 'register_settings_hook' ) );
+
 		// setup the CBOX plugin menu
 		add_action( 'cbox_admin_menu', array( $this, 'setup_settings_page' ), 20 );
 	}
 
 	/** SETTINGS-SPECIFIC *********************************************/
+
+	/**
+	 * Public function to call our private register_settings() method.
+	 *
+	 * @since 1.0.5
+	 */
+	public function register_settings_hook() {
+		$this->register_settings();
+	}
 
 	/**
 	 * Register settings.
