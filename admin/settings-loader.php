@@ -63,17 +63,30 @@ class CBox_Settings {
 	 * @see CBox_Settings::register_setting()
 	 */
 	private function register_settings() {
+		// setup BP settings array
+		$bp_settings = array();
+
+		$bp_settings[] = array(
+			'label'       => __( 'Member Profile Default Tab', 'cbox' ),
+			'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
+			'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
+		);
+
+		if ( bp_is_active( 'groups' ) &&
+			( function_exists( 'bbp_is_group_forums_active' ) && bbp_is_group_forums_active() ) ||
+			( function_exists( 'bp_forums_is_installed_correctly' ) && bp_forums_is_installed_correctly() ) ) {
+			$bp_settings[] = array(
+				'label'       => __( 'Group Forum Default Tab', 'cbox' ),
+				'description' => __( 'On a group page, set the default tab to "Forum" instead of "Activity".', 'cbox' ),
+				'class_name'  => 'CBox_BP_Group_Forum_Tab'
+			);
+		}
+
 		// BuddyPress
 		self::register_setting( array(
 			'plugin_name' => 'BuddyPress',
 			'key'         => 'bp',
-			'settings'    => array(
-				array(
-					'label'       => __( 'Member Profile Default Tab', 'cbox' ),
-					'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
-					'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
-				),
-			),
+			'settings'    => $bp_settings
 		) );
 
 		// BuddyPress Group Email Subscription
