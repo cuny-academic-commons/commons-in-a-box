@@ -16,4 +16,4 @@ Think you've found a bug? You may consider posting your issue first in the [comm
 
 Developers who are interested in contributing to Commons In A Box can send pull requests to this repo.
 
-The Commons In A Box theme (cbox-theme) is developed at http://github.com/cuny-academic-commons/cbox-theme. Note that the master branch of cbox-theme is a child theme of [Infinity](http://github.com/presscrew/infinity), while the version of the theme distributed with Commons In A Box is compiled so that it does not require a parent theme.
+The Commons In A Box theme (cbox-theme) is separately maintained at http://github.com/cuny-academic-commons/cbox-theme.  The theme is a deriviative of the [Infinity](http://github.com/presscrew/infinity) theme developed by [PressCrew](http://community.presscrew.com/).
