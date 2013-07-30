@@ -40,9 +40,11 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.5 =
-* Updated plugins: BuddyPress Docs 1.4.3
+* Updated plugins: BuddyPress 1.8, BuddyPress Docs 1.4.5, BuddyPress Docs Wiki 1.0.4, BuddyPress Group Email Subscription 3.4, BP Groupblog 1.8.4, BuddyPress Reply By Email 1.0-RC2, Invite Anyone 1.0.23, External Group Blogs 1.5.2
+* New CBOX option: For BuddyPress group pages, set the default tab to "Forum" instead of "Activity".
+* For bbPress, reinstates the TinyMCE editor that was disabled since v2.3.
 * Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly
-* Theme improvements: Fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages
+* Theme improvements: Fix visibility of second-level dropdown menus; on multisite installs, allow admins to set a different front page on sub-sites and also allow usage of the homepage slider on sub-sites; fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages; improved compatibility with BP Docs Wiki; fix 'New Topic' button for group forums; various compatibility fixes for IE8
 
 = 1.0.4 =
 * Updated plugin: BuddyPress 1.7.2
