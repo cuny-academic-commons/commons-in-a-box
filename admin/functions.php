@@ -369,6 +369,16 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			// get position of last hyphen in github directory
 			$pos = strrpos( $source, '-' );
 
+			// get the previous character to the hyphen
+			$previous = substr( $source, $pos - 1, 1 );
+
+			// see if previous character is numeric.
+			// if so, we need to strip further back
+			if ( is_numeric( $previous ) ) {
+				$from_back = strlen( $source ) - $pos + 1;
+				$pos = strrpos( $source, '-', -$from_back );
+			}
+
 			// get rid of branch name in github directory
 			$new_location = trailingslashit( substr( $source, 0, $pos ) );
 
