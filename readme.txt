@@ -44,7 +44,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * New CBOX option: For BuddyPress group pages, set the default tab to "Forum" instead of "Activity".
 * For bbPress, reinstates the TinyMCE editor that was disabled since v2.3.
 * Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly
-* Theme improvements: Fix visibility of second-level dropdown menus; on multisite installs, allow admins to set a different front page on sub-sites and also allow usage of the homepage slider on sub-sites; fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages; improved compatibility with BP Docs Wiki; fix 'New Topic' button for group forums; various compatibility fixes for IE8
+* Theme improvements: Fix visibility of second-level dropdown menus; on multisite installs, allow admins to set a different front page on sub-sites and also allow usage of the homepage slider on sub-sites; fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages; improved compatibility with BP Docs Wiki; fix 'New Topic' button for group forums; various compatibility fixes for IE8; fix some debug notices; improve the appearance of comments on Docs; improve localizability
 
 = 1.0.4 =
 * Updated plugin: BuddyPress 1.7.2

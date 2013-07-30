@@ -47,6 +47,9 @@
 						<li>Fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages</li>
 						<li>Improved compatibility with BP Docs Wiki</li>
 						<li>Fix 'New Topic' button for group forums</li>
+						<li>Fix some debug notices</li>
+						<li>Improve the appearance of comments on Docs</li>
+						<li>Improve localizability</li>
 					</ul>
 
 				</div>
