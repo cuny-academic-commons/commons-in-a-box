@@ -72,7 +72,7 @@ class CBox_Settings {
 			'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
 		);
 
-		if ( bp_is_active( 'groups' ) &&
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) &&
 			( function_exists( 'bbp_is_group_forums_active' ) && bbp_is_group_forums_active() ) ||
 			( function_exists( 'bp_forums_is_installed_correctly' ) && bp_forums_is_installed_correctly() ) ) {
 			$bp_settings[] = array(
