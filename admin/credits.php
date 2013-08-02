@@ -99,7 +99,9 @@
 
 			<h4 class="wp-people-group"><?php _e( 'External Libraries', 'cbox' ); ?></h4>
 
-			<p class="wp-credits-list"><a href="http://drupal.org/">Drupal</a>, <a href="http://wordpress.org/extend/plugins/plugin-dependencies/">Plugin Dependencies</a>.</p>
+			<p class="wp-credits-list">
+				<a href="http://wordpress.org/extend/plugins/plugin-dependencies/" title="<?php _e( 'For adding plugin dependencies for WordPress.  Portions rewritten and modified by CBOX.', 'cbox' ); ?>">Plugin Dependencies</a>.
+			</p>
 			
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
