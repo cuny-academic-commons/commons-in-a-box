@@ -90,6 +90,13 @@
 				</li>
 			</ul>
 
+			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.5', 'cbox' ); ?></h4>
+
+			<p class="wp-credits-list">
+				<a href="http://commonsinabox.org/members/haystack/">Christian Wach</a> and 
+				<a href="http://commonsinabox.org/members/merolino/">merolino</a>.
+			</p>
+
 			<h4 class="wp-people-group"><?php _e( 'External Libraries', 'cbox' ); ?></h4>
 
 			<p class="wp-credits-list"><a href="http://drupal.org/">Drupal</a>, <a href="http://wordpress.org/extend/plugins/plugin-dependencies/">Plugin Dependencies</a>.</p>
