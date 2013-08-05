@@ -44,12 +44,14 @@
 						<li>Various compatibility fixes for IE8 (Props <a href="http://commonsinabox.org/members/haystack/">Christian Wach</a>)</li>
 						<li>On multisite installs, allow admins to set a different front page on sub-sites</li>
 						<li>On multisite installs, allow usage of the homepage slider on sub-sites (<a href="http://commonsinabox.org/documentation/cbox-slider#multisite" target="_blank">view this article</a> for more info)</li>
-						<li>Fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages</li>
-						<li>Improved compatibility with BP Docs Wiki</li>
+						<li>Fix bug that prevented the Comments section from appearing on BuddyPress Docs pages</li>
+						<li>Improve compatibility with BP Docs Wiki</li>
 						<li>Fix 'New Topic' button for group forums</li>
 						<li>Fix some debug notices</li>
 						<li>Improve the appearance of comments on Docs</li>
 						<li>Improve localizability</li>
+						<li>Improve compatibility with WordPress 3.6</li>
+						<li>Slider enhancements: Allow some HTML in slider excerpt; fix styling when slider is disabled; ensure that slider can display more than 8 items; improve documentation</li>
 					</ul>
 
 				</div>
