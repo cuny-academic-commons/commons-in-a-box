@@ -349,15 +349,23 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			if ( strpos( $obj->options['url'], 'github.com' ) === false )
 				return $source;
 
+			global $wp_filesystem;
 
 			// rename the theme folder to get rid of github's funky naming
 			$new_location = $remote_source . '/cbox-theme/';
 
 			// now rename the folder
-			@rename( $source, $new_location );
+			$rename = $wp_filesystem->move( $source, $new_location );
 
-			// and return the new location
-			return $new_location;
+			// return our directory
+			// being extra cautious here
+			if ( $rename === false ) {
+				return $source;
+
+			// if rename was successful, return the new location
+			} else {
+				return $new_location;
+			}
 
 			break;
 
@@ -366,17 +374,36 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false )
 				return $source;
 
+			global $wp_filesystem;
+
 			// get position of last hyphen in github directory
 			$pos = strrpos( $source, '-' );
+
+			// get the previous character to the hyphen
+			$previous = substr( $source, $pos - 1, 1 );
+
+			// see if previous character is numeric.
+			// if so, we need to strip further back
+			if ( is_numeric( $previous ) ) {
+				$from_back = strlen( $source ) - $pos + 1;
+				$pos = strrpos( $source, '-', -$from_back );
+			}
 
 			// get rid of branch name in github directory
 			$new_location = trailingslashit( substr( $source, 0, $pos ) );
 
 			// now rename the folder
-			@rename( $source, $new_location );
+			$rename = $wp_filesystem->move( $source, $new_location );
 
-			// and return the new location
-			return $new_location;
+			// return our directory
+			// being extra cautious here
+			if ( $rename === false ) {
+				return $source;
+
+			// if rename was successful, return the new location
+			} else {
+				return $new_location;
+			}
 
 			break;
 

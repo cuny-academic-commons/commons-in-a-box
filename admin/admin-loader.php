@@ -388,8 +388,8 @@ class CBox_Admin {
          * activation hook.
          */
 	public function theme_activation_hook() {
-		if ( get_option( '_cbox_theme_activated' ) ) {
-			delete_option( '_cbox_theme_activated' );
+		if ( function_exists( 'bp_get_option' ) && bp_get_option( '_cbox_theme_activated' ) ) {
+			bp_delete_option( '_cbox_theme_activated' );
 			do_action( 'infinity_dashboard_activated' );
 		}
 	}

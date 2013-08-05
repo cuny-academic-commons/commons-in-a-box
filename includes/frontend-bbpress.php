@@ -37,8 +37,10 @@ class CBox_BBP_Autoload {
 	 */
 	public function __construct() {
 		$this->is_site_public();
-		
+
 		$this->remove_dynamic_role_setter();
+
+		$this->enable_visual_editor();
 	}
 
 	/**
@@ -50,9 +52,9 @@ class CBox_BBP_Autoload {
 	 * is recorded in BuddyPress.  Therefore, we force bbP so it's always public.
 	 *
 	 * @see https://bbpress.trac.wordpress.org/ticket/2151
-	 */	
+	 */
 	public function is_site_public() {
-		add_filter( 'bbp_is_site_public', '__return_true' );	
+		add_filter( 'bbp_is_site_public', '__return_true' );
 	}
 
 	/**
@@ -67,6 +69,25 @@ class CBox_BBP_Autoload {
 		if ( version_compare( bbp_get_version(), '2.3' ) < 0 ) {
 			remove_action( 'switch_blog', 'bbp_set_current_user_default_role' );
 		}
+	}
+
+	/**
+	 * Re-enable TinyMCE in the forum textarea.
+	 *
+	 * bbPress 2.3 removed TinyMCE by default due to quirks in code formatting.
+	 * We want to bring it back for backpat and UX reasons.
+	 *
+	 * @see https://github.com/cuny-academic-commons/commons-in-a-box/issues/76
+	 */
+	public function enable_visual_editor() {
+		// create function to re-enable TinyMCE
+		$enable_tinymce = create_function( '$retval', '
+			$retval["tinymce"] = true;
+			return $retval;
+		' );
+
+		// add our function to bbPress
+		add_filter( 'bbp_after_get_the_content_parse_args', $enable_tinymce );
 	}
 }
 

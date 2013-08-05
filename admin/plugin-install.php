@@ -684,9 +684,9 @@ class CBox_Plugin_Defaults {
 	public function plugin_defaults( $plugin, $network_wide ) {
 		switch ( $plugin ) {
 			// BuddyPress
-			// this is where we would add some default options.
-			// at the moment, we have none!
 			case 'buddypress/bp-loader.php' :
+				// don't let BP redirect to its about page after activating
+				delete_transient( '_bp_activation_redirect' );
 
 				break;
 
@@ -733,7 +733,11 @@ class CBox_Plugin_Defaults {
 					) );
 
 					// update the bbP marker for group forums
-					update_option( '_bbp_group_forums_root_id', $forum_id );
+					if ( is_multisite() ) {
+						update_blog_option( $bp_root_blog, '_bbp_group_forums_root_id', $forum_id );
+					} else {
+						update_option( '_bbp_group_forums_root_id', $forum_id );
+					}
 				}
 
 				break;

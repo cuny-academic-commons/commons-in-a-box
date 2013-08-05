@@ -29,29 +29,30 @@ class CBox_Settings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// setup globals
-		$this->setup_globals();
-
 		// setup our hooks
 		$this->setup_hooks();
-	}
-
-	/**
-	 * Setup globals.
-	 */
-	private function setup_globals() {
-		$this->register_settings();
 	}
 
 	/**
 	 * Setup our hooks.
 	 */
 	private function setup_hooks() {
+		add_action( 'admin_init',      array( $this, 'register_settings_hook' ) );
+
 		// setup the CBOX plugin menu
 		add_action( 'cbox_admin_menu', array( $this, 'setup_settings_page' ), 20 );
 	}
 
 	/** SETTINGS-SPECIFIC *********************************************/
+
+	/**
+	 * Public function to call our private register_settings() method.
+	 *
+	 * @since 1.0.5
+	 */
+	public function register_settings_hook() {
+		$this->register_settings();
+	}
 
 	/**
 	 * Register settings.
@@ -62,17 +63,30 @@ class CBox_Settings {
 	 * @see CBox_Settings::register_setting()
 	 */
 	private function register_settings() {
+		// setup BP settings array
+		$bp_settings = array();
+
+		$bp_settings[] = array(
+			'label'       => __( 'Member Profile Default Tab', 'cbox' ),
+			'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
+			'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
+		);
+
+		if ( function_exists( 'bp_is_active' ) && bp_is_active( 'groups' ) &&
+			( function_exists( 'bbp_is_group_forums_active' ) && bbp_is_group_forums_active() ) ||
+			( function_exists( 'bp_forums_is_installed_correctly' ) && bp_forums_is_installed_correctly() ) ) {
+			$bp_settings[] = array(
+				'label'       => __( 'Group Forum Default Tab', 'cbox' ),
+				'description' => __( 'On a group page, set the default tab to "Forum" instead of "Activity".', 'cbox' ),
+				'class_name'  => 'CBox_BP_Group_Forum_Tab'
+			);
+		}
+
 		// BuddyPress
 		self::register_setting( array(
 			'plugin_name' => 'BuddyPress',
 			'key'         => 'bp',
-			'settings'    => array(
-				array(
-					'label'       => __( 'Member Profile Default Tab', 'cbox' ),
-					'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
-					'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
-				),
-			),
+			'settings'    => $bp_settings
 		) );
 
 		// BuddyPress Group Email Subscription
@@ -158,7 +172,7 @@ class CBox_Settings {
 		$submitted = (array) $_REQUEST['cbox_settings'];
 
 		// update settings
-		update_option( cbox()->settings_key, $submitted );
+		bp_update_option( cbox()->settings_key, $submitted );
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
@@ -208,7 +222,7 @@ class CBox_Settings {
 		$active = array_flip( $active['deactivate'] );
 
 		// get saved settings
-		$cbox_settings = get_option( cbox()->settings_key );
+		$cbox_settings = bp_get_option( cbox()->settings_key );
 
 		// parse and output settings
 		foreach( self::$settings as $plugin => $settings ) {
@@ -246,7 +260,7 @@ class CBox_Settings {
 	 * Helper function to see if an option is checked.
 	 */
 	private function is_checked( $class_name, $settings, $key ) {
-		if ( in_array( $class_name, (array) $settings[$key] ) ) {
+		if ( isset( $settings[$key] ) && in_array( $class_name, (array) $settings[$key] ) ) {
 			echo 'checked="checked"';
 		}
 	}

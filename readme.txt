@@ -3,7 +3,7 @@ Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,7 +40,11 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.5 =
-* Updated plugins: BuddyPress Docs 1.4.3
+* Updated plugins: BuddyPress 1.8, BuddyPress Docs 1.4.5, BuddyPress Docs Wiki 1.0.4, BuddyPress Group Email Subscription 3.4, BP Groupblog 1.8.4, BuddyPress Reply By Email 1.0-RC2, Invite Anyone 1.0.23, External Group Blogs 1.5.2
+* New CBOX option: For BuddyPress group pages, set the default tab to "Forum" instead of "Activity".
+* For bbPress, reinstates the TinyMCE editor that was disabled since v2.3.
+* Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly
+* Theme improvements: Fix visibility of second-level dropdown menus; on multisite installs, allow admins to set a different front page on sub-sites and also allow usage of the homepage slider on sub-sites; fixed bug that prevented the Comments section from appearing on BuddyPress Docs pages; improved compatibility with BP Docs Wiki; fix 'New Topic' button for group forums; various compatibility fixes for IE8; fix some debug notices; improve the appearance of comments on Docs; improve localizability; improve WP 3.6 compatibility; allow some HTML in slider excerpt; fix styling when slider is disabled; ensure that slider can display more than 8 items; improve documentation on how to get set up with the slider
 
 = 1.0.4 =
 * Updated plugin: BuddyPress 1.7.2

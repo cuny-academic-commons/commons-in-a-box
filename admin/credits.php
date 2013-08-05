@@ -21,7 +21,7 @@
 
 			<ul class="wp-people-group " id="wp-people-group-project-leaders">
 				<li class="wp-person" id="wp-person-matt">
-					<a href="http://commons.gc.cuny.edu/members/admin/"><img src="http://commons.gc.cuny.edu/files/avatars/1/7c138746bf168f09cf20024f745b5e8f-bpfull.jpg" class="gravatar" alt="Matthew K. Gold" /></a>
+					<a href="http://commons.gc.cuny.edu/members/admin/"><img src="http://0.gravatar.com/avatar/a9747746855c05b5ffeca1f9bd2cc938?s=60" class="gravatar" alt="Matthew K. Gold" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/admin/">Matthew K. Gold</a>
 					<span class="title"><?php _e( 'Project Lead', 'cbox' ); ?></span>
 				</li>
@@ -70,12 +70,12 @@
 					<a class="web" href="http://commons.gc.cuny.edu/members/brianfoote/">Brian Foote</a>
 	
 				<li class="wp-person" id="wp-person-sarah">
-					<a href="http://commons.gc.cuny.edu/members/Sarah_Morgano/"><img src="http://commons.gc.cuny.edu/files/avatars/295/6414fbdc6e0e0d5328a5610c6bddc19d-bpfull.jpg" class="gravatar" alt="Sarah Morgano" /></a>
+					<a href="http://commons.gc.cuny.edu/members/Sarah_Morgano/"><img src="http://commons.gc.cuny.edu/files/avatars/295/f4d3616c613123e19984bd0477b49df9-bpfull.jpg" class="gravatar" alt="Sarah Morgano" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/Sarah_Morgano/">Sarah Morgano</a>
 				</li>
 	
 				<li class="wp-person" id="wp-person-michael">
-					<a href="http://commons.gc.cuny.edu/members/msmith/"><img src="http://commons.gc.cuny.edu/files/avatars/388/b7a018b0e830a66f0ee7dc46fe7e0626-bpfull.jpg" class="gravatar" alt="Michael Branson Smith" /></a>
+					<a href="http://commons.gc.cuny.edu/members/msmith/"><img src="http://commons.gc.cuny.edu/files/avatars/388/e2c7b2991a0db329799da686446db8d6-bpfull.jpg" class="gravatar" alt="Michael Branson Smith" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/msmith/">Michael Branson Smith</a>
 				</li>
 	
@@ -90,9 +90,18 @@
 				</li>
 			</ul>
 
+			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.5', 'cbox' ); ?></h4>
+
+			<p class="wp-credits-list">
+				<a href="http://commonsinabox.org/members/haystack/">Christian Wach</a> and 
+				<a href="http://commonsinabox.org/members/merolino/">merolino</a>.
+			</p>
+
 			<h4 class="wp-people-group"><?php _e( 'External Libraries', 'cbox' ); ?></h4>
 
-			<p class="wp-credits-list"><a href="http://drupal.org/">Drupal</a>, <a href="http://wordpress.org/extend/plugins/plugin-dependencies/">Plugin Dependencies</a>.</p>
+			<p class="wp-credits-list">
+				<a href="http://wordpress.org/extend/plugins/plugin-dependencies/" title="<?php _e( 'For adding plugin dependencies for WordPress.  Portions rewritten and modified by CBOX.', 'cbox' ); ?>">Plugin Dependencies</a>.
+			</p>
 			
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
