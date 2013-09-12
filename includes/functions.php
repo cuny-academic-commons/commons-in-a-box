@@ -23,9 +23,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
  */
 function cbox_is_admin() {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-		// wp_get_referer() should contain the URL of the requesting
-		// page. Check to see whether it's an admin page
-		$is_admin = 0 === strpos( wp_get_referer(), admin_url() );
+		// if we're in the admin area, WP_NETWORK_ADMIN will be defined.
+		// admin-ajax.php does not define this so this is a good check to see
+		// if we're in the admin area
+		$is_admin = defined( 'WP_NETWORK_ADMIN' );
 	} else {
 		$is_admin = is_admin();
 	}
