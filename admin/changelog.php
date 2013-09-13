@@ -16,6 +16,11 @@
 			</h2>
 
 			<div class="changelog">
+				<h3><?php _e( '1.0.5.1 Stability Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.5.1 release improves stability with WordPress version 3.6.1, especially when using AJAX.', 'cbox' ) ?></p>
+			</div>
+
+			<div class="changelog">
 				<h3><?php _e( 'Plugin Updates', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
