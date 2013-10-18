@@ -416,7 +416,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
  			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : false;
 
 		// if a redirect link is passed during the class constructor, use it
-		} elseif ( ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
+		} elseif ( ! self::_is_static() && ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
 			$redirect_link = $this->options['redirect_link'];
 			$redirect_text = $this->options['redirect_text'];
 
@@ -432,6 +432,22 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		do_action( 'cbox_after_updater' );
 	}
 
+	/**
+	 * Detect whether a class is called statically.
+	 *
+	 * Lighter than using Reflection to determine this. 
+	 *
+	 * @since 1.0.6
+	 *
+	 * @return bool
+	 */
+	protected static function _is_static() {
+		$backtrace = debug_backtrace();
+
+		// The 0th call is this method, so we need to check the next
+		// call down the stack.
+		return $backtrace[1]['type'] == '::';
+	}
 }
 
 /**
