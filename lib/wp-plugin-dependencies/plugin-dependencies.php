@@ -13,7 +13,7 @@ Domain Path: /lang
 if ( !is_admin() )
 	return;
 
-add_action( 'extra_plugin_headers', array( 'Plugin_Dependencies', 'extra_plugin_headers' ) );
+add_filter( 'extra_plugin_headers', array( 'Plugin_Dependencies', 'extra_plugin_headers' ) );
 
 class Plugin_Dependencies {
 	private static $dependencies = array();
@@ -27,7 +27,7 @@ class Plugin_Dependencies {
 	private static $deactivate_cascade;
 	private static $deactivate_conflicting;
 
-	function extra_plugin_headers( $headers ) {
+	public static function extra_plugin_headers( $headers ) {
 		$headers['Provides'] = 'Provides';
 		$headers['Depends']  = 'Depends';
 		$headers['Core']     = 'Core';
@@ -35,7 +35,7 @@ class Plugin_Dependencies {
 		return $headers;
 	}
 
-	function init() {
+	public static function init() {
 		global $wp_version;
 
 		// setup $active_plugins variable
@@ -138,7 +138,7 @@ class Plugin_Dependencies {
 		//var_dump( self::$requirements );
 	}
 
-	public function parse_field( $str ) {
+	public static function parse_field( $str ) {
 		return array_filter( preg_split( '/,\s*/', $str ) );
 	}
 
@@ -153,7 +153,7 @@ class Plugin_Dependencies {
 	 * @param string $plugin_name The plugin name. Can include version dependencies. View PHPDoc for more info.
 	 * @return mixed Array of requirements if plugin needs it. Boolean false if the plugin is good!
 	 */
-	public function parse_requirements( $plugin_name = false, $active_check = false ) {
+	public static function parse_requirements( $plugin_name = false, $active_check = false ) {
 		// get full plugin before altering
 		$full_plugin_name = $plugin_name;
 
@@ -225,7 +225,7 @@ class Plugin_Dependencies {
 	 * @param string $plugin_id A plugin basename
 	 * @return array List of dependencies
 	 */
-	public function get_dependencies( $plugin_id = false ) {
+	public static function get_dependencies( $plugin_id = false ) {
 		if ( ! $plugin_id )
 			return self::$dependencies;
 
@@ -241,7 +241,7 @@ class Plugin_Dependencies {
 	 * @param string $plugin_name Plugin name
 	 * @return array Associative array of requirements
 	 */
-	public function get_requirements( $plugin_name = false ) {
+	public static function get_requirements( $plugin_name = false ) {
 		if ( ! $plugin_name )
 			return self::$requirements;
 
@@ -257,7 +257,7 @@ class Plugin_Dependencies {
 	 * @param string $plugin_id A plugin basename
 	 * @return array List of dependencies
 	 */
-	public function get_provided( $plugin_id ) {
+	public static function get_provided( $plugin_id ) {
 		return self::$provides[ $plugin_id ];
 	}
 
@@ -267,7 +267,7 @@ class Plugin_Dependencies {
 	 * @param string $dep Real or virtual dependency
 	 * @return array List of plugins
 	 */
-	public function get_providers( $dep ) {
+	public static function get_providers( $dep ) {
 		$plugin_ids = array();
 
 		if ( isset( self::$provides[ $dep ] ) ) {
@@ -290,7 +290,7 @@ class Plugin_Dependencies {
 	 * @param string $plugin_name A plugin name
 	 * @return mixed String of loader on success, boolean false on failure
 	 */
-	public function get_pluginloader_by_name( $plugin_name = false ) {
+	public static function get_pluginloader_by_name( $plugin_name = false ) {
 		if ( ! $plugin_name )
 			return false;
 
@@ -306,7 +306,7 @@ class Plugin_Dependencies {
 	 * @param array $plugin_ids A list of plugin basenames
 	 * @return array List of deactivated plugins
 	 */
-	public function deactivate_conflicting( $to_activate ) {
+	protected static function deactivate_conflicting( $to_activate ) {
 		$deps = array();
 		foreach ( $to_activate as $plugin_id ) {
 			$deps = array_merge( $deps, self::get_provided( $plugin_id ) );
@@ -337,7 +337,7 @@ class Plugin_Dependencies {
 	 * @param array $plugin_ids A list of plugin basenames
 	 * @return array List of deactivated plugins
 	 */
-	public function deactivate_cascade( $to_deactivate ) {
+	public static function deactivate_cascade( $to_deactivate ) {
 		if ( empty( $to_deactivate ) )
 			return array();
 
@@ -348,7 +348,7 @@ class Plugin_Dependencies {
 		return self::$deactivate_cascade;
 	}
 
-	private function _cascade( $to_deactivate ) {
+	protected static function _cascade( $to_deactivate ) {
 		$to_deactivate_deps = array();
 		foreach ( $to_deactivate as $plugin_id )
 			$to_deactivate_deps = array_merge( $to_deactivate_deps, self::get_provided( $plugin_id ) );
@@ -395,7 +395,7 @@ class Plugin_Dependencies {
 	 *
 	 * @see {@link Plugin_Dependencies::check_incompatibility()}
 	 */
-	public function parse_dependency( $dependency ) {
+	public static function parse_dependency( $dependency ) {
 		// We use named subpatterns and support every op that version_compare
 		// supports. Also, op is optional and defaults to equals.
 		$p_op = '(?P<operation>!=|==|=|<|<=|>|>=|<>)?';
@@ -444,7 +444,7 @@ class Plugin_Dependencies {
 	 *
 	 * @see Plugin_Dependencies::parse_dependency()
 	 */
-	public function check_incompatibility( $v, $current_version ) {
+	public static function check_incompatibility( $v, $current_version ) {
 		if ( !empty( $v['versions'] ) ) {
 			foreach ( $v['versions'] as $required_version ) {
 				if ( ( isset($required_version['op'] ) && !version_compare( $current_version, $required_version['version'], $required_version['op'] ) ) ) {
@@ -462,7 +462,7 @@ class Plugin_Dependencies_UI {
 
 	private static $msg;
 
-	function init() {
+	public static function init() {
 		add_action( is_network_admin() ? 'network_' : '' . 'admin_notices', array( __CLASS__, 'admin_notices' ) );
 
 		add_action( 'admin_print_styles', array( __CLASS__, 'admin_print_styles' ) );
@@ -513,7 +513,7 @@ class Plugin_Dependencies_UI {
 		}
 	}
 
-	function admin_notices() {
+	public static function admin_notices() {
 		foreach ( self::$msg as $args ) {
 			list( $action, $type, $text ) = $args;
 
@@ -607,7 +607,7 @@ class Plugin_Dependencies_UI {
 		}
 	}
 
-	function catch_bulk_activate() {
+	protected static function catch_bulk_activate() {
 		$wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
 
 		switch( $wp_list_table->current_action() ) {
@@ -640,7 +640,7 @@ class Plugin_Dependencies_UI {
 		}
 	}
 
-	function inline_plugin_error( $plugin_file, $plugin_data, $status ) {
+	public static function inline_plugin_error( $plugin_file, $plugin_data, $status ) {
 	?>
 		<tr class="plugin-update-tr">
 			<td class="plugin-update" colspan="3">
@@ -652,7 +652,7 @@ class Plugin_Dependencies_UI {
 	<?php
 	}
 
-	function admin_print_styles() {
+	public static function admin_print_styles() {
 ?>
 <style type="text/css">
 .plugin-warnings ul {margin:.5em 0 1.5em 1em;}
@@ -664,7 +664,7 @@ span.deps li.satisfied { color: green }
 <?php
 	}
 
-	function footer_script() {
+	public static function footer_script() {
 		$all_plugins = get_plugins();
 
 		$hash = array();
@@ -688,7 +688,7 @@ jQuery(function($) {
 <?php
 	}
 
-	function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
+	public static function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
 		// get requirements
 		$requirements = Plugin_Dependencies::get_requirements();
 
@@ -700,7 +700,7 @@ jQuery(function($) {
 		return $actions;
 	}
 
-	private function generate_dep_list( $deps, $unsatisfied = array(), $unsatisfied_network = array() ) {
+	protected static function generate_dep_list( $deps, $unsatisfied = array(), $unsatisfied_network = array() ) {
 		$all_plugins = Plugin_Dependencies::$all_plugins;
 
 		$dep_list = '';
