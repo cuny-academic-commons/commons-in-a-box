@@ -183,7 +183,7 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.0.23',
+			'version'           => '1.0.25',
 			'depends'           => 'BuddyPress (>=1.5)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.0.23.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
