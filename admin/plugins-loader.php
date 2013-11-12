@@ -248,7 +248,7 @@ class CBox_Plugins {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
 				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
-				'version'           => '3.5',
+				'version'           => '3.7.1',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
 				'network_settings'  => 'settings.php#menu'
