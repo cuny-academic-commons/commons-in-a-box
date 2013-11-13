@@ -53,32 +53,18 @@
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
 				<div class="feature-section col two-col">
-					<div>
-
-						<p><strong>New CBOX option:</strong> For BuddyPress group pages, you can now set the default tab to "Forum".  Try this feature by selecting it on the "Commons In A Box > Settings" page.</p>
-
-					</div>
 
 					<div class="last-feature">
 
-						<p><strong>bbPress Editor is Back!</strong> The visual editor in bbPress was disabled as of v2.3, however CBOX users can rejoice as it is automatically enabled on your site.</p>
+						<p><strong>Paste from Microsoft Word in forums</strong> We've added a button to the visual editor to make it easier to paste content that you've formatted in Microsoft Word.</p>
 
 					</div>
 				</div>
-
-				<div class="feature-section col two-col">
-					<div>
-						<p><strong>Bug fix:</strong> Fixed bug in Custom Profile Filters for BuddyPress that caused some social networking fields to render incorrectly.</p>
-					</div>
-				</div>
-
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>

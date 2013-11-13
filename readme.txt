@@ -42,6 +42,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0.6 =
 * Compatibility with WordPress 3.7
 * Updated plugins: bbPress 2.4.1, BP Group Announcements 1.0.3, BP Groupblog 1.8.5, BuddyPress 1.8.1, BuddyPress Docs 1.5.5, BuddyPress Docs Wiki 1.0.5, Invite Anyone 1.0.25, More Privacy Options 3.7.1
+* Added a Paste From Word button to the visual editor in bbPress forums
 * Theme improvements: A brand new slider that is easier to use and performs better in various environments; Improved appearance of Docs attachment lists; Fixed some debug notices
 
 = 1.0.5.1 =
