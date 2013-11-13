@@ -213,7 +213,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	 *
 	 * @param str $plugins Array of plugin names
 	 */
-	function bulk_activate( $plugins ) {
+	public static function bulk_activate( $plugins ) {
 
 		if ( empty( $plugins ) )
 			return false;
@@ -334,7 +334,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php $this->after_updater(); ?></p>
+			<p><?php self::after_updater(); ?></p>
  		<?php
 		}
 
@@ -343,14 +343,14 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		else {
 			usleep(500000);
 
-			$this->after_updater();
+			self::after_updater();
 		}
 	}
 
 	/**
 	 * Overriding this so we can change the ID of the DIV so toggling works... sigh...
 	 */
-	function before() {
+	function before( $title = '' ) {
 		$title = $this->plugin_info['Title'];
 
 		if ( ! empty( $this->options['install_plugins'] ) ) {
@@ -373,7 +373,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	/**
 	 * Overriding this so we can change the ID of the DIV so toggling works... sigh...
 	 */
-	function after() {
+	function after( $title = '' ) {
 		$title = $this->plugin_info['Title'];
 
 		if ( ! empty( $this->options['install_plugins'] ) ) {
@@ -409,14 +409,14 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	 * @param string $redirect_link Redirect link with anchor text. This is used if CBox_Bulk_Plugin_Upgrader_Skin doesn't have one.
 	 * @since 0.3
 	 */
-	public function after_updater( $args = array() ) {
+	public static function after_updater( $args = array() ) {
 		// if a redirect link is passed, use it.
 		if ( ! empty( $args ) ) {
  			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : false;
  			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : false;
 
 		// if a redirect link is passed during the class constructor, use it
-		} elseif ( ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
+		} elseif ( ! self::_is_static() && ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
 			$redirect_link = $this->options['redirect_link'];
 			$redirect_text = $this->options['redirect_text'];
 
@@ -430,6 +430,23 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 		// extra hook to do stuff after the updater has run
 		do_action( 'cbox_after_updater' );
+	}
+
+	/**
+	 * Detect whether a class is called statically.
+	 *
+	 * Lighter than using Reflection to determine this. 
+	 *
+	 * @since 1.0.6
+	 *
+	 * @return bool
+	 */
+	protected static function _is_static() {
+		$backtrace = debug_backtrace();
+
+		// The 0th call is this method, so we need to check the next
+		// call down the stack.
+		return $backtrace[1]['type'] == '::';
 	}
 }
 

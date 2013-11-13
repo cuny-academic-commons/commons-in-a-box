@@ -1282,7 +1282,7 @@ class CBox_Admin {
 	/**
 	 * Inline CSS for the main dashboard page.
 	 */
-	public function dashboard_css() {
+	public static function dashboard_css() {
 		$badge_url        = cbox()->plugin_url( 'admin/images/logo-cbox_vert.png?ver='    . cbox()->version );
 		$badge_url_2x     = cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png?ver=' . cbox()->version );
 		$icon32_url       = cbox()->plugin_url( 'admin/images/icon32.png?ver='            . cbox()->version );
