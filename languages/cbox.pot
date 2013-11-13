@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commons-in-a-box\n"
-"POT-Creation-Date: 2013-08-05 20:23:28+00:00\n"
+"POT-Creation-Date: 2013-11-13 19:48:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -389,29 +389,39 @@ msgid "What&#8217;s New"
 msgstr ""
 
 #: admin/changelog.php:19
+msgid "1.0.6 Maintenance Release"
+msgstr ""
+
+#: admin/changelog.php:20
+msgid ""
+"The 1.0.6 release brings a number of plugins up to date, and improves "
+"compatibility with WordPress 3.7+."
+msgstr ""
+
+#: admin/changelog.php:24
 msgid "Plugin Updates"
 msgstr ""
 
-#: admin/changelog.php:22
+#: admin/changelog.php:27
 msgid ""
 "Since the last version release, the following plugins were updated in CBOX:"
 msgstr ""
 
-#: admin/changelog.php:38
+#: admin/changelog.php:43
 msgid "Theme Improvements"
 msgstr ""
 
-#: admin/changelog.php:41
+#: admin/changelog.php:46
 msgid ""
 "Since the last version release, the following bugfixes and enhancements were "
 "added to the Commons In A Box theme:"
 msgstr ""
 
-#: admin/changelog.php:61
+#: admin/changelog.php:57
 msgid "Under the Hood"
 msgstr ""
 
-#: admin/changelog.php:86 admin/credits.php:107
+#: admin/changelog.php:70 admin/credits.php:107
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -519,7 +529,7 @@ msgstr ""
 msgid "Now Activating Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:335 admin/plugin-install.php:603
+#: admin/plugin-install.php:335 admin/plugin-install.php:620
 msgid "Plugins activated."
 msgstr ""
 
@@ -527,23 +537,23 @@ msgstr ""
 msgid "Return to the CBOX Plugins page"
 msgstr ""
 
-#: admin/plugin-install.php:562
+#: admin/plugin-install.php:579
 msgid "Upgrading Existing Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:584
+#: admin/plugin-install.php:601
 msgid "Installing Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:598
+#: admin/plugin-install.php:615
 msgid "Activating Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:723 admin/plugin-install.php:731
+#: admin/plugin-install.php:740 admin/plugin-install.php:748
 msgid "Group Forums"
 msgstr ""
 
-#: admin/plugin-install.php:732
+#: admin/plugin-install.php:749
 msgid "All forums created in groups can be found here."
 msgstr ""
 
