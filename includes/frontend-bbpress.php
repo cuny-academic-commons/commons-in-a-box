@@ -82,12 +82,59 @@ class CBox_BBP_Autoload {
 	public function enable_visual_editor() {
 		// create function to re-enable TinyMCE
 		$enable_tinymce = create_function( '$retval', '
+			// enable tinymce
 			$retval["tinymce"] = true;
+
+			// set teeny mode to false so we can use some additional buttons
+			$retval["teeny"]   = false;
+
+			// also manipulate some TinyMCE buttons
+			CBox_BBP_Autoload::tinymce_buttons();
+
 			return $retval;
 		' );
 
 		// add our function to bbPress
 		add_filter( 'bbp_after_get_the_content_parse_args', $enable_tinymce );
 	}
+
+	/**
+	 * Add / remove buttons to emulate WP's TinyMCE 'teeny' mode for bbPress.
+	 *
+	 * Since the 'pasteword' button can only be used if 'teeny' mode is false,
+	 * we need to remove a bunch of buttons from WP's regular post editor to
+	 * emulate teeny mode.
+	 *
+	 * @see https://github.com/cuny-academic-commons/commons-in-a-box/issues/91
+	 */
+	public static function tinymce_buttons() {
+		// create function to add / remove some TinyMCE buttons
+		$buttons = create_function( '$retval', '
+
+			// remove some buttons to emulate teeny mode
+			$retval = array_diff( $retval, array(
+				"wp_more",
+				"underline",
+				"justifyleft",
+				"justifycenter",
+				"justifyright",
+				"wp_adv"
+			) );
+
+			// add the pasteword plugin
+			// add back undo / redo from teeny mode
+			// bbPress adds the image button so we should do it as well
+			array_push( $retval, "image", "pasteword", "undo", "redo" );
+
+			return $retval;
+		' );
+
+		// add our function to bbPress
+		add_filter( 'mce_buttons',   $buttons, 20 );
+
+		// wipe out the second row of TinyMCE buttons
+		add_filter( 'mce_buttons_2', create_function( '', "return array();" ) );
+	}
+
 }
 
