@@ -130,7 +130,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 *
 	 * Why? So we can use our custom download URLs from Github.
 	 */
-	function install( $package = false ) {
+	function install( $package = false, $args = array() ) {
 		$this->init();
 		$this->install_strings();
 
@@ -180,7 +180,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 *
 	 * @param str $upgrades The value from CBox_Theme_Specs::get_upgrades()
 	 */
-	function bulk_upgrade( $upgrades = false ) {
+	function bulk_upgrade( $upgrades = false, $args = array() ) {
 		if ( empty( $upgrades ) )
 			return false;
 
