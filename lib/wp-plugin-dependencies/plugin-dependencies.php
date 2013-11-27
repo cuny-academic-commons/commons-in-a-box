@@ -306,7 +306,7 @@ class Plugin_Dependencies {
 	 * @param array $plugin_ids A list of plugin basenames
 	 * @return array List of deactivated plugins
 	 */
-	protected static function deactivate_conflicting( $to_activate ) {
+	public static function deactivate_conflicting( $to_activate ) {
 		$deps = array();
 		foreach ( $to_activate as $plugin_id ) {
 			$deps = array_merge( $deps, self::get_provided( $plugin_id ) );
