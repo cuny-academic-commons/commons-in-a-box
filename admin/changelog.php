@@ -26,14 +26,8 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>bbPress 2.4.1</li>
-						<li>BP Group Announcements 1.0.3</li>
-						<li>BP Groupblog 1.8.5</li>
-						<li>BuddyPress 1.8.1</li>
-						<li>BuddyPress Docs 1.5.5</li>
-						<li>BuddyPress Docs Wiki 1.0.5</li>
-						<li>Invite Anyone 1.0.25</li>
-						<li>More Privacy Options</li>
+						<li>BuddyPress 1.9.2</li>
+						<li>BuddyPress Docs 1.5.6</li>
 					</ul>
 
 				</div>
@@ -45,9 +39,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>A brand new slider that is easier to use and performs better on different devices</li>
-						<li>Improved appearance of Docs attachment lists in directories and on single Doc pages</li>
-						<li>Fix some debug notices</li>
+						<li><?php _e( 'Improved compatibility with the new Notifications Component, introduced in BuddyPress 1.9.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
