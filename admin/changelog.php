@@ -28,6 +28,7 @@
 					<ul>
 						<li>BuddyPress 1.9.2</li>
 						<li>BuddyPress Docs 1.5.6</li>
+						<li>BuddyPress Docs Wiki 1.0.6</li>
 					</ul>
 
 				</div>
