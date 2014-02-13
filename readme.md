@@ -14,6 +14,6 @@ Think you've found a bug? You may consider posting your issue first in the [comm
 
 ## Developers
 
-Developers who are interested in contributing to Commons In A Box can send pull requests to this repo.
+Developers who are interested in contributing to Commons In A Box can send pull requests to this repo. Note that the master branch mirrors *the last stable release*. The current maintenance branch is 1.0.x; please submit requests against this branch.
 
 The Commons In A Box theme (cbox-theme) is separately maintained at http://github.com/cuny-academic-commons/cbox-theme.  The theme is a deriviative of the [Infinity](http://github.com/presscrew/infinity) theme developed by [PressCrew](http://community.presscrew.com/).
