@@ -1356,6 +1356,7 @@ class CBox_Admin {
 		        background-image: url( <?php echo $badge_url; ?> );
 			background-position:22px 10px;
 			background-size:auto;
+			background-repeat: no-repeat;
 			padding-top:200px;
 		        color:#999; text-shadow:none;
 		}
