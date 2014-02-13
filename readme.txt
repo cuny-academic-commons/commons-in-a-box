@@ -39,6 +39,10 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.7 =
+* Fixed bug in Plugin Dependencies library that caused errors on some setups
+* Fixed miscellaneous PHP notices
+
 = 1.0.6 =
 * Compatibility with WordPress 3.7
 * Updated plugins: bbPress 2.4.1, BP Group Announcements 1.0.3, BP Groupblog 1.8.5, BuddyPress 1.8.1, BuddyPress Docs 1.5.5, BuddyPress Docs Wiki 1.0.5, Invite Anyone 1.0.25, More Privacy Options 3.7.1
