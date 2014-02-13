@@ -26,6 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
+						<li>bbPress 2.5.3</li>
 						<li>BuddyPress 1.9.2</li>
 						<li>BuddyPress Docs 1.5.6</li>
 						<li>BuddyPress Docs Wiki 1.0.6</li>
