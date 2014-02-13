@@ -1293,7 +1293,7 @@ class CBox_Admin {
 			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
-		#welcome-panel {overflow:visible;min-height: 240px;}
+		#welcome-panel {overflow:visible;min-height: 280px;}
 
 		.about-text {margin-right:220px;}
 		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:210px; margin-bottom:.5em;}
@@ -1364,7 +1364,7 @@ class CBox_Admin {
 		#welcome-panel .wp-badge {
 			border: 1px solid #DFDFDF;
 			border-radius: 4px;
-			top:30px; right: 20px;
+			top:50px; right: 20px;
 		}
 
 		/* Retina */
