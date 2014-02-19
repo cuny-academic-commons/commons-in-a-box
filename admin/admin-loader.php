@@ -1374,7 +1374,12 @@ class CBox_Admin {
 			only screen and (min-device-pixel-ratio: 1.5) {
 				.wp-badge {
 					background-image: url( <?php echo $badge_url_2x; ?> );
-					background-size:  300px 364px;
+					background-size: 77%;
+					background-repeat: no-repeat;
+					width: 152px;
+					padding-top: 157px;
+					height: 34px;
+					top: 50px;
 				}
 		}
 
