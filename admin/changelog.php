@@ -44,12 +44,14 @@
 					<ul>
 						<li><?php _e( 'Improved compatibility with the new Notifications Component, introduced in BuddyPress 1.9.', 'cbox' ) ?></li>
 						<li><?php _e( 'Support for the responsive admin bar in WordPress 3.8', 'cbox' ) ?></li>
+						<li><?php _e( 'Visual and text improvements to the Featured Slide tool', 'cbox' ) ?></li>
 						<li><?php _e( 'Fixed some jQuery UI conflicts on the theme administration panel', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
 			</div>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -62,6 +64,7 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
