@@ -35,7 +35,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	 *
 	 * @param str $plugins Array of plugin names
 	 */
-	function bulk_upgrade( $plugins ) {
+	function bulk_upgrade( $plugins, $args = array() ) {
 
 		$this->init();
 		$this->bulk = true;

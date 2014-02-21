@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.6 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.6 release brings a number of plugins up to date, and improves compatibility with WordPress 3.7+.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.7 Maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.7 release brings a number of plugins up to date, and improves compatibility with WordPress 3.8 and BuddyPress 1.9.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,14 +26,11 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>bbPress 2.4.1</li>
-						<li>BP Group Announcements 1.0.3</li>
-						<li>BP Groupblog 1.8.5</li>
-						<li>BuddyPress 1.8.1</li>
-						<li>BuddyPress Docs 1.5.5</li>
-						<li>BuddyPress Docs Wiki 1.0.5</li>
-						<li>Invite Anyone 1.0.25</li>
-						<li>More Privacy Options</li>
+						<li>bbPress 2.5.3</li>
+						<li>BuddyPress 1.9.2</li>
+						<li>BuddyPress Docs 1.5.6</li>
+						<li>BuddyPress Docs Wiki 1.0.6</li>
+						<li>Invite Anyone 1.0.26</li>
 					</ul>
 
 				</div>
@@ -45,14 +42,16 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li>A brand new slider that is easier to use and performs better on different devices</li>
-						<li>Improved appearance of Docs attachment lists in directories and on single Doc pages</li>
-						<li>Fix some debug notices</li>
+						<li><?php _e( 'Improved compatibility with the new Notifications Component, introduced in BuddyPress 1.9.', 'cbox' ) ?></li>
+						<li><?php _e( 'Support for the responsive admin bar in WordPress 3.8', 'cbox' ) ?></li>
+						<li><?php _e( 'Visual and text improvements to the Featured Slide tool', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed some jQuery UI conflicts on the theme administration panel', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
 			</div>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -65,6 +64,7 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
