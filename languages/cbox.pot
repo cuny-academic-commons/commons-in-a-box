@@ -1,14 +1,14 @@
-# Copyright (C) 2013 
+# Copyright (C) 2014 
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/commons-in-a-box\n"
-"POT-Creation-Date: 2013-11-13 19:48:14+00:00\n"
+"POT-Creation-Date: 2014-02-21 02:45:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -389,13 +389,13 @@ msgid "What&#8217;s New"
 msgstr ""
 
 #: admin/changelog.php:19
-msgid "1.0.6 Maintenance Release"
+msgid "1.0.7 Maintenance Release"
 msgstr ""
 
 #: admin/changelog.php:20
 msgid ""
-"The 1.0.6 release brings a number of plugins up to date, and improves "
-"compatibility with WordPress 3.7+."
+"The 1.0.7 release brings a number of plugins up to date, and improves "
+"compatibility with WordPress 3.8 and BuddyPress 1.9."
 msgstr ""
 
 #: admin/changelog.php:24
@@ -407,18 +407,32 @@ msgid ""
 "Since the last version release, the following plugins were updated in CBOX:"
 msgstr ""
 
-#: admin/changelog.php:43
+#: admin/changelog.php:40
 msgid "Theme Improvements"
 msgstr ""
 
-#: admin/changelog.php:46
+#: admin/changelog.php:43
 msgid ""
 "Since the last version release, the following bugfixes and enhancements were "
 "added to the Commons In A Box theme:"
 msgstr ""
 
-#: admin/changelog.php:57
-msgid "Under the Hood"
+#: admin/changelog.php:45
+msgid ""
+"Improved compatibility with the new Notifications Component, introduced in "
+"BuddyPress 1.9."
+msgstr ""
+
+#: admin/changelog.php:46
+msgid "Support for the responsive admin bar in WordPress 3.8"
+msgstr ""
+
+#: admin/changelog.php:47
+msgid "Visual and text improvements to the Featured Slide tool"
+msgstr ""
+
+#: admin/changelog.php:48
+msgid "Fixed some jQuery UI conflicts on the theme administration panel"
 msgstr ""
 
 #: admin/changelog.php:70 admin/credits.php:107
