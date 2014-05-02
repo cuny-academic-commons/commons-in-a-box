@@ -66,7 +66,7 @@ class CBox_BBP_Autoload {
 	 * @see https://bbpress.trac.wordpress.org/ticket/2103
 	 */
 	public function remove_dynamic_role_setter() {
-		if ( version_compare( bbp_get_version(), '2.3' ) < 0 ) {
+		if ( function_exists( 'bbp_get_version' ) AND version_compare( bbp_get_version(), '2.3' ) < 0 ) {
 			remove_action( 'switch_blog', 'bbp_set_current_user_default_role' );
 		}
 	}
