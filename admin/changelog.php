@@ -28,6 +28,7 @@
 					<ul>
 						<li>BuddyPress 2.0.1</li>
 						<li>BuddyPress Docs 1.7.0</li>
+						<li>BuddyPress Docs Wiki add-on 1.0.7</li>
 					</ul>
 
 				</div>
