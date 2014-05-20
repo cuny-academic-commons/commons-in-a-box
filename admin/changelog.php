@@ -26,6 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
+						<li>BP Groupblog 1.8.6</li>
 						<li>BuddyPress 2.0.1</li>
 						<li>BuddyPress Docs 1.7.0</li>
 						<li>BuddyPress Docs Wiki add-on 1.0.7</li>
