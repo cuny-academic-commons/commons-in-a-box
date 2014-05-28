@@ -90,11 +90,11 @@
 				</li>
 			</ul>
 
-			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.5', 'cbox' ); ?></h4>
+			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.8', 'cbox' ); ?></h4>
 
 			<p class="wp-credits-list">
 				<a href="http://commonsinabox.org/members/haystack/">Christian Wach</a> and 
-				<a href="http://commonsinabox.org/members/merolino/">merolino</a>.
+				<a href="http://commonsinabox.org/members/jreeve/">Jonathan Reeve</a>.
 			</p>
 
 			<h4 class="wp-people-group"><?php _e( 'External Libraries', 'cbox' ); ?></h4>
