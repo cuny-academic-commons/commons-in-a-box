@@ -43,10 +43,10 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Improved compatibility with the new Notifications Component, introduced in BuddyPress 1.9.', 'cbox' ) ?></li>
-						<li><?php _e( 'Support for the responsive admin bar in WordPress 3.8', 'cbox' ) ?></li>
-						<li><?php _e( 'Visual and text improvements to the Featured Slide tool', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed some jQuery UI conflicts on the theme administration panel', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved menu rendering', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed the "Background Color" theme option in some instances', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed the footer "Background Overlay" theme option', 'cbox' ) ?></li>
+						<li><?php _e( 'Minor styling enhancements to bbPress', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
