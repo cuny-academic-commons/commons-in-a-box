@@ -723,7 +723,7 @@ class CBox_Admin {
 		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
 		// check for theme upgrades
-		$is_theme_upgrade = CBox_Theme_Specs::get_upgrades();
+		$is_theme_upgrade = cbox_get_theme_to_update();
 
 		// no available upgrades, so stop!
 		if ( ! $active_cbox_plugins_need_update && ! $is_theme_upgrade ) {
@@ -1153,6 +1153,13 @@ class CBox_Admin {
 				$disable_btn = 'bp-wizard';
 				break;
 
+			case 'theme-update' :
+				$notice_text = __( 'The CBOX Default theme needs an update.', 'cbox' );
+				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox_get_theme_to_update() ), 'cbox_upgrade_theme' );
+				$button_text = __( 'Update the theme &rarr;', 'cbox' );
+				$disable_btn = 'cbox';
+				break;
+
 			case 'last-step' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
 				$button_link = network_admin_url( 'admin.php?page=cbox' );
@@ -1163,7 +1170,12 @@ class CBox_Admin {
 
 		// change variables if we're still in setup phase
 		if ( ! empty( cbox()->setup ) ) {
-			$notice_text = __( 'Installing plugins...', 'cbox' );
+			if ( 'upgrade-theme' == cbox()->setup ) {
+				$notice_text = __( 'Upgrading theme...', 'cbox' );
+			} else {
+				$notice_text = __( 'Installing plugins...', 'cbox' );
+			}
+
 			$disable_btn = 'cbox';
 		}
 	?>
