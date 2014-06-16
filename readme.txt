@@ -45,10 +45,6 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Theme improvements: Improved menu rendering; Fixed background color and footer background overlays in some instances; Minor styling improvements to bbPress
 
 = 1.0.7 =
-* Compatibility with WordPress 3.9 and BuddyPress 2.0
-* Updated plugins: BP Groupblog 1.8.6, BuddyPress 2.0.1, BuddyPress Docs 1.7.0, BuddyPress Docs Wiki add-on 1.0.7, Invite Anyone 1.2.1, More Privacy Options 3.8.2
-
-= 1.0.7 =
 * Compatibility with WordPress 3.8 and BuddyPress 1.9
 * Updated plugins: bbPress 2.5.3, BuddyPress 1.9.2, BuddyPress Docs 1.5.6, BuddyPress Docs Wiki 1.0.6, Invite Anyone 1.0.26
 * Fixed bug in Plugin Dependencies library that caused errors on some setups
