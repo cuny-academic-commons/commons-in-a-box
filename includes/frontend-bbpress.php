@@ -110,6 +110,7 @@ class CBox_BBP_Autoload {
 	public static function tinymce_buttons() {
 		// create function to add / remove some TinyMCE buttons
 		$buttons = create_function( '$retval', '
+			global $wp_version;
 
 			// remove some buttons to emulate teeny mode
 			$retval = array_diff( $retval, array(
@@ -122,9 +123,11 @@ class CBox_BBP_Autoload {
 			) );
 
 			// add the pasteword plugin
+			$paste = ( version_compare( $wp_version, "3.9" ) >= 0 ) ? "paste" : "pasteword";
+
 			// add back undo / redo from teeny mode
 			// bbPress adds the image button so we should do it as well
-			array_push( $retval, "image", "pasteword", "undo", "redo" );
+			array_push( $retval, "image", $paste, "undo", "redo" );
 
 			return $retval;
 		' );

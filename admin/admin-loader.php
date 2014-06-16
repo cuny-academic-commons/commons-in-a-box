@@ -700,7 +700,7 @@ class CBox_Admin {
 			<div id="cbox-upgrades" class="secondary-panel">
 				<h2><?php _e( 'Upgrade Available', 'cbox' ); ?></h2>
 
-				<div class="login">
+				<div class="login postbox">
 					<div class="message">
 						<p><?php printf( __( 'Commons In A Box %s requires WordPress %s', 'cbox' ), cbox_get_version(), $version ); ?>
 						<br />
@@ -723,7 +723,7 @@ class CBox_Admin {
 		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
 
 		// check for theme upgrades
-		$is_theme_upgrade = CBox_Theme_Specs::get_upgrades();
+		$is_theme_upgrade = cbox_get_theme_to_update();
 
 		// no available upgrades, so stop!
 		if ( ! $active_cbox_plugins_need_update && ! $is_theme_upgrade ) {
@@ -771,7 +771,7 @@ class CBox_Admin {
 		<div id="cbox-upgrades" class="secondary-panel">
 			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'cbox' ), $total_count ); ?></h2>
 
-			<div class="login">
+			<div class="login postbox">
 				<div class="message">
 					<p><?php echo $message; ?>
 					<br />
@@ -822,7 +822,7 @@ class CBox_Admin {
 					?>
 					</ul>
 
-					<div class="login">
+					<div class="login postbox">
 						<div class="message" style="text-align:center;">
 							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here!</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
 						</div>
@@ -870,7 +870,7 @@ class CBox_Admin {
 
 								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
 
-								<div class="login">
+								<div class="login postbox">
 									<div class="message" style="text-align:center;">
 										<strong><?php printf( __( '<a href="%s">Like the CBOX Theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) ); ?></strong>
 									</div>
@@ -907,7 +907,7 @@ class CBox_Admin {
 
 								<?php /* HIDE THIS FOR NOW ?>
 								<?php if ( $is_upgrade ) : ?>
-									<div class="login">
+									<div class="login postbox">
 										<div id="login_error" class="message">
 											<?php _e( 'Update available.', 'cbox' ); ?> <strong><a href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_upgrade ), 'cbox_upgrade_theme' ); ?>"><?php _e( 'Update now!', 'cbox' ); ?></a></strong>
 										</div>
@@ -915,7 +915,7 @@ class CBox_Admin {
 								<?php endif; ?>
 								<?php */ ?>
 
-								<div class="login">
+								<div class="login postbox">
 									<div class="message">
 										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), 'themes.php?page=infinity-theme' ) ) ); ?></strong>
 									</div>
@@ -1153,6 +1153,13 @@ class CBox_Admin {
 				$disable_btn = 'bp-wizard';
 				break;
 
+			case 'theme-update' :
+				$notice_text = __( 'The CBOX Default theme needs an update.', 'cbox' );
+				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox_get_theme_to_update() ), 'cbox_upgrade_theme' );
+				$button_text = __( 'Update the theme &rarr;', 'cbox' );
+				$disable_btn = 'cbox';
+				break;
+
 			case 'last-step' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
 				$button_link = network_admin_url( 'admin.php?page=cbox' );
@@ -1163,7 +1170,12 @@ class CBox_Admin {
 
 		// change variables if we're still in setup phase
 		if ( ! empty( cbox()->setup ) ) {
-			$notice_text = __( 'Installing plugins...', 'cbox' );
+			if ( 'upgrade-theme' == cbox()->setup ) {
+				$notice_text = __( 'Upgrading theme...', 'cbox' );
+			} else {
+				$notice_text = __( 'Installing plugins...', 'cbox' );
+			}
+
 			$disable_btn = 'cbox';
 		}
 	?>
@@ -1317,7 +1329,7 @@ class CBox_Admin {
 		.secondary-panel h2 {line-height:1;}
 
 		.secondary-panel h4 {font-size:14px;}
-			.secondary-panel h4 .icon16 {margin-left: -32px;}
+			.secondary-panel h4 .icon16 {margin-top:-10px; margin-left: -32px;}
 
 		.secondary-panel .welcome-panel-column-container {
 		    clear: both;
@@ -1345,7 +1357,7 @@ class CBox_Admin {
 			padding-left: 2px;
 		}
 
-		.update-message {margin:5px 0;}
+		#wpbody .update-message {margin:5px 0;}
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
 

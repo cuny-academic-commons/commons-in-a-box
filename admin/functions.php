@@ -40,6 +40,11 @@ function cbox_is_setup() {
 	if ( cbox_is_bp_maintenance_mode() )
 		return false;
 
+	// theme needs an update
+	if ( cbox_get_theme_to_update() ) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -57,6 +62,46 @@ function cbox_is_upgraded() {
 		return true;
 
 	return false;
+}
+
+/**
+ * Get the CBOX theme that needs to be updated.
+ *
+ * @since 1.0.8
+ *
+ * @return string|bool Returns the theme name needing an update; otherwise
+ *  boolean false if theme is already updated or if current theme is not
+ *  bundled with CBOX.
+ */
+function cbox_get_theme_to_update() {
+	if ( isset( cbox()->theme_to_update ) ) {
+		return cbox()->theme_to_update;
+	}
+
+	if ( is_multisite() ) {
+		// sanity check
+		if ( ! defined( 'BP_VERSION' ) ) {
+			return false;
+		}
+
+		switch_to_blog( bp_get_root_blog_id() );
+		$theme = wp_get_theme();
+		restore_current_blog();
+	} else {
+		$theme = wp_get_theme();
+	}
+
+	// include the CBOX Theme Installer
+	if ( ! class_exists( 'CBox_Theme_Installer' ) ) {
+		require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+	}
+
+	$retval = CBOX_Theme_Specs::get_upgrades( $theme );
+
+	// set marker so we don't have to do this again
+	cbox()->theme_to_update = $retval;
+
+	return $retval;
 }
 
 /**
@@ -136,6 +181,10 @@ function cbox_get_setup_step() {
 		// buddypress needs to finish setup
 		if ( cbox_is_bp_maintenance_mode() ) {
 			$step = 'buddypress-wizard';
+
+		// theme needs an update?
+		} elseif ( cbox_get_theme_to_update() ) {
+			$step = 'theme-update';
 
 		// buddypress is setup
 		} else {

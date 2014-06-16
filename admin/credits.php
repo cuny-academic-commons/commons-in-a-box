@@ -36,12 +36,12 @@
 
 			<ul class="wp-people-group " id="wp-people-group-core-developers">
 				<li class="wp-person" id="wp-person-dom">
-					<a href="http://commons.gc.cuny.edu/members/humanshell/"><img src="https://0.gravatar.com/avatar/639e517ff8357171d75a82427c1ac01a?s=60" class="gravatar" alt="Raymond Hoh" /></a>
+					<a href="http://commons.gc.cuny.edu/members/humanshell/"><img src="https://0.gravatar.com/avatar/639e517ff8357171d75a82427c1ac01a?s=60" class="gravatar" alt="Dominic Giglio" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/humanshell/">Dominic Giglio</a>
 					<span class="title"><?php _e( 'Core Developer', 'cbox' ); ?></span>
 				</li>
 				<li class="wp-person" id="wp-person-ray">
-					<a href="http://commons.gc.cuny.edu/members/rhoh/"><img src="https://0.gravatar.com/avatar/e0f0d76bbe46923ae0dccce7fa9afa48?s=60" class="gravatar" alt="Raymond Hoh" /></a>
+					<a href="http://commons.gc.cuny.edu/members/rhoh/"><img src="https://0.gravatar.com/avatar/6bd31ab878ed6e7cf746231c57fc237d?s=60" class="gravatar" alt="Raymond Hoh" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/rhoh/">Raymond Hoh</a>
 					<span class="title"><?php _e( 'Core Developer', 'cbox' ); ?></span>
 				</li>
@@ -70,12 +70,12 @@
 					<a class="web" href="http://commons.gc.cuny.edu/members/brianfoote/">Brian Foote</a>
 	
 				<li class="wp-person" id="wp-person-sarah">
-					<a href="http://commons.gc.cuny.edu/members/Sarah_Morgano/"><img src="http://commons.gc.cuny.edu/files/avatars/295/f4d3616c613123e19984bd0477b49df9-bpfull.jpg" class="gravatar" alt="Sarah Morgano" /></a>
+					<a href="http://commons.gc.cuny.edu/members/Sarah_Morgano/"><img src="https://0.gravatar.com/avatar/c12a1f8619958bd041b2707374faed5d?s=60" class="gravatar" alt="Sarah Morgano" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/Sarah_Morgano/">Sarah Morgano</a>
 				</li>
 	
 				<li class="wp-person" id="wp-person-michael">
-					<a href="http://commons.gc.cuny.edu/members/msmith/"><img src="http://commons.gc.cuny.edu/files/avatars/388/e2c7b2991a0db329799da686446db8d6-bpfull.jpg" class="gravatar" alt="Michael Branson Smith" /></a>
+					<a href="http://commons.gc.cuny.edu/members/msmith/"><img src="https://0.gravatar.com/avatar/4d889ac090d7456457e3c54706ccfb66?s=60" class="gravatar" alt="Michael Branson Smith" /></a>
 					<a class="web" href="http://commons.gc.cuny.edu/members/msmith/">Michael Branson Smith</a>
 				</li>
 	
@@ -90,11 +90,11 @@
 				</li>
 			</ul>
 
-			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.5', 'cbox' ); ?></h4>
+			<h4 class="wp-people-group"><?php _e( 'Core Contributors to Commons In A Box 1.0.8', 'cbox' ); ?></h4>
 
 			<p class="wp-credits-list">
 				<a href="http://commonsinabox.org/members/haystack/">Christian Wach</a> and 
-				<a href="http://commonsinabox.org/members/merolino/">merolino</a>.
+				<a href="http://commonsinabox.org/members/jreeve/">Jonathan Reeve</a>.
 			</p>
 
 			<h4 class="wp-people-group"><?php _e( 'External Libraries', 'cbox' ); ?></h4>
