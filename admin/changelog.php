@@ -32,7 +32,7 @@
 						<li>BuddyPress Docs 1.7.0</li>
 						<li>BuddyPress Docs Wiki add-on 1.0.7</li>
 						<li>Invite Anyone 1.2.1</li>
-						<li>More Privacy Options 3.8.2</li>
+						<li>More Privacy Options 3.9.1.1</li>
 					</ul>
 
 				</div>
