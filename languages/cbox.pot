@@ -1,10 +1,10 @@
-# Copyright (C) 2014 
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2014 Commons In A Box
+# This file is distributed under the same license as the Commons In A Box package.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/commons-in-a-box\n"
-"POT-Creation-Date: 2014-02-21 02:45:51+00:00\n"
+"Project-Id-Version: Commons In A Box 1.0.8\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/commons-in-a-box\n"
+"POT-Creation-Date: 2014-06-16 17:58:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -50,6 +50,8 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
+#. #-#-#-#-#  cbox.pot (Commons In A Box 1.0.8)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
 #: admin/admin-loader.php:404 admin/admin-loader.php:405
 msgid "Commons In A Box"
 msgstr ""
@@ -336,43 +338,55 @@ msgid "Finish BuddyPress setup &rarr;"
 msgstr ""
 
 #: admin/admin-loader.php:1157
-msgid "You only have one last thing to do. We promise!"
+msgid "The CBOX Default theme needs an update."
 msgstr ""
 
 #: admin/admin-loader.php:1159
-msgid "Click here to finish up!"
+msgid "Update the theme &rarr;"
+msgstr ""
+
+#: admin/admin-loader.php:1164
+msgid "You only have one last thing to do. We promise!"
 msgstr ""
 
 #: admin/admin-loader.php:1166
+msgid "Click here to finish up!"
+msgstr ""
+
+#: admin/admin-loader.php:1174
+msgid "Upgrading theme..."
+msgstr ""
+
+#: admin/admin-loader.php:1176
 msgid "Installing plugins..."
 msgstr ""
 
-#: admin/admin-loader.php:1172
+#: admin/admin-loader.php:1184
 msgid "Commons In A Box is almost ready!"
 msgstr ""
 
-#: admin/admin-loader.php:1201
+#: admin/admin-loader.php:1213
 msgid "CBOX Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:1203
+#: admin/admin-loader.php:1215
 msgid "CBOX Network Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:1206
+#: admin/admin-loader.php:1218
 msgid ""
 "Don't forget that CBOX plugins can be managed from the CBOX plugins page!"
 msgstr ""
 
-#: admin/admin-loader.php:1208
+#: admin/admin-loader.php:1220
 msgid "You can <a href=\"%s\">manage your CBOX plugins here</a>."
 msgstr ""
 
-#: admin/admin-loader.php:1211
+#: admin/admin-loader.php:1223
 msgid "Plugins on %s"
 msgstr ""
 
-#: admin/admin-loader.php:1213
+#: admin/admin-loader.php:1225
 msgid "Other Network Plugins"
 msgstr ""
 
@@ -389,13 +403,13 @@ msgid "What&#8217;s New"
 msgstr ""
 
 #: admin/changelog.php:19
-msgid "1.0.7 Maintenance Release"
+msgid "1.0.8 Maintenance Release"
 msgstr ""
 
 #: admin/changelog.php:20
 msgid ""
-"The 1.0.7 release brings a number of plugins up to date, and improves "
-"compatibility with WordPress 3.8 and BuddyPress 1.9."
+"The 1.0.8 release brings a number of plugins up to date, and improves "
+"compatibility with WordPress 3.9 and BuddyPress 2.0."
 msgstr ""
 
 #: admin/changelog.php:24
@@ -407,35 +421,33 @@ msgid ""
 "Since the last version release, the following plugins were updated in CBOX:"
 msgstr ""
 
-#: admin/changelog.php:40
+#: admin/changelog.php:42
 msgid "Theme Improvements"
 msgstr ""
 
-#: admin/changelog.php:43
+#: admin/changelog.php:45
 msgid ""
 "Since the last version release, the following bugfixes and enhancements were "
 "added to the Commons In A Box theme:"
 msgstr ""
 
-#: admin/changelog.php:45
-msgid ""
-"Improved compatibility with the new Notifications Component, introduced in "
-"BuddyPress 1.9."
-msgstr ""
-
-#: admin/changelog.php:46
-msgid "Support for the responsive admin bar in WordPress 3.8"
-msgstr ""
-
 #: admin/changelog.php:47
-msgid "Visual and text improvements to the Featured Slide tool"
+msgid "Improved menu rendering"
 msgstr ""
 
 #: admin/changelog.php:48
-msgid "Fixed some jQuery UI conflicts on the theme administration panel"
+msgid "Fixed the \"Background Color\" theme option in some instances"
 msgstr ""
 
-#: admin/changelog.php:70 admin/credits.php:107
+#: admin/changelog.php:49
+msgid "Fixed the footer \"Background Overlay\" theme option"
+msgstr ""
+
+#: admin/changelog.php:50
+msgid "Minor styling enhancements to bbPress"
+msgstr ""
+
+#: admin/changelog.php:72 admin/credits.php:107
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -484,7 +496,7 @@ msgid "Support Team"
 msgstr ""
 
 #: admin/credits.php:93
-msgid "Core Contributors to Commons In A Box 1.0.5"
+msgid "Core Contributors to Commons In A Box 1.0.8"
 msgstr ""
 
 #: admin/credits.php:100
@@ -914,4 +926,22 @@ msgstr ""
 msgid ""
 "\"%s\" cannot be activated. Before you can activate this plugin, please <a "
 "href=\"%s\">address the issues listed here</a>."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://commonsinabox.org"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"A suite of community and collaboration tools for WordPress, designed "
+"especially for academic communities"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "CUNY Academic Commons"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://commons.gc.cuny.edu"
 msgstr ""
