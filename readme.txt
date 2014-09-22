@@ -37,6 +37,10 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 1. The Commons In A Box Dashboard panel
 2. The Commons In A Box default theme
 
+== Translation credits ==
+
+* Spanish: Andrew Kurtis
+
 == Changelog ==
 
 = 1.0.8 =

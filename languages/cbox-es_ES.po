@@ -1,0 +1,1052 @@
+# Copyright (C) 2014 Commons In A Box
+# This file is distributed under the same license as the Commons In A Box package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Commons In A Box 1.0.8\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/commons-in-a-box\n"
+"POT-Creation-Date: 2014-06-16 17:58:20+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-09-16 10:59+0100\n"
+"Last-Translator: jelena kovacevic <jecajeca260@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#: admin/admin-loader.php:185
+msgid "Set Up CBOX Plugins"
+msgstr "Configurar Plugins CBOX"
+
+#: admin/admin-loader.php:190 admin/admin-loader.php:213
+#: admin/admin-loader.php:238
+msgid "Return to the CBOX Dashboard"
+msgstr "Regresar al Panel de Control CBOX"
+
+#: admin/admin-loader.php:208
+msgid "Install CBOX Plugins"
+msgstr "Instalar Plugins CBOX"
+
+#: admin/admin-loader.php:228
+msgid "Upgrading CBOX Plugins and Themes"
+msgstr "Actualización Plugins y Temas de CBOX"
+
+#: admin/admin-loader.php:231
+msgid "Now, let's upgrade the CBOX Default theme &rarr;"
+msgstr "Ahora, vamos a actualizar el Tema CBOX por defecto &rarr;"
+
+#: admin/admin-loader.php:235
+msgid "Upgrading CBOX Plugins"
+msgstr "Actualización Plugins CBOX"
+
+#: admin/admin-loader.php:269
+msgctxt "references the theme that is currently being installed"
+msgid "Installing %s"
+msgstr "Instalando %s"
+
+#: admin/admin-loader.php:289
+msgid "Upgrading CBOX Theme"
+msgstr "Actualización Tema CBOX"
+
+#: admin/admin-loader.php:330 admin/admin-loader.php:834
+msgid "Theme"
+msgstr "Tema"
+
+#. #-#-#-#-#  cbox.pot (Commons In A Box 1.0.8)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: admin/admin-loader.php:404 admin/admin-loader.php:405
+msgid "Commons In A Box"
+msgstr "Commons In A Box"
+
+#: admin/admin-loader.php:413 admin/admin-loader.php:459
+msgid "Commons In A Box Dashboard"
+msgstr "Panel de Control Commons In A Box"
+
+#: admin/admin-loader.php:414
+msgid "Dashboard"
+msgstr "Panel de Control"
+
+#: admin/admin-loader.php:480 admin/admin-loader.php:952
+msgid "About"
+msgstr "Acerca de"
+
+#: admin/admin-loader.php:482 admin/admin-loader.php:956
+msgid ""
+"<strong>Commons In A Box</strong> is a software project aimed at turning the "
+"infrastructure that successfully powers the <a href=\"%s\">CUNY Academic "
+"Commons</a> into a free, distributable, easy-to-install package."
+msgstr ""
+"<strong > Commons In A Box </strong> es un proyecto de software destinado a "
+"convertir la infraestructura que impulsa con éxito <a href=\"%s\">Académicos "
+"Comunes CUNY</a> en un paquete distribuible, de fácil instalación."
+
+#: admin/admin-loader.php:483 admin/admin-loader.php:958
+msgid ""
+"Commons In A Box is made possible by a generous grant from the Alfred P. "
+"Sloan Foundation."
+msgstr ""
+"Commons In A Box es posible gracias a una generosa donación de la Fundación "
+"Alfred P. Sloan"
+
+#: admin/admin-loader.php:488
+msgid "Useful Links:"
+msgstr "Enlaces Útiles:"
+
+#: admin/admin-loader.php:489
+msgid "<a href=\"%s\">Changelog</a>"
+msgstr "<a href=\"%s\"> Changelog </a>"
+
+#: admin/admin-loader.php:490
+msgid "<a href=\"%s\">Show Welcome Message</a>"
+msgstr "<a href=\"%s\"> Mostrar Mensaje de Bienvenida </a>"
+
+#: admin/admin-loader.php:550
+msgid "Dismiss"
+msgstr "Descartar"
+
+#: admin/admin-loader.php:553 admin/changelog.php:7 admin/credits.php:7
+msgid "Version %s"
+msgstr "Versión %s"
+
+#: admin/admin-loader.php:556
+msgid "Welcome to Commons In A Box! "
+msgstr "¡Bienvenido a Commons In A Box!"
+
+#: admin/admin-loader.php:558
+msgid ""
+"Need help getting started? Looking for support or ideas? Check out our "
+"documentation and join the community of CBOX users at <a href=\"http://"
+"commonsinabox.org\">commonsinabox.org</a>."
+msgstr ""
+"¿Necesitas ayuda para empezar? ¿Buscando apoyo o ideas? Echa un vistazo a "
+"nuestra documentación y únete a la comunidad de usuarios CBOX en <a href="
+"\"http://commonsinabox.org\"> commonsinabox.org </a>."
+
+#: admin/admin-loader.php:561
+msgid ""
+"If you&#8217;d rather dive right in, here are a few things most people do "
+"first when they set up a new CBOX site."
+msgstr ""
+"Si usted&#8217;  prefiere entrar directamente, aquí hay algunas cosas la "
+"mayoría que la gente hace en primer lugar cuando instalan un nuevo sitio CBOX"
+
+#: admin/admin-loader.php:562
+msgid ""
+"Already know what you&#8217;re doing? <a href=\"%s\">Dismiss this message</"
+"a>."
+msgstr ""
+"¿Ya sabe lo que está haciendo? <a href=\"%s\"> Descartar este mensaje </a>."
+
+#: admin/admin-loader.php:599
+msgid "Install BuddyPress"
+msgstr "Instalar BuddyPress"
+
+#: admin/admin-loader.php:602
+msgid ""
+"Before you can use Commons In A Box, we'll need to install BuddyPress and "
+"some recommended plugins. Click 'Continue' to get set up."
+msgstr ""
+"Antes de poder utilizar los Commons In A Box, necesitaremos instalar "
+"BuddyPress y algunos plugins recomendados. Haz clic en \"Continuar\" para "
+"ponerse en marcha."
+
+#: admin/admin-loader.php:606
+msgid "Continue &rarr;"
+msgstr "Continuar &rarr;"
+
+#: admin/admin-loader.php:617
+msgid "Set Up BuddyPress"
+msgstr "Configurar BuddyPress"
+
+#: admin/admin-loader.php:619
+msgid "We're almost there! Now we need to finish setting up BuddyPress."
+msgstr ""
+"¡Ya casi llegamos! Ahora tenemos que terminar de configurar BuddyPress."
+
+#: admin/admin-loader.php:621
+msgid ""
+"Don't worry! BuddyPress has a simple wizard to guide you through the "
+"process.  However, if you want more help, check out this <a href='%s'>codex "
+"article</a>."
+msgstr ""
+"¡No se preocupe! BuddyPress tiene un sencillo asistente que le guiará a "
+"través del proceso. Sin embargo, si desea más ayuda, eche un vistazo a este "
+"<a href='%s'>artículo de códice </a>."
+
+#: admin/admin-loader.php:623
+msgid "Continue to BuddyPress setup &rarr;"
+msgstr "Continuar para configurar BuddyPress &rarr;"
+
+#: admin/admin-loader.php:642
+msgid "Install some other cool stuff!"
+msgstr "¡Instale otras cosas interesantes!"
+
+#: admin/admin-loader.php:645
+msgid ""
+"It looks like you're already running BuddyPress. Cool! You're almost "
+"finished the setup process!"
+msgstr ""
+"Parece que ya está ejecutando BuddyPress. ¡Bien! ¡Ya casi ha terminado el "
+"proceso de configuración!"
+
+#: admin/admin-loader.php:647
+msgid ""
+"Did you know Commons In A Box comes prebundled with a few, recommended "
+"plugins?  These plugins help to add functionality to your existing WordPress "
+"and BuddyPress site. "
+msgstr ""
+"¿Sabía usted Commons In A Box viene en paquete con unos, plugins "
+"recomendados? Estos complementos ayudan a agregar funcionalidad a su "
+"WordPress existente y a su sitio BuddyPress."
+
+#: admin/admin-loader.php:649
+msgid ""
+"We have automatically selected the following plugins to install for you. "
+"However, feel free to uncheck some of these plugins based on your site's "
+"needs."
+msgstr ""
+"Hemos seleccionado de forma automática los siguientes plugins para instalar "
+"para usted. Sin embargo, no dude en desmarcar algunos de estos plugins "
+"basado ​​en las necesidades de su sitio."
+
+#: admin/admin-loader.php:701 admin/admin-loader.php:772
+msgid "Upgrade Available"
+msgstr "Actualizar disponibles"
+
+#: admin/admin-loader.php:705
+msgid "Commons In A Box %s requires WordPress %s"
+msgstr "Commons In A Box %s requiere WordPress %s"
+
+#: admin/admin-loader.php:707
+msgid "Upgrade now!"
+msgstr "¡Actualizar ahora!"
+
+#: admin/admin-loader.php:756
+msgid ""
+"%d installed plugin and the CBOX Default theme have an update available. "
+"Click on the button below to upgrade."
+msgid_plural ""
+"%d installed plugins and the CBOX Default theme have updates available. "
+"Click on the button below to upgrade."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/admin-loader.php:760
+msgid ""
+"%d installed plugin has an update available. Click on the button below to "
+"upgrade."
+msgid_plural ""
+"%d installed plugins have updates available. Click on the button below to "
+"upgrade."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/admin-loader.php:767
+msgid ""
+"The CBOX Default theme has an update available. Click on the button below to "
+"upgrade."
+msgstr ""
+"El Tema por defecto CBOX tiene una actualización disponible. Haga clic en el "
+"botón de abajo para actualizar."
+
+#: admin/admin-loader.php:778
+msgid "Upgrade"
+msgstr "Actualizar"
+
+#: admin/admin-loader.php:803
+msgid "Quick Links"
+msgstr "Enlaces rápidos"
+
+#: admin/admin-loader.php:809 admin/plugins-loader.php:1068
+#: admin/settings-loader.php:145
+msgid "Settings"
+msgstr "Configuración"
+
+#: admin/admin-loader.php:810
+msgid ""
+"Commons In A Box works by pulling together a number of independent WordPress "
+"and BuddyPress plugins. Customize your site by exploring the settings pages "
+"for these plugins below."
+msgstr ""
+"Commons In A Box trabaja reuniendo una serie de plugins WordPress "
+"independientes y plugins BuddyPress. Personalice tu sitio mediante la "
+"exploración de las páginas de configuración para estos plugins a "
+"continuación."
+
+#: admin/admin-loader.php:815 admin/plugins-loader.php:1066
+msgid "Click here to view this plugin's settings page"
+msgstr "Haga clic aquí para ver la página de configuración de este plugin."
+
+#: admin/admin-loader.php:818
+msgid "Click here for plugin documentation at commonsinabox.org"
+msgstr ""
+"Haga clic aquí para obtener documentación para plugins en commonsinabox.org"
+
+#: admin/admin-loader.php:818
+msgid "Info..."
+msgstr "Info ..."
+
+#: admin/admin-loader.php:827
+msgid "<a href=\"%s\">Manage all your CBOX plugins here!</a>"
+msgstr "<a href=\"%s\"> ¡Gestione todos sus plugins cBox aquí! </a>"
+
+#: admin/admin-loader.php:850
+msgid "<a href=\"%s\">Install the CBOX Default theme to get started</a>."
+msgstr "<a href=\"%s\"> Instale el Tema por defecto CBOX para empezar </a>."
+
+#: admin/admin-loader.php:859
+msgid "Your current theme is %s."
+msgstr "Su tema actual es %s."
+
+#: admin/admin-loader.php:864
+msgid "It looks like this theme is not compatible with BuddyPress."
+msgstr "Parece que este tema no es compatible con BuddyPress."
+
+#: admin/admin-loader.php:869
+msgid ""
+"Did you know that <strong>CBOX</strong> comes with a cool theme? Check it "
+"out below!"
+msgstr ""
+"¿Sabía que <strong> CBOX </strong> viene con un tema genial? ¡Eche un "
+"vistazo a continuación!"
+
+#: admin/admin-loader.php:871
+msgid "View a larger screenshot of the CBOX theme"
+msgstr "Ver una imagen más grande del tema CBOX."
+
+#: admin/admin-loader.php:875
+msgid "<a href=\"%s\">Like the CBOX Theme? Install it!</a>"
+msgstr "<a href=\"%s\"> ¿Le gusta el tema CBOX? ¡Instálelo! </a>"
+
+#: admin/admin-loader.php:890
+msgid ""
+"You can also make your theme compatible with the <a href='%s'>BuddyPress "
+"Template Pack</a>."
+msgstr ""
+"También puede hacer su tema compatible con el <a href='%s'> Paquete de "
+"Plantillas de BuddyPress </a>."
+
+#: admin/admin-loader.php:903
+msgid ""
+"You're using a child theme of the <strong>CBOX Default</strong> theme! Good "
+"on ya!"
+msgstr ""
+"¡Usted está utilizando un tema secundario del tema <strong> CBOX por defecto "
+"</strong >! ¡Bien por usted!"
+
+#: admin/admin-loader.php:905
+msgid "You're using the <strong>CBOX Default</strong> theme! Good on ya!"
+msgstr ""
+"¡Usted está utilizando el tema <strong> CBOX por defecto </ strong>!Bien por "
+"usted!"
+
+#: admin/admin-loader.php:920
+msgid "<a href=\"%s\">Configure the CBOX Theme here!</a>"
+msgstr "<a Href=\"%s\"> ¡Configurar el Tema CBOX aquí! </a>"
+
+#: admin/admin-loader.php:954
+msgid "You're currently using <strong>Commons In A Box %s</strong>"
+msgstr ""
+"Usted está utilizando actualmente <strong> Commons In A Box %s</strong>"
+
+#: admin/admin-loader.php:961
+msgid "What's New"
+msgstr "Novedades"
+
+#: admin/admin-loader.php:962 admin/changelog.php:14 admin/credits.php:14
+msgid "Credits"
+msgstr "Créditos"
+
+#: admin/admin-loader.php:963
+msgid "Documentation"
+msgstr "Documentación"
+
+#: admin/admin-loader.php:964
+msgid "Dev tracker"
+msgstr "Rastreador Dev"
+
+#: admin/admin-loader.php:1143
+msgid "Let's get started!"
+msgstr "¡Vamos a empezar!"
+
+#: admin/admin-loader.php:1145
+msgid "Click here to get set up"
+msgstr "Haga clic aquí para ponerse en marcha"
+
+#: admin/admin-loader.php:1150
+msgid "BuddyPress is installed, but needs some additional setup."
+msgstr ""
+"BuddyPress está instalado, pero necesita algo de configuración adicional."
+
+#: admin/admin-loader.php:1152
+msgid "Finish BuddyPress setup &rarr;"
+msgstr "Finalizar configuración BuddyPress &rarr;"
+
+#: admin/admin-loader.php:1157
+msgid "The CBOX Default theme needs an update."
+msgstr "El Tema por defecto CBOX necesita una actualización."
+
+#: admin/admin-loader.php:1159
+msgid "Update the theme &rarr;"
+msgstr "Actualizar el tema &rarr;"
+
+#: admin/admin-loader.php:1164
+msgid "You only have one last thing to do. We promise!"
+msgstr "Sólo hay una última cosa que hacer. ¡Lo prometemos!"
+
+#: admin/admin-loader.php:1166
+msgid "Click here to finish up!"
+msgstr "¡Haga clic aquí para terminar!"
+
+#: admin/admin-loader.php:1174
+msgid "Upgrading theme..."
+msgstr "Actualizando Tema..."
+
+#: admin/admin-loader.php:1176
+msgid "Installing plugins..."
+msgstr "Instalando plugins ..."
+
+#: admin/admin-loader.php:1184
+msgid "Commons In A Box is almost ready!"
+msgstr "¡Commons In A Box está casi listo!"
+
+#: admin/admin-loader.php:1213
+msgid "CBOX Plugins"
+msgstr "Plugins CBOX"
+
+#: admin/admin-loader.php:1215
+msgid "CBOX Network Plugins"
+msgstr "Plugins CBOX  de Red"
+
+#: admin/admin-loader.php:1218
+msgid ""
+"Don't forget that CBOX plugins can be managed from the CBOX plugins page!"
+msgstr ""
+"¡No olvides que los plugins CBOX se pueden administrar desde la página de "
+"plugins CBOX!"
+
+#: admin/admin-loader.php:1220
+msgid "You can <a href=\"%s\">manage your CBOX plugins here</a>."
+msgstr "Usted puede <a href=\"%s\"> administrar sus plugins cBox aquí </a>."
+
+#: admin/admin-loader.php:1223
+msgid "Plugins on %s"
+msgstr "Plugins en %s"
+
+#: admin/admin-loader.php:1225
+msgid "Other Network Plugins"
+msgstr "Otros Plugins de Red"
+
+#: admin/changelog.php:3 admin/credits.php:3
+msgid "Welcome to Commons In A Box %s"
+msgstr "Bienvenido a Commons In A Box %s"
+
+#: admin/changelog.php:5
+msgid "Thank you for updating to the latest version!"
+msgstr "Gracias por actualizar a la última versión"
+
+#: admin/changelog.php:11 admin/credits.php:11
+msgid "What&#8217;s New"
+msgstr "Qué hay de nuevo"
+
+#: admin/changelog.php:19
+msgid "1.0.8 Maintenance Release"
+msgstr "Versión de mantenimiento 1.0.8"
+
+#: admin/changelog.php:20
+msgid ""
+"The 1.0.8 release brings a number of plugins up to date, and improves "
+"compatibility with WordPress 3.9 and BuddyPress 2.0."
+msgstr ""
+"La versión 1.0.8 trae una serie de plugins actualizados, y mejora la "
+"compatibilidad con WordPress 3.9 y BuddyPress 2.0."
+
+#: admin/changelog.php:24
+msgid "Plugin Updates"
+msgstr "Actualizaciones de Plugins"
+
+#: admin/changelog.php:27
+msgid ""
+"Since the last version release, the following plugins were updated in CBOX:"
+msgstr ""
+"Desde la última versión, los siguientes plugins fueron actualizados en CBOX:"
+
+#: admin/changelog.php:42
+msgid "Theme Improvements"
+msgstr "Mejoras en Temas"
+
+#: admin/changelog.php:45
+msgid ""
+"Since the last version release, the following bugfixes and enhancements were "
+"added to the Commons In A Box theme:"
+msgstr ""
+"Desde la versión, se añadieron las siguientes correcciones de errores y "
+"mejoras del tema Commons In A Box:"
+
+#: admin/changelog.php:47
+msgid "Improved menu rendering"
+msgstr "Procesamiento mejorado del menú"
+
+#: admin/changelog.php:48
+msgid "Fixed the \"Background Color\" theme option in some instances"
+msgstr "Se fijó la opción de tema \"Color de fondo\" en algunos casos"
+
+#: admin/changelog.php:49
+msgid "Fixed the footer \"Background Overlay\" theme option"
+msgstr "Se fijó la opción de tema de pies de página \"Diseño de fondo \"."
+
+#: admin/changelog.php:50
+msgid "Minor styling enhancements to bbPress"
+msgstr "Mejoras menores en el estil bbPress"
+
+#: admin/changelog.php:72 admin/credits.php:107
+msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
+msgstr "<a href=\"%s\"> Vuelva al Panel CBOX y rarr; </a>"
+
+#: admin/credits.php:5
+msgid ""
+"Commons In A Box is a project of the <a href=\"%s\">City University of New "
+"York</a> and the <a href=\"%s\">Graduate Center, CUNY</a> and is made "
+"possible by a generous grant from the <a href=\"%s\">Alfred P. Sloan "
+"Foundation</a>."
+msgstr ""
+"Commons In A Box es un proyecto de la <a href=\"%s\">Universidad de Nueva "
+"York </a> y la <a href=\"%s\">Centro de Graduados, CUNY </a> y es posible "
+"gracias a una generosa donación de la <a href=\"%s\"> Fundación Alfred P. "
+"Sloan < /a>."
+
+#: admin/credits.php:18
+msgid "Commons In A Box is created by these individuals."
+msgstr "Commons In A Box es creada por estos individuos."
+
+#: admin/credits.php:20
+msgid "Project Leaders"
+msgstr "Líderes de Proyectos"
+
+#: admin/credits.php:26
+msgid "Project Lead"
+msgstr "Líder de Proyecto"
+
+#: admin/credits.php:31
+msgid "Lead Developer"
+msgstr "Desarrollador Principal"
+
+#: admin/credits.php:35
+msgid "Core Developers"
+msgstr "Desarrolladores Centrales"
+
+#: admin/credits.php:41 admin/credits.php:46
+msgid "Core Developer"
+msgstr "Desarrollador Central"
+
+#: admin/credits.php:50
+msgid "Theme Developers"
+msgstr "Desarrolladores temáticos"
+
+#: admin/credits.php:56 admin/credits.php:61
+msgid "Theme Developer"
+msgstr "Desarrollador temático"
+
+#: admin/credits.php:65
+msgid "Support Team"
+msgstr "Equipo de soporte"
+
+#: admin/credits.php:93
+msgid "Core Contributors to Commons In A Box 1.0.8"
+msgstr "Colaboradores Centrales a Commons In A Box 1.0.8"
+
+#: admin/credits.php:100
+msgid "External Libraries"
+msgstr "Bibliotecas externas"
+
+#: admin/credits.php:103
+msgid ""
+"For adding plugin dependencies for WordPress.  Portions rewritten and "
+"modified by CBOX."
+msgstr ""
+"Para agregar dependencias de plugins para WordPress. Porciones reescritas y "
+"modificadas por CBOX."
+
+#: admin/plugin-install.php:276
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr "Instalar Plugin %1$s (%2$d/%3$d)"
+
+#: admin/plugin-install.php:278
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+"El proceso de instalación está iniciando. Este proceso puede tardar un "
+"tiempo en algunos anfitriones, así que por favor sea paciente."
+
+#: admin/plugin-install.php:279
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+"Se ha producido un error durante la instalación de %1$<strong>%2$s</strong>"
+
+#: admin/plugin-install.php:280
+msgid "The installation of %1$s failed."
+msgstr "La instalación de  %1$s falló."
+
+#: admin/plugin-install.php:281
+msgid "%1$s installed successfully."
+msgstr "%1$s  instalado con éxito."
+
+#: admin/plugin-install.php:281
+msgid "Show Details"
+msgstr "Mostrar detalles"
+
+#: admin/plugin-install.php:281
+msgid "Hide Details"
+msgstr "Ocultar detalles"
+
+#: admin/plugin-install.php:282
+msgid "Plugins finished installing."
+msgstr "Plugins terminaron de instalarse."
+
+#: admin/plugin-install.php:309
+msgid "Plugins updated."
+msgstr "Plugins actualizados."
+
+#: admin/plugin-install.php:313
+msgid "Now Installing Plugins..."
+msgstr "Ahora Instalando Plugins ..."
+
+#: admin/plugin-install.php:328
+msgid "Now Activating Plugins..."
+msgstr "Ahora Activando Plugins ..."
+
+#: admin/plugin-install.php:335 admin/plugin-install.php:620
+msgid "Plugins activated."
+msgstr "Plugins activados."
+
+#: admin/plugin-install.php:426
+msgid "Return to the CBOX Plugins page"
+msgstr "Volver a la página Plugins de CBOX"
+
+#: admin/plugin-install.php:579
+msgid "Upgrading Existing Plugins..."
+msgstr "Actualizando Plugins existentes …"
+
+#: admin/plugin-install.php:601
+msgid "Installing Plugins..."
+msgstr "Instalando plugins ..."
+
+#: admin/plugin-install.php:615
+msgid "Activating Plugins..."
+msgstr "Activando Plugins .. ."
+
+#: admin/plugin-install.php:740 admin/plugin-install.php:748
+msgid "Group Forums"
+msgstr "Foros del Grupo"
+
+#: admin/plugin-install.php:749
+msgid "All forums created in groups can be found here."
+msgstr "Todos los foros creados en grupos se pueden encontrar aquí."
+
+#: admin/plugins-loader.php:121
+msgid "BuddyPress"
+msgstr "BuddyPress"
+
+#: admin/plugins-loader.php:122
+msgid ""
+"BuddyPress provides the core functionality of Commons In A Box, including "
+"groups and user profiles."
+msgstr ""
+"BuddyPress proporciona la funcionalidad principal de Commons In A Box, "
+"incluidos los grupos y perfiles de usuario."
+
+#: admin/plugins-loader.php:143
+msgid "Docs"
+msgstr "Docs"
+
+#: admin/plugins-loader.php:144
+msgid "Allows your members to collaborate on wiki-style Docs."
+msgstr "Permite que sus miembros colaboren en Docs al estilo wiki."
+
+#: admin/plugins-loader.php:157
+msgid "Wiki"
+msgstr "Wiki"
+
+#: admin/plugins-loader.php:158
+msgid "A sitewide wiki, powered by BuddyPress Docs"
+msgstr "Un sitio wiki, impulsado por BuddyPress Docs"
+
+#: admin/plugins-loader.php:170
+msgid "Group Email Subscription"
+msgstr "Suscripción por correo electrónico al Grupo"
+
+#: admin/plugins-loader.php:171
+msgid ""
+"Allows your community members to receive email notifications of activity "
+"within their groups."
+msgstr ""
+"Permite a sus miembros de la comunidad recibir notificaciones por correo "
+"electrónico de la actividad dentro de sus grupos."
+
+#: admin/plugins-loader.php:184
+msgid "Invite Anyone"
+msgstr "Invitar a Cualquiera"
+
+#: admin/plugins-loader.php:185
+msgid ""
+"An enhanced interface for inviting existing community members to groups, as "
+"well as a powerful tool for sending invitations, via email, to potential "
+"members."
+msgstr ""
+"Una interfaz mejorada para invitar a miembros de la comunidad a los grupos "
+"existentes, así como una poderosa herramienta para el envío de invitaciones, "
+"por correo electrónico, a los miembros potenciales."
+
+#: admin/plugins-loader.php:198
+msgid "Custom Profile Filters"
+msgstr "Filtros de Perfil personalizado"
+
+#: admin/plugins-loader.php:199
+msgid ""
+"Let your members specify what profile content they'd like to become search "
+"links, by wrapping the content in brackets."
+msgstr ""
+"Deje que sus miembros especifiquen qué contenidos de perfil les gustaría "
+"convertir en enlaces de búsqueda, envolviendo el contenido entre paréntesis."
+
+#: admin/plugins-loader.php:211
+msgid "bbPress Forums"
+msgstr "Foros bbPress"
+
+#: admin/plugins-loader.php:212
+msgid "Sitewide and group-specific discussion forums."
+msgstr "Foros de discusión en todo el sitio y específicos de grupo."
+
+#: admin/plugins-loader.php:224
+msgid "Featured Content Widget"
+msgstr "Widget de contenido destacado"
+
+#: admin/plugins-loader.php:225
+msgid ""
+"Provides a widget that allows you to select among five different content "
+"types to feature in a widget area."
+msgstr ""
+"Proporciona un widget que le permite seleccionar entre cinco diferentes "
+"tipos de contenidos que cuentan en un área de widget."
+
+#: admin/plugins-loader.php:235
+msgid "Group Announcements"
+msgstr "Noticias del Grupo"
+
+#: admin/plugins-loader.php:236
+msgid ""
+"Repurposes group activity updates, using an Announcements tab to groups."
+msgstr ""
+"Replantea actualizaciones de actividad del grupo, utilizando una ficha de "
+"anuncios para grupos."
+
+#: admin/plugins-loader.php:249
+msgid "More Privacy Options"
+msgstr "Más Opciones de privacidad"
+
+#: admin/plugins-loader.php:250
+msgid "Adds more blog privacy options for your users."
+msgstr "Añade más opciones de privacidad de blogs para sus usuarios."
+
+#: admin/plugins-loader.php:261
+msgid "Activity Privacy"
+msgstr "Privacidad de Actividad"
+
+#: admin/plugins-loader.php:262
+msgid ""
+"Works with More Privacy Options to keep private blog content out of public "
+"activity feeds."
+msgstr ""
+"Trabaja con Más Opciones de privacidad para mantener el contenido de blog "
+"privado de feeds de actividad pública."
+
+#: admin/plugins-loader.php:272
+msgid "Group Blogs"
+msgstr "Blogs de Grupo"
+
+#: admin/plugins-loader.php:305
+msgid "External RSS Feeds for Groups"
+msgstr "Feeds RSS Externos para Grupos"
+
+#: admin/plugins-loader.php:306
+msgid ""
+"Gives group creators and administrators the ability to attach external RSS "
+"feeds to groups."
+msgstr ""
+"Da a los creadores del grupo y los administradores la capacidad de adjuntar "
+"feeds RSS externos a los grupos."
+
+#: admin/plugins-loader.php:318
+msgid "Reply By Email"
+msgstr "Responder Por correo electrónico"
+
+#: admin/plugins-loader.php:319
+msgid ""
+"Reply to content from all over the community from the comfort of your email "
+"inbox"
+msgstr ""
+"De respuesta a los contenidos de toda la comunidad desde la comodidad de su "
+"bandeja de entrada de correo electrónico"
+
+#: admin/plugins-loader.php:679 admin/plugins-loader.php:827
+msgid "Commons In A Box Plugins"
+msgstr "Plugins Commons In A Box"
+
+#: admin/plugins-loader.php:680
+msgid "Plugins"
+msgstr "Plugins"
+
+#: admin/plugins-loader.php:723
+msgid ""
+"You do not have sufficient permissions to deactivate plugins for this site."
+msgstr "No tiene permisos suficientes para desactivar plugins para este sitio."
+
+#: admin/plugins-loader.php:776
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:496
+msgid "The following plugins have also been deactivated:"
+msgstr "Las siguientes plugins también han sido desactivados:"
+
+#: admin/plugins-loader.php:831
+msgid "Required Plugins"
+msgstr "Plugins Requeridos"
+
+#: admin/plugins-loader.php:833
+msgid "Commons In A Box requires the following plugins."
+msgstr "Commons In A Box requiere los siguientes plugins."
+
+#: admin/plugins-loader.php:839
+msgid "Recommended Plugins"
+msgstr "Plugins recomendados"
+
+#: admin/plugins-loader.php:841
+msgid ""
+"The following plugins are installed automatically during initial Commons In "
+"A Box setup.  We like them, but feel free to deactivate them if you don't "
+"need certain functionality."
+msgstr ""
+"Los siguientes plugins se instalan automáticamente durante la configuración "
+"inicial de Commons In A Box.  Nos gustan, pero no dude en desactivarlos si "
+"no necesita cierta funcionalidad."
+
+#: admin/plugins-loader.php:847
+msgid "&Agrave; la carte"
+msgstr "&Agrave;  la carte"
+
+#: admin/plugins-loader.php:849
+msgid ""
+"The following plugins work well with Commons In A Box, but they require a "
+"bit of additional setup, so we do not install them by default."
+msgstr ""
+"Los siguientes plugins funcionan bien con Commons In A Box, pero requieren "
+"un poco de configuración adicional, por lo que no los instalamos por defecto."
+
+#: admin/plugins-loader.php:850
+msgid "To install, check the plugins you want to install and click 'Update'."
+msgstr ""
+"Para instalar, marque los plugins que desea instalar y haga clic en "
+"\"Actualizar\"."
+
+#: admin/plugins-loader.php:882
+msgid "Update CBOX"
+msgstr "Actualizar CBOX"
+
+#: admin/plugins-loader.php:1011 admin/plugins-loader.php:1019
+msgid "Plugin"
+msgstr "Plugin"
+
+#: admin/plugins-loader.php:1012 admin/plugins-loader.php:1020
+msgid "Description"
+msgstr "Descripción"
+
+#: admin/plugins-loader.php:1041
+msgid "Check this box to install the plugin."
+msgstr "Marque esta casilla para instalar el plugin."
+
+#: admin/plugins-loader.php:1043
+msgid "Plugin is already active!"
+msgstr "¡El Plugin ya está activo!"
+
+#: admin/plugins-loader.php:1076
+msgid "Click here for documentation on this plugin, from commonsinabox.org"
+msgstr ""
+"Haga clic aquí para obtener la documentación de este plugin, desde "
+"commonsinabox.org"
+
+#: admin/plugins-loader.php:1078
+msgid "Info"
+msgstr "Info"
+
+#: admin/plugins-loader.php:1090
+msgid "Deactivate this plugin."
+msgstr "Desactivar este plugin."
+
+#: admin/plugins-loader.php:1092
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: admin/plugins-loader.php:1103
+msgid "Select the checkbox and click on 'Update' to upgrade this plugin."
+msgstr ""
+"Seleccione la casilla de verificación y haga clic en \"Actualizar\" para "
+"actualizar este plugin."
+
+#: admin/plugins-loader.php:1103
+msgid "Update available."
+msgstr "Actualización disponible."
+
+#: admin/plugins-loader.php:1120
+msgid "Requires: "
+msgstr "Requiere:"
+
+#: admin/plugins-loader.php:1130
+msgid "(enabled)"
+msgstr "(activado)"
+
+#: admin/plugins-loader.php:1132
+msgid "(disabled)"
+msgstr "(desactivado)"
+
+#: admin/plugins-loader.php:1134
+msgid "(not installed)"
+msgstr "(no instalado)"
+
+#: admin/plugins-loader.php:1151
+msgid "Update"
+msgstr "Actualizar"
+
+#: admin/settings-loader.php:70
+msgid "Member Profile Default Tab"
+msgstr "Pestaña por defecto para perfil de Miembro"
+
+#: admin/settings-loader.php:71
+msgid ""
+"On a member page, set the default tab to \"Profile\" instead of \"Activity\"."
+msgstr ""
+"En una página de miembros, establece la pestaña por defecto de \"perfil\" en "
+"lugar de \"Actividad\""
+
+#: admin/settings-loader.php:79
+msgid "Group Forum Default Tab"
+msgstr "Pestaña por defecto para Foro de Grupo"
+
+#: admin/settings-loader.php:80
+msgid ""
+"On a group page, set the default tab to \"Forum\" instead of \"Activity\"."
+msgstr ""
+"En una página de grupo, establezca la pestaña predeterminada en \"Forum\" en "
+"lugar de \"Actividad\"."
+
+#: admin/settings-loader.php:98
+msgid "Forum Full Text"
+msgstr "Texto Completo Foro"
+
+#: admin/settings-loader.php:99
+msgid ""
+"Check this box if you would like the full text of bbPress forum posts to "
+"appear in email notifications."
+msgstr ""
+"Marque esta casilla si desea que el texto completo de publicaciones en el "
+"foro bbPress aparezca en las notificaciones de correo electrónico."
+
+#: admin/settings-loader.php:144 admin/settings-loader.php:191
+msgid "Commons In A Box Settings"
+msgstr "Configuración Commons In A Box"
+
+#: admin/settings-loader.php:193
+msgid "CBOX can configure some important options for certain plugins."
+msgstr ""
+"CBOX puede configurar algunas opciones importantes  para ciertos plugins"
+
+#: admin/settings-loader.php:200
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: admin/theme-install.php:312
+msgid "Return to CBOX Dashboard &rarr;"
+msgstr "Volver al Panel de Control CBOX $rarr;"
+
+#: includes/frontend-bp.php:87
+msgid "Activity"
+msgstr "Actividad"
+
+#: includes/frontend-wp.php:61
+msgid "Updates available."
+msgstr "Actualizaciones disponibles"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:497
+msgid ""
+"The following plugins have been deactivated due to dependency conflicts:"
+msgstr ""
+"Los siguientes plugins han sido desactivados debido a conflictos de "
+"dependencia:"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:545
+msgid "Pre-activation warnings"
+msgstr "Advertencias pre-activación"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:548
+msgid ""
+"%s requires the following issues to be addressed before it can be activated: "
+msgstr ""
+"%s requiere los siguientes aspectos que deben revisarse antes de que pueda "
+"ser activado:"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:557
+msgid "Unactivated plugin"
+msgstr "Plugin desactivado"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:561
+msgid "(Activate it now!)"
+msgstr "(¡Active ahora!)"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:569
+msgid "Missing plugin"
+msgstr "Plugin faltante"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:571
+msgid "(<a href=\"%s\">Try to find the plugin and install it here</a>)"
+msgstr "(<a href=\"%s\"> Trate de encontrar el plugin e instálelo aquí </a>)"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:581
+msgid "Incorrect plugin version installed"
+msgstr "Versión instalada del plugin incorrecta"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:584
+msgid "%s (Version %s required)"
+msgstr "%s (Versión %s requerida)"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:595
+msgid "WordPress version %s required"
+msgstr "WordPress versión %s requerida"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:596
+msgid "(Upgrade now!)"
+msgstr "( ¡Actualice ahora!)"
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:648
+msgid ""
+"\"%s\" cannot be activated. Before you can activate this plugin, please <a "
+"href=\"%s\">address the issues listed here</a>."
+msgstr ""
+"\"%s\" no puede activarse. Antes de poder activar este plugin, por favor <a "
+"href=\"%s\"> aborde las cuestiones enumeradas aquí </a>."
+
+#. Plugin URI of the plugin/theme
+msgid "http://commonsinabox.org"
+msgstr "http://commonsinabox.org"
+
+#. Description of the plugin/theme
+msgid ""
+"A suite of community and collaboration tools for WordPress, designed "
+"especially for academic communities"
+msgstr ""
+"Un conjunto de herramientas de la comunidad y de colaboración para "
+"WordPress, diseñado especialmente para comunidades del sector académico"
+
+#. Author of the plugin/theme
+msgid "CUNY Academic Commons"
+msgstr "CUNY Académicos Comunes"
+
+#. Author URI of the plugin/theme
+msgid "http://commons.gc.cuny.edu"
+msgstr "http://commons.gc.cuny.edu"
