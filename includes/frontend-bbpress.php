@@ -43,6 +43,8 @@ class CBox_BBP_Autoload {
 		$this->enable_visual_editor();
 
 		$this->get_activity_id_hotfix();
+
+		$this->fix_form_actions();
 	}
 
 	/**
@@ -218,6 +220,61 @@ class CBox_BBP_Autoload {
 		remove_filter( 'bp_activity_get_specific', array( $this, 'add_count_total_to_get_specific' ), 10, 3 );
 
 		return $retval;
+	}
+
+	/**
+	 * Workaround for bbPress group form actions being wrong on BP 2.1 for bp-default derivatives.
+	 *
+	 * @since 1.0.9
+	 */
+	public function fix_form_actions() {
+		add_action( 'bbp_locate_template', array( $this, 'fix_group_forum_action' ), 10, 2 );
+
+		add_action( 'bbp_theme_before_topic_form', array( $this, 'remove_the_permalink_override' ) );
+		add_action( 'bbp_theme_before_reply_form', array( $this, 'remove_the_permalink_override' ) );
+	}
+
+	/**
+	 * Conditionally filter the_permalink to fix bbPress form actions.
+	 *
+	 * BP 2.1 breaks this functionality on bp-default-derivative themes.
+	 *
+	 * @param string $located       The full filepath to the located template.
+	 * @param string $template_name The filename for the template.
+	 */
+	public function fix_group_forum_action( $located, $template_name ) {
+		if ( version_compare( BP_VERSION, '2.1.0' ) < 0 ) {
+			return;
+		}
+
+		if ( 'form-reply.php' !== $template_name && 'form-topic.php' !== $template_name ) {
+			return;
+		}
+
+		if ( bp_is_group() && bp_is_current_action( 'forum' ) && ! bp_is_action_variable( 'edit', 2 ) ) {
+			add_filter( 'the_permalink', array( $this, 'override_the_permalink_with_group_permalink' ) );
+		}
+	}
+
+	/**
+	 * Callback added in CBox_BBP_Autoload::fix_group_forum_action().
+	 *
+	 * @since 1.0.9
+	 *
+	 * @param string $retval Permalink string.
+	 * @return string
+	 */
+	public function override_the_permalink_with_group_permalink( $retval = '' ) {
+		return bp_get_group_permalink();
+	}
+
+	/**
+	 * Remove the group permalink override just after it's been applied.
+	 *
+	 * @since 1.0.9
+	 */
+	public function remove_the_permalink_override() {
+		remove_filter( 'the_permalink', array( $this, 'override_the_permalink_with_group_permalink' ) );
 	}
 }
 
