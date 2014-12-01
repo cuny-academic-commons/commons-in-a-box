@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.8 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.8 release brings a number of plugins up to date, and improves compatibility with WordPress 3.9 and BuddyPress 2.0.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.9 Maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.9 release brings a number of plugins up to date, and improves compatibility with WordPress 4.0 and BuddyPress 2.1.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,13 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BP Groupblog 1.8.6</li>
-						<li>BuddyPress 2.0.1</li>
-						<li>bbPress 2.5.4</li>
-						<li>BuddyPress Docs 1.7.0</li>
-						<li>BuddyPress Docs Wiki add-on 1.0.7</li>
-						<li>Invite Anyone 1.2.1</li>
-						<li>More Privacy Options 3.9.1.1</li>
+						<li>BuddyPress 2.1.1</li>
 					</ul>
 
 				</div>
