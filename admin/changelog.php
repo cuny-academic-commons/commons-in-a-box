@@ -29,6 +29,7 @@
 						<li>BuddyPress 2.1.1</li>
 						<li>BuddyPress Docs 1.8.5</li>
 						<li>BuddyPress Docs Wiki add-on 1.0.8</li>
+						<li>Invite Anyone 1.3.4</li>
 					</ul>
 
 				</div>
