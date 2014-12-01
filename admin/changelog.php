@@ -27,6 +27,7 @@
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
 						<li>BP Group Announcements 1.0.4</li>
+						<li>BP Groupblog 1.8.9</li>
 						<li>BuddyPress 2.1.1</li>
 						<li>BuddyPress Docs 1.8.5</li>
 						<li>BuddyPress Docs Wiki add-on 1.0.8</li>
