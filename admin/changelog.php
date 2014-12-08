@@ -49,6 +49,7 @@
 						<li><?php _e( 'Fixed bug that caused a fatal error when parsing LESS stylesheets', 'cbox' ) ?></li>
 						<li><?php _e( 'Fixed bug that prevented header logo from showing up in recent versions of Chrome', 'cbox' ) ?></li>
 						<li><?php _e( 'Added support for @-mention autosuggest in BuddyPress 2.1', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved CSS for overlapping sidebar and header elements.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
