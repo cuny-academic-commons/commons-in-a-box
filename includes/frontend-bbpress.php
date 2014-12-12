@@ -167,7 +167,7 @@ class CBox_BBP_Autoload {
 		}
 
 		// we're hoping a fix is going to be ready by bbP 2.6
-		if ( function_exists( 'bbp_get_version' ) AND version_compare( bbp_get_version(), '2.6' ) >= 0 ) {
+		if ( version_compare( bbp_get_version(), '2.6' ) >= 0 ) {
 		        return;
 		}
 
