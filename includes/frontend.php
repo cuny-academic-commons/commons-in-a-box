@@ -115,8 +115,6 @@ class CBox_Frontend {
 					break;
 
 				// custom profile filters for buddypress
-				// this doesn't work since cpf loads its code on 'bp_init' instead of
-				// 'plugins_loaded'
 				case 'cpf' :
 					$this->plugins->$plugin = new stdClass;
 					$this->plugins->$plugin->active_check = 'cpfb_add_social_networking_links';
