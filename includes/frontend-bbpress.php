@@ -13,10 +13,6 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-// setup globals for bbPress
-cbox()->plugins->bbpress = new stdClass;
-cbox()->plugins->bbpress->is_setup = function_exists( 'bbpress' );
-
 /**
  * Hotfixes and workarounds for bbPress.
  *

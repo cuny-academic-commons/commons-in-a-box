@@ -29,27 +29,10 @@ class CBox_Frontend {
 		if ( empty( $this->settings ) )
 			return;
 
-		// setup our CBOX plugins object
-		// this will hold some plugin-specific references
-		cbox()->plugins = new stdClass;
-
-		add_action( 'plugins_loaded', array( $this, 'setup' ), 100 );
-	}
-
-	/**
-	 * Include the plugin mods and set up any necessary hooks
-	 *
-	 * Hooked to plugins_loaded to ensure that plugins have had a chance
-	 * to fully initialize
-	 *
-	 * @since 1.0.5
-	 */
-	public function setup() {
-		// setup includes
-		$this->includes();
-
-		// setup our hooks
-		$this->setup_hooks();
+		add_action( 'plugins_loaded', array( $this, 'includes' ), 99 );
+		add_action( 'plugins_loaded', array( $this, 'setup_hooks' ), 100 );
+		add_action( 'init', array( $this, 'includes' ), 99 );
+		add_action( 'init', array( $this, 'setup_hooks' ), 100 );
 	}
 
 	/**
@@ -66,6 +49,9 @@ class CBox_Frontend {
 
 		// merge admin settings with autoloaded ones
 		$this->settings = array_merge_recursive( $this->settings, $this->autoload );
+
+		// setup plugins
+		$this->setup_plugins();
 	}
 
 	/**
@@ -96,16 +82,82 @@ class CBox_Frontend {
 	}
 
 	/**
+	 * Setup plugins.
+	 *
+	 * What we're doing here is adding some properties so we can check for the
+	 * plugin's existence later on in CBOX_Frontend::includes().
+	 *
+	 * @since 1.0.9.1
+	 */
+	private function setup_plugins() {
+		// setup our CBOX plugins object
+		// this will hold some plugin-specific references
+		$this->plugins = new stdClass;
+
+		$plugins = array_keys( $this->settings );
+
+		// we're adding the string of the function name to each plugin so we can check
+		// for its existence later on a hook that is specified below.
+		foreach ( $plugins as $plugin ) {
+			switch ( $plugin ) {
+				// buddypress
+				case 'bp' :
+					$this->plugins->$plugin = new stdClass;
+					$this->plugins->$plugin->active_check = 'bp_include';
+					$this->plugins->$plugin->on_action    = 'plugins_loaded';
+					break;
+
+				// bbpress
+				case 'bbpress' :
+					$this->plugins->$plugin = new stdClass;
+					$this->plugins->$plugin->active_check = 'bbp_activation';
+					$this->plugins->$plugin->on_action    = 'plugins_loaded';
+					break;
+
+				// custom profile filters for buddypress
+				// this doesn't work since cpf loads its code on 'bp_init' instead of
+				// 'plugins_loaded'
+				case 'cpf' :
+					$this->plugins->$plugin = new stdClass;
+					$this->plugins->$plugin->active_check = 'cpfb_add_social_networking_links';
+					$this->plugins->$plugin->on_action    = 'init';
+					break;
+
+				// group email subscription
+				case 'ges' :
+					$this->plugins->$plugin = new stdClass;
+					$this->plugins->$plugin->active_check = 'ass_activate_extension';
+					$this->plugins->$plugin->on_action    = 'plugins_loaded';
+					break;
+
+				// wordpress
+				case 'wp' :
+					$this->plugins->$plugin = new stdClass;
+					$this->plugins->$plugin->active_check = 'wp';
+					$this->plugins->$plugin->on_action    = 'plugins_loaded';
+					break;
+			}
+		}
+	}
+
+	/**
 	 * Includes.
 	 *
 	 * We conditionally load up specific PHP files depending if a setting was
 	 * saved under the CBOX admin settings page.
 	 */
-	private function includes() {
-		// get plugins from CBOX settings
-		$plugins = array_keys( $this->settings );
+	public function includes() {
+		foreach ( $this->settings as $plugin => $classes ) {
+			// do not do this if we're not firing on the plugin's specific hook
+			if ( $this->plugins->$plugin->on_action !== current_filter() ) {
+				continue;
+			}
 
-		foreach ( $plugins as $plugin ) {
+			// if our plugin is not setup, do not load file
+			if ( ! function_exists( $this->plugins->$plugin->active_check ) ) {
+				continue;
+			}
+
 			if ( file_exists( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" ) ) {
 				require( cbox()->plugin_dir . "includes/frontend-{$plugin}.php" );
 			}
@@ -118,12 +170,17 @@ class CBox_Frontend {
 	 * We conditionally add our hooks depending if a setting was saved under the
 	 * CBOX admin settings page or if it is explicitly autoloaded by CBOX.
 	 */
-	private function setup_hooks() {
-
+	public function setup_hooks() {
 		foreach( $this->settings as $plugin => $classes ) {
-			// if our plugin is not setup, stop loading hooks now!
-			if ( empty( cbox()->plugins->$plugin->is_setup ) )
+			// do not do this if we're not firing on the plugin's specific hook
+			if ( $this->plugins->$plugin->on_action !== current_filter() ) {
 				continue;
+			}
+
+			// if our plugin is not setup, stop loading hooks now!
+			if ( ! function_exists( $this->plugins->$plugin->active_check ) ) {
+				continue;
+			}
 
 			// sanity check
 			$classes = array_unique( $classes );

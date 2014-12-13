@@ -13,11 +13,6 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-// setup globals for WordPress
-// not technically a plugin, but we sometimes need to modify WP core behavior
-cbox()->plugins->wp = new stdClass;
-cbox()->plugins->wp->is_setup = true; // WordPress is always available :)
-
 /**
  * Modifies the 'Updates' menu item in the WP Toolbar to omit numbers.
  *

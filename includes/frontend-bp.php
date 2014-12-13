@@ -14,10 +14,6 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-// setup globals for BuddyPress
-cbox()->plugins->bp = new stdClass;
-cbox()->plugins->bp->is_setup = function_exists( 'bp_include' );
-
 /**
  * Changes the default tab on a BP member page from 'Activity' to 'Profile'
  *

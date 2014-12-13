@@ -13,10 +13,6 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-// setup globals for GES
-cbox()->plugins->ges = new stdClass;
-cbox()->plugins->ges->is_setup = function_exists( 'ass_loader' );
-
 /**
  * Changes the default group subscription to "All Mail" from "No Email".
  *
