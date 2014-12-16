@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // setup globals for bbPress
 cbox()->plugins->bbpress = new stdClass;
-cbox()->plugins->bbpress->is_setup = function_exists( 'bbpress' );
+cbox()->plugins->bbpress->is_setup = function_exists( 'bbp_activation' );
 
 /**
  * Hotfixes and workarounds for bbPress.
