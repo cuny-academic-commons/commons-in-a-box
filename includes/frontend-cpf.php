@@ -13,6 +13,10 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
+// setup globals for bbPress
+cbox()->plugins->cpf = new stdClass;
+cbox()->plugins->cpf->is_setup = function_exists( 'custom_profile_filters_for_buddypress_init' );
+
 /**
  * Hotfixes and workarounds for CPF.
  *
