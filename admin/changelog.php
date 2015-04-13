@@ -27,6 +27,7 @@
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
 						<li>bbPress 2.5.6</li>
+						<li>BP Group Announcements 1.0.5</li>
 						<li>BP Groupblog 1.8.11</li>
 					</ul>
 
