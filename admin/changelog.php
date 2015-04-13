@@ -32,6 +32,7 @@
 						<li>BuddyPress Docs 1.8.6</li>
 						<li>BuddyPress Docs Wiki add-on 1.0.9</li>
 						<li>BuddyPress Group Email Subscription 3.5.1</li>
+						<li>Invite Anyone 1.3.7</li>
 					</ul>
 
 				</div>
