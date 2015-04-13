@@ -45,7 +45,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 = 1.0.10 =
 * Compatibility with WordPress 4.1 and BuddyPress 2.2
-* Updated plugins: bbPress 2.5.6, BP Groupblog 1.8.10
+* Updated plugins: bbPress 2.5.6, BP Groupblog 1.8.11
 
 = 1.0.9 =
 * Compatibility with WordPress 4.0 and BuddyPress 2.1
