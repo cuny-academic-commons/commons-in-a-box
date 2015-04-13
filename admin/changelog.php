@@ -29,6 +29,7 @@
 						<li>bbPress 2.5.6</li>
 						<li>BP Group Announcements 1.0.5</li>
 						<li>BP Groupblog 1.8.11</li>
+						<li>BuddyPress Docs Wiki add-on 1.0.9</li>
 					</ul>
 
 				</div>
