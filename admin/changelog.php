@@ -44,11 +44,15 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Improved compatibility with BuddyPress Groupblog', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed bug that caused a fatal error when parsing LESS stylesheets', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed bug that prevented header logo from showing up in recent versions of Chrome', 'cbox' ) ?></li>
-						<li><?php _e( 'Added support for @-mention autosuggest in BuddyPress 2.1', 'cbox' ) ?></li>
-						<li><?php _e( 'Improved CSS for overlapping sidebar and header elements.', 'cbox' ) ?></li>
+						<li><?php _e( 'Added an option to the Recent Blog Posts widget that allows the inclusion of groupblog-related posts.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved styling for forum topic headers.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed bug where theme admin panel JavaScript did not load on some setups.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed bug that prevented media uploads in the theme admin on some setups.', 'cbox' ) ?></li>
+						<li><?php _e( 'Updated registration templates to match recent versions of BuddyPress.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved appearance of form fields on IE.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved compatibility with bxSlider.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved localizability of some strings.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved appearance of groupblog navigation item.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
