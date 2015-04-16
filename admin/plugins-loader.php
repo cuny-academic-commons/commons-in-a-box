@@ -304,9 +304,9 @@ class CBox_Plugins {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'External RSS Feeds for Groups', 'cbox' ),
 			'cbox_description'  => __( 'Gives group creators and administrators the ability to attach external RSS feeds to groups.', 'cbox' ),
-			'depends'           => 'BuddyPress (>=1.2)',
-			'version'           => '1.5.2',
-			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.5.2.zip',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'version'           => '1.6.0',
+			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.6.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
 		) );
 
