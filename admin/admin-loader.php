@@ -1361,7 +1361,7 @@ class CBox_Admin {
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
 
-		.wp-badge {
+		.svg .wp-badge {
 		        position:absolute;
 		        width:190px; height:30px;
 		        background-color:#fff;
