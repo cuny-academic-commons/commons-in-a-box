@@ -50,6 +50,7 @@
 						<li><?php _e( 'Fixed bug where theme admin panel JavaScript did not load on some setups.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fixed bug that prevented media uploads in the theme admin on some setups.', 'cbox' ) ?></li>
 						<li><?php _e( 'Updated registration templates to match recent versions of BuddyPress.', 'cbox' ) ?></li>
+						<li><?php _e( "Improved appearance of CBOX Theme's mobile menu with the WP Admin Bar.", 'cbox' ) ?></li>
 						<li><?php _e( 'Improved appearance of form fields on IE.', 'cbox' ) ?></li>
 						<li><?php _e( 'Improved compatibility with bxSlider.', 'cbox' ) ?></li>
 						<li><?php _e( 'Improved localizability of some strings.', 'cbox' ) ?></li>
