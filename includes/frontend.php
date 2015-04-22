@@ -22,6 +22,11 @@ class CBox_Frontend {
 	 * Constructor.
 	 */
 	public function __construct() {
+		// Sanity check: ensure that BuddyPress is running.
+		if ( ! function_exists( 'buddypress' ) ) {
+			return;
+		}
+
 		// setup globals
 		$this->setup_globals();
 
