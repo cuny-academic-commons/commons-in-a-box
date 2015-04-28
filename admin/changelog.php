@@ -17,7 +17,7 @@
 
 			<div class="changelog">
 				<h3><?php _e( '1.0.10 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.10 release brings a number of plugins up to date, and improves compatibility with WordPress 4.1 and BuddyPress 2.2.', 'cbox' ) ?></p>
+				<p><?php _e( 'The 1.0.10 release brings a number of plugins up to date, and improves compatibility with WordPress 4.2 and BuddyPress 2.2.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
