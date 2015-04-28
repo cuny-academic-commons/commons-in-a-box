@@ -1361,7 +1361,7 @@ class CBox_Admin {
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
 
-		.wp-badge {
+		.svg .wp-badge {
 		        position:absolute;
 		        width:190px; height:30px;
 		        background-color:#fff;
@@ -1419,6 +1419,15 @@ class CBox_Admin {
 		span.enabled       {color:#008800;}
 		span.disabled      {color:#880000;}
 		span.not-installed {color:#9f9f9f;}
+
+		/* Responsive */
+		@media screen and (max-width: 600px) {
+			#welcome-panel {min-height:0;}
+			#welcome-panel .wp-badge, .welcome-panel-close {display:none;}
+			.welcome-panel-content .about-description, .welcome-panel h3 {margin-right:10px;}
+			.welcome-panel-dismiss {margin-bottom:2em;}
+			.secondary-panel .welcome-panel-column {width:auto;}
+		}
 		</style>
 
 	<?php

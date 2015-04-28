@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.8 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.8 release brings a number of plugins up to date, and improves compatibility with WordPress 3.9 and BuddyPress 2.0.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.10 Maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.10 release brings a number of plugins up to date, and improves compatibility with WordPress 4.1 and BuddyPress 2.2.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,13 +26,16 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BP Groupblog 1.8.6</li>
-						<li>BuddyPress 2.0.1</li>
-						<li>bbPress 2.5.4</li>
-						<li>BuddyPress Docs 1.7.0</li>
-						<li>BuddyPress Docs Wiki add-on 1.0.7</li>
-						<li>Invite Anyone 1.2.1</li>
-						<li>More Privacy Options 3.9.1.1</li>
+						<li>bbPress 2.5.7</li>
+						<li>BP Group Announcements 1.0.5</li>
+						<li>BP Groupblog 1.8.11</li>
+						<li>BuddyPress 2.2.3.1</li>
+						<li>BuddyPress Docs 1.8.6</li>
+						<li>BuddyPress Docs Wiki add-on 1.0.9</li>
+						<li>BuddyPress Group Email Subscription 3.5.1</li>
+						<li>CAC Featured Content 1.0.5</li>
+						<li>External Group Blogs 1.6.0</li>
+						<li>Invite Anyone 1.3.7</li>
 					</ul>
 
 				</div>
@@ -44,10 +47,17 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Improved menu rendering', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed the "Background Color" theme option in some instances', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed the footer "Background Overlay" theme option', 'cbox' ) ?></li>
-						<li><?php _e( 'Minor styling enhancements to bbPress', 'cbox' ) ?></li>
+						<li><?php _e( 'Added an option to the Recent Blog Posts widget that allows the inclusion of groupblog-related posts.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved styling for forum topic headers.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed bug where theme admin panel JavaScript did not load on some setups.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed bug that prevented media uploads in the theme admin on some setups.', 'cbox' ) ?></li>
+						<li><?php _e( 'Updated registration templates to match recent versions of BuddyPress.', 'cbox' ) ?></li>
+						<li><?php _e( 'Added support for the DiRT Directory Client plugin.', 'cbox' ) ?></li>
+						<li><?php _e( "Improved appearance of CBOX Theme's mobile menu with the WP Admin Bar.", 'cbox' ) ?></li>
+						<li><?php _e( 'Improved appearance of form fields on IE.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved compatibility with bxSlider.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved localizability of some strings.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved appearance of groupblog navigation item.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
