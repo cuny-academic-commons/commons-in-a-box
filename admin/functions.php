@@ -394,9 +394,10 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 
 	switch ( $class_name ) {
 		case 'CBox_Theme_Installer' :
-			// if download url is not from github, stop now!
-			if ( strpos( $obj->options['url'], 'github.com' ) === false )
+			// if download url is not from github or a local install, stop now!
+			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false && ( ! empty( $obj->options['url'] ) && strpos( $obj->options['url'], 'commons-in-a-box/includes/zip' ) === false ) ) {
 				return $source;
+			}
 
 			global $wp_filesystem;
 
@@ -419,9 +420,10 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			break;
 
 		case 'CBox_Plugin_Upgrader' :
-			// if download url is not from github, stop now!
-			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false )
+			// if download url is not from github or a local install, stop now!
+			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false && strpos( $obj->skin->options['url'], 'commons-in-a-box/includes/zip' ) === false ) {
 				return $source;
+			}
 
 			global $wp_filesystem;
 
