@@ -45,7 +45,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 = 1.0.11 =
 * Compatibility with BuddyPress 2.3
-* Updated plugins: bbPress 2.5.8, Invite Anyone 1.3.8
+* Updated plugins: bbPress 2.5.8, Invite Anyone 1.3.8, CAC Featured Content 1.0.6
 
 = 1.0.10 =
 * Compatibility with WordPress 4.2 and BuddyPress 2.2

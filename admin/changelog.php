@@ -27,6 +27,7 @@
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
 						<li>bbPress 2.5.8</li>
+						<li>CAC Featured Content 1.0.6</li>
 						<li>Invite Anyone 1.3.8</li>
 					</ul>
 
