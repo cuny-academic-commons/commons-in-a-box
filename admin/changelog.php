@@ -29,6 +29,7 @@
 						<li>bbPress 2.5.8</li>
 						<li>CAC Featured Content 1.0.6</li>
 						<li>Invite Anyone 1.3.8</li>
+						<li>More Privacy Options 4.1.1</li>
 					</ul>
 
 				</div>
