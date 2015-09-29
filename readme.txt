@@ -43,6 +43,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.11 =
+* Updated plugins: bbPress 2.5.8
+
 = 1.0.10 =
 * Compatibility with WordPress 4.2 and BuddyPress 2.2
 * Fixed bug that could cause fatal errors in some cases where bbPress is not network-activated

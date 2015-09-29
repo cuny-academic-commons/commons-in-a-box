@@ -26,16 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>bbPress 2.5.7</li>
-						<li>BP Group Announcements 1.0.5</li>
-						<li>BP Groupblog 1.8.11</li>
-						<li>BuddyPress 2.2.3.1</li>
-						<li>BuddyPress Docs 1.8.6</li>
-						<li>BuddyPress Docs Wiki add-on 1.0.9</li>
-						<li>BuddyPress Group Email Subscription 3.5.1</li>
-						<li>CAC Featured Content 1.0.5</li>
-						<li>External Group Blogs 1.6.0</li>
-						<li>Invite Anyone 1.3.7</li>
+						<li>bbPress 2.5.8</li>
 					</ul>
 
 				</div>
