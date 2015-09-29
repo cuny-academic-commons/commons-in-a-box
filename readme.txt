@@ -44,6 +44,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.11 =
+* Compatibility with BuddyPress 2.3
 * Updated plugins: bbPress 2.5.8
 
 = 1.0.10 =
