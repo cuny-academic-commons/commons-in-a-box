@@ -46,6 +46,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0.11 =
 * Compatibility with WordPress 4.3 and BuddyPress 2.3
 * Updated plugins: bbPress 2.5.8, BuddyPress Docs 1.8.8, CAC Featured Content 1.0.6, Invite Anyone 1.3.8, More Privacy Options 4.1.1
+* Theme improvements: Fixed bug that prevented URL field types from being displayed properly when registering or editing one's profile; Fixed localization on Registration and Activation pages; Fixed JavaScript error that occurred after Joyride tour completion.
 
 = 1.0.10 =
 * Compatibility with WordPress 4.2 and BuddyPress 2.2

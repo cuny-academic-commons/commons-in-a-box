@@ -42,17 +42,9 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Added an option to the Recent Blog Posts widget that allows the inclusion of groupblog-related posts.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improved styling for forum topic headers.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed bug where theme admin panel JavaScript did not load on some setups.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed bug that prevented media uploads in the theme admin on some setups.', 'cbox' ) ?></li>
-						<li><?php _e( 'Updated registration templates to match recent versions of BuddyPress.', 'cbox' ) ?></li>
-						<li><?php _e( 'Added support for the DiRT Directory Client plugin.', 'cbox' ) ?></li>
-						<li><?php _e( "Improved appearance of CBOX Theme's mobile menu with the WP Admin Bar.", 'cbox' ) ?></li>
-						<li><?php _e( 'Improved appearance of form fields on IE.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improved compatibility with bxSlider.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improved localizability of some strings.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improved appearance of groupblog navigation item.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed bug that prevented URL field types from being displayed properly when registering or editing one\'s profile.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed localization on Registration and Activation pages.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed JavaScript error that occurred after Joyride tour completion.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
