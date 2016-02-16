@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# CBOX wp.org distro script
+#
+# Before using:
+#   1. Ensure that 1.0.x branch has pinned all plugins to latest version.
+#   2. Checkout a new branch for wp.org.  @todo decide on a branch name.
+#   3. Create the following folder - 'includes/zip'
+#
+# Next, run this bash script.
+#
+# By default, this bash script will:
+#   1. Download all Github plugins and themes and place them in the
+#      /includes/zip/ folder.
+#   2. Switch references to all Github links in CBOX to the local filepath
+#
+# If you don't need to re-download all Github assets, use 'cbox-distro no-dl'
+# to just modify the filepath references.
+#
+# Confirm that the changes are accurate, then commit and deploy to wp.org!
+
+# pass any parameter to disable github fetching
+if [ -z "$1" ]; then
+	download=true
+else
+	download=false
+fi
+
+# fetch all github links and save to /includes/zip/ directory
+if $download ; then
+	# delete everything in the /includes/zip/ directory
+	rm includes/zip/* 2> /dev/null
+
+	# grab all github links from plugins-loader.php and download them to /includes/zip/
+	# requires wget
+	grep -o --null "https\?://github\.com.*\w" admin/plugins-loader.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
+
+	# grab all github links from theme-install.php and download them to /includes/zip/
+	# requires wget
+	grep -o --null "https\?://github\.com.*\w" admin/theme-install.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
+
+	# previous try with curl resulted in downloaded zips that WP didn't like
+	#grep -o --null "https\?://github\.com.*\w" admin/plugins-loader.php | awk '{split($0,a,"/"); b[0] = "curl -L -o includes/zip/" a[5] "-" a[7] " -i " $0; print b[0]; b[0] | getline v; close(b[0]); }'
+
+	# output message
+	echo Github downloads complete and moved to /includes/zip/ folder.
+fi
+
+# replace references of github links to internal file paths in plugins-loader.php
+sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
+s,/archive/,-,g" admin/plugins-loader.php
+
+# replace references of github links to internal file paths in theme-install.php
+sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
+s,/archive/,-,g" admin/theme-install.php
+
+# remove .bak files needed during sed replacement
+rm `find admin/ -name *.bak`
+
+# output message
+echo Github references changed to use local filepath.
+echo All done!
