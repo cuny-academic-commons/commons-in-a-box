@@ -45,6 +45,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 = 1.0.12 =
 * Compatibility with WordPress 4.4 and BuddyPress 2.4
+* Updated plugins: BuddyPress Group Email Subscription 3.6.0
 
 = 1.0.11 =
 * Compatibility with WordPress 4.3 and BuddyPress 2.3
