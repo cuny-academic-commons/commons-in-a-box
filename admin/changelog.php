@@ -41,9 +41,10 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Fixed bug that prevented URL field types from being displayed properly when registering or editing one\'s profile.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed localization on Registration and Activation pages.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed JavaScript error that occurred after Joyride tour completion.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed problems with CSS and JS assets on SSL-optional sites.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fixed PHP notices in Recent Posts widget.', 'cbox' ) ?></li>
+						<li><?php _e( 'Allowed slider settings to be filtered by a child theme.', 'cbox' ) ?></li>
+						<li><?php _e( 'Enabled Composer support for improved theme management.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
