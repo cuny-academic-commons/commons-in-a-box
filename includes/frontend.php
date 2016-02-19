@@ -58,6 +58,9 @@ class CBox_Frontend {
 	 * @since 1.0.1
 	 */
 	private function setup_globals() {
+		// bail if BuddyPress not yet present
+		if ( ! function_exists( 'bp_get_option' ) ) return;
+
 		// get our CBOX admin settings
 		$this->settings = (array) bp_get_option( cbox()->settings_key );
 
