@@ -46,6 +46,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 = 1.0.12 =
 * Compatibility with WordPress 4.4 and BuddyPress 2.4
 * Updated plugins: BuddyPress Group Email Subscription 3.6.0, BuddyPress Groupblog 1.8.12, Invite Anyone 1.3.9
+* Fixed bug that could cause errors when installing Commons In A Box on top of an existing BuddyPress installation.
 * Theme improvements: Fixed problems with CSS and JS assets on SSL-optional sites; Fixed PHP notices in Recent Posts widget; Allowed slider settings to be filtered by child theme; Enabled Composer support for theme management
 
 = 1.0.11 =

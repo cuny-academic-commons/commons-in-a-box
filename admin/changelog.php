@@ -17,7 +17,7 @@
 
 			<div class="changelog">
 				<h3><?php _e( '1.0.12 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.11 release brings a number of plugins up to date, and improves compatibility with BuddyPress 2.4.', 'cbox' ) ?></p>
+				<p><?php _e( 'The 1.0.12 release brings a number of plugins up to date, and improves compatibility with BuddyPress 2.4.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -50,7 +50,6 @@
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -58,12 +57,11 @@
 
 					<div class="last-feature">
 
-						<p><strong>Paste from Microsoft Word in forums</strong> We've added a button to the visual editor to make it easier to paste content that you've formatted in Microsoft Word.</p>
+						<p>Fixed a bug that could cause errors when installing Commons In A Box on top of an existing BuddyPress installation.</p>
 
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
