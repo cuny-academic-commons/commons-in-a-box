@@ -41,7 +41,7 @@ class CBox_Theme_Specs {
 	 */
 	private static $cbox_theme = array(
 		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0.11',
+		'version'        => '1.0.12',
 		'directory_name' => 'cbox-theme'
 	);
 
@@ -49,8 +49,7 @@ class CBox_Theme_Specs {
 	 * Static bootstrapping init method.
 	 */
 	public static function init() {
-		self::$cbox_theme['download_url'] = 'http://github.com/cuny-academic-commons/cbox-theme/archive/master.zip';
-//		self::$cbox_theme['download_url'] = 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.11.zip';
+		self::$cbox_theme['download_url'] = 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.12.zip';
 		return new self();
 	}
 
