@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
-Tested up to: 4.2.1
-Stable tag: 1.0.10
+Tested up to: 4.4.2
+Stable tag: 1.0.12
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -42,6 +42,17 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Spanish: Andrew Kurtis
 
 == Changelog ==
+
+= 1.0.12 =
+* Compatibility with WordPress 4.4 and BuddyPress 2.4
+* Updated plugins: BuddyPress Group Email Subscription 3.6.0, BuddyPress Groupblog 1.8.12, Invite Anyone 1.3.9
+* Fixed bug that could cause errors when installing Commons In A Box on top of an existing BuddyPress installation.
+* Theme improvements: Fixed problems with CSS and JS assets on SSL-optional sites; Fixed PHP notices in Recent Posts widget; Allowed slider settings to be filtered by child theme; Enabled Composer support for theme management
+
+= 1.0.11 =
+* Compatibility with WordPress 4.3 and BuddyPress 2.3
+* Updated plugins: bbPress 2.5.8, BuddyPress Docs 1.8.8, CAC Featured Content 1.0.6, Invite Anyone 1.3.8, More Privacy Options 4.1.1
+* Theme improvements: Fixed bug that prevented URL field types from being displayed properly when registering or editing one's profile; Fixed localization on Registration and Activation pages; Fixed JavaScript error that occurred after Joyride tour completion.
 
 = 1.0.10 =
 * Compatibility with WordPress 4.2 and BuddyPress 2.2

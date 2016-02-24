@@ -120,7 +120,7 @@ class CBox_Plugins {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '2.2.3.1',
+			'version'           => '2.4.3',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -142,9 +142,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.8.6',
+			'version'           => '1.8.8',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.8.6.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.8.8.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only'
@@ -170,8 +170,8 @@ class CBox_Plugins {
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '3.5.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.5.1.zip',
+			'version'           => '3.6.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.6.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'admin.php?page=ass_admin_options'
@@ -183,9 +183,9 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.3.7',
+			'version'           => '1.3.9',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.7.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.9.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone'
@@ -210,8 +210,8 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
-			'version'           => '2.5.7',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.7.zip',
+			'version'           => '2.5.8',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.8.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only'
@@ -223,8 +223,8 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Featured Content Widget', 'cbox' ),
 			'cbox_description'  => __( 'Provides a widget that allows you to select among five different content types to feature in a widget area.', 'cbox' ),
-			'version'           => '1.0.5',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.5.zip',
+			'version'           => '1.0.6',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/cac-featured-content.1.0.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
@@ -248,7 +248,7 @@ class CBox_Plugins {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
 				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
-				'version'           => '3.9.1.1',
+				'version'           => '4.1.1',
 				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
 				'network_settings'  => 'settings.php#menu'
@@ -272,8 +272,8 @@ class CBox_Plugins {
 				'cbox_name'         => __( 'Group Blogs', 'cbox' ),
 				'cbox_description'  => 'Enables a BuddyPress group to be associated with a blog, by placing a Blog link in the group navigation and, optionally, syncing group membership with blog roles.',
 				'depends'           => 'BuddyPress (>=1.6)',
-				'version'           => '1.8.11',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.11.zip',
+				'version'           => '1.8.12',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.8.12.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
@@ -356,7 +356,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.2.3.1.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.4.3.zip'
 		) );
 	}
 
