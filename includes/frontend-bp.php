@@ -62,6 +62,11 @@ class CBox_BP_Group_Forum_Tab {
 				return $retval;
 			}
 
+			// Allow non-logged-in users to view a private group's homepage.
+			if ( false === is_user_logged_in() && groups_get_current_group() && 'private' === bp_get_new_group_status() ) {
+				return $retval;
+			}
+
 			// reconfigure the group's nav
 			add_action( 'bp_actions', array( $this, 'config_group_nav' ) );
 
