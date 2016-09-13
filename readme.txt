@@ -43,6 +43,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.0.13 =
+* Update plugins: BuddyPress Docs 1.9.1, CAC Featured Content 1.0.7
+
 = 1.0.12 =
 * Compatibility with WordPress 4.4 and BuddyPress 2.4
 * Updated plugins: BuddyPress Group Email Subscription 3.6.0, BuddyPress Groupblog 1.8.12, Invite Anyone 1.3.9
