@@ -30,6 +30,7 @@
 						<li>BuddyPress Docs 1.9.1</li>
 						<li>BuddyPress Docs Wiki 1.9.1</li>
 						<li>CAC Featured Content 1.0.7</li>
+						<li>Invite Anyone 1.3.11</li>
 					</ul>
 
 				</div>
