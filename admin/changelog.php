@@ -45,10 +45,10 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Fixed problems with CSS and JS assets on SSL-optional sites.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed PHP notices in Recent Posts widget.', 'cbox' ) ?></li>
-						<li><?php _e( 'Allowed slider settings to be filtered by a child theme.', 'cbox' ) ?></li>
-						<li><?php _e( 'Enabled Composer support for improved theme management.', 'cbox' ) ?></li>
+						<li><?php _e( 'Improved escaping for some strings.', 'cbox' ) ?></li>
+						<li><?php _e( 'Don\'t show settings links when Settings component is inactive.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix some PHP notices.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix bug that prevented admins from visiting a private group\'s Manage tab.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
