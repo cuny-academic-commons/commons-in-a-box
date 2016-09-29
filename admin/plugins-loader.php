@@ -1100,7 +1100,7 @@ class CBox_Plugins {
 
 							<?php /* upgrade notice */ ?>
 							<?php if ( $state == 'upgrade' ) : ?>
-								<div class="plugin-update-tr"><p class="update-message" title="<?php _e( "Select the checkbox and click on 'Update' to upgrade this plugin.", 'cbox' ); ?>"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
+								<div class="plugin-card"><p class="update-now" title="<?php _e( "Select the checkbox and click on 'Update' to upgrade this plugin.", 'cbox' ); ?>"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
 							<?php endif; ?>
 						</div>
 						<!-- end - plugin row links -->
