@@ -483,7 +483,7 @@ class CBox_Plugins {
 		if ( empty( $active ) )
 			return false;
 
-		$active = $active['deactivate'];
+		$active = isset( $active['deactivate'] ) ? $active['deactivate'] : array();
 
 		$settings = array();
 
