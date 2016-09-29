@@ -644,12 +644,16 @@ class Plugin_Dependencies_UI {
 		// Add variables depending if WP install is 4.6 or not.
 		$css_class = function_exists( 'wp_get_ext_types' ) ? 'cbox-shiny' : 'cbox-not-shiny';
 		$format    = function_exists( 'wp_get_ext_types' ) ? '<p>%s</p>' : '%s';
+
+		$checkbox_id = 'checkbox_' . md5( $plugin_data['Name'] );
 	?>
 		<tr class="plugin-update-tr cbox-plugin <?php echo $css_class; ?>">
 			<td class="plugin-update" colspan="3">
 				<div class="update-message notice-error">
 					<?php printf( $format, sprintf( __( '"%s" cannot be activated. Before you can activate this plugin, please <a href="%s">address the issues listed here</a>.', 'plugin-dependencies' ), $plugin_data['Name'], '#warnings-' . sanitize_title( $plugin_data['Name'] ) ) ); ?>
 				</div>
+
+				<script type='text/javascript'>document.getElementById('<?php echo $checkbox_id; ?>').disabled = true;</script>
 			</td>
 		</tr>
 	<?php
