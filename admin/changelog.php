@@ -52,6 +52,7 @@
 						<li><?php _e( 'Don\'t show settings links when Settings component is inactive.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fix some PHP notices.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fix bug that prevented admins from visiting a private group\'s Manage tab.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix bug with Manage Folders interface in BuddyPress Docs 1.9+', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
