@@ -210,8 +210,8 @@ class CBox_Plugins {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
-			'version'           => '2.5.10',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.10.zip',
+			'version'           => '2.5.12',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.12.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only'

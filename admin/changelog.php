@@ -26,7 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li></li>
+						<li>bbPress 2.5.12</li>
 					</ul>
 
 				</div>
