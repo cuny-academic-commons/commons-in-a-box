@@ -30,6 +30,7 @@
 						<li>BuddyPress 2.7.3</li>
 						<li>BuddyPress Docs 1.9.2</li>
 						<li>BuddyPress Group Email Subscription 3.7.0</li>
+						<li>Invite Anyone 1.3.12</li>
 					</ul>
 
 				</div>
