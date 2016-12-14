@@ -44,7 +44,7 @@
 					<ul>
 						<li><?php _e( 'Fix bug that prevented secondary profile group tabs from appearing in Edit mode.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fix bug that caused post trackbacks and pingbacks not to appear in some cases.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix some PHP deprecation and error otices.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix some PHP deprecation and error notices.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fix bug that caused images and other elements not to render properly in theme documentation.', 'cbox' ) ?></li>
 					</ul>
 
