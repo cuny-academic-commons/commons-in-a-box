@@ -29,6 +29,7 @@
 						<li>bbPress 2.5.12</li>
 						<li>BuddyPress 2.7.3</li>
 						<li>BuddyPress Docs 1.9.2</li>
+						<li>BuddyPress Group Email Subscription 3.7.0</li>
 					</ul>
 
 				</div>
