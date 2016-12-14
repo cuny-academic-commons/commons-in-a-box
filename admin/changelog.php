@@ -28,6 +28,7 @@
 					<ul>
 						<li>bbPress 2.5.12</li>
 						<li>BuddyPress 2.7.3</li>
+						<li>BuddyPress Docs 1.9.2</li>
 					</ul>
 
 				</div>
