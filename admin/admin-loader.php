@@ -1261,6 +1261,10 @@ class CBox_Admin {
 	?>
 
 		<style type="text/css">
+		/* Plugin row */
+		.row-actions-visible .plugin-card {width: 100%; padding: 0px 8px; margin: 0;}
+		.row-actions-visible .plugin-card .update-now {line-height: 1.8;}
+
 		#adminmenu #toplevel_page_cbox .wp-menu-image {
 			background: url('<?php echo $menu_icon_url; ?>');
 			background-repeat: no-repeat;

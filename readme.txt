@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
-Tested up to: 4.4.2
-Stable tag: 1.0.12
+Tested up to: 4.7
+Stable tag: 1.0.14
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -42,6 +42,16 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Spanish: Andrew Kurtis
 
 == Changelog ==
+
+= 1.0.14 =
+* Compatibility with WordPress 4.7 and BuddyPress 2.7
+* Updated plugins: bbPress 2.5.12, BuddyPress 2.7.3, BuddyPress Docs 1.9.2, BuddyPress Group Email Subscription 3.7.0, Invite Anyone 1.3.12
+* Theme improvements: Fix bug that prevented secondary profile group tabs from appearing in Edit mode; Fix bug that caused post trackbacks and pingbacks not to appear in some cases; Fix some PHP deprecation and error notices; Fix bug that caused images and other elements not to render properly in theme documentation.
+
+= 1.0.13 =
+* Compatibility with WordPress 4.6 and BuddyPress 2.6
+* Update plugins: bbPress 2.5.10, BP Groupblog 1.8.13, BuddyPress Docs 1.9.1, BuddyPress Docs Wiki 1.0.10, CAC Featured Content 1.0.7, External Group Blogs 1.6.1, Invite Anyone 1.3.11, More Privacy Options 4.6
+* Theme improvements: Improved escaping for some strings; Don't show settings links when Settings component is inactive; Fix some PHP notices; Fix bug that prevented admins from visiting a private group's Manage tab; Fix bug with Manage Folders interface in BuddyPress Docs 1.9+
 
 = 1.0.12 =
 * Compatibility with WordPress 4.4 and BuddyPress 2.4

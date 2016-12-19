@@ -62,6 +62,11 @@ class CBox_BP_Group_Forum_Tab {
 				return $retval;
 			}
 
+			// Allow non-logged-in users to view a private group's homepage.
+			if ( false === is_user_logged_in() && groups_get_current_group() && 'private' === bp_get_new_group_status() ) {
+				return $retval;
+			}
+
 			// reconfigure the group's nav
 			add_action( 'bp_actions', array( $this, 'config_group_nav' ) );
 
@@ -83,8 +88,16 @@ class CBox_BP_Group_Forum_Tab {
 	public function config_group_nav() {
 		$group_slug = bp_current_item();
 
-		buddypress()->bp_options_nav[$group_slug]['forum']['position'] = 0;
-		buddypress()->bp_options_nav[$group_slug]['home']['name']      = __( 'Activity', 'buddypress' );
+		// BP 2.6+.
+		if ( function_exists( 'bp_rest_api_init' ) ) {
+			buddypress()->groups->nav->edit_nav( array( 'position' => 0 ), 'forum', $group_slug );
+			buddypress()->groups->nav->edit_nav( array( 'name' => __( 'Activity', 'buddypress' ) ), 'home', $group_slug );
+
+		// Older versions of BP.
+		} else {
+			buddypress()->bp_options_nav[$group_slug]['forum']['position'] = 0;
+			buddypress()->bp_options_nav[$group_slug]['home']['name']      = __( 'Activity', 'buddypress' );
+		}
 
 	}
 }

@@ -1,14 +1,14 @@
-# Copyright (C) 2015 Commons In A Box
+# Copyright (C) 2016 Commons In A Box
 # This file is distributed under the same license as the Commons In A Box package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Commons In A Box 1.0.10\n"
+"Project-Id-Version: Commons In A Box 1.0.14\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commons-in-a-box\n"
-"POT-Creation-Date: 2015-10-09 02:45:28+00:00\n"
+"POT-Creation-Date: 2016-12-19 19:12:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
-#. #-#-#-#-#  cbox.pot (Commons In A Box 1.0.10)  #-#-#-#-#
+#. #-#-#-#-#  cbox.pot (Commons In A Box 1.0.14)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: admin/admin-loader.php:404 admin/admin-loader.php:405
 msgid "Commons In A Box"
@@ -403,13 +403,13 @@ msgid "What&#8217;s New"
 msgstr ""
 
 #: admin/changelog.php:19
-msgid "1.0.11 Maintenance Release"
+msgid "1.0.14 maintenance Release"
 msgstr ""
 
 #: admin/changelog.php:20
 msgid ""
-"The 1.0.11 release brings a number of plugins up to date, and improves "
-"compatibility with BuddyPress 2.3."
+"The 1.0.14 release brings a number of plugins up to date, and improves "
+"compatibility with WordPress 4.7 and BuddyPress 2.7."
 msgstr ""
 
 #: admin/changelog.php:24
@@ -433,19 +433,27 @@ msgstr ""
 
 #: admin/changelog.php:45
 msgid ""
-"Fixed bug that prevented URL field types from being displayed properly when "
-"registering or editing one's profile."
+"Fix bug that prevented secondary profile group tabs from appearing in Edit "
+"mode."
 msgstr ""
 
 #: admin/changelog.php:46
-msgid "Fixed localization on Registration and Activation pages."
+msgid ""
+"Fix bug that caused post trackbacks and pingbacks not to appear in some "
+"cases."
 msgstr ""
 
 #: admin/changelog.php:47
-msgid "Fixed JavaScript error that occurred after Joyride tour completion."
+msgid "Fix some PHP deprecation and error notices."
 msgstr ""
 
-#: admin/changelog.php:69 admin/credits.php:107
+#: admin/changelog.php:48
+msgid ""
+"Fix bug that caused images and other elements not to render properly in "
+"theme documentation."
+msgstr ""
+
+#: admin/changelog.php:70 admin/credits.php:107
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -866,7 +874,7 @@ msgstr ""
 msgid "Return to CBOX Dashboard &rarr;"
 msgstr ""
 
-#: includes/frontend-bp.php:87
+#: includes/frontend-bp.php:94 includes/frontend-bp.php:99
 msgid "Activity"
 msgstr ""
 
@@ -920,7 +928,7 @@ msgstr ""
 msgid "(Upgrade now!)"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:648
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:653
 msgid ""
 "\"%s\" cannot be activated. Before you can activate this plugin, please <a "
 "href=\"%s\">address the issues listed here</a>."

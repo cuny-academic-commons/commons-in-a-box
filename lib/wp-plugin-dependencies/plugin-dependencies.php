@@ -641,12 +641,19 @@ class Plugin_Dependencies_UI {
 	}
 
 	public static function inline_plugin_error( $plugin_file, $plugin_data, $status ) {
+		// Add variables depending if WP install is 4.6 or not.
+		$css_class = function_exists( 'wp_get_ext_types' ) ? 'cbox-shiny' : 'cbox-not-shiny';
+		$format    = function_exists( 'wp_get_ext_types' ) ? '<p>%s</p>' : '%s';
+
+		$checkbox_id = 'checkbox_' . md5( $plugin_data['Name'] );
 	?>
-		<tr class="plugin-update-tr">
+		<tr class="plugin-update-tr cbox-plugin <?php echo $css_class; ?>">
 			<td class="plugin-update" colspan="3">
-				<div class="update-message form-invalid">
-					<?php printf( __( '"%s" cannot be activated. Before you can activate this plugin, please <a href="%s">address the issues listed here</a>.', 'plugin-dependencies' ), $plugin_data['Name'], '#warnings-' . sanitize_title( $plugin_data['Name'] ) ); ?>
+				<div class="update-message notice-error">
+					<?php printf( $format, sprintf( __( '"%s" cannot be activated. Before you can activate this plugin, please <a href="%s">address the issues listed here</a>.', 'plugin-dependencies' ), $plugin_data['Name'], '#warnings-' . sanitize_title( $plugin_data['Name'] ) ) ); ?>
 				</div>
+
+				<script type='text/javascript'>document.getElementById('<?php echo $checkbox_id; ?>').disabled = true;</script>
 			</td>
 		</tr>
 	<?php
@@ -660,6 +667,12 @@ class Plugin_Dependencies_UI {
 span.deps li.unsatisfied { color: red }
 span.deps li.unsatisfied_network { color: orange }
 span.deps li.satisfied { color: green }
+.cbox-plugin .update-message.notice-error { margin: 5px 20px 5px 40px; background-color: #fbeaea;}
+.cbox-plugin.cbox-not-shiny .update-message:before { margin-left: 0; margin-right: 5px; color: #dc3232; content: "\f534";}
+.cbox-plugin.cbox-not-shiny .update-message {padding: 6px 12px 8px;}
+.cbox-plugin.cbox-shiny .update-message {padding: 0.1em 0; border-left-width: 4px; border-left-style: solid;}
+.cbox-plugin.cbox-shiny .update-message p { margin: .5em 0 .5em .8em; }
+.cbox-plugin.cbox-shiny .update-message p:before { margin-right: 6px; }
 </style>
 <?php
 	}

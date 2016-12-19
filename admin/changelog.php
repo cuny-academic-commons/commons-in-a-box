@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.12 Maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.12 release brings a number of plugins up to date, and improves compatibility with BuddyPress 2.4.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.14 maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.14 release brings a number of plugins up to date, and improves compatibility with WordPress 4.7 and BuddyPress 2.7.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,10 +26,11 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress 2.4.3</li>
-						<li>BuddyPress Group Email Subscription 3.6.0</li>
-						<li>BuddyPress Groupblog 1.8.12</li>
-						<li>Invite Anyone 1.3.9</li>
+						<li>bbPress 2.5.12</li>
+						<li>BuddyPress 2.7.3</li>
+						<li>BuddyPress Docs 1.9.2</li>
+						<li>BuddyPress Group Email Subscription 3.7.0</li>
+						<li>Invite Anyone 1.3.12</li>
 					</ul>
 
 				</div>
@@ -41,15 +42,16 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Fixed problems with CSS and JS assets on SSL-optional sites.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fixed PHP notices in Recent Posts widget.', 'cbox' ) ?></li>
-						<li><?php _e( 'Allowed slider settings to be filtered by a child theme.', 'cbox' ) ?></li>
-						<li><?php _e( 'Enabled Composer support for improved theme management.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix bug that prevented secondary profile group tabs from appearing in Edit mode.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix bug that caused post trackbacks and pingbacks not to appear in some cases.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix some PHP deprecation and error notices.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix bug that caused images and other elements not to render properly in theme documentation.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
 			</div>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -62,6 +64,7 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
