@@ -1241,7 +1241,7 @@ class CBox_Admin {
 		// http://leanmodal.finelysliced.com.au/
 		wp_enqueue_script(
 			'cbox-lean-modal',
-			'https://raw.github.com/FinelySliced/leanModal.js/master/jquery.leanModal.js',
+			'https://cdn.rawgit.com/FinelySliced/leanModal.js/master/jquery.leanModal.js',
 			array( 'jquery' )
 		);
 	}
