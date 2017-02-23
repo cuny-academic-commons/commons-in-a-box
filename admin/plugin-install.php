@@ -36,6 +36,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	 * @param str $plugins Array of plugin names
 	 */
 	function bulk_upgrade( $plugins, $args = array() ) {
+		$parsed_args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
 
 		$this->init();
 		$this->bulk = true;
@@ -119,9 +122,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ) );
 		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification', 10, 2 );
 
-		// Force refresh of plugin update information
-		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
+		// Force refresh of plugin update information.
+		wp_clean_plugins_cache( $parsed_args['clear_update_cache'] );
 
 		return $results;
 	}
@@ -201,9 +203,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
 		remove_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
 
-		// Force refresh of plugin update information
-		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
+		// Force refresh of plugin update information.
+		wp_clean_plugins_cache();
 
 		return $results;
 	}
