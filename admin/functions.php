@@ -395,7 +395,7 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 	switch ( $class_name ) {
 		case 'CBox_Theme_Installer' :
 			// if download url is not from github or a local install, stop now!
-			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false && ( ! empty( $obj->options['url'] ) && strpos( $obj->options['url'], 'commons-in-a-box/includes/zip' ) === false ) ) {
+			if ( ( ! empty( $obj->options['url'] ) && false === strpos( $obj->options['url'], 'github.com' ) ) && ( ! empty( $obj->options['url'] ) && false === strpos( $obj->options['url'], 'commons-in-a-box/includes/zip' ) ) ) {
 				return $source;
 			}
 
