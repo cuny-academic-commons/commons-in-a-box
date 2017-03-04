@@ -147,7 +147,8 @@ class CBox_Plugins {
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.9.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
-			'network_settings'  => 'root-blog-only'
+			'network_settings'  => 'root-blog-only',
+			'network'           => false
 		) );
 
 		// BuddyPress Docs Wiki
@@ -160,7 +161,8 @@ class CBox_Plugins {
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
 			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.10.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
-			'network_settings'  => 'root-blog-only'
+			'network_settings'  => 'root-blog-only',
+			'network'           => false
 		) );
 
 		// BuddyPress Group Email Subscription
@@ -174,7 +176,7 @@ class CBox_Plugins {
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.7.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
-			'network_settings'  => 'admin.php?page=ass_admin_options'
+			'network_settings'  => 'root-blog-only'
 		) );
 
 		// Invite Anyone
@@ -188,7 +190,8 @@ class CBox_Plugins {
 			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.12.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
-			'network_settings'  => 'admin.php?page=invite-anyone'
+			'network_settings'  => 'admin.php?page=invite-anyone',
+			'network'           => false
 		) );
 
 		// Custom Profile Filters for BuddyPress
@@ -201,6 +204,7 @@ class CBox_Plugins {
 			'version'           => '0.3.1',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/custom-profile-filters-for-buddypress.0.3.1.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/custom-profile-filters-for-buddypress',
+			'network'           => false
 		) );
 
 		// bbPress
@@ -214,7 +218,8 @@ class CBox_Plugins {
 			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.12.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
-			'network_settings'  => 'root-blog-only'
+			'network_settings'  => 'root-blog-only',
+			'network'           => false
 		) );
 
 		// CAC Featured Content
@@ -238,6 +243,7 @@ class CBox_Plugins {
 			'version'           => '1.0.5',
 			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.5.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
+			'network'           => false
 		) );
 
 		// only show the following plugins in network mode
@@ -308,6 +314,7 @@ class CBox_Plugins {
 			'version'           => '1.6.1',
 			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.6.1.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
+			'network'           => false
 		) );
 
 		// BuddyPress Reply By Email
@@ -383,7 +390,7 @@ class CBox_Plugins {
 			'admin_settings'    => false, // if applicable, where does the admin settings page reside? should be relative to /wp-admin/
 			'network_settings'  => false, // if plugin is network-only and has a settings page, where does the network admin settings page reside?
 			                              // should be relative to /wp-admin/; if plugin's settings resides on the BP_ROOT_BLOG only, mark this as 'root-blog-only'
-			'network'           => true   // should the plugin be activated network-wide? not used at the moment
+			'network'           => true   // should the plugin be activated network-wide?
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -403,6 +410,7 @@ class CBox_Plugins {
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['documentation_url'] = $r['documentation_url'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = $r['network'];
 
 				break;
 
