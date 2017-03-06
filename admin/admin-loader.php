@@ -279,10 +279,6 @@ class CBox_Admin {
 				if ( ! class_exists( 'CBox_Theme_Installer' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 
-				// Modifies the theme action links that get displayed after theme installation
-				// is complete.
-				add_filter( 'update_bulk_theme_complete_actions', array( 'CBox_Theme_Installer', 'remove_theme_actions' ) );
-
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon( 'cbox' );
@@ -290,6 +286,11 @@ class CBox_Admin {
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
+
+				// Modifies the theme action links that get displayed after theme installation
+				// is complete.
+				add_filter( 'update_bulk_theme_complete_actions', array( $upgrader, 'remove_theme_actions' ) );
+
 				$upgrader->bulk_upgrade( cbox()->theme_upgrades );
 
 				echo '</div>';
