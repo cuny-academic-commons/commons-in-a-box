@@ -741,13 +741,40 @@ class CBox_Plugins {
 
 					// start deactivating!
 					} else {
-						$set_transient = is_network_admin() ? 'set_site_transient' : 'set_transient';
-
+						// Deactivate dependent plugins.
 						$deactivated = call_user_func( array( 'Plugin_Dependencies', "deactivate_cascade" ), (array) $plugin );
-						$set_transient( "pd_deactivate_cascade", $deactivated );
 
-						// now deactivate the plugin
-						deactivate_plugins( $plugin, false, is_network_admin() );
+						// Save markers.
+						set_site_transient( "cbox_deactivate_cascade", $deactivated );
+
+						// Multisite
+						if ( is_multisite() ) {
+							// Darn BuddyPress...
+							if ( 1 !== cbox_get_main_site_id() ) {
+								switch_to_blog( cbox_get_main_site_id() );
+							}
+
+							// Deactivate dependent plugins on main site as well.
+							deactivate_plugins( $deactivated, false, false );
+
+							/*
+							 * Also deactivate the main plugin in question.
+							 *
+							 * Should probably look at our 'network' flag...
+							 */
+							deactivate_plugins( $plugin, false, is_plugin_active_for_network( $plugin ) );
+
+							// Switch back.
+							if ( 1 !== cbox_get_main_site_id() ) {
+								restore_current_blog();
+							}
+
+						// Single site.
+						} else {
+							// Deactivate the main plugin in question.
+							deactivate_plugins( $plugin, false );
+
+						}
 
 						if ( ! is_network_admin() )
 							update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
@@ -770,12 +797,8 @@ class CBox_Plugins {
 
 			// if PD deactivated any other dependent plugins, show admin notice here
 			// basically a copy-n-paste of Plugin_Dependencies::generate_dep_list()
-
-			$get_transient = is_network_admin() ? 'get_site_transient' : 'get_transient';
-			$deactivated = $get_transient( "pd_deactivate_cascade" );
-
-			$delete_transient = is_network_admin() ? 'delete_site_transient' : 'delete_transient';
-			$delete_transient( "pd_deactivate_cascade" );
+			$deactivated = get_site_transient( 'cbox_deactivate_cascade' );
+			delete_site_transient( 'cbox_deactivate_cascade' );
 
 			// if no other plugins were deactivated, stop now!
 			if ( empty( $deactivated ) )
@@ -937,9 +960,31 @@ class CBox_Plugins {
 	 * @return bool
 	 */
 	public static function is_plugin_active( $loader ) {
-		$active_plugins = (array) Plugin_Dependencies::$active_plugins;
+		$is_active = null;
 
-		return in_array( $loader, $active_plugins );
+		// BuddyPress complicates things due to a different root blog ID.
+		if ( 1 !== cbox_get_main_site_id() ) {
+			$cbox_plugins = self::get_plugins();
+			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
+
+			// 'network' flag is false, so switch to root blog.
+			if ( false === $cbox_plugins[ $plugin_data['Name'] ]['network'] ) {
+				switch_to_blog( cbox_get_main_site_id() );
+				$is_active = is_plugin_active( $loader );
+				restore_current_blog();
+
+			// 'network' flag is true.
+			} else {
+				$is_active = is_plugin_active_for_network( $loader );
+			}
+		}
+
+		// Use already-queried active plugins from PD.
+		if ( null === $is_active ) {
+			$is_active = in_array( $loader, (array) Plugin_Dependencies::$active_plugins );
+		}
+
+		return $is_active;
 	}
 
 	/**

@@ -67,7 +67,25 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$maintenance = is_multisite(); // @TODO: This should only kick in for individual sites if at all possible.
 		foreach ( $plugins as $plugin ) {
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
-			$maintenance = $maintenance || (is_plugin_active($plugin_loader) ); // Only activate Maintenance mode if a plugin is active
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			$is_active = is_plugin_active( $plugin_loader );
+
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
+
+			// Only activate Maintenance mode if a plugin is active.
+			$maintenance = $maintenance || $is_active;
 		}
 
 		if ( $maintenance )
@@ -93,7 +111,22 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
 			// see if plugin is active
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
 			$this->skin->plugin_active = is_plugin_active( $plugin_loader );
+
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 
 			$result = $this->run( array(
 				'package'           => $download_url,
@@ -219,20 +252,41 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		if ( empty( $plugins ) )
 			return false;
 
-		// Only activate plugins which are not already active.
-		$check = is_multisite() ? 'is_plugin_active_for_network' : 'is_plugin_active';
+		$current = CBox_Plugins::get_plugins();
 
 		foreach ( $plugins as $i => $plugin ) {
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			$is_active = is_plugin_active( $plugin_loader );
+
 			// if already active, skip!
-			if ( ! empty( $plugin_loader ) && $check( $plugin ) ) {
+			if ( ! empty( $plugin_loader ) && $is_active ) {
 				unset( $plugins[ $i ] );
+
+				// Remember to restore blog, if we're skipping!
+				if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+					restore_current_blog();
+				}
+
 				continue;
 			}
 
 			// activate the plugin
-			activate_plugin( $plugin_loader, '', is_network_admin() );
+			activate_plugin( $plugin_loader, '', false !== $current[ $plugin ]['network'] );
+
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 		}
 
 		if ( ! is_network_admin() ) {
