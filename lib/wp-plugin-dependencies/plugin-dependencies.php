@@ -41,7 +41,10 @@ class Plugin_Dependencies {
 		// setup $active_plugins variable
 		// if we're in the network admin area, we check for sitewide plugins,
 		// otherwise on single site, check the current site's plugins only
-		self::$active_plugins = ! is_network_admin() ? get_option( 'active_plugins', array() ) : array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
+		self::$active_plugins = get_option( 'active_plugins', array() );
+		if ( is_multisite() ) {
+			self::$active_plugins = array_merge( self::$active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
+		}
 
 		// get all plugins
 		self::$all_plugins = get_plugins();
@@ -187,7 +190,7 @@ class Plugin_Dependencies {
 				$active = true;
 
 				// check network plugins first
-				if ( is_multisite() && ! is_plugin_active_for_network( $loader ) ) {
+				if ( is_multisite() && is_network_admin() && ! is_plugin_active_for_network( $loader ) ) {
 					$active = false;
 				}
 				// single site
