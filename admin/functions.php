@@ -283,6 +283,27 @@ function cbox_is_bp_maintenance_mode() {
 }
 
 /**
+ * Wrapper for wp_get_theme() to account for main site ID.
+ *
+ * @since 1.1.0
+ *
+ * @param string|null $stylesheet Directory name for the theme. Optional. Defaults to current theme.
+ */
+function cbox_get_theme( $stylesheet = '' ) {
+	if ( 1 !== cbox_get_main_site_id() ) {
+		switch_to_blog( cbox_get_main_site_id );
+	}
+
+	$theme = wp_get_theme( $stylesheet );
+
+	if ( 1 !== cbox_get_main_site_id() ) {
+		restore_current_blog();
+	}
+
+	return $theme;
+}
+
+/**
  * Check to see if the current theme is BuddyPress-compatible.
  *
  * @since 0.3
