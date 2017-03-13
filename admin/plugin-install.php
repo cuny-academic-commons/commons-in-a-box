@@ -498,7 +498,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	/**
 	 * Detect whether a class is called statically.
 	 *
-	 * Lighter than using Reflection to determine this. 
+	 * Lighter than using Reflection to determine this.
 	 *
 	 * @since 1.0.6
 	 *
