@@ -173,6 +173,11 @@ class CBox_Admin {
 			cbox()->setup = 'upgrade-theme';
 			cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 		}
+
+		// Remove admin notice during setup mode.
+		if ( ! empty( cbox()->setup ) ) {
+			remove_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
+		}
 	}
 
 	/**
