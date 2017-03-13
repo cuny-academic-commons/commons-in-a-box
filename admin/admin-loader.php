@@ -99,14 +99,20 @@ class CBox_Admin {
 			// set reference pointer for later use
 			cbox()->setup = 'install';
 
-			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
-
-			// if no plugins to install, redirect back to CBOX dashboard
+			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
-				do_action( 'cbox_after_updater' );
-				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
-				exit;
+				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
+				if ( ! cbox_get_installed_revision_date() && ! cbox_get_theme( 'cbox-theme' )->exists() ) {
+					cbox()->setup = 'theme-prompt';
+
+				// Bump the revision date in the DB after updating
+				} else {
+					add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+					do_action( 'cbox_after_updater' );
+
+					wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+					exit;
+				}
 			}
 
 		// plugin upgrades available
@@ -119,6 +125,16 @@ class CBox_Admin {
 
 			if ( ! empty( $_REQUEST['cbox-themes'] ) )
 				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
+
+			// bump the revision date in the DB after updating
+			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+
+		// theme prompt
+		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'theme-prompt' ) {
+			check_admin_referer( 'cbox_theme_prompt' );
+
+			// CBOX theme doesn't exist, so set reference pointer for later use
+			cbox()->setup = 'theme-prompt';
 
 			// bump the revision date in the DB after updating
 			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
@@ -252,6 +268,47 @@ class CBox_Admin {
 					'redirect_link' => $redirect_link,
 					'redirect_text' => $redirect_text
 				) );
+
+				echo '</div>';
+
+				break;
+
+			// prompt for theme install
+			case 'theme-prompt' :
+				$screenshot_title = esc_html__( 'View a larger screenshot of the CBOX theme', 'cbox' );
+				$screenshot_url   = cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' );
+
+				// some HTML markup!
+				echo '<div class="wrap">';
+
+				echo '<h2>' . esc_html__( 'Theme Installation', 'cbox' ) . '</h2>';
+
+				// Temporary until we turn this markup into a template part.
+				$text = <<<EOD
+
+<a rel="leanModal" title="{$screenshot_title}" href="#cbox-theme-screenshot" style="float:right; margin-left:2em;"><img width="200" src="{$screenshot_url}" alt="" /></a>
+
+<p>One last step!</p>
+
+<p>The Commons In A Box Theme is the final piece of the Commons In A Box package.  It ties together all functionality offered by Commons In A Box in a beautiful package.</p>
+
+<p>Please note: clicking on "Install Theme" will change your current theme.  If you would rather keep your existing theme, click on "Skip".</p>
+
+<div id="cbox-theme-screenshot" style="display:none;">
+	<img src="{$screenshot_url}" alt="" />
+</div>
+
+<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
+
+EOD;
+
+				echo $text;
+
+				echo '<div style="margin-top:2em;">';
+					echo '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" style="display:inline-block; margin:5px 15px 0 0;">Skip</a>';
+
+					echo '<a class="button button-primary" href="' . wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . esc_html__( 'Install Theme', 'cbox' ). '</a>';
+				echo '</div>';
 
 				echo '</div>';
 
