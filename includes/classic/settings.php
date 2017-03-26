@@ -1,6 +1,16 @@
 <?php
 /**
- * Set up the settings page.
+ * Package: Classic Settings class
+ *
+ * Part of the CLassic package.
+ *
+ * @package    Commons_In_A_Box
+ * @subpackage Package
+ * @since      1.1.0
+ */
+
+/**
+ * Admin settings page for the Classic package.
  *
  * @since 1.0-beta2
  *
@@ -12,11 +22,12 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Setup the CBOX settings area.
+ * Setup the CBOX settings area for the Classic package.
  *
  * @since 1.0-beta2
+ * @since 1.1.0 Renamed class from CBox_Settings to CBox_Settings_Classic.
  */
-class CBox_Settings {
+class CBox_Settings_Classic {
 
 	/**
 	 * Static variable to hold our various settings
@@ -24,6 +35,15 @@ class CBox_Settings {
 	 * @var array
 	 */
 	private static $settings = array();
+
+	/**
+	 * The settings options key used by the Classic package
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var string
+	 */
+	public static $settings_key = '_cbox_admin_settings';
 
 	/**
 	 * Constructor.
@@ -172,7 +192,7 @@ class CBox_Settings {
 		$submitted = (array) $_REQUEST['cbox_settings'];
 
 		// update settings
-		bp_update_option( cbox()->settings_key, $submitted );
+		bp_update_option( self::$settings_key, $submitted );
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
@@ -222,7 +242,7 @@ class CBox_Settings {
 		$active = array_flip( $active['deactivate'] );
 
 		// get saved settings
-		$cbox_settings = bp_get_option( cbox()->settings_key );
+		$cbox_settings = bp_get_option( self::$settings_key );
 
 		// parse and output settings
 		foreach( self::$settings as $plugin => $settings ) {

@@ -32,6 +32,13 @@ class Commons_In_A_Box {
 	private $package;
 
 	/**
+	 * Settings key. Temporary. Needed until frontend loader is reconfigured.
+	 *
+	 * @since 1.0-beta2
+	 */
+	public $settings_key ='_cbox_admin_settings';
+
+	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1
@@ -96,11 +103,6 @@ class Commons_In_A_Box {
 
 		// the URL to the CBOX directory
 		$this->plugin_url    = plugin_dir_url( __FILE__ );
-
-		/** SETTINGS **********************************************************/
-
-		// the settings options key used on the "CBOX Settings" page
-		$this->settings_key  = '_cbox_admin_settings';
 	}
 
 	/**
@@ -116,7 +118,6 @@ class Commons_In_A_Box {
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 			require( $this->plugin_dir . 'admin/plugins-loader.php' );
-			require( $this->plugin_dir . 'admin/settings-loader.php' );
 
 		// frontend
 		} else {
@@ -152,7 +153,6 @@ class Commons_In_A_Box {
 		if ( cbox_is_admin() ) {
 			$this->admin    = new CBox_Admin;
 			$this->plugins  = new CBox_Plugins;
-			$this->settings = new CBox_Settings;
 
 		// frontend
 		} else {
