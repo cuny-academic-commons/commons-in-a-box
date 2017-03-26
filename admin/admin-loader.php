@@ -340,7 +340,7 @@ EOD;
 
 				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
 
-				$cbox_theme = new CBox_Theme_Installer( new CBox_Theme_Installer_Skin( compact( 'title' ) ) );
+				$cbox_theme = new CBox_Theme_Installer( new Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
 
 				break;

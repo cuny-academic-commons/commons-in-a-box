@@ -205,35 +205,3 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		return $actions;
 	}
 }
-
-/**
- * The UI for CBOX's Theme Installer.
- *
- * Extends the {@link Theme_Installer_Skin} class just to change an icon!
- *
- * @since 0.3
- *
- * @package Commons_In_A_Box
- * @subpackage Themes
- */
-class CBox_Theme_Installer_Skin extends Theme_Installer_Skin {
-
-	/**
-	 * Overrides the parent {@link WP_Upgrader_Skin::header()} method.
-	 *
-	 * Why? Just to change a lousy icon! :)
-	 */
-	function header() {
-		if ( $this->done_header )
-			return;
-
-		$this->done_header = true;
-
-		echo '<div class="wrap">';
-
-		// and here's the lousy change!
-		echo screen_icon( 'themes' );
-
-		echo '<h2>' . $this->options['title'] . '</h2>';
-	}
-}
