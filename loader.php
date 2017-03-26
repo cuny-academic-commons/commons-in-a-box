@@ -32,13 +32,6 @@ class Commons_In_A_Box {
 	private $package;
 
 	/**
-	 * Settings key. Temporary. Needed until frontend loader is reconfigured.
-	 *
-	 * @since 1.0-beta2
-	 */
-	public $settings_key ='_cbox_admin_settings';
-
-	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1

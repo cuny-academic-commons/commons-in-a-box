@@ -41,6 +41,15 @@ abstract class CBox_Package {
 	public static $template_path = '';
 
 	/**
+	 * Settings key used to fetch settings from {@link get_option()}.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var string
+	 */
+	public static $settings_key = '';
+
+	/**
 	 * URL to package icon.
 	 *
 	 * @since 1.1.0

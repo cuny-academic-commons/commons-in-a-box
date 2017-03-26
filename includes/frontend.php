@@ -70,8 +70,9 @@ class CBox_Frontend {
 	 * @since 1.0.1
 	 */
 	private function setup_globals() {
-		// get our CBOX admin settings
-		$this->settings = (array) bp_get_option( cbox()->settings_key );
+		// get our admin settings; this is highly specific to the Classic package...
+		$settings_key   = cbox_get_package_prop( 'settings_key' );
+		$this->settings = ! empty( $settings_key ) ? (array) bp_get_option( $settings_key ) : array();
 
 		// setup autoload classes
 		$this->setup_autoload();
