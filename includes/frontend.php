@@ -27,6 +27,13 @@ class CBox_Frontend {
 			return;
 		}
 
+		/**
+		 * Hook to include various files on the frontend.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'cbox_frontend_includes' );
+
 		// setup globals
 		$this->setup_globals();
 
