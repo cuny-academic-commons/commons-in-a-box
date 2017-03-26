@@ -87,8 +87,6 @@
 							<?php
 							// current theme is the CBOX default theme
 							} else {
-								// check for upgrades
-								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
 							?>
 
 								<?php if ( $theme->get_stylesheet() != $package_theme['directory_name'] ) : ?>
@@ -96,16 +94,6 @@
 								<?php else : ?>
 									<p><?php printf( __( 'You\'re using the <strong>%1$s</strong> theme.', 'cbox' ), esc_attr( $package_theme['name'] ) ); ?></p>
 								<?php endif; ?>
-
-								<?php /* HIDE THIS FOR NOW ?>
-								<?php if ( $is_upgrade ) : ?>
-									<div class="login postbox">
-										<div id="login_error" class="message">
-											<?php _e( 'Update available.', 'cbox' ); ?> <strong><a href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_upgrade ), 'cbox_upgrade_theme' ); ?>"><?php _e( 'Update now!', 'cbox' ); ?></a></strong>
-										</div>
-									</div>
-								<?php endif; ?>
-								<?php */ ?>
 
 								<div class="login postbox">
 									<div class="message">

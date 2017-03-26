@@ -84,19 +84,35 @@ function cbox_get_theme_to_update() {
 			return false;
 		}
 
-		switch_to_blog( bp_get_root_blog_id() );
-		$theme = wp_get_theme();
-		restore_current_blog();
+		$current_theme = cbox_get_theme();
 	} else {
-		$theme = wp_get_theme();
+		$current_theme = wp_get_theme();
 	}
 
-	// include the CBOX Theme Installer
-	if ( ! class_exists( 'CBox_Theme_Installer' ) ) {
-		require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
-	}
+	$retval = false;
 
-	$retval = CBOX_Theme_Specs::get_upgrades( $theme );
+	// get our package theme specs
+	$package_theme = cbox_get_package_prop( 'theme' );
+
+	// if current theme is not the CBOX package theme, no need to proceed!
+	if ( ! empty( $package_theme ) ) {
+		$check = true;
+		if ( $current_theme->get_template() != $package_theme['directory_name'] ) {
+			$check = false;
+		}
+
+		// child theme support
+		// if child theme, we need to grab the CBOX parent theme's data
+		if ( true === $check && $current_theme->get_stylesheet() != $package_theme['directory_name'] ) {
+			$current_theme = cbox_get_theme( $package_theme['directory_name'] );
+		}
+
+		// check if current CBOX theme is less than our internal spec
+		// if so, we want to update it!
+		if ( true === $check && version_compare( $current_theme->Version, $package_theme['version'] ) < 0 ) {
+			$retval = $package_theme['directory_name'];
+		}
+	}
 
 	// set marker so we don't have to do this again
 	cbox()->theme_to_update = $retval;

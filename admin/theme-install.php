@@ -14,106 +14,6 @@ if ( ! class_exists( 'Plugin_Upgrader' ) )
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
 /**
- * Sets up our CBOX theme requirements.
- *
- * In this class, we setup our required specs for the CBOX Default theme.
- *
- * Use the init() method to construct the class.
- *
- * Is chainable, so you can do something like this:
- *      // get infinity theme specs
- *      CBox_Theme_Specs::init()->get( 'cbox-theme' );
- *
- *      // get our version for infinity'
- *      CBox_Theme_Specs::init()->get( 'cbox-theme', 'version' );
- *
- * @package Commons_In_A_Box
- * @subpackage Themes
- */
-class CBox_Theme_Specs {
-
-	/**
-	 * Setup our theme info.
-	 *
-	 * We offer the PressCrew-developed CBOX Theme to be installed during CBOX setup.
-	 *
-	 * @static
-	 */
-	private static $cbox_theme = array(
-		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0.14',
-		'directory_name' => 'cbox-theme'
-	);
-
-	/**
-	 * Static bootstrapping init method.
-	 */
-	public static function init() {
-		self::$cbox_theme['download_url'] = 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.14.zip';
-		return new self();
-	}
-
-	/**
-	 * Fetch our theme info depending on the passed variables.
-	 *
-	 * @param str $theme The theme we want specs for. Only 'cbox_theme' will work.
-	 * @param str $param The theme parameter we want to fetch. 'name', 'version', 'directory_name', 'download_url' will work.
-	 * @return mixed Array of theme specs if $param isn't passed. String if $param is successfully passed.
-	 */
-	public function get( $theme_name, $param = '' ) {
-		if ( empty( self::$$theme_name ) )
-			return false;
-
-		$theme = self::$$theme_name;
-
-		if ( ! empty( $theme[$param] ) )
-			return $theme[$param];
-
-		return $theme;
-	}
-
-
-	/**
-	 * Check to see if our CBOX themes need to be upgraded.
-	 *
-	 * @param WP_Theme $current_theme The current running theme.
-	 * @uses wp_get_theme() If not passed, will grab the current running theme.
-	 * @uses CBox_Theme_Specs::init() To initialize our CBOX theme specs
-	 * @uses version_compare() To compare the current CBOX theme with our internal specs.
-	 * @return mixed String of what themes to update. Boolean false on failure.
-	 */
-	public static function get_upgrades( WP_Theme $current_theme = NULL ) {
-		// get current theme if not passed
-		if ( empty( $current_theme ) || ! is_object( $current_theme ) )
-			$current_theme = wp_get_theme();
-
-		// get our CBOX theme specs
-		$cbox_theme_specs = self::$cbox_theme;
-
-		// if current theme is not the CBOX theme, no need to proceed!
-		if ( $current_theme->get_template() != $cbox_theme_specs['directory_name'] )
-			return false;
-
-		// child theme support
-		// if child theme, we need to grab the CBOX parent theme's data
-		if ( $current_theme->get_stylesheet() != $cbox_theme_specs['directory_name'] ) {
-			$current_theme = wp_get_theme( $cbox_theme_specs['directory_name'] );
-		}
-
-		// version checking
-		$retval = false;
-
-		// check if current CBOX theme is less than our internal spec
-		// if so, we want to update it!
-		if ( version_compare( $current_theme->Version, $cbox_theme_specs['version'] ) < 0 )
-			$retval = $cbox_theme_specs['directory_name'];
-
-		return $retval;
-	}
-
-}
-
-/**
  * CBOX's custom theme upgrader.
  *
  * Extends the {@link Theme_Upgrader} class to allow for our custom required spec.
@@ -179,7 +79,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 *
 	 * Why? So we can use our custom download URLs from Github.
 	 *
-	 * @param str $upgrades The value from CBox_Theme_Specs::get_upgrades()
+	 * @param str $upgrades The value from cbox_get_theme_to_update()
 	 */
 	function bulk_upgrade( $upgrades = false, $args = array() ) {
 		if ( empty( $upgrades ) )
