@@ -23,6 +23,15 @@ class Commons_In_A_Box {
 	private static $instance = false;
 
 	/**
+	 * Package holder.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var object Extended class of {@link CBox_Package}
+	 */
+	private $package;
+
+	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1
@@ -121,6 +130,8 @@ class Commons_In_A_Box {
 	 * @since 1.0-beta4
 	 */
 	private function setup_actions() {
+		add_action( 'cbox_admin_loaded', array( $this, 'load_package' ), 11 );
+
 		// Add actions to plugin activation and deactivation hooks
 		add_action( 'activate_'   . plugin_basename( __FILE__ ), create_function( '', "do_action( 'cbox_activation' );"   ) );
 		add_action( 'deactivate_' . plugin_basename( __FILE__ ), create_function( '', "do_action( 'cbox_deactivation' );" ) );
@@ -159,6 +170,60 @@ class Commons_In_A_Box {
 	}
 
 	/** HOOKS *********************************************************/
+
+	/**
+	 * Loads the active package into CBOX.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_package() {
+		// Package autoloader.
+		spl_autoload_register( function( $class ) {
+			$subdir = $relative_class = '';
+
+			// Package prefix.
+			$prefix = 'CBox_Package';
+			if ( $class === $prefix ) {
+				$relative_class = 'package';
+			} elseif ( false !== strpos( $class, $prefix ) ) {
+				$subdir = '/';
+				$subdir .= $relative_class = strtolower( substr( $class, 13 ) );
+			}
+
+			// Plugins prefix.
+			if ( false !== strpos( $class, 'CBox_Plugins_' ) ) {
+				$subdir = '/' . strtolower( substr( $class, 13 ) );
+				$relative_class = 'plugins';
+			}
+
+			// Settings prefix.
+			if ( false !== strpos( $class, 'CBox_Settings_' ) ) {
+				$subdir = '/' . strtolower( substr( $class, 14 ) );
+				$relative_class = 'settings';
+			}
+
+			if ( '' === $relative_class ) {
+				return;
+			}
+
+			$file = "{$this->plugin_dir}includes{$subdir}/{$relative_class}.php";
+
+			if ( file_exists( $file ) ) {
+				require $file;
+			}
+		} );
+
+		$current = cbox_get_current_package_id();
+		if ( empty( $current ) ) {
+			return;
+		}
+
+		// Load our package.
+		$packages = cbox_get_packages();
+		if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
+			$this->package = call_user_func( array( $packages[$current], 'init' ) );
+		}
+	}
 
 	/**
 	 * Custom textdomain loader.
