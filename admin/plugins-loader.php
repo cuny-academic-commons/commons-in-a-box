@@ -49,6 +49,15 @@ class CBox_Plugins {
 		// make sure to include the WP Update API if it isn't available
 		//if ( ! function_exists( 'get_plugin_updates' ) )
 		//	require( ABSPATH . '/wp-admin/includes/update.php' );
+
+		/**
+		 * Hook to declare when the CBOX plugins code is loaded at its earliest.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param CBox_Plugins $this
+		 */
+		do_action( 'cbox_plugins_loaded', $this );
 	}
 
 	/**

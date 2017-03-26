@@ -147,6 +147,15 @@ class Commons_In_A_Box {
 		} else {
 			$this->frontend = new CBox_Frontend;
 		}
+
+		/**
+		 * Hook to load components.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param Commons_In_A_Box $this
+		 */
+		do_action( 'cbox_load_components', $this );
 	}
 
 	/** HOOKS *********************************************************/

@@ -34,6 +34,15 @@ class CBox_Admin {
 	 */
 	private function includes() {
 		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
+
+		/**
+		 * Hook to declare when the CBOX admin area is loaded at its earliest.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param CBox_Admin $this
+		 */
+		do_action( 'cbox_admin_loaded', $this );
 	}
 
 	/**
