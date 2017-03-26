@@ -514,11 +514,11 @@ EOD;
 	public function admin_page() {
 		// what's new page
 		if ( $this->is_changelog() ) {
-			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
+			cbox_get_template_part( 'changelog' );
 
 		// credits page
 		} elseif ( $this->is_credits() ) {
-			require( CBOX_PLUGIN_DIR . 'admin/credits.php' );
+			cbox_get_template_part( 'credits' );
 
 		// setup screen
 		} elseif( ! empty( cbox()->setup ) ) {
