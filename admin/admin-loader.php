@@ -599,46 +599,7 @@ EOD;
 			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
 		}
 
-		global $wp_version;
-
-		// default class for our welcome panel container
-		$classes = 'welcome-panel';
-
-		// get our user's welcome panel setting
-		$option = get_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', true );
-
-		// if welcome panel option isn't set, set it to "1" to show the panel by default
-		if ( $option === '' )
-			$option = 1;
-
-		// this sets the CSS class needed to hide the welcome panel if needed
-		if ( ! (int) $option )
-			$classes .= ' hidden';
-
-	?>
-		<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
-			<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
-
-			<?php if ( cbox_is_setup() ) : ?>
-				<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e( 'Dismiss', 'cbox' ); ?></a>
-			<?php endif; ?>
-
-			<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
-
-			<div class="welcome-panel-content">
-				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
-
-				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBOX users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
-
-				<?php if ( cbox_is_setup() ) : ?>
-					<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBOX site.', 'cbox' ); ?></p>
-					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
-				<?php endif; ?>
-			</div><!-- .welcome-panel-content -->
-
-		</div><!-- #welcome-panel -->
-
-	<?php
+		cbox_get_template_part( 'welcome' );
 	}
 
 	/**
@@ -870,143 +831,7 @@ EOD;
 		if ( ! cbox_is_setup() )
 			return;
 
-		$cbox_plugins = CBox_Plugins::get_plugins();
-	?>
-
-		<div id="cbox-links" class="secondary-panel">
-			<h2><?php _e( 'Quick Links', 'cbox' ); ?></h2>
-
-			<div class="welcome-panel-column-container">
-
-				<!-- SETTINGS -->
-				<div class="welcome-panel-column">
-					<h4><span class="icon16 icon-settings"></span> <?php _e( 'Settings', 'cbox' ); ?></h4>
-					<p><?php _e( "Commons In A Box works by pulling together a number of independent WordPress and BuddyPress plugins. Customize your site by exploring the settings pages for these plugins below.", 'cbox' ); ?></p>
-					<ul>
-
-					<?php
-						foreach ( CBox_Plugins::get_settings() as $plugin => $settings_url ) {
-							echo '<li><a title="' . __( "Click here to view this plugin's settings page", 'cbox' ) . '" href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'];
-
-							if ( ! empty( $cbox_plugins[$plugin]['documentation_url'] ) )
-								echo ' [<a title="' . __( "Click here for plugin documentation at commonsinabox.org", 'cbox' ) . '" href="' . esc_url( $cbox_plugins[$plugin]['documentation_url'] ) . '" target="_blank">' . __( 'Info...', 'cbox' ) . '</a>]';
-
-							echo '</li>';
-						}
-					?>
-					</ul>
-
-					<div class="login postbox">
-						<div class="message" style="text-align:center;">
-							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here!</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
-						</div>
-					</div>
-				</div>
-
-				<!-- THEME -->
-				<div class="welcome-panel-column welcome-panel-last">
-					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'cbox' ); ?></h4>
-					<?php
-						// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-						if ( ! bp_is_root_blog() ) {
-							switch_to_blog( bp_get_root_blog_id() );
-						}
-
-						$theme = wp_get_theme();
-
-						// restore blog after switching
-						if ( is_multisite() ) {
-							restore_current_blog();
-						}
-
-						if ( $theme->errors() ) :
-							echo '<p>';
-							printf( __( '<a href="%s">Install the CBOX Default theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) );
-							echo '</p>';
-						else:
-
-							// current theme is not the CBOX default theme
-							if ( $theme->get_template() != 'cbox-theme' ) {
-								$is_bp_compatible = cbox_is_theme_bp_compatible();
-
-							?>
-								<p><?php printf( __( 'Your current theme is %s.', 'cbox' ), '<strong>' . $theme->display( 'Name' ) . '</strong>' ); ?></p>
-
-								<?php
-									if ( ! $is_bp_compatible ) {
-										echo '<p>';
-										_e( 'It looks like this theme is not compatible with BuddyPress.', 'cbox' );
-										echo '</p>';
-									}
-								?>
-
-								<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
-
-								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
-
-								<div class="login postbox">
-									<div class="message" style="text-align:center;">
-										<strong><?php printf( __( '<a href="%s">Like the CBOX Theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) ); ?></strong>
-									</div>
-								</div>
-
-								<!-- hidden modal window -->
-								<div id="cbox-theme-screenshot" style="display:none;">
-									<img src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" />
-								</div>
-								<!-- #cbox-theme-screenshot -->
-
-								<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
-
-								<?php
-									if ( ! $is_bp_compatible ) {
-										echo '<p>';
-										printf( __( "You can also make your theme compatible with the <a href='%s'>BuddyPress Template Pack</a>.", 'buddypress' ), network_admin_url( 'plugin-install.php?type=term&tab=search&s=%22bp-template-pack%22' ) );
-										echo '</p>';
-									}
-								?>
-
-							<?php
-							// current theme is the CBOX default theme
-							} else {
-								// check for upgrades
-								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
-							?>
-
-								<?php if ( $theme->get_stylesheet() != 'cbox-theme' ) : ?>
-									<p><?php _e( "You're using a child theme of the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
-								<?php else : ?>
-									<p><?php _e( "You're using the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
-								<?php endif; ?>
-
-								<?php /* HIDE THIS FOR NOW ?>
-								<?php if ( $is_upgrade ) : ?>
-									<div class="login postbox">
-										<div id="login_error" class="message">
-											<?php _e( 'Update available.', 'cbox' ); ?> <strong><a href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_upgrade ), 'cbox_upgrade_theme' ); ?>"><?php _e( 'Update now!', 'cbox' ); ?></a></strong>
-										</div>
-									</div>
-								<?php endif; ?>
-								<?php */ ?>
-
-								<div class="login postbox">
-									<div class="message">
-										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), 'themes.php?page=infinity-theme' ) ) ); ?></strong>
-									</div>
-								</div>
-
-							<?php
-							}
-
-						endif;
-					?>
-				</div>
-
-			</div><!-- .welcome-panel-column-container -->
-
-		</div><!-- .welcome-panel -->
-
-	<?php
+		cbox_get_template_part( 'dashboard' );
 	}
 
 	/**
@@ -1021,24 +846,8 @@ EOD;
 	private function about() {
 		if ( ! cbox_is_setup() )
 			return;
-	?>
-		<div id="cbox-about" class="secondary-panel">
-			<h2><?php _e( 'About', 'cbox' ); ?></h2>
 
-			<p><?php printf( __( "You're currently using <strong>Commons In A Box %s</strong>", 'cbox' ), cbox_get_version() ); ?>.</p>
-
-			<p><?php printf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ); ?></p>
-
-			<p><?php  _e( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ); ?></p>
-
-			<ul>
-				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
-				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
-				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
-				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/1.0.x"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
-			</ul>
-		</div>
-	<?php
+		cbox_get_template_part( 'footer' );
 	}
 
 	/** HEADER INJECTIONS *********************************************/
