@@ -131,7 +131,9 @@ class Commons_In_A_Box {
 	 * @since 1.0-beta4
 	 */
 	private function setup_actions() {
-		add_action( 'cbox_admin_loaded', array( $this, 'load_package' ), 11 );
+		// Package hooks.
+		add_action( 'cbox_admin_loaded',      array( $this, 'load_package' ), 11 );
+		add_action( 'cbox_frontend_includes', array( $this, 'package_autoloader' ) );
 
 		// Add actions to plugin activation and deactivation hooks
 		add_action( 'activate_'   . plugin_basename( __FILE__ ), create_function( '', "do_action( 'cbox_activation' );"   ) );
@@ -178,40 +180,7 @@ class Commons_In_A_Box {
 	 */
 	public function load_package() {
 		// Package autoloader.
-		spl_autoload_register( function( $class ) {
-			$subdir = $relative_class = '';
-
-			// Package prefix.
-			$prefix = 'CBox_Package';
-			if ( $class === $prefix ) {
-				$relative_class = 'package';
-			} elseif ( false !== strpos( $class, $prefix ) ) {
-				$subdir = '/';
-				$subdir .= $relative_class = strtolower( substr( $class, 13 ) );
-			}
-
-			// Plugins prefix.
-			if ( false !== strpos( $class, 'CBox_Plugins_' ) ) {
-				$subdir = '/' . strtolower( substr( $class, 13 ) );
-				$relative_class = 'plugins';
-			}
-
-			// Settings prefix.
-			if ( false !== strpos( $class, 'CBox_Settings_' ) ) {
-				$subdir = '/' . strtolower( substr( $class, 14 ) );
-				$relative_class = 'settings';
-			}
-
-			if ( '' === $relative_class ) {
-				return;
-			}
-
-			$file = "{$this->plugin_dir}includes{$subdir}/{$relative_class}.php";
-
-			if ( file_exists( $file ) ) {
-				require $file;
-			}
-		} );
+		$this->package_autoloader();
 
 		$current = cbox_get_current_package_id();
 		if ( empty( $current ) ) {
@@ -260,6 +229,48 @@ class Commons_In_A_Box {
 	}
 
 	/** HELPERS *******************************************************/
+
+	/**
+	 * Package autoloader.
+	 *
+	 * @since 1.1.0
+	 */
+	public function package_autoloader() {
+		spl_autoload_register( function( $class ) {
+			$subdir = $relative_class = '';
+
+			// Package prefix.
+			$prefix = 'CBox_Package';
+			if ( $class === $prefix ) {
+				$relative_class = 'package';
+			} elseif ( false !== strpos( $class, $prefix ) ) {
+				$subdir = '/';
+				$subdir .= $relative_class = strtolower( substr( $class, 13 ) );
+			}
+
+			// Plugins prefix.
+			if ( false !== strpos( $class, 'CBox_Plugins_' ) ) {
+				$subdir = '/' . strtolower( substr( $class, 13 ) );
+				$relative_class = 'plugins';
+			}
+
+			// Settings prefix.
+			if ( false !== strpos( $class, 'CBox_Settings_' ) ) {
+				$subdir = '/' . strtolower( substr( $class, 14 ) );
+				$relative_class = 'settings';
+			}
+
+			if ( '' === $relative_class ) {
+				return;
+			}
+
+			$file = "{$this->plugin_dir}includes{$subdir}/{$relative_class}.php";
+
+			if ( file_exists( $file ) ) {
+				require $file;
+			}
+		} );
+	}
 
 	/**
 	 * Get the plugin URL for CBOX.
