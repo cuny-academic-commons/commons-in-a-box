@@ -377,7 +377,7 @@ class CBox_Plugins {
 	 * @see CBox_Plugins::register_optional_plugins()
 	 * @see CBox_Plugins::register_dependency_plugins()
 	 */
-	private function register_plugin( $args = '' ) {
+	public function register_plugin( $args = '' ) {
 		$defaults = array(
 			'plugin_name'       => false, // (required) the name of the plugin as in the plugin header
 			'type'              => 'required', // types include 'required', 'recommended', 'optional', dependency'
