@@ -465,6 +465,31 @@ function cbox_get_template_part( $slug, $name = null ) {
 	do_action( 'cbox_after_get_template_part', $slug, $name );
 }
 
+/**
+ * Template tag to output CSS classes meant for the welcome panel admin block.
+ *
+ * @since 1.1.0
+ */
+function cbox_welcome_panel_classes() {
+	// Default class for our welcome panel container.
+	$classes = 'welcome-panel';
+
+	// Get our user's welcome panel setting.
+	$option = get_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', true );
+
+	// If welcome panel option isn't set, set it to "1" to show the panel by default
+	if ( $option === '' ) {
+		$option = 1;
+	}
+
+	// This sets the CSS class needed to hide the welcome panel if needed.
+	if ( ! (int) $option ) {
+		$classes .= ' hidden';
+	}
+
+	echo esc_attr( $classes );
+}
+
 /** HOOK-RELATED ***************************************************/
 
 /**
