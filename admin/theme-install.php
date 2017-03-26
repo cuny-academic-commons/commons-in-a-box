@@ -140,11 +140,12 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		add_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
-		$this->options['url'] = CBox_Theme_Specs::init()->get( 'cbox_theme', 'download_url' );
+		$package_theme = cbox_get_package_prop( 'theme' );
+		$this->options['url'] = $package_theme['download_url'];
 
 		$this->run( array(
 			// get download URL for the CBOX theme
-			'package'           => CBox_Theme_Specs::init()->get( 'cbox_theme', 'download_url' ),
+			'package'           => $package_theme['download_url'],
 
 			'destination'       => WP_CONTENT_DIR . '/themes',
 
@@ -211,16 +212,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		$results = $themes = array();
 
-		// initialize our theme specs
-		$theme_specs = CBox_Theme_Specs::init();
-
-		// setup our themes to upgrade
-		switch ( $upgrades ) {
-			case 'cbox-theme' :
-				$themes[] = $theme_specs->get( 'cbox_theme' );
-
-				break;
-		}
+		// @todo Potential to have multiple themes attached to a CBOX package...
+		$themes[] = cbox_get_package_prop( 'theme' );
 
 		$this->update_count   = count( $themes );
 		$this->update_current = 0;
@@ -277,17 +270,16 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		// get our theme directory names
-		$theme_specs        = CBox_Theme_Specs::init();
-		$cbox_theme_dir     = $theme_specs->get( 'cbox_theme', 'directory_name' );
+		$theme = cbox_get_package_prop( 'theme' );
 
-		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $cbox_theme_dir ) {
+		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $theme['directory_name'] ) {
 			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
 			if ( ! bp_is_root_blog() ) {
 				switch_to_blog( bp_get_root_blog_id() );
 			}
 
-			// switch the theme to the CBOX theme!
-			switch_theme( $cbox_theme_dir, $cbox_theme_dir );
+			// switch the theme
+			switch_theme( $theme['directory_name'], $theme['directory_name'] );
 
 			// restore blog after switching
 			if ( is_multisite() ) {

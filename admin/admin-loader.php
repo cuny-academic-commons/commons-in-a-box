@@ -154,19 +154,20 @@ class CBox_Admin {
 			check_admin_referer( 'cbox_install_theme' );
 
 			// get cbox theme
-			$cbox_theme = wp_get_theme( 'cbox-theme' );
-			$errors = $cbox_theme->errors()->errors;
+			$package_theme = cbox_get_package_prop( 'theme' );
+			$theme = cbox_get_theme( $package_theme['directory_name'] );
+			$errors = $theme->errors()->errors;
 
 			// CBOX theme exists! so let's activate it and redirect to the
 			// CBOX Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
-				switch_theme( 'cbox-theme', 'cbox-theme' );
+				switch_theme( $package_theme['directory_name'], $package_theme['directory_name'] );
 
                                // Mark the theme as having just been activated
                                // so that we can run the setup on next pageload
 				bp_update_option( '_cbox_theme_activated', '1' );
 
-				wp_redirect( admin_url( 'themes.php?page=infinity-theme' ) );
+				wp_redirect( admin_url( $package_theme['admin_settings'] ) );
 				return;
 			}
 
@@ -258,7 +259,7 @@ class CBox_Admin {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
 					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
-					$redirect_text = __( "Now, let's upgrade the CBOX Default theme &rarr;", 'cbox' );
+					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'cbox' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
 
 
 				} else {
@@ -334,10 +335,10 @@ EOD;
 				if ( ! class_exists( 'CBox_Theme_Installer' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 
-				// get CBOX theme specs
-				$theme = CBox_Theme_Specs::init()->get( 'cbox_theme' );
+				// get package theme specs
+				$theme = cbox_get_package_prop( 'theme' );
 
-				$title = sprintf( _x( 'Installing %s', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
+				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
 
 				$cbox_theme = new CBox_Theme_Installer( new CBox_Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
@@ -353,7 +354,7 @@ EOD;
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Upgrading CBOX Theme', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Upgrading Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
@@ -825,7 +826,7 @@ EOD;
 			// theme has update, so add an extra parameter to the querystring
 			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
-			$message = sprintf( _n( '%d installed plugin and the CBOX Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBOX Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
 
 		// just plugins
 		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
@@ -836,7 +837,8 @@ EOD;
 			// theme has update, so switch up the upgrade URL
 			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
-			$message = __( 'The CBOX Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
+			$theme = cbox_get_package_prop( 'theme' );
+			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), $theme['name'] );
 		}
 
 	?>
@@ -1226,8 +1228,9 @@ EOD;
 				break;
 
 			case 'theme-update' :
-				$notice_text = __( 'The CBOX Default theme needs an update.', 'cbox' );
-				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox_get_theme_to_update() ), 'cbox_upgrade_theme' );
+				$theme = cbox_get_package_prop( 'theme' );
+				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( $theme['name'] ) );
+				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( $theme['directory_name'] ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
