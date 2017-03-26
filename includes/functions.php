@@ -33,3 +33,26 @@ function cbox_is_admin() {
 
 	return $is_admin;
 }
+
+/**
+ * Returns the current CBOX revision date as set in
+ * {@link Commons_In_A_Box::setup_globals()}.
+ *
+ * @since 0.3
+ *
+ * @return int The current CBOX revision date as a unix timestamp.
+ */
+function cbox_get_current_revision_date() {
+	return strtotime( cbox()->revision_date );
+}
+
+/**
+ * Returns the CBOX revision date from the current CBOX install.
+ *
+ * @since 0.3
+ *
+ * @return mixed Integer of the installed CBOX unix timestamp on success.  Boolean false on failure.
+ */
+function cbox_get_installed_revision_date() {
+	return strtotime( get_site_option( '_cbox_revision_date' ) );
+}
