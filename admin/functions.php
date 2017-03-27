@@ -404,18 +404,19 @@ function cbox_bp_after_version_bump() {
  * @since 1.1.0
  *
  * @param  string|array $template_names Template file(s) to search for, in order.
+ * @param  string       $package_id     The CBOX package to grab the template for.
  * @param  bool         $load           If true the template file will be loaded if it is found.
  * @param  bool         $require_once   Whether to require_once or require. Default true. Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
-function cbox_locate_template( $template_names, $load = false, $require_once = true ) {
+function cbox_locate_template( $template_names, $package_id = '', $load = false, $require_once = true ) {
 	$located = '';
 	foreach ( (array) $template_names as $template_name ) {
 		if ( ! $template_name ) {
 			continue;
 		}
 
-		$template_path = cbox_get_package_prop( 'template_path' );
+		$template_path = cbox_get_package_prop( 'template_path', $package_id );
 		if ( ! empty( $template_path ) && file_exists( trailingslashit( $template_path ) . $template_name ) ) {
 			$located = trailingslashit( $template_path ) . $template_name;
 			break;
@@ -440,16 +441,12 @@ function cbox_locate_template( $template_names, $load = false, $require_once = t
  *
  * @since 1.1.0
  *
- * @param string $slug The slug name for the generic template.
- * @param string $name The name of the specialised template.
+ * @param string $slug       The slug name for the generic template.
+ * @param string $package_id Optional. The CBOX package to grab the template for. Defaults to current
+ *                           package if available.
  */
-function cbox_get_template_part( $slug, $name = null ) {
+function cbox_get_template_part( $slug, $package_id = '' ) {
 	$templates = array();
-	$name = (string) $name;
-	if ( '' !== $name ) {
-		$templates[] = "{$slug}-{$name}.php";
-	}
-
 	$templates[] = "{$slug}.php";
 
 	/**
@@ -460,12 +457,12 @@ function cbox_get_template_part( $slug, $name = null ) {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string $slug The slug name for the generic template.
-	 * @param string $name The name of the specialized template.
+	 * @param string $slug       The slug name for the generic template.
+	 * @param string $package_id The CBOX package to grab the template for.
 	 */
-	do_action( 'cbox_get_template_part', $slug, $name );
+	do_action( 'cbox_get_template_part', $slug, $package_id );
 
-	cbox_locate_template( $templates, true, false );
+	cbox_locate_template( $templates, $package_id, true, false );
 
 	/**
 	 * Fires after the specified template part file is loaded.
@@ -475,10 +472,10 @@ function cbox_get_template_part( $slug, $name = null ) {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string      $slug The slug name for the generic template.
-	 * @param string|null $name The name of the specialized template.
+	 * @param string $slug       The slug name for the generic template.
+	 * @param string $package_id The CBOX package to grab the template for.
 	 */
-	do_action( 'cbox_after_get_template_part', $slug, $name );
+	do_action( 'cbox_after_get_template_part', $slug, $package_id );
 }
 
 /**
