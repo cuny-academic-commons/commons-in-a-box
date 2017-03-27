@@ -162,6 +162,9 @@ class CBox_Plugins {
 		// if type is 'all', we want all CBOX plugins regardless of type
 		if ( $type == 'all' ) {
 			$plugins = self::$plugins;
+			if ( empty( $plugins ) ) {
+				return $plugins;
+			}
 
 			// okay, I lied, we want all plugins except dependencies!
 			unset( $plugins['dependency'] );
@@ -190,7 +193,7 @@ class CBox_Plugins {
 	public static function organize_plugins_by_state( $plugins ) {
 		$organized_plugins = array();
 
-		foreach ( $plugins as $plugin => $data ) {
+		foreach ( (array) $plugins as $plugin => $data ) {
 			// attempt to get the plugin loader file
 			$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
