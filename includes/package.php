@@ -14,13 +14,28 @@
  */
 abstract class CBox_Package {
 	/**
-	 * Name of your package.
+	 * Name of your package. Required. Must be extended.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
 	public static $name = '';
+
+	/**
+	 * Configuration holder. Required. Must be in extended class.
+	 *
+	 * Why? Because extended classes need to ensure their data is stored in their
+	 * class and not in the parent due to the usage of late static binding. For
+	 * more info, read: {@link https://bkcore.com/blog/code/php-late-static-binding-child-attribute-declaration.html}
+	 *
+	 * Copy the commented line and put it in your extended class. Intentionally
+	 * commented out so a fatal error is thrown if this isn't declared in the
+	 * extended class and because PHP doesn't support abstract class properties.
+	 *
+	 * @since 1.1.0
+	 */
+	//protected static $config = array();
 
 	/**
 	 * Theme properties.
@@ -30,33 +45,6 @@ abstract class CBox_Package {
 	 * @var array See {@link CBox_Package::register_theme()} for parameters.
 	 */
 	public static $theme = array();
-
-	/**
-	 * Absolute template path used for custom admin template parts.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @var string
-	 */
-	public static $template_path = '';
-
-	/**
-	 * Settings key used to fetch settings from {@link get_option()}.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @var string
-	 */
-	public static $settings_key = '';
-
-	/**
-	 * URL to package icon.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @var string
-	 */
-	public static $icon_url = '';
 
 	/**
 	 * Starts the extended class.
@@ -74,7 +62,8 @@ abstract class CBox_Package {
 	 */
 	final protected function __construct() {
 		// Set props.
-		$this->set_properties();
+		$this->set_theme();
+		self::set_props();
 
 		// Custom init method.
 		$this->custom_init();
@@ -110,24 +99,33 @@ abstract class CBox_Package {
 	}
 
 	/**
-	 * Set properties.
+	 * Set theme.
 	 *
 	 * @since 1.1.0
 	 */
-	final protected function set_properties() {
-		// $theme
+	final protected function set_theme() {
 		$_theme = $this->register_theme();
 		if ( ! empty( $_theme ) && is_array( $_theme ) ) {
 			static::$theme = $_theme;
 		}
+	}
 
-		// Misc props.
-		$props = array_merge( (array) static::config(), (array) self::config() );
-		foreach ( $props as $prop => $val ) {
-			if ( isset( static::$$prop ) ) {
-				static::$$prop = $val;
-			}
-		}
+	/**
+	 * Set miscellaneous props.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function set_props() {
+		static::$config = array_merge( (array) self::config(), (array) static::config() );
+	}
+
+	/**
+	 * Get props.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function get_props() {
+		return static::$config;
 	}
 
 	/**

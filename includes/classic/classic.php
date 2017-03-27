@@ -24,9 +24,9 @@ class CBox_Package_Classic extends CBox_Package {
 	public static $name = 'Classic';
 
 	/**
-	 * @var string Settings key used to fetch settings from {@link get_option()}.
+	 * @var array Configuration holder.
 	 */
-	public static $settings_key = '_cbox_admin_settings';
+	protected static $config = array();
 
 	/**
 	 * Package configuration.

@@ -130,8 +130,21 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 	}
 
 	$packages = cbox_get_packages();
-	if ( isset( $packages[$package_id] ) && class_exists( $packages[$package_id] ) && isset( $packages[$package_id]::$$prop ) ) {
-		return $packages[$package_id]::$$prop;
+	if ( isset( $packages[$package_id] ) && class_exists( $packages[$package_id] ) ) {
+		if ( 'name' === $prop || 'theme' === $prop ) {
+			return $packages[$package_id]::$$prop;
+		}
+
+		// If we've never set up the package properties before, do it now.
+		$props = $packages[$package_id]::get_props();
+		if ( empty( $props ) ) {
+			$packages[$package_id]::set_props();
+			$props = $packages[$package_id]::get_props();
+		}
+
+		if ( isset( $props[$prop] ) ) {
+			return $props[$prop];
+		}
 	}
 
 	return false;
