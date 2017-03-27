@@ -174,7 +174,7 @@ abstract class CBox_Package {
 	protected static function config() {
 		return array(
 			'template_path'  => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
-			'icon_url'       => '',
+			'icon_url'       => includes_url( 'images/crystal/archive.png' ),
 		);
 	}
 
