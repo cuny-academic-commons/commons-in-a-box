@@ -1,4 +1,8 @@
 
+		<h2><?php printf( esc_html__( 'Current Box: %s', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></h2>
+
+		<?php cbox_get_template_part( 'description' ); ?>
+
 		<div id="cbox-links" class="secondary-panel">
 			<h2><?php _e( 'Quick Links', 'cbox' ); ?></h2>
 
