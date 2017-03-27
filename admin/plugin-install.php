@@ -482,11 +482,14 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		}
 
 		// CBOX hasn't been installed ever, so change button to theme install.
-		if ( ! cbox_get_installed_revision_date() && ! cbox_get_theme( 'cbox-theme' )->exists() ) {
-			$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
-			$redirect_text = __( 'Continue to theme installation', 'cbox' );
+		if ( ! cbox_get_installed_revision_date() ) {
+			$theme = cbox_get_package_prop( 'theme' );
+			if ( ! empty( $theme['directory_name'] ) && ! cbox_get_theme( $theme['directory_name'] )->exists() ) {
+				$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+				$redirect_text = __( 'Continue to theme installation', 'cbox' );
 
-			remove_all_actions( 'cbox_after_updater' );
+				remove_all_actions( 'cbox_after_updater' );
+			}
 		}
 
 		echo '<br /><a class="button-primary" href="' . esc_url( $redirect_link ) . '">' . esc_attr( $redirect_text ) . '</a>';

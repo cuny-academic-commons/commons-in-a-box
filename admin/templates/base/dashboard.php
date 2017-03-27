@@ -61,11 +61,11 @@
 									}
 								?>
 
-								<?php if ( $package_theme['directory_name'] ) : ?>
+								<?php if ( $package_theme['directory_name'] && $package_theme['screenshot_url'] ) : ?>
 
-									<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
+									<p><?php printf( __( 'Did you know that <strong>%s</strong> comes with a cool theme? Check it out below!', 'cbox' ), esc_html( cbox_get_package_prop( 'name' ) ) ); ?></p>
 
-									<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
+									<a rel="leanModal" title="<?php printf( esc_attr__( 'View a larger screenshot of the %s theme', 'cbox' ), $package_theme['name'] ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo esc_url( $package_theme['screenshot_url'] ); ?>" alt="" /></a>
 
 									<div class="login postbox">
 										<div class="message" style="text-align:center;">
@@ -75,7 +75,7 @@
 
 									<!-- hidden modal window -->
 									<div id="cbox-theme-screenshot" style="display:none;">
-										<img src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" />
+										<img src="<?php echo esc_url( $package_theme['screenshot_url'] ); ?>" alt="" />
 									</div>
 									<!-- #cbox-theme-screenshot -->
 
