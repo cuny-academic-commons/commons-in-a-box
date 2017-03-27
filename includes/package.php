@@ -163,10 +163,13 @@ abstract class CBox_Package {
 	 *
 	 * @return array {
 	 *     Array of parameters.
-	 *     @var string $template_path  Absolute filepath for custom admin template parts. If your package is not
-	 *                                 bundled with CBOX and you need to override the default admin templates,
-	 *                                 then override this parameter.
-	 *     @var string $icon_url       Optional. Icon URL.
+	 *     @var string $template_path     Absolute filepath for custom admin template parts. If your package is not
+	 *                                    bundled with CBOX and you need to override the default admin templates,
+	 *                                    then override this parameter.
+	 *     @var string $settings_key      Used to fetch settings with {@link get_option()}.
+	 *     @var string $documentation_url Optional. Documentation URL. Currently used in package selection screen's
+	 *                                    "More Details" link.
+	 *     @var string $icon_url          Optional. Icon URL.
 	 * }
 	 */
 	protected static function config() {
