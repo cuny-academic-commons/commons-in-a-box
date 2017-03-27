@@ -695,22 +695,69 @@ class CBox_Updater {
 	 * Activates a plugin after upgrading or installing a plugin
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
+		$plugin = '';
 
 		// activates a plugin post-upgrade
 		if ( ! empty( $hook_extra['plugin'] ) ) {
-			activate_plugin( $hook_extra['plugin'], '', is_network_admin() );
-		}
+			$plugin = $hook_extra['plugin'];
+
+			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+			$plugin_name = $plugin_data['Name'];
+
 		// activates a plugin post-install
-		elseif ( ! empty( $result['destination_name'] ) ) {
-			// when a plugin is installed, we need to find the plugin loader file
-			$plugin_loader = array_keys( get_plugins( '/' . $result['destination_name'] ) );
-			$plugin_loader = $plugin_loader[0];
+		} elseif ( ! empty( $result['destination_name'] ) ) {
+			// Fetch data for plugin.
+			$plugin_data = get_plugins( '/' . $result['destination_name'] );
+
+			// When a plugin is installed, we need to find the plugin loader file
+			$plugin_loader = key( $plugin_data );
+
+			// Grab the plugin name.
+			$plugin_name = $plugin_data[ $plugin_loader ]['Name'];
 
 			// this makes sure that validate_plugin() works in activate_plugin()
-			wp_cache_flush();
+			if ( ! wp_using_ext_object_cache() ) {
+				wp_cache_flush();
+			}
 
-			// now activate the plugin
-			activate_plugin( $result['destination_name'] . '/' . $plugin_loader, '', is_network_admin() );
+			$plugin = $result['destination_name'] . '/' . $plugin_loader;
+		}
+
+		if ( '' !== $plugin ) {
+			$cbox_plugins = CBox_Plugins::get_plugins();
+
+			// If CBOX plugin manifest is empty, must load package data again.
+			if ( empty( $cbox_plugins ) ) {
+				/** This hook is documented in admin/plugins-loader.php */
+				do_action( 'cbox_plugins_loaded', cbox()->plugins );
+
+				$cbox_plugins = CBox_Plugins::get_plugins();
+			}
+
+			if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
+				$network_activate = $cbox_plugins[ $plugin_name ]['network'];
+			} else {
+				$dependency = CBox_Plugins::get_plugins( 'dependency' );
+				$network_activate = $dependency[ $plugin_name ]['network'];
+			}
+
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			// activate the plugin
+			activate_plugin( $plugin, '', $network_activate );
+
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 		}
 
 		return $bool;
