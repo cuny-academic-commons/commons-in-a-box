@@ -36,6 +36,9 @@
 					<?php
 						$theme = cbox_get_theme();
 						$package_theme = cbox_get_package_prop( 'theme' );
+						if ( empty( $package_theme ) ) {
+							$package_theme = array( 'directory_name' => '' );
+						}
 
 						if ( $theme->errors() ) :
 							echo '<p>';
@@ -58,23 +61,27 @@
 									}
 								?>
 
-								<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
+								<?php if ( $package_theme['directory_name'] ) : ?>
 
-								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
+									<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
 
-								<div class="login postbox">
-									<div class="message" style="text-align:center;">
-										<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( $package_theme['name'] ) ); ?></strong>
+									<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
+
+									<div class="login postbox">
+										<div class="message" style="text-align:center;">
+											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( $package_theme['name'] ) ); ?></strong>
+										</div>
 									</div>
-								</div>
 
-								<!-- hidden modal window -->
-								<div id="cbox-theme-screenshot" style="display:none;">
-									<img src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" />
-								</div>
-								<!-- #cbox-theme-screenshot -->
+									<!-- hidden modal window -->
+									<div id="cbox-theme-screenshot" style="display:none;">
+										<img src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" />
+									</div>
+									<!-- #cbox-theme-screenshot -->
 
-								<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
+									<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
+
+								<?php endif; ?>
 
 								<?php
 									if ( ! $is_bp_compatible ) {
