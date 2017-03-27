@@ -13,5 +13,9 @@
 				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
 				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
 				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/1.0.x"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
+
+				<?php if ( count( cbox_get_packages() ) > 1 ) : ?>
+					<li><a class="confirm" href="<?php echo esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=0' ), 'cbox_select_package' ) ); ?>"><?php esc_html_e( 'Change boxes', 'cbox' ); ?></a></li>
+				<?php endif; ?>
 			</ul>
 		</div>

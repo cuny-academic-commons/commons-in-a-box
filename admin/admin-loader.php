@@ -89,8 +89,25 @@ class CBox_Admin {
 	 * @since 0.3
 	 */
 	public function catch_form_submission() {
+		// no package / reset package.
+		if ( isset( $_REQUEST['cbox-package'] ) ) {
+			// verify nonce
+			check_admin_referer( 'cbox_select_package' );
+
+			// We want to select a new package.
+			if ( empty( $_REQUEST['cbox-package'] ) ) {
+				delete_site_option( '_cbox_current_package' );
+				delete_site_option( '_cbox_revision_date' );
+
+			// We've selected a package.
+			} else {
+				update_site_option( '_cbox_current_package', $_REQUEST['cbox-package'] );
+			}
+			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+			die();
+
 		// virgin setup - no CBOX or BP installed
-		if ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
+		} elseif ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_virgin_setup', 'cbox-virgin-nonce' );
 
@@ -594,6 +611,10 @@ EOD;
 	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
 	 */
 	private function welcome_panel() {
+		if ( 'no-package' === cbox_get_setup_step() ) {
+			return;
+		}
+
 		if ( isset( $_GET['welcome'] ) ) {
 			$welcome_checked = empty( $_GET['welcome'] ) ? 0 : 1;
 			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
@@ -624,6 +645,104 @@ EOD;
 
 		// do something different depending on the setup step
 		switch ( cbox_get_setup_step() ) {
+			// (0) No package.
+			case 'no-package' :
+				wp_enqueue_script( 'thickbox' );
+				wp_enqueue_style( 'thickbox' );
+			?>
+
+				<div style="text-align:center;">
+					<h2><?php _e( 'Select a box', 'cbox' ); ?></h2>
+
+					<p><?php _e( 'A box is a specially-crafted bundle of plugins and a theme for WordPress, designed for quick installation and configuration. Select the box that best suits your site.', 'cbox' ); ?></p>
+				</div>
+
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
+					<div class="wp-list-table widefat">
+					<div id="the-list">
+
+			<?php foreach ( cbox_get_packages() as $package => $class ) : ?>
+
+			<div class="plugin-card plugin-card-<?php echo sanitize_html_class( cbox_get_package_prop( 'name', $package ) ); ?>" style="width:100%; margin-left:0;">
+			<div class="plugin-card-top">
+				<div class="name column-name">
+					<h3><?php esc_attr_e( cbox_get_package_prop( 'name', $package ) ); ?>
+
+					<img src="<?php echo esc_url( cbox_get_package_prop( 'icon_url', $package ) ); ?>" class="plugin-icon" alt="">
+					</h3>
+				</div>
+
+				<div class="action-links">
+					<ul class="plugin-action-buttons">
+						<li><a href="<?php echo wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=' . $package ), 'cbox_select_package' ); ?>" class="button activate-now" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
+						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'cbox' ); ?></a></li>
+					</ul>
+				</div>
+
+				<div class="desc column-description">
+					<?php cbox_get_template_part( 'description', $package ); ?>
+					<!--<p class="authors"> <cite>By <a href="">CBOX Team</a></cite></p>-->
+				</div>
+
+				<div class="prompt" style="display:none">
+					<p><?php esc_html_e( 'Selecting this box can:', 'cbox' ); ?></p>
+
+					<ul>
+					<?php cbox_get_template_part( 'permissions', $package ); ?>
+					</ul>
+
+					<p><?php esc_html_e( 'Are you sure you want to continue?', 'cbox' ); ?></p>
+				</div>
+			</div>
+			</div>
+
+			<?php endforeach; ?>
+
+					</div>
+					</div>
+				</form>
+
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.js"></script>
+
+				<script>
+jQuery('a.activate-now').confirm({
+	type: 'red',
+	content: function() {
+		var package = this.$target.closest( '.plugin-card' );
+
+		// Set modal title.
+		this.setTitle( package.find( 'h3' )[0].textContent );
+
+		// Set modal content.
+		return package.find( '.prompt' )[0].innerHTML;
+	},
+	title: function() {},
+	boxWidth: '500px',
+	useBootstrap: false,
+	bgOpacity: 0.7,
+	buttons: {
+	        no: {
+			text: '<?php esc_attr_e( 'No', 'cbox' ); ?>',
+			action: function() {}
+		},
+		yes: {
+			text: '<?php esc_attr_e( 'Yes', 'cbox' ); ?>',
+			btnClass: 'btn-red',
+			action: function () {
+				location.href = this.$target.attr('href');
+			}
+		},
+	}
+});
+				</script>
+
+<style type="text/css">
+.jconfirm ul {list-style-type:disc; padding-left:25px;}
+</style>
+
+			<?php
+				break;
 
 			// (1) buddypress isn't activated or isn't installed
 			case 'no-buddypress' :
@@ -1022,6 +1141,7 @@ EOD;
 
 		// setup some variables depending on the setup step
 		switch ( cbox_get_setup_step() ) {
+			case 'no-package' :
 			case 'no-buddypress' :
 				$notice_text = __( "Let's get started!", 'cbox' );
 				$button_link = network_admin_url( 'admin.php?page=cbox' );

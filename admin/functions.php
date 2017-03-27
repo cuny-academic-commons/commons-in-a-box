@@ -197,10 +197,14 @@ function cbox_bump_revision_date() {
  * @return string The current CBOX setup step.
  */
 function cbox_get_setup_step() {
+	// No package.
+	if ( ! cbox_get_current_package_id() ) {
+		$step = 'no-package';
+
 	// see if BuddyPress is activated
 	// @todo BP_VERSION doesn't work in BP 1.7 yet
 	// @todo should also check the BP DB version...
-	if ( ! defined( 'BP_VERSION' ) ) {
+	} elseif ( ! defined( 'BP_VERSION' ) ) {
 		$step = 'no-buddypress';
 
 	// buddypress is activated
