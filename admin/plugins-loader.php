@@ -135,6 +135,7 @@ class CBox_Plugins {
 			case 'required' :
 			case 'recommended' :
 			case 'optional' :
+			case 'dependency' :
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']         = $r['cbox_name'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description']  = $r['cbox_description'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']           = $r['depends'];
@@ -144,11 +145,6 @@ class CBox_Plugins {
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = $r['network'];
-
-				break;
-
-			case 'dependency' :
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']     = $r['download_url'];
 
 				break;
 		}
