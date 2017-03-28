@@ -28,6 +28,7 @@
 					<ul>
 						<li>BuddyPress 2.8.2</li>
 						<li>BuddyPress Docs 1.9.3</li>
+						<li>BuddyPress Group Email Subscription 3.7.1</li>
 						<li>Invite Anyone 1.3.16</li>
 					</ul>
 
