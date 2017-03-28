@@ -173,8 +173,8 @@ class CBox_Plugins {
 			'version'           => '3.7.1',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.7.1.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
-			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
-			'network_settings'  => 'admin.php?page=ass_admin_options'
+			'admin_settings'    => 'options-general.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
+			'network_settings'  => 'settings.php?page=ass_admin_options'
 		) );
 
 		// Invite Anyone
