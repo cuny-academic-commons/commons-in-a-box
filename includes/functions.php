@@ -72,6 +72,7 @@ function cbox_get_packages() {
 	 */
 	$default = array(
 		'classic' => 'CBox_Package_Classic',
+		'openlab' => 'CBox_Package_OpenLab',
 	);
 
 	/**
