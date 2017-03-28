@@ -564,7 +564,50 @@ class CBox_Updater {
 		$plugin_list = call_user_func_array( 'array_merge', $plugins );
 
 		// get requirements
-		$requirements = Plugin_Dependencies::get_requirements();
+		$requirements = (array) Plugin_Dependencies::get_requirements();
+
+		/*
+		 * If a plugin is not installed, but has dependencies, we have to parse those
+		 * dependencies before looping through the rest of the plugins.
+		 *
+		 * This is done because the Plugin Dependencies library cannot parse plugins
+		 * it doesn't know about.
+		 */
+		if ( ! empty( $plugins['install'] ) ) {
+			$cbox_plugins = CBox_Plugins::get_plugins();
+			$dependencies = array_flip( array_keys( CBox_Plugins::get_plugins( 'dependency' ) ) );
+
+			foreach ( $plugins['install'] as $plugin ) {
+				if ( ! isset( $cbox_plugins[ $plugin ]['depends'] ) ) {
+					continue;
+				}
+
+				foreach ( Plugin_Dependencies::parse_field( $cbox_plugins[ $plugin ]['depends'] ) as $dep ) {
+					// a dependent name can contain a version number, so let's get just the name
+					$plugin_name = rtrim( strtok( $dep, '(' ) );
+
+					// see if plugin has any requirements
+					$requirement = Plugin_Dependencies::parse_requirements( $dep );
+					if ( empty( $requirement ) ) {
+						continue;
+					}
+
+					if ( isset( $requirement['not-installed'] ) ) {
+						// Check if uninstalled plugin is part of our CBOX plugin spec.
+						foreach ( $requirement['not-installed'] as $i => $_plugin ) {
+							if ( ! isset( $dependencies[ $_plugin ] ) ) {
+								unset( $requirement['not-installed'][$i] );
+							}
+						}
+					}
+
+					// We've found the dependent plugin in our spec; add it to our requirements.
+					if ( ! empty( $requirement['not-installed'] ) ) {
+						$requirements[ $plugin ] = $requirement;
+					}
+				}
+			}
+		}
 
 		// loop through each submitted plugin and check for any dependencies
 		foreach( $plugin_list as $plugin ) {
