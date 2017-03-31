@@ -252,10 +252,20 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		if ( empty( $plugins ) )
 			return false;
 
-		$current = CBox_Plugins::get_plugins();
+		$current    = CBox_Plugins::get_plugins();
+		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 
 		foreach ( $plugins as $i => $plugin ) {
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+			if ( ! is_multisite() ) {
+				$network_activate = false;
+			} elseif ( isset( $current[ $plugin ] ) ) {
+				$network_activate = $current[ $plugin ]['network'];
+			} else {
+				$dependency = CBox_Plugins::get_plugins( 'dependency' );
+				$network_activate = $dependency[ $plugin ]['network'];
+			}
 
 			/*
 			 * Special case for root-blog plugins.
@@ -263,7 +273,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
 			 * we need to switch to that blog to get the correct active plugins list.
 			 */
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
 				switch_to_blog( cbox_get_main_site_id() );
 			}
 
@@ -274,7 +284,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 				unset( $plugins[ $i ] );
 
 				// Remember to restore blog, if we're skipping!
-				if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
 					restore_current_blog();
 				}
 
@@ -282,9 +292,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			}
 
 			// activate the plugin
-			activate_plugin( $plugin_loader, '', false !== $current[ $plugin ]['network'] );
+			activate_plugin( $plugin_loader, '', $network_activate );
 
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
 				restore_current_blog();
 			}
 		}
@@ -743,13 +753,16 @@ class CBox_Updater {
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		$plugin = '';
+		$network_activate = ! is_multisite() ? false : null;
 
 		// activates a plugin post-upgrade
 		if ( ! empty( $hook_extra['plugin'] ) ) {
 			$plugin = $hook_extra['plugin'];
 
-			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-			$plugin_name = $plugin_data['Name'];
+			if ( null === $network_activate ) {
+				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+				$plugin_name = $plugin_data['Name'];
+			}
 
 		// activates a plugin post-install
 		} elseif ( ! empty( $result['destination_name'] ) ) {
@@ -771,23 +784,24 @@ class CBox_Updater {
 		}
 
 		if ( '' !== $plugin ) {
-			$cbox_plugins = CBox_Plugins::get_plugins();
-
-			// If CBOX plugin manifest is empty, must load package data again.
-			if ( empty( $cbox_plugins ) ) {
-				/** This hook is documented in admin/plugins-loader.php */
-				do_action( 'cbox_plugins_loaded', cbox()->plugins );
-
+			if ( null === $network_activate ) {
 				$cbox_plugins = CBox_Plugins::get_plugins();
+	
+				// If CBOX plugin manifest is empty, must load package data again.
+				if ( empty( $cbox_plugins ) ) {
+					/** This hook is documented in admin/plugins-loader.php */
+					do_action( 'cbox_plugins_loaded', cbox()->plugins );
+	
+					$cbox_plugins = CBox_Plugins::get_plugins();
+				}
+	
+				if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
+					$network_activate = $cbox_plugins[ $plugin_name ]['network'];
+				} else {
+					$dependency = CBox_Plugins::get_plugins( 'dependency' );
+					$network_activate = $dependency[ $plugin_name ]['network'];
+				}
 			}
-
-			if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
-				$network_activate = $cbox_plugins[ $plugin_name ]['network'];
-			} else {
-				$dependency = CBox_Plugins::get_plugins( 'dependency' );
-				$network_activate = $dependency[ $plugin_name ]['network'];
-			}
-
 
 			/*
 			 * Special case for root-blog plugins.
