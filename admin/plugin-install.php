@@ -657,6 +657,10 @@ class CBox_Updater {
 			}
 		}
 
+		foreach ( $plugins as $state => $p ) {
+			$plugins[$state] = array_unique( $p );
+		}
+
 		// setup our plugin defaults
 		CBox_Plugin_Defaults::init();
 
