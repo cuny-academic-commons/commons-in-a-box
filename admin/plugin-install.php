@@ -408,7 +408,8 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		else {
 			usleep(500000);
 
-			self::after_updater();
+			$args = ! empty( $this->options ) ? $this->options : array();
+			self::after_updater( $args );
 		}
 	}
 
