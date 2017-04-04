@@ -42,6 +42,7 @@
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
 						<li><?php _e( 'Fix positioning of search interface on forum tag page.', 'cbox' ) ?></li>
+						<li><?php _e( 'Fix positioning bug with certain widget titles.', 'cbox' ) ?></li>
 						<li><?php _e( 'Improve compatibility with BuddyPress 2.8+.', 'cbox' ) ?></li>
 						<li><?php _e( 'Improve compatibility with PHP 7.1+.', 'cbox' ) ?></li>
 						<li><?php _e( 'Fix some PHP notices.', 'cbox' ) ?></li>
