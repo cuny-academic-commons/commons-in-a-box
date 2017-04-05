@@ -28,6 +28,10 @@ fi
 
 # fetch all github links and save to /includes/zip/ directory
 if $download ; then
+	if [ ! -d 'includes/zip' ]; then
+		mkdir 'includes/zip'
+	fi
+
 	# delete everything in the /includes/zip/ directory
 	rm includes/zip/* 2> /dev/null
 
