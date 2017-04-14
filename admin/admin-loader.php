@@ -661,7 +661,9 @@ EOD;
 					<div class="wp-list-table widefat">
 					<div id="the-list">
 
-			<?php foreach ( cbox_get_packages() as $package => $class ) : ?>
+			<?php foreach ( cbox_get_packages() as $package => $class ) :
+				$incompatible = ! is_multisite() && true === cbox_get_package_prop( 'network', $package );
+			?>
 
 			<div class="plugin-card plugin-card-<?php echo sanitize_html_class( cbox_get_package_prop( 'name', $package ) ); ?>" style="width:100%; margin-left:0;">
 			<div class="plugin-card-top">
@@ -674,7 +676,7 @@ EOD;
 
 				<div class="action-links">
 					<ul class="plugin-action-buttons">
-						<li><a href="<?php echo wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=' . $package ), 'cbox_select_package' ); ?>" class="button activate-now" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
+						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=' . $package ), 'cbox_select_package' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
 						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'cbox' ); ?></a></li>
 					</ul>
 				</div>
@@ -694,6 +696,18 @@ EOD;
 					<p><?php esc_html_e( 'Are you sure you want to continue?', 'cbox' ); ?></p>
 				</div>
 			</div>
+
+			<div class="plugin-card-bottom">
+				<div class="column-compatibility">
+					<?php if ( $incompatible ) : ?>
+						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'cbox' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
+						'Find out how to convert to a WordPress Multisite network here.', 'cbox' ) ); ?></span>
+					<?php else : ?>
+						<span class="compatibility-compatible"><strong>Compatible</strong> with your version of WordPress</span>
+					<?php endif; ?>
+				</div>
+			</div>
+
 			</div>
 
 			<?php endforeach; ?>

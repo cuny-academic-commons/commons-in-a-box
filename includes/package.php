@@ -163,6 +163,7 @@ abstract class CBox_Package {
 	 *
 	 * @return array {
 	 *     Array of parameters.
+	 *     @var bool   $network           Whether the package requires multisite. Default: false.
 	 *     @var string $template_path     Absolute filepath for custom admin template parts. If your package is not
 	 *                                    bundled with CBOX and you need to override the default admin templates,
 	 *                                    then override this parameter.
@@ -174,8 +175,9 @@ abstract class CBox_Package {
 	 */
 	protected static function config() {
 		return array(
-			'template_path'  => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
-			'icon_url'       => includes_url( 'images/crystal/archive.png' ),
+			'template_path' => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
+			'icon_url'      => includes_url( 'images/crystal/archive.png' ),
+			'network'       => false
 		);
 	}
 
