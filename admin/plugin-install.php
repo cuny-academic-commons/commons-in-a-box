@@ -263,7 +263,6 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			} elseif ( isset( $current[ $plugin ] ) ) {
 				$network_activate = $current[ $plugin ]['network'];
 			} else {
-				$dependency = CBox_Plugins::get_plugins( 'dependency' );
 				$network_activate = $dependency[ $plugin ]['network'];
 			}
 
