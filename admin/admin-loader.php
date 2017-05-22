@@ -70,7 +70,7 @@ class CBox_Admin {
 		// add a special header on the admin plugins page
 		add_action( 'pre_current_active_plugins', 	                            array( $this, 'plugins_page_header' ) );
 
-		// after installing the cbox-theme, run the activation hook
+		// after installing a theme, do something
 		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
 	}
 
@@ -383,19 +383,22 @@ EOD;
 	}
 
 	/**
-         * Trigger Infinity's activation hook, if necessary
+         * Do something just after a theme is activated on the next page load.
          *
-	 * Infinity, and therefore cbox-theme, run certain setup routines at
-         * 'infinity_dashboard_activated'. However, this hook doesn't fire
-         * properly when CBOX uses switch_theme() to set the current theme.
-         * Instread, we set a flag at activation, and then check on each admin
-         * pageload to see if the theme was just activated; if so, we run the
-         * activation hook.
+         * @since 1.0-beta1
          */
 	public function theme_activation_hook() {
-		if ( function_exists( 'bp_get_option' ) && bp_get_option( '_cbox_theme_activated' ) ) {
-			bp_delete_option( '_cbox_theme_activated' );
-			do_action( 'infinity_dashboard_activated' );
+		if ( get_blog_option( cbox_get_main_site_id(), '_cbox_theme_activated' ) ) {
+			delete_blog_option( cbox_get_main_site_id(), '_cbox_theme_activated' );
+
+			/**
+			 * Do something just after a theme is activated on the next page load.
+			 *
+			 * This is a dynamic hook, based off of the current package ID.
+			 *
+			 * @since 1.1.0
+			 */
+			do_action( 'cbox_' . cbox_get_current_package_id() . '_theme_activated' );
 		}
 	}
 

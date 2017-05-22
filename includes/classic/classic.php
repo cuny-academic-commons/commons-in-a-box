@@ -56,4 +56,22 @@ class CBox_Package_Classic extends CBox_Package {
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ),
 		);
 	}
+
+	/**
+	 * Custom hooks used during package initialization.
+	 *
+	 * @since 1.1.0
+	 */
+	protected function custom_init() {
+		/**
+	         * Trigger Infinity's activation hook
+	         *
+		 * Infinity, and therefore cbox-theme, runs certain setup routines at
+	         * 'infinity_dashboard_activated'. We need to run this hook just after CBOX
+	         * activates a theme, so we do that here.
+	         */
+		add_action( 'cbox_classic_theme_activated', function() {
+			do_action( 'infinity_dashboard_activated' );
+		} );
+	}
 }
