@@ -174,21 +174,21 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $theme['directory_name'] ) {
 			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-			if ( ! bp_is_root_blog() ) {
-				switch_to_blog( bp_get_root_blog_id() );
+			if ( 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
 			}
 
 			// switch the theme
 			switch_theme( $theme['directory_name'], $theme['directory_name'] );
 
 			// restore blog after switching
-			if ( is_multisite() ) {
+			if ( 1 !== cbox_get_main_site_id() ) {
 				restore_current_blog();
 			}
 
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload
-			bp_update_option( '_cbox_theme_activated', '1' );
+			update_blog_option( cbox_get_main_site_id(), '_cbox_theme_activated', '1' );
 		}
 
 		return $bool;

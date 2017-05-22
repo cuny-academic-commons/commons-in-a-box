@@ -888,20 +888,11 @@ class CBox_Plugin_Defaults {
 
 				/** If BP bundled forums exists, stop now! *********************/
 
-				// do check for multisite
-				if ( is_multisite() ) {
-					$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
-
-					$option = get_blog_option( $bp_root_blog, 'bb-config-location' );
-
-				// single WP
-				} else {
-					$option = get_option( 'bb-config-location' );
-				}
-
 				// stop if our bb-config-location was found
-				if ( false !== $option )
+				$option = get_blog_option( cbox_get_main_site_id(), 'bb-config-location' );
+				if ( false !== $option ) {
 					return;
+				}
 
 				/** See if a bbPress forum named 'Group Forums' exists *********/
 
@@ -924,11 +915,7 @@ class CBox_Plugin_Defaults {
 					) );
 
 					// update the bbP marker for group forums
-					if ( is_multisite() ) {
-						update_blog_option( $bp_root_blog, '_bbp_group_forums_root_id', $forum_id );
-					} else {
-						update_option( '_bbp_group_forums_root_id', $forum_id );
-					}
+					update_blog_option( cbox_get_main_site_id(), '_bbp_group_forums_root_id', $forum_id );
 				}
 
 				break;
