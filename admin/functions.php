@@ -35,11 +35,6 @@ function cbox_is_setup() {
 	if ( ! defined( 'BP_VERSION' ) )
 		return false;
 
-	// check if BuddyPress is in maintenance mode
-	// this means BuddyPress hasn't finished setting up yet
-	if ( cbox_is_bp_maintenance_mode() )
-		return false;
-
 	// theme needs an update
 	if ( cbox_get_theme_to_update() ) {
 		return false;
@@ -209,12 +204,8 @@ function cbox_get_setup_step() {
 
 	// buddypress is activated
 	} else {
-		// buddypress needs to finish setup
-		if ( cbox_is_bp_maintenance_mode() ) {
-			$step = 'buddypress-wizard';
-
 		// theme needs an update?
-		} elseif ( cbox_get_theme_to_update() ) {
+		if ( cbox_get_theme_to_update() ) {
 			$step = 'theme-update';
 
 		// buddypress is setup
@@ -224,59 +215,6 @@ function cbox_get_setup_step() {
 	}
 
 	return $step;
-}
-
-/**
- * Outputs the URL for the BP Admin Wizard page.
- *
- * @since 0.3
- *
- * @uses cbox_get_the_bp_admin_wizard_url() To get the URL for the BP Admin Wizard page.
- */
-function cbox_the_bp_admin_wizard_url() {
-	echo cbox_get_the_bp_admin_wizard_url();
-}
-
-	/**
-	 * Get the URL for the BP Admin Wizard page.
-	 *
-	 * This basically copies a section of code from
-	 * {@link BP_Admin::admin_menus()}.
-	 *
-	 * @since 0.3
-	 *
-	 * @uses is_multisite() Check to see if WP is in network mode.
-	 * @uses bp_is_multiblog() Check to see if BuddyPress is in multiblog mode.
-	 * @return string of the BP wizard URL
-	 */
-	function cbox_get_the_bp_admin_wizard_url() {
-		if ( ! is_multisite() || bp_is_multiblog_mode() ) {
-			return admin_url( 'index.php?page=bp-wizard' );
-		} else {
-			return network_admin_url( 'update-core.php?page=bp-wizard' );
-		}
-	}
-
-/**
- * Check to see if BuddyPress is in maintenance mode.
- *
- * @since 0.3
- *
- * @uses bp_get_maintenance_mode() Exists in BP 1.6 and up.
- * @return bool
- */
-function cbox_is_bp_maintenance_mode() {
-	// BP 1.6+
-	if ( function_exists( 'bp_get_maintenance_mode' ) && bp_get_maintenance_mode() )
-		return true;
-
-	// BP 1.5
-	global $bp;
-
-	if ( ! empty( $bp->maintenance_mode ) )
-		return true;
-
-	return false;
 }
 
 /**

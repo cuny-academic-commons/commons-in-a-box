@@ -70,12 +70,6 @@ class CBox_Admin {
 		// add a special header on the admin plugins page
 		add_action( 'pre_current_active_plugins', 	                            array( $this, 'plugins_page_header' ) );
 
-		// add a hook to manipulate BP's wizard steps
-		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_listener' ) );
-
-		// after the BP wizard completes, redirect to the CBOX dashboard
-		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
-
 		// after installing the cbox-theme, run the activation hook
 		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
 	}
@@ -389,85 +383,6 @@ EOD;
 	}
 
 	/**
-	 * If we're on the BuddyPress Wizard, we do a couple of things to
-	 * manipulate BP for CBOX UX reasons.
-	 *
-	 * 1) Alter BuddyPress' wizard to remove the "Theme" step.
-	 * 2) Set a cookie if we're on the last step of the BP wizard. This
-	 *    is done so we can redirect back to the CBOX dashboard after BP
-	 *    wizard has done its thang.
-	 *
-	 * Warning: hackety-hack-hack!
-	 *
-	 * @since 0.3
-	 */
-	public function bp_wizard_listener() {
-		// if we're not on the BP wizard page, stop now!
-		if ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != 'bp-wizard' )
-			return;
-
-		global $bp;
-
-		// check to see if the 3rd key exists in the wizard
-		// this almost always exists, but just testing as a precaution!
-		if ( empty( $bp->admin->wizard->steps[3] ) ) {
-			return;
-		}
-
-		// alright, the 3rd key exists!
-		// now let's check to see if the key equals our 'Theme' step
-		// this usually occurs for BP 1.5-1.6 only as BP 1.7 removes this
-		if ( $bp->admin->wizard->steps[3] = __( 'Theme', 'buddypress' ) ) {
-			// 'Theme' step exists! now get rid of it!
-			unset( $bp->admin->wizard->steps[3] );
-
-			// rejig the keys
-			$bp->admin->wizard->steps = array_values( $bp->admin->wizard->steps );
-		}
-
-		/* lastly, set a cookie on the last step of the BP wizard */
-
-		// get the last step of the bp wizard
-		$last_step = array_pop( array_keys( $bp->admin->wizard->steps ) );
-
-		// get current step
-		$current_step = $bp->admin->wizard->current_step();
-
-		// set the cookie
-		if ( $last_step == $current_step ) {
-			@setcookie( 'cbox-bp-finish-wizard', 1, time() + 60 * 60 * 24, COOKIEPATH );
-		}
-	}
-
-	/**
-	 * Catch BP wizard's redirect after completion and redirect to the
-	 * CBOX dashboard.
-	 *
-	 * @since 0.3
-	 *
-	 * @see CBox_Admin::bp_wizard_listener()
-	 */
-	public function bp_wizard_redirect() {
-		// after the BP wizard completes, it gets redirected back to the BP
-		// components page.
-		//
-		// so check to see if we're on the BP components page, if not, stop now!
-		if ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != 'bp-components' )
-			return;
-
-		if ( ! empty( $_COOKIE['cbox-bp-finish-wizard'] ) ) {
-			// remove the cookie
-			@setcookie( 'cbox-bp-finish-wizard', '', time() - 3600, COOKIEPATH );
-
-			// do some stuff after CBOX is installed
-			cbox_bp_after_version_bump();
-
-			// redirect to the CBOX dashboard
-			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
-		}
-	}
-
-	/**
          * Trigger Infinity's activation hook, if necessary
          *
 	 * Infinity, and therefore cbox-theme, run certain setup routines at
@@ -776,23 +691,7 @@ jQuery('a.activate-now').confirm({
 			<?php
 				break;
 
-			// (2) buddypress is activated, but we just upgraded buddypress
-			case 'buddypress-wizard' :
-
-			?>
-
-				<h2><?php _e( 'Set Up BuddyPress', 'cbox' ); ?></h2>
-
-				<p class="submitted-on"><?php _e( "We're almost there! Now we need to finish setting up BuddyPress.", 'cbox' ); ?></p>
-
-				<p class="submitted-on"><?php printf( __( "Don't worry! BuddyPress has a simple wizard to guide you through the process.  However, if you want more help, check out this <a href='%s'>codex article</a>.", 'cbox' ), 'http://codex.buddypress.org/getting-started/setting-up-a-new-installation/installation-wizard/#step-1' ); ?></p>
-
-				<p><a class="button-primary" href="<?php cbox_the_bp_admin_wizard_url(); ?>"><?php _e( 'Continue to BuddyPress setup &rarr;', 'cbox' ); ?></a></p>
-
-			<?php
-				break;
-
-			// (3) we're on the last step!
+			// (2) we're on the last step!
 			case 'last-step' :
 
 				// get recommended plugins that are available to install / upgrade
@@ -1161,13 +1060,6 @@ jQuery('a.activate-now').confirm({
 				$button_link = network_admin_url( 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to get set up', 'cbox' );
 				$disable_btn = 'cbox';
-				break;
-
-			case 'buddypress-wizard' :
-				$notice_text = __( 'BuddyPress is installed, but needs some additional setup.', 'cbox' );
-				$button_link = cbox_get_the_bp_admin_wizard_url();
-				$button_text = __( 'Finish BuddyPress setup &rarr;', 'cbox' );
-				$disable_btn = 'bp-wizard';
 				break;
 
 			case 'theme-update' :
