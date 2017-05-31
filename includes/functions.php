@@ -184,3 +184,33 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 
 	return false;
 }
+
+/**
+ * Get a specific property from a registered CBOX package's theme.
+ *
+ * @since 1.1.0
+ *
+ * @param  string $prop       The property to fetch from the CBOX package theme.
+ * @param  string $package_id The CBOX package to query. If empty, falls back to current package ID.
+ * @return mixed|false        Boolean false on failure, any other type on success.
+ */
+function cbox_get_theme_prop( $prop = '', $package_id = '' ) {
+	if ( empty( $package_id ) ) {
+		$package_id = cbox_get_current_package_id();
+	}
+
+	if ( empty( $package_id ) ) {
+		return false;
+	}
+
+	$theme = cbox_get_package_prop( 'theme', $package_id );
+	if ( false === $theme ) {
+		return false;
+	}
+
+	if ( isset( $theme[$prop] ) ) {
+		return $theme[$prop];
+	}
+
+	return false;
+}
