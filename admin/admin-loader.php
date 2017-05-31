@@ -298,34 +298,12 @@ class CBox_Admin {
 
 			// prompt for theme install
 			case 'theme-prompt' :
-				$screenshot_title = esc_html__( 'View a larger screenshot of the CBOX theme', 'cbox' );
-				$screenshot_url   = cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' );
-
 				// some HTML markup!
 				echo '<div class="wrap">';
 
 				echo '<h2>' . esc_html__( 'Theme Installation', 'cbox' ) . '</h2>';
 
-				// Temporary until we turn this markup into a template part.
-				$text = <<<EOD
-
-<a rel="leanModal" title="{$screenshot_title}" href="#cbox-theme-screenshot" style="float:right; margin-left:2em;"><img width="200" src="{$screenshot_url}" alt="" /></a>
-
-<p>One last step!</p>
-
-<p>The Commons In A Box Theme is the final piece of the Commons In A Box package.  It ties together all functionality offered by Commons In A Box in a beautiful package.</p>
-
-<p>Please note: clicking on "Install Theme" will change your current theme.  If you would rather keep your existing theme, click on "Skip".</p>
-
-<div id="cbox-theme-screenshot" style="display:none;">
-	<img src="{$screenshot_url}" alt="" />
-</div>
-
-<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
-
-EOD;
-
-				echo $text;
+				cbox_get_template_part( 'theme-prompt' );
 
 				echo '<div style="margin-top:2em;">';
 					echo '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" style="display:inline-block; margin:5px 15px 0 0;">Skip</a>';
