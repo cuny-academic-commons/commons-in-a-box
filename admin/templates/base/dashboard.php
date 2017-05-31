@@ -39,19 +39,15 @@
 					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'cbox' ); ?></h4>
 					<?php
 						$theme = cbox_get_theme();
-						$package_theme = cbox_get_package_prop( 'theme' );
-						if ( empty( $package_theme ) ) {
-							$package_theme = array( 'directory_name' => '' );
-						}
 
 						if ( $theme->errors() ) :
 							echo '<p>';
-							printf( __( '<a href="%1$s">Install the %2$s theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( $package_theme['name'] ) );
+							printf( __( '<a href="%1$s">Install the %2$s theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
 							echo '</p>';
 						else:
 
 							// current theme is not the CBOX default theme
-							if ( $theme->get_template() != $package_theme['directory_name'] ) {
+							if ( $theme->get_template() != cbox_get_theme_prop( 'directory_name' ) ) {
 								$is_bp_compatible = cbox_is_theme_bp_compatible();
 
 							?>
@@ -65,7 +61,7 @@
 									}
 								?>
 
-								<?php if ( $package_theme['directory_name'] && $package_theme['screenshot_url'] ) : ?>
+								<?php if ( cbox_get_theme_prop( 'directory_name' ) && cbox_get_theme_prop( 'screenshot_url' ) ) : ?>
 
 									<p><?php printf( __( 'Did you know that <strong>%s</strong> comes with a cool theme? Check it out below!', 'cbox' ), esc_html( cbox_get_package_prop( 'name' ) ) ); ?></p>
 
@@ -73,13 +69,13 @@
 
 									<div class="login postbox">
 										<div class="message" style="text-align:center;">
-											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( $package_theme['name'] ) ); ?></strong>
+											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
 										</div>
 									</div>
 
 									<!-- hidden modal window -->
 									<div id="cbox-theme-screenshot" style="display:none;">
-										<img src="<?php echo esc_url( $package_theme['screenshot_url'] ); ?>" alt="" />
+										<img src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>" alt="" />
 									</div>
 									<!-- #cbox-theme-screenshot -->
 
@@ -100,15 +96,15 @@
 							} else {
 							?>
 
-								<?php if ( $theme->get_stylesheet() != $package_theme['directory_name'] ) : ?>
-									<p><?php printf( __( 'You\'re using a child theme of the <strong>%1$s</strong> theme.', 'cbox' ), esc_attr( $package_theme['name'] ) ); ?></p>
+								<?php if ( $theme->get_stylesheet() != cbox_get_theme_prop( 'directory_name' ) ) : ?>
+									<p><?php printf( __( 'You\'re using a child theme of the <strong>%1$s</strong> theme.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></p>
 								<?php else : ?>
-									<p><?php printf( __( 'You\'re using the <strong>%1$s</strong> theme.', 'cbox' ), esc_attr( $package_theme['name'] ) ); ?></p>
+									<p><?php printf( __( 'You\'re using the <strong>%1$s</strong> theme.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></p>
 								<?php endif; ?>
 
 								<div class="login postbox">
 									<div class="message">
-										<strong><?php printf( __( '<a href="%1$s">Configure the %2$s theme here</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), $package_theme['admin_settings'] ) ), esc_attr( $package_theme['name'] ) ); ?></strong>
+										<strong><?php printf( __( '<a href="%1$s">Configure the %2$s theme here</a>', 'cbox' ), esc_url( get_admin_url( cbox_get_main_site_id(), cbox_get_theme_prop( 'admin_settings' ) ) ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
 									</div>
 								</div>
 
