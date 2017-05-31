@@ -40,12 +40,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		add_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
-		$package_theme = cbox_get_package_prop( 'theme' );
-		$this->options['url'] = $package_theme['download_url'];
+		$this->options['url'] = cbox_get_theme_prop( 'download_url' );
 
 		$this->run( array(
 			// get download URL for the CBOX theme
-			'package'           => $package_theme['download_url'],
+			'package'           => cbox_get_theme_prop( 'download_url' ),
 
 			'destination'       => WP_CONTENT_DIR . '/themes',
 
@@ -170,16 +169,16 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		// get our theme directory names
-		$theme = cbox_get_package_prop( 'theme' );
+		$directory_name = cbox_get_theme_prop( 'directory_name' );
 
-		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $theme['directory_name'] ) {
+		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $directory_name ) {
 			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
 			if ( 1 !== cbox_get_main_site_id() ) {
 				switch_to_blog( cbox_get_main_site_id() );
 			}
 
 			// switch the theme
-			switch_theme( $theme['directory_name'], $theme['directory_name'] );
+			switch_theme( $directory_name, $directory_name );
 
 			// restore blog after switching
 			if ( 1 !== cbox_get_main_site_id() ) {

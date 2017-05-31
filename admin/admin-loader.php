@@ -162,20 +162,19 @@ class CBox_Admin {
 			check_admin_referer( 'cbox_install_theme' );
 
 			// get cbox theme
-			$package_theme = cbox_get_package_prop( 'theme' );
-			$theme = cbox_get_theme( $package_theme['directory_name'] );
+			$theme = cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) );
 			$errors = $theme->errors()->errors;
 
 			// CBOX theme exists! so let's activate it and redirect to the
 			// CBOX Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
-				switch_theme( $package_theme['directory_name'], $package_theme['directory_name'] );
+				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
                                // Mark the theme as having just been activated
                                // so that we can run the setup on next pageload
 				bp_update_option( '_cbox_theme_activated', '1' );
 
-				wp_redirect( admin_url( $package_theme['admin_settings'] ) );
+				wp_redirect( admin_url( cbox_get_theme_prop( 'admin_settings' ) ) );
 				return;
 			}
 
@@ -318,13 +317,11 @@ class CBox_Admin {
 			// install the cbox theme
 			case 'install-theme' :
 				// include the CBOX Theme Installer
-				if ( ! class_exists( 'CBox_Theme_Installer' ) )
+				if ( ! class_exists( 'CBox_Theme_Installer' ) ) {
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+				}
 
-				// get package theme specs
-				$theme = cbox_get_package_prop( 'theme' );
-
-				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
+				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), cbox_get_theme_prop( 'name' ) . ' ' . cbox_get_theme_prop( 'version' ) );
 
 				$cbox_theme = new CBox_Theme_Installer( new Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
@@ -808,8 +805,7 @@ jQuery('a.activate-now').confirm({
 			// theme has update, so switch up the upgrade URL
 			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
-			$theme = cbox_get_package_prop( 'theme' );
-			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), $theme['name'] );
+			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), cbox_get_theme_prop( 'name' ) );
 		}
 
 	?>
@@ -988,9 +984,8 @@ jQuery('a.activate-now').confirm({
 				break;
 
 			case 'theme-update' :
-				$theme = cbox_get_package_prop( 'theme' );
-				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( $theme['name'] ) );
-				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( $theme['directory_name'] ) ), 'cbox_upgrade_theme' );
+				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
+				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
