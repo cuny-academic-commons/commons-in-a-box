@@ -315,7 +315,7 @@ class CBox_Admin {
 				cbox_get_template_part( 'theme-prompt' );
 
 				echo '<div style="margin-top:2em;">';
-					echo '<a href="' . self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' ) . '" style="display:inline-block; margin:5px 15px 0 0;">Skip</a>';
+					echo '<a href="' . self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' ) . '" style="display:inline-block; margin:5px 15px 0 0;">' . esc_html__( 'Skip', 'cbox' ) . '</a>';
 
 					echo '<a class="button button-primary" href="' . wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . esc_html__( 'Install Theme', 'cbox' ). '</a>';
 				echo '</div>';
