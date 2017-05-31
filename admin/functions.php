@@ -137,40 +137,6 @@ function cbox_version() {
 	}
 
 /**
- * Convenience function to fetch the main site ID for the WordPress site.
- *
- * If using BuddyPress and have changed the root blog ID, BP gets precedence
- * over multisite's $current_site->blog_id.
- *
- * @since 1.1.0
- *
- * @return int
- */
-function cbox_get_main_site_id() {
-	/*
-	 * BuddyPress has precedence; not using bp_get_root_blog_id() b/c BuddyPress
-	 * might not be active by the time this function is called.
-	 */
-	if ( defined( 'BP_ROOT_BLOG' ) ) {
-		/** This filter is documented in /wp-content/plugins/buddypress/bp-core/bp-core-functions.php */
-		return (int) apply_filters( 'bp_get_root_blog_id', constant( 'BP_ROOT_BLOG' ) );
-	}
-
-	/*
-	 * Multisite; see ms_load_current_site_and_network().
-	 *
-	 * This might not be necessary for 99% of installs out there, but better safe
-	 * than sorry!
-	 */
-	if ( is_multisite() ) {
-		return (int) get_current_site()->blog_id;
-	}
-
-	// Fallback to 1 if we've reached this part.
-	return 1;
-}
-
-/**
  * Bumps the CBOX revision date in the DB
  *
  * @since 0.3
