@@ -71,6 +71,10 @@ class CBox_Package_Classic extends CBox_Package {
 	         * activates a theme, so we do that here.
 	         */
 		add_action( 'cbox_classic_theme_activated', function() {
+			if ( ! cbox_get_installed_revision_date() ) {
+				remove_action( 'infinity_dashboard_activated', 'infinity_dashboard_activated_redirect', 99 );
+			}
+
 			do_action( 'infinity_dashboard_activated' );
 		} );
 	}
