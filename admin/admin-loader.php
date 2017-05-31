@@ -170,9 +170,11 @@ class CBox_Admin {
 			if ( empty( $errors['theme_not_found'] ) ) {
 				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
-                               // Mark the theme as having just been activated
-                               // so that we can run the setup on next pageload
-				bp_update_option( '_cbox_theme_activated', '1' );
+				/**
+				 * Mark the theme as having just been activated so that we can run the setup
+				 * on next pageload
+				 */
+				update_blog_option( cbox_get_main_site_id(), '_cbox_theme_activated', '1' );
 
 				wp_redirect( admin_url( cbox_get_theme_prop( 'admin_settings' ) ) );
 				return;
