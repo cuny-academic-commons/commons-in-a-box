@@ -65,7 +65,7 @@
 
 									<p><?php printf( __( 'Did you know that <strong>%s</strong> comes with a cool theme? Check it out below!', 'cbox' ), esc_html( cbox_get_package_prop( 'name' ) ) ); ?></p>
 
-									<a rel="leanModal" title="<?php printf( esc_attr__( 'View a larger screenshot of the %s theme', 'cbox' ), $package_theme['name'] ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo esc_url( $package_theme['screenshot_url'] ); ?>" alt="" /></a>
+									<a rel="leanModal" title="<?php printf( esc_attr__( 'View a larger screenshot of the %s theme', 'cbox' ), cbox_get_theme_prop( 'name' ) ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>" alt="" /></a>
 
 									<div class="login postbox">
 										<div class="message" style="text-align:center;">
