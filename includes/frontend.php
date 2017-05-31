@@ -72,7 +72,7 @@ class CBox_Frontend {
 	private function setup_globals() {
 		// get our admin settings; this is highly specific to the Classic package...
 		$settings_key   = cbox_get_package_prop( 'settings_key' );
-		$this->settings = ! empty( $settings_key ) ? (array) bp_get_option( $settings_key ) : array();
+		$this->settings = ! empty( $settings_key ) ? (array) get_blog_option( cbox_get_main_site_id(), $settings_key ) : array();
 
 		// setup autoload classes
 		$this->setup_autoload();
