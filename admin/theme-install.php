@@ -31,6 +31,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 * Why? So we can use our custom download URLs from Github.
 	 */
 	function install( $package = false, $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
+
 		$this->init();
 		$this->install_strings();
 
@@ -63,12 +67,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
-		// Force refresh of theme update information
-		delete_site_transient( 'update_themes' );
-		search_theme_directories( true );
-
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
+		// Refresh the Theme Update information
+		wp_clean_themes_cache( $args['clear_update_cache'] );
 
 		return true;
 	}
@@ -83,6 +83,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	function bulk_upgrade( $upgrades = false, $args = array() ) {
 		if ( empty( $upgrades ) )
 			return false;
+
+		$args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
 
 		$this->init();
 		$this->bulk = true;
@@ -139,6 +143,9 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		$this->maintenance_mode( false );
 
+		// Refresh the Theme Update information
+		wp_clean_themes_cache( $args['clear_update_cache'] );
+
 		$this->skin->bulk_footer();
 
 		$this->skin->footer();
@@ -149,13 +156,6 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
 		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
 		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
-
-		// Force refresh of theme update information
-		delete_site_transient('update_themes');
-		search_theme_directories( true );
-
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
 
 		return $results;
 	}
