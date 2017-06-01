@@ -788,15 +788,15 @@ class CBox_Updater {
 		if ( '' !== $plugin ) {
 			if ( null === $network_activate ) {
 				$cbox_plugins = CBox_Plugins::get_plugins();
-	
+
 				// If CBOX plugin manifest is empty, must load package data again.
 				if ( empty( $cbox_plugins ) ) {
 					/** This hook is documented in admin/plugins-loader.php */
 					do_action( 'cbox_plugins_loaded', cbox()->plugins );
-	
+
 					$cbox_plugins = CBox_Plugins::get_plugins();
 				}
-	
+
 				if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
 					$network_activate = $cbox_plugins[ $plugin_name ]['network'];
 				} else {
