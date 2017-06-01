@@ -548,6 +548,8 @@ class CBox_Updater {
 	 * @param array $plugins Associative array of plugin names
 	 */
 	function __construct( $plugins = false, $settings = array() ) {
+		$skin_args = array();
+
 		if ( ! empty( $plugins['upgrade'] ) )
 			self::$is_upgrade  = true;
 
