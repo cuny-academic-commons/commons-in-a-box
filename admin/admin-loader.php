@@ -119,7 +119,7 @@ class CBox_Admin {
 			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
-				if ( ! cbox_get_installed_revision_date() && ! cbox_get_theme( 'cbox-theme' )->exists() ) {
+				if ( ! cbox_get_installed_revision_date() && ! cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) )->exists() ) {
 					cbox()->setup = 'theme-prompt';
 
 				// Bump the revision date in the DB after updating
