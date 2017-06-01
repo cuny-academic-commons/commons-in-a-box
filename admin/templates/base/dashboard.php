@@ -1,4 +1,6 @@
 
+		<?php cbox_get_template_part( 'welcome' ); ?>
+
 		<h2><?php printf( esc_html__( 'Current Box: %s', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></h2>
 
 		<?php cbox_get_template_part( 'description' ); ?>

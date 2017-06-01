@@ -516,16 +516,10 @@ class CBox_Admin {
 	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
 	 */
 	private function welcome_panel() {
-		if ( 'no-package' === cbox_get_setup_step() ) {
-			return;
-		}
-
 		if ( isset( $_GET['welcome'] ) ) {
 			$welcome_checked = empty( $_GET['welcome'] ) ? 0 : 1;
 			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
 		}
-
-		cbox_get_template_part( 'welcome' );
 	}
 
 	/**
