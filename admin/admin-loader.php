@@ -97,16 +97,13 @@ class CBox_Admin {
 			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 			die();
 
-		// virgin setup - no CBOX or BP installed
+		// virgin setup
 		} elseif ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_virgin_setup', 'cbox-virgin-nonce' );
 
 			// set reference pointer for later use
 			cbox()->setup = 'virgin-setup';
-
-			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
 
 		// BP installed, but no CBOX
 		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
@@ -217,8 +214,8 @@ class CBox_Admin {
 		switch( cbox()->setup ) {
 			// virgin setup - no CBOX or BP installed
 			case 'virgin-setup' :
-				// get CBOX plugins except optional ones
-				$plugins = CBox_Plugins::get_plugins( 'all', 'optional' );
+				// get required CBOX plugins.
+				$plugins = CBox_Plugins::get_plugins( 'required' );
 
 				// sort plugins by plugin state
 				$plugins = CBox_Plugins::organize_plugins_by_state( $plugins );
@@ -230,7 +227,7 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Set Up CBOX Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'cbox' ) . '</h2>';
 
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
@@ -253,7 +250,7 @@ class CBox_Admin {
 				// some HTML markup!
 				echo '<div class="wrap">';
 				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Install CBOX Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
 
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
@@ -657,15 +654,15 @@ jQuery('a.activate-now').confirm({
 			<?php
 				break;
 
-			// (1) buddypress isn't activated or isn't installed
-			case 'no-buddypress' :
+			// (1) required plugins need to be installed/upgraded first if necessary.
+			case 'required-plugins' :
 
 			?>
 
-				<h2><?php _e( 'Install BuddyPress', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "Before you can use Commons In A Box, we'll need to install BuddyPress and some recommended plugins. Click 'Continue' to get set up.", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php printf( __( "Before you can use Commons In A Box %s, we'll need to install some required plugins. Click 'Continue' to get set up.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
 
@@ -675,26 +672,16 @@ jQuery('a.activate-now').confirm({
 			<?php
 				break;
 
-			// (2) we're on the last step!
-			case 'last-step' :
-
-				// get recommended plugins that are available to install / upgrade
-				$recommended_plugins = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
-
-				// we don't want already-installed plugins
-				if ( ! empty( $recommended_plugins['deactivate'] ) )
-					unset( $recommended_plugins['deactivate'] );
-
-				// we have some recommended plugins to bug the user about!
-				if ( ! empty( $recommended_plugins ) ) {
+			// (2) next, recommended plugins are offered if available.
+			case 'recommended-plugins' :
 			?>
 
-				<h2><?php _e( 'Install some other cool stuff!', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "It looks like you're already running BuddyPress. Cool! You're almost finished the setup process!", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "You're almost finished the setup process!", 'cbox' ); ?></p>
 
-					<p class="submitted-on"><?php _e( "Did you know Commons In A Box comes prebundled with a few, recommended plugins?  These plugins help to add functionality to your existing WordPress and BuddyPress site. ", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few, recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
 
 					<p class="submitted-on"><?php _e( "We have automatically selected the following plugins to install for you. However, feel free to uncheck some of these plugins based on your site's needs.", 'cbox' ); ?></p>
 
@@ -710,14 +697,12 @@ jQuery('a.activate-now').confirm({
 				</form>
 
 			<?php
-				// all recommended plugins are already installed
-				// so bump the CBOX revision date and reload the page using javascript
-				// @todo make this <noscript> friendly
-				} else {
-					cbox_bump_revision_date();
+				break;
 
-					echo '<script type="text/javascript">window.location = document.URL;</script>';
-				}
+			// (3) bump revision date if we ever reach here.
+			default :
+				cbox_bump_revision_date();
+				echo '<script type="text/javascript">window.location = document.URL;</script>';
 
 				break;
 
@@ -985,7 +970,7 @@ jQuery('a.activate-now').confirm({
 		// setup some variables depending on the setup step
 		switch ( cbox_get_setup_step() ) {
 			case 'no-package' :
-			case 'no-buddypress' :
+			case 'required-plugins' :
 				$notice_text = __( "Let's get started!", 'cbox' );
 				$button_link = network_admin_url( 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to get set up', 'cbox' );
@@ -999,11 +984,15 @@ jQuery('a.activate-now').confirm({
 				$disable_btn = 'cbox';
 				break;
 
-			case 'last-step' :
+			case 'recommended-plugins' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
 				$button_link = network_admin_url( 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to finish up!', 'cbox' );
 				$disable_btn = 'cbox';
+				break;
+
+			case '' :
+				return;
 				break;
 		}
 

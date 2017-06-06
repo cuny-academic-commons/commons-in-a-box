@@ -158,26 +158,35 @@ function cbox_bump_revision_date() {
  * @return string The current CBOX setup step.
  */
 function cbox_get_setup_step() {
+	$step = '';
+
 	// No package.
 	if ( ! cbox_get_current_package_id() ) {
 		$step = 'no-package';
 
-	// see if BuddyPress is activated
-	// @todo BP_VERSION doesn't work in BP 1.7 yet
-	// @todo should also check the BP DB version...
-	} elseif ( ! defined( 'BP_VERSION' ) ) {
-		$step = 'no-buddypress';
+	// Haven't installed before.
+	} elseif ( ! cbox_get_installed_revision_date() ) {
+		// Get required plugins.
+		$required = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'required' ) );
+		unset( $required['deactivate'] );
 
-	// buddypress is activated
-	} else {
-		// theme needs an update?
-		if ( cbox_get_theme_to_update() ) {
-			$step = 'theme-update';
+		// Check to see if required plugins are needed.
+		if ( ! empty( $required ) ) {
+			$step = 'required-plugins';
 
-		// buddypress is setup
+		// Recommended plugins.
 		} else {
-			$step = 'last-step';
+			$recommended = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
+			unset( $recommended['deactivate'] );
+
+			if ( ! empty( $recommended ) ) {
+				$step = 'recommended-plugins';
+			}
 		}
+
+	// Theme needs an update.
+	} elseif ( cbox_get_theme_to_update() ) {
+		$step = 'theme-update';
 	}
 
 	return $step;
