@@ -105,25 +105,39 @@ class CBox_Plugins {
 	 *
 	 * Updates our private, static $plugins variable in the process.
 	 *
-	 * @see CBox_Plugins::register_required_plugins()
-	 * @see CBox_Plugins::register_recommended_plugins()
-	 * @see CBox_Plugins::register_optional_plugins()
-	 * @see CBox_Plugins::register_dependency_plugins()
+	 * @since 1.1.0 Added $network as an $args parameter.
+	 *
+	 * @param array $args {
+	 *     Array of parameters.
+	 *     @type string $plugin_name       Required. Name of the plugin as in the WP plugin header.
+	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', or 'dependency'
+	 *     @type string $cbox_name         Custom name for the plugin.
+	 *     @type string $cbox_description  Custom short description for the plugin.
+	 *     @type string $depends           Defined plugin dependencies for the plugin. See
+	 *                                     {@link Plugin_Dependencies::parse_requirements()} for syntax.
+	 *     @type string $version           Plugin version number.
+	 *     @type string $download_url      Plugin download URL. Used to downlaod the plugin if not installed.
+	 *     @type string $documentation_url Plugin documentation URL.
+	 *     @type string $admin_settings    Relative wp-admin link to plugin's admin settings page, if applicable.
+	 *     @type string $network_settings  Relative wp-admin link to plugin's network admin settings page, if
+	 *                                     applicable. If plugin's settings resides on the root blog, set this value
+	 *                                     to 'root-blog-only'.
+	 *     @type bool   $network           Should the plugin be activated network-wide? Default: true.
+	 * }
 	 */
 	public function register_plugin( $args = '' ) {
 		$defaults = array(
-			'plugin_name'       => false, // (required) the name of the plugin as in the plugin header
-			'type'              => 'required', // types include 'required', 'recommended', 'optional', dependency'
-			'cbox_name'         => false, // CBOX's label for the plugin
-			'cbox_description'  => false, // CBOX's short description of the plugin
-			'depends'           => false, // our own defined dependencies for the plugin; uses same syntax as PD
-			'version'           => false, // the version number of the plugin we want to compare the installed version with (if applicable)
-			'download_url'      => false, // the download URL of the plugin used if the active version is not compatible with our version
-			'documentation_url' => false, // the documentation URL for the plugin
-			'admin_settings'    => false, // if applicable, where does the admin settings page reside? should be relative to /wp-admin/
-			'network_settings'  => false, // if plugin is network-only and has a settings page, where does the network admin settings page reside?
-			                              // should be relative to /wp-admin/; if plugin's settings resides on the BP_ROOT_BLOG only, mark this as 'root-blog-only'
-			'network'           => true   // should the plugin be activated network-wide?
+			'plugin_name'       => false,
+			'type'              => 'required',
+			'cbox_name'         => false,
+			'cbox_description'  => false,
+			'depends'           => false,
+			'version'           => false,
+			'download_url'      => false,
+			'documentation_url' => false,
+			'admin_settings'    => false,
+			'network_settings'  => false,
+			'network'           => true
 		);
 
 		$r = wp_parse_args( $args, $defaults );
