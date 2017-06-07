@@ -890,19 +890,14 @@ class CBox_Plugins {
 								);
 							}
 
-							// deactivate link
-							if ( $state == 'deactivate' ) {
-								// If override is on, we must still not allow BuddyPress to be deactivated
-								// through the CBOX plugins page. It can still be deactivated through the
-								// regular WP plugins page though
-								if ( $r['type'] != 'required' || ( $this->is_override() && $data['cbox_name'] != 'BuddyPress' ) ) {
-									$plugin_row_links[] = sprintf(
-										'<a title="%s" href="%s">%s</a>',
-										__( "Deactivate this plugin.", 'cbox' ),
-										$this->deactivate_link( $loader ),
-										__( "Deactivate", 'cbox' )
-									);
-								}
+							// deactivate link - only show for non-required plugins.
+							if ( $state == 'deactivate' && $r['type'] !== 'required' ) {
+								$plugin_row_links[] = sprintf(
+									'<a title="%s" href="%s">%s</a>',
+									__( "Deactivate this plugin.", 'cbox' ),
+									$this->deactivate_link( $loader ),
+									__( "Deactivate", 'cbox' )
+								);
 							}
 						?>
 
