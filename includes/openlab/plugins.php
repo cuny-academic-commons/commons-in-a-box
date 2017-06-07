@@ -150,19 +150,16 @@ class CBox_Plugins_OpenLab {
 			'network'           => false
 		) );
 
-		// Multisite-only.
-		if ( is_network_admin() ) {
-			// More Privacy Options
-			$instance( array(
-				'plugin_name'       => 'More Privacy Options',
-				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
-				'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
-				'version'           => '4.6',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
-				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
-				'network_settings'  => 'settings.php#menu'
-			) );
-		}
+		// More Privacy Options
+		$instance( array(
+			'plugin_name'       => 'More Privacy Options',
+			'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
+			'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
+			'version'           => '4.6',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/more-privacy-options.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/more-privacy-options',
+			'network_settings'  => 'settings.php#menu'
+		) );
 	}
 
 	/**
