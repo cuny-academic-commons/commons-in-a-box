@@ -84,8 +84,7 @@ class CBox_Plugins_OpenLab {
 			'depends'           => 'BuddyPress (>=2.7)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.10.zip',
 			'documentation_url' => '', // @todo
-			'admin_settings'    => '', // @todo
-			'network_settings'  => '', // @todo
+			'network_settings'  => 'settings.php?page=bp-group-documents-settings',
 			'network'          => false
 		) );
 
