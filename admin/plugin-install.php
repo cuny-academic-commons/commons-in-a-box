@@ -475,18 +475,21 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	 * @since 0.3
 	 */
 	public static function after_updater( $args = array() ) {
+		$redirect_link = $redirect_text = '';
+
 		// if a redirect link is passed, use it.
 		if ( ! empty( $args ) ) {
- 			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : false;
- 			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : false;
+			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : '';
+			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : '';
 
 		// if a redirect link is passed during the class constructor, use it
 		} elseif ( ! self::_is_static() && ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
 			$redirect_link = $this->options['redirect_link'];
 			$redirect_text = $this->options['redirect_text'];
+		}
 
 		// default fallback
-		} else {
+		if ( '' === $redirect_link ) {
 			$redirect_link = self_admin_url( 'admin.php?page=cbox-plugins' );
 			$redirect_text = __( 'Return to the CBOX Plugins page', 'cbox' );
 		}
