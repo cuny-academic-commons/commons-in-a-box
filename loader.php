@@ -122,8 +122,8 @@ class Commons_In_A_Box {
 	 */
 	private function setup_actions() {
 		// Add actions to plugin activation and deactivation hooks
-		add_action( 'activate_'   . plugin_basename( __FILE__ ), create_function( '', "do_action( 'cbox_activation' );"   ) );
-		add_action( 'deactivate_' . plugin_basename( __FILE__ ), create_function( '', "do_action( 'cbox_deactivation' );" ) );
+		add_action( 'activate_'   . plugin_basename( __FILE__ ), function() { do_action( 'cbox_activation' ); } );
+		add_action( 'deactivate_' . plugin_basename( __FILE__ ), function() { do_action( 'cbox_deactivation' ); } );
 
 		// localization
 		// we only fire this in the admin area, since we have no strings to localize

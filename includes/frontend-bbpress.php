@@ -85,7 +85,7 @@ class CBox_BBP_Autoload {
 	 */
 	public function enable_visual_editor() {
 		// create function to re-enable TinyMCE
-		$enable_tinymce = create_function( '$retval', '
+		$enable_tinymce = function( $retval ) {
 			// enable tinymce
 			$retval["tinymce"] = true;
 
@@ -96,7 +96,7 @@ class CBox_BBP_Autoload {
 			CBox_BBP_Autoload::tinymce_buttons();
 
 			return $retval;
-		' );
+		};
 
 		// add our function to bbPress
 		add_filter( 'bbp_after_get_the_content_parse_args', $enable_tinymce );
@@ -113,7 +113,7 @@ class CBox_BBP_Autoload {
 	 */
 	public static function tinymce_buttons() {
 		// create function to add / remove some TinyMCE buttons
-		$buttons = create_function( '$retval', '
+		$buttons = function( $retval ) {
 			global $wp_version;
 
 			// remove some buttons to emulate teeny mode
@@ -134,13 +134,13 @@ class CBox_BBP_Autoload {
 			array_push( $retval, "image", $paste, "undo", "redo" );
 
 			return $retval;
-		' );
+		};
 
 		// add our function to bbPress
 		add_filter( 'mce_buttons',   $buttons, 20 );
 
 		// wipe out the second row of TinyMCE buttons
-		add_filter( 'mce_buttons_2', create_function( '', "return array();" ) );
+		add_filter( 'mce_buttons_2', '__return_empty_array' );
 	}
 
 	/**

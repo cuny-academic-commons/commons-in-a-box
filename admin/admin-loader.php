@@ -89,7 +89,7 @@ class CBox_Admin {
 			cbox()->setup = 'virgin-setup';
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 		// BP installed, but no CBOX
 		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
@@ -100,7 +100,7 @@ class CBox_Admin {
 			cbox()->setup = 'install';
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 			// if no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
@@ -121,7 +121,7 @@ class CBox_Admin {
 				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 		// install CBOX theme
 		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {
@@ -1015,12 +1015,12 @@ class CBox_Admin {
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
-		add_action( $prefix . 'admin_notices', create_function( '', "
-			echo '<div class=\'error\'>';
+		add_action( $prefix . 'admin_notices', function() {
+			echo '<div class="error">';
 			echo '<p>' . __( 'We see you\'re running BuddyPress\' bundled forums. Commons In A Box comes with bbPress 2.2, an upgraded and improved forum tool.', 'cbox' ) . '</p>';
 			echo '<p>' . sprintf( __( 'However, we don\'t recommend running BP\'s bundled forums alongside bbPress 2.2. <a href=\'%s\'>Click here</a> to learn more about your options.', 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ) . '</p>';
 			echo '</div>';
-		" ) );
+		} );
 	}
 
 	/**
