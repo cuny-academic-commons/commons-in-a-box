@@ -22,11 +22,6 @@ class CBox_Frontend {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// Sanity check: ensure that BuddyPress is running.
-		if ( ! function_exists( 'buddypress' ) ) {
-			return;
-		}
-
 		/**
 		 * Hook to include various files on the frontend.
 		 *
