@@ -256,6 +256,11 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 
 		foreach ( $plugins as $i => $plugin ) {
+			// Do not activate if plugin is install-only.
+			if ( true === CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) {
+				continue;
+			}
+
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
 			if ( ! is_multisite() ) {
@@ -773,16 +778,14 @@ class CBox_Updater {
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		$plugin = '';
-		$network_activate = ! is_multisite() ? false : null;
+		$network_activate = $install_only = false;
 
 		// activates a plugin post-upgrade
 		if ( ! empty( $hook_extra['plugin'] ) ) {
 			$plugin = $hook_extra['plugin'];
 
-			if ( null === $network_activate ) {
-				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-				$plugin_name = $plugin_data['Name'];
-			}
+			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+			$plugin_name = $plugin_data['Name'];
 
 		// activates a plugin post-install
 		} elseif ( ! empty( $result['destination_name'] ) ) {
@@ -803,24 +806,27 @@ class CBox_Updater {
 			$plugin = $result['destination_name'] . '/' . $plugin_loader;
 		}
 
+		// Do not activate if plugin is install-only.
+		if ( true === CBox_Plugins::is_plugin_type( $plugin_name, 'install-only' ) ) {
+			return $bool;
+		}
+
 		if ( '' !== $plugin ) {
-			if ( null === $network_activate ) {
+			$cbox_plugins = CBox_Plugins::get_plugins();
+
+			// If CBOX plugin manifest is empty, must load package data again.
+			if ( empty( $cbox_plugins ) ) {
+				/** This hook is documented in admin/plugins-loader.php */
+				do_action( 'cbox_plugins_loaded', cbox()->plugins );
+
 				$cbox_plugins = CBox_Plugins::get_plugins();
+			}
 
-				// If CBOX plugin manifest is empty, must load package data again.
-				if ( empty( $cbox_plugins ) ) {
-					/** This hook is documented in admin/plugins-loader.php */
-					do_action( 'cbox_plugins_loaded', cbox()->plugins );
-
-					$cbox_plugins = CBox_Plugins::get_plugins();
-				}
-
-				if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
-					$network_activate = $cbox_plugins[ $plugin_name ]['network'];
-				} else {
-					$dependency = CBox_Plugins::get_plugins( 'dependency' );
-					$network_activate = $dependency[ $plugin_name ]['network'];
-				}
+			if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
+				$network_activate = $cbox_plugins[ $plugin_name ]['network'];
+			} else {
+				$dependency = CBox_Plugins::get_plugins( 'dependency' );
+				$network_activate = $dependency[ $plugin_name ]['network'];
 			}
 
 			/*

@@ -105,12 +105,13 @@ class CBox_Plugins {
 	 *
 	 * Updates our private, static $plugins variable in the process.
 	 *
-	 * @since 1.1.0 Added $network as an $args parameter.
+	 * @since 1.1.0 Added $network as a parameter. Added 'install-only' as an option for $type.
 	 *
 	 * @param array $args {
 	 *     Array of parameters.
 	 *     @type string $plugin_name       Required. Name of the plugin as in the WP plugin header.
-	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', or 'dependency'
+	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', 'install-only' or
+	 *                                     'dependency'.
 	 *     @type string $cbox_name         Custom name for the plugin.
 	 *     @type string $cbox_description  Custom short description for the plugin.
 	 *     @type string $depends           Defined plugin dependencies for the plugin. See
@@ -149,6 +150,7 @@ class CBox_Plugins {
 			case 'required' :
 			case 'recommended' :
 			case 'optional' :
+			case 'install-only' :
 			case 'dependency' :
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']         = $r['cbox_name'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description']  = $r['cbox_description'];
@@ -158,7 +160,7 @@ class CBox_Plugins {
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['documentation_url'] = $r['documentation_url'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = $r['network'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = 'install-only' === $r['type'] ? false : $r['network'];
 
 				break;
 		}
@@ -168,7 +170,8 @@ class CBox_Plugins {
 	/**
 	 * Helper method to grab all CBOX plugins of a certain type.
 	 *
-	 * @param string $type Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional', 'dependency'.
+	 * @param string $type Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional',
+	 *                     'install-only', 'dependency'.
 	 * @param string $omit_type The type of CBOX plugin to omit from returning
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
@@ -195,6 +198,28 @@ class CBox_Plugins {
 			return false;
 
 		return self::$plugins[$type];
+	}
+
+	/**
+	 * Helper method to check if a CBOX plugin is a certain type.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  string $plugin_name Full plugin name.
+	 * @param  string $type        Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional',
+	 *                            'install-only', 'dependency'.
+	 * @return bool
+	 */
+	public static function is_plugin_type( $plugin_name = '', $type = '' ) {
+		if ( '' === $plugin_name || '' === $type ) {
+			return false;
+		}
+
+		if ( isset( self::$plugins[ $type ][ $plugin_name ] ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -639,6 +664,15 @@ class CBox_Plugins {
 						<?php $this->render_plugin_table( 'type=optional' ); ?>
 					</div>
 
+					<div id="site-plugins" class="cbox-plugins-section">
+						<h2><?php _e( 'Site Plugins', 'cbox' ); ?></h2>
+
+						<p><?php _e( "The following plugins can improve the WordPress site experience for your users.", 'cbox' ); ?></p>
+						<p><?php _e( "Installing a plugin here makes it available for members in the Plugins area of their site.", 'cbox' ); ?></p>
+
+						<?php $this->render_plugin_table( 'type=install-only' ); ?>
+					</div>
+
 					<?php wp_nonce_field( 'cbox_update' ); ?>
 				</form>
 			</div>
@@ -842,24 +876,32 @@ class CBox_Plugins {
 
 					if ( $r['omit_activated'] && $state == 'deactivate' )
 						continue;
+
+					$css_class = 'activate' == $state && CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ? 'active' : '';
+					$css_class = '' === $css_class ? $state == 'deactivate' ? 'active' : 'action-required' : $css_class;
 			?>
-				<tr id="<?php echo sanitize_title( $plugin ); ?>" class="cbox-plugin-row-<?php echo $state == 'deactivate' ? 'active' : 'action-required'; ?>">
+				<tr id="<?php echo sanitize_title( $plugin ); ?>" class="cbox-plugin-row-<?php echo $css_class; ?>">
 					<th scope='row' class='check-column'>
-						<?php if ( $state != 'deactivate' ) : ?>
+						<?php if ( 'activate' == $state && CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) : ?>
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already installed', 'cbox' ); ?>" style="margin-left:7px;" />
+
+						<?php elseif ( 'deactivate' !== $state ) : ?>
 							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/>
+
 						<?php else : ?>
 							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
+
 						<?php endif; ?>
 					</th>
 
 					<td class="plugin-title">
-						<?php if ( $state != 'deactivate' ) : ?>
+						<?php if ( 'action-required' === $css_class ) : ?>
 							<label for="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>">
 						<?php endif; ?>
 
 						<strong><?php echo $data['cbox_name']; ?></strong>
 
-						<?php if ( $state != 'deactivate' ) : ?>
+						<?php if ( 'action-required' === $css_class ) : ?>
 							</label>
 						<?php endif; ?>
 
@@ -951,7 +993,7 @@ class CBox_Plugins {
 			</tbody>
 		</table>
 
-		<p><input type="submit" value="<?php _e( 'Update', 'cbox' ); ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
+		<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : __( 'Update', 'cbox' ) ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
 	<?php
 	}
 
