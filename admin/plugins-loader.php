@@ -567,6 +567,39 @@ class CBox_Plugins {
 					}
 
 					break;
+
+
+				case 'uninstall' :
+					check_admin_referer( 'bulk-plugins' );
+
+					$result = true;
+					if ( self::is_plugin_type( $plugin, 'install-only' ) ) {
+						$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+						$result = delete_plugins( (array) $loader );
+
+						if ( is_wp_error( $result ) ) {
+							$result = 0;
+
+						// If plugin was activated on the CBOX site, refresh active plugins list.
+						} elseif ( ! is_wp_error( $result ) && self::is_plugin_active( $loader ) ) {
+							// Switch to CBOX main site ID, if necessary.
+							if ( 1 !== cbox_get_main_site_id() ) {
+								switch_to_blog( cbox_get_main_site_id() );
+							}
+
+							// Validate existing plugins.
+							validate_active_plugins();
+
+							// Switch back.
+							if ( 1 !== cbox_get_main_site_id() ) {
+								restore_current_blog();
+							}
+						}
+					}
+
+					wp_redirect( self_admin_url("admin.php?page=cbox-plugins&uninstall={$result}") );
+					exit;
+					break;
 			}
 		}
 
@@ -618,6 +651,14 @@ class CBox_Plugins {
 					html( 'p', '$text', html( 'ul', array( 'class' => 'dep-list' ), '$dep_list' ) )
 				);
 			" ) );
+		}
+
+		// Uninstall notice.
+		if ( ! empty( $_REQUEST['uninstall'] ) ) {
+			$prefix = is_network_admin() ? 'network_' : '';
+			add_action( $prefix . 'admin_notices', function() {
+				echo '<div class="updated"><p>' . __( 'Plugin uninstalled.', 'cbox' ) . '</p></div>';
+			} );
 		}
 	}
 
@@ -936,6 +977,16 @@ class CBox_Plugins {
 									__( "Deactivate this plugin.", 'cbox' ),
 									$this->deactivate_link( $loader ),
 									__( "Deactivate", 'cbox' )
+								);
+							}
+
+							// Uninstall - only for install-only plugins.
+							if ( 'install-only' == $r['type'] && 'install' !== $state ) {
+								$plugin_row_links[] = sprintf(
+									'<a title="%s" href="%s">%s</a>',
+									__( "Uninstall this plugin.", 'cbox' ),
+									self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=uninstall&amp;plugin=' . urlencode( $plugin ) . '&amp;_wpnonce=' . wp_create_nonce( 'bulk-plugins' ) ),
+									__( "Uninstall", 'cbox' )
 								);
 							}
 						?>
