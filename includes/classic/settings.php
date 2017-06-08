@@ -196,9 +196,9 @@ class CBox_Settings_Classic {
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
-		add_action( $prefix . 'admin_notices', create_function( '', "
-			echo '<div class=\'updated\'><p><strong>' . __( 'Settings saved.', 'cbox' ) . '</strong></p></div>';
-		" ) );
+		add_action( $prefix . 'admin_notices', function() {
+			echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'cbox' ) . '</strong></p></div>';
+		} );
 	}
 
 	/**

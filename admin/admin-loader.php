@@ -121,7 +121,7 @@ class CBox_Admin {
 
 				// Bump the revision date in the DB after updating
 				} else {
-					add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+					add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 					do_action( 'cbox_after_updater' );
 
 					wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
@@ -141,7 +141,7 @@ class CBox_Admin {
 				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 		// theme prompt
 		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'theme-prompt' ) {
@@ -151,7 +151,7 @@ class CBox_Admin {
 			cbox()->setup = 'theme-prompt';
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 		// install CBOX theme
 		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {

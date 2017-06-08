@@ -607,9 +607,9 @@ class CBox_Plugins {
 		if ( ! empty( $_REQUEST['deactivate'] ) ) {
 			// add an admin notice
 			$prefix = is_network_admin() ? 'network_' : '';
-			add_action( $prefix . 'admin_notices', create_function( '', "
-				echo '<div class=\'updated\'><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
-			" ) );
+			add_action( $prefix . 'admin_notices', function() {
+				echo '<div class="updated"><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
+			} );
 
 			// if PD deactivated any other dependent plugins, show admin notice here
 			// basically a copy-n-paste of Plugin_Dependencies::generate_dep_list()
@@ -645,12 +645,11 @@ class CBox_Plugins {
 			}
 
 			// now add the admin notice for any other deactivated plugins by PD
-			add_action( $prefix . 'admin_notices', create_function( '', "
-				echo
-				html( 'div', array( 'class' => 'updated' ),
+			add_action( $prefix . 'admin_notices', function() {
+				echo html( 'div', array( 'class' => 'updated' ),
 					html( 'p', '$text', html( 'ul', array( 'class' => 'dep-list' ), '$dep_list' ) )
 				);
-			" ) );
+			} );
 		}
 
 		// Uninstall notice.
