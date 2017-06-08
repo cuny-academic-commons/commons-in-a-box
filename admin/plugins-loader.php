@@ -929,8 +929,8 @@ class CBox_Plugins {
 								);
 							}
 
-							// deactivate link - only show for non-required plugins.
-							if ( $state == 'deactivate' && $r['type'] !== 'required' ) {
+							// deactivate link - only show for non-required and non-install plugins.
+							if ( 'deactivate' === $state && 'required' !== $r['type'] && 'install-only' !== $r['type'] ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s">%s</a>',
 									__( "Deactivate this plugin.", 'cbox' ),
