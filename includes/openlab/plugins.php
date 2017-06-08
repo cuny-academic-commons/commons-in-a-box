@@ -27,6 +27,7 @@ class CBox_Plugins_OpenLab {
 		self::register_dependency_plugins( $instance );
 		self::register_recommended_plugins( $instance );
 		self::register_optional_plugins( $instance );
+		self::register_installonly_plugins( $instance );
 	}
 
 	/**
@@ -248,31 +249,55 @@ class CBox_Plugins_OpenLab {
 			'download_url'      => 'http://downloads.wordpress.org/plugin/dirt-directory-client.1.1.0.zip',
 			'network'           => false
 		) );
+	}
 
-		/** @TODO THESE SHOULD BE INSTALLED ONLY
+	/**
+	 * Register install-only plugins.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param callable $instance {@see CBox_Plugins::register_plugin()}.
+	 */
+	protected static function register_installonly_plugins( $instance ) {
 		$instance( array(
 			'plugin_name'       => 'Anthologize',
-			'type'              => 'site_tools',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'Anthologize', 'cbox' ),
+			'cbox_description'  => __( 'Create ebooks from your blog posts or other external content.', 'cbox' ),
 			'version'           => '0.7.7',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.7.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
 		) );
 
+		/* Commented out until correct info is received.
 		$instance( array(
 			'plugin_name'       => 'Braille',
-			'type'              => 'site_tools',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'Braille', 'cbox' ),
 			'version'           => '3.7.18',
+			'download_url'      => '',
+			'documentation_url' => '',
 		) );
+		*/
 
 		$instance( array(
 			'plugin_name'       => 'PressForward',
-			'type'              => 'site_tools',
-			'version'           => '4.2.1',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'PressForward', 'cbox' ),
+			'cbox_description'  => __( 'A plugin providing an editorial workflow for content aggregation and curation within the WordPress dashboard. Designed for bloggers and editorial teams wishing to collect, discuss, and share content from a variety of sources on the open web.', 'cbox' ),
+			'version'           => '4.3.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.4.3.0.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
 		$instance( array(
 			'plugin_name'       => 'WP Grade Comments',
-			'type'              => 'site_tools',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'WP Grade Comments', 'cbox' ),
+			'cbox_description'  => __( 'A plugin for instructors using their WordPress site in a course setting. Provides ability to give private feedback and/or grades to post authors, all without leaving the familiar commenting interface.', 'cbox' ),
 			'version'           => '1.1.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.1.1.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/wp-grade-comments',
 		) );
-		*/
 	}
 }
