@@ -226,7 +226,6 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'cbox' ) . '</h2>';
 
 				// start the upgrade!
@@ -249,7 +248,6 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
 
 				// start the install!
@@ -289,7 +287,6 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
 				echo '<h2>' . $title . '</h2>';
 
 				// start the upgrade!
@@ -343,7 +340,6 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
 				echo '<h2>' . esc_html__('Upgrading Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
@@ -447,7 +443,6 @@ class CBox_Admin {
 		} else {
 		?>
 			<div class="wrap">
-				<?php screen_icon( 'cbox' ); ?>
 				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
 
 				<?php $this->welcome_panel(); ?>

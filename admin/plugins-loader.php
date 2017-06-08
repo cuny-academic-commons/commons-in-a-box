@@ -611,8 +611,6 @@ class CBox_Plugins {
 		else {
 	?>
 			<div class="wrap">
-				<?php screen_icon( 'cbox' ); ?>
-
 				<h2><?php _e( 'Commons In A Box Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
@@ -667,7 +665,6 @@ class CBox_Plugins {
 
 		// some HTML markup!
 		echo '<div class="wrap">';
-		screen_icon( 'cbox' );
 		echo '<h2>' . esc_html__('Update CBOX', 'cbox' ) . '</h2>';
 
 		// start the upgrade!

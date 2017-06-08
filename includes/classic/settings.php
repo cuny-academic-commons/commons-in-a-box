@@ -207,7 +207,6 @@ class CBox_Settings_Classic {
 	public function admin_page() {
 	?>
 		<div class="wrap">
-			<?php screen_icon( 'cbox' ); ?>
 			<h2><?php _e( 'Commons In A Box Settings', 'cbox' ); ?></h2>
 
 			<p><?php _e( 'CBOX can configure some important options for certain plugins.', 'cbox' ); ?>
