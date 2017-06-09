@@ -477,7 +477,7 @@ function cbox_rename_github_folder( $source, $remote_source, $obj ) {
 			global $wp_filesystem;
 
 			// rename the theme folder to get rid of github's funky naming
-			$new_location = $remote_source . '/cbox-theme/';
+			$new_location = $remote_source . '/' . cbox_get_theme_prop( 'directory_name' ) . '/';
 
 			// now rename the folder
 			$rename = $wp_filesystem->move( $source, $new_location );
