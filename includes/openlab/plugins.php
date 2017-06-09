@@ -269,16 +269,14 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
 		) );
 
-		/* Commented out until correct info is received.
 		$instance( array(
-			'plugin_name'       => 'Braille',
+			'plugin_name'       => 'braille',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Braille', 'cbox' ),
-			'version'           => '3.7.18',
-			'download_url'      => '',
-			'documentation_url' => '',
+			'version'           => '0.0.5',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/braille.0.0.5.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/braille',
 		) );
-		*/
 
 		$instance( array(
 			'plugin_name'       => 'PressForward',
