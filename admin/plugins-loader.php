@@ -674,64 +674,82 @@ class CBox_Plugins {
 
 		// if upgrade process is finished, show regular plugins page
 		else {
+			$type = ! empty( $_GET['type'] ) ? $_GET['type'] : '';
+			$url  = self_admin_url( 'admin.php?page=cbox-plugins' );
+			$url  = ! empty( $type ) ? add_query_arg( 'type', esc_attr( $_GET['type'] ), $url ) : $url;
+
 	?>
 			<div class="wrap">
 				<h2><?php _e( 'Commons In A Box Plugins', 'cbox' ); ?></h2>
 
-				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox-plugins' ); ?>">
-					<div id="required" class="cbox-plugins-section">
-						<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
+				<?php if ( self::get_plugins( 'optional' ) || self::get_plugins( 'install-only' ) ) : ?>
+					<h2 class="nav-tab-wrapper wp-clearfix">
+						<a href="<?php echo remove_query_arg( 'type', $url ); ?>" class="nav-tab<?php echo '' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Core', 'cbox' ); ?></a>
+						<a href="<?php echo add_query_arg( 'type', 'optional', $url ); ?>" class="nav-tab<?php echo 'optional' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Optional', 'cbox' ); ?></a>
+					</h2>
 
-						<p><?php _e( 'Commons In A Box requires the following plugins.', 'cbox' ); ?></p>
+				<?php endif; ?>
 
-						<?php $this->render_plugin_table(); ?>
-					</div>
+				<form method="post" action="<?php echo $url; ?>">
+					<?php if ( '' === $type ) : ?>
 
-					<?php if ( self::get_plugins( 'recommended' ) ) : ?>
+						<div id="required" class="cbox-plugins-section">
+							<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
-						<div id="recommended" class="cbox-plugins-section">
-							<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
+							<p><?php _e( 'Commons In A Box requires the following plugins.', 'cbox' ); ?></p>
 
-							<p><?php _e( "The following plugins are recommended during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
-
-							<?php $this->render_plugin_table( 'type=recommended' ); ?>
+							<?php $this->render_plugin_table(); ?>
 						</div>
+
+						<?php if ( self::get_plugins( 'recommended' ) ) : ?>
+
+							<div id="recommended" class="cbox-plugins-section">
+								<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
+
+								<p><?php _e( "The following plugins are recommended during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+
+								<?php $this->render_plugin_table( 'type=recommended' ); ?>
+							</div>
+
+						<?php endif; ?>
 
 					<?php endif; ?>
 
-					<?php if ( self::get_plugins( 'optional' ) ) : ?>
+					<?php if( 'optional' === $type ) : ?>
 
-						<div id="a-la-carte" class="cbox-plugins-section">
-							<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
+						<?php if ( self::get_plugins( 'optional' ) ) : ?>
 
-							<p><?php _e( "The following plugins work well with Commons In A Box, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ); ?></p>
-							<p><?php _e( "To install, check the plugins you want to install and click 'Update'.", 'cbox' ); ?></p>
+							<div id="a-la-carte" class="cbox-plugins-section">
+								<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
 
-							<?php $this->render_plugin_table( 'type=optional' ); ?>
-						</div>
+								<p><?php _e( "The following plugins work well with Commons In A Box, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ); ?></p>
+								<p><?php _e( "To install, check the plugins you want to install and click 'Update'.", 'cbox' ); ?></p>
 
-					<?php endif; ?>
+								<?php $this->render_plugin_table( 'type=optional' ); ?>
+							</div>
 
-					<?php if ( self::get_plugins( 'install-only' ) ) : ?>
+						<?php endif; ?>
 
-						<div id="site-plugins" class="cbox-plugins-section">
-							<h2><?php _e( 'Site Plugins', 'cbox' ); ?></h2>
+						<?php if ( self::get_plugins( 'install-only' ) ) : ?>
 
-							<p><?php _e( "The following plugins can improve the WordPress site experience for your users.", 'cbox' ); ?></p>
-							<p><?php _e( "Installing a plugin here makes it available for members in the Plugins area of their site.", 'cbox' ); ?></p>
+							<div id="site-plugins" class="cbox-plugins-section">
+								<h2><?php _e( 'Site Plugins', 'cbox' ); ?></h2>
 
-							<?php $this->render_plugin_table( 'type=install-only' ); ?>
-						</div>
+								<p><?php _e( "The following plugins can improve the WordPress site experience for your users.", 'cbox' ); ?></p>
+								<p><?php _e( "Installing a plugin here makes it available for members in the Plugins area of their site.", 'cbox' ); ?></p>
 
-						<div class="prompt" style="display:none">
-							<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'cbox' ); ?></p>
-							<p><?php esc_html_e( 'Are you sure you want to continue uninstalling?', 'cbox' ); ?>
-						</div>
+								<?php $this->render_plugin_table( 'type=install-only' ); ?>
+							</div>
 
-						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
-						<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.js"></script>
+							<div class="prompt" style="display:none">
+								<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'cbox' ); ?></p>
+								<p><?php esc_html_e( 'Are you sure you want to continue uninstalling?', 'cbox' ); ?>
+							</div>
 
-						<script>
+							<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.js"></script>
+
+							<script>
 jQuery('a[data-uninstall="1"]').confirm({
 	type: 'red',
 	content: function() {
@@ -759,7 +777,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 		},
 	}
 });
-						</script>
+							</script>
+
+						<?php endif; ?>
 
 					<?php endif; ?>
 
