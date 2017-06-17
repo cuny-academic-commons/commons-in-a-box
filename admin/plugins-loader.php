@@ -690,7 +690,7 @@ class CBox_Plugins {
 					<div id="recommended" class="cbox-plugins-section">
 						<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-						<p><?php _e( "The following plugins are installed automatically during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+						<p><?php _e( "The following plugins are recommended during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
 
 						<?php $this->render_plugin_table( 'type=recommended' ); ?>
 					</div>
