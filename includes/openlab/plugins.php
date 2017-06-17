@@ -273,6 +273,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'braille',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Braille', 'cbox' ),
+			'cbox_description'  => __( 'Provides a number of Braille-related services to WordPress and the Anthologize plugin.', 'cbox' ),
 			'version'           => '0.0.5',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/braille.0.0.5.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/braille',
