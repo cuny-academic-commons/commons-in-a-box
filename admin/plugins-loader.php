@@ -713,6 +713,44 @@ class CBox_Plugins {
 						<?php $this->render_plugin_table( 'type=install-only' ); ?>
 					</div>
 
+				<div class="prompt" style="display:none">
+					<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'cbox' ); ?></p>
+					<p><?php esc_html_e( 'Are you sure you want to continue uninstalling?', 'cbox' ); ?>
+				</div>
+
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.js"></script>
+
+				<script>
+jQuery('a[data-uninstall="1"]').confirm({
+	type: 'red',
+	content: function() {
+		// Set modal title.
+		this.setTitle( this.$target.attr( 'title' ) );
+
+		// Set modal content.
+		return jQuery( '.prompt' )[0].innerHTML;
+	},
+	title: function() {},
+	boxWidth: '500px',
+	useBootstrap: false,
+	bgOpacity: 0.7,
+	buttons: {
+	        no: {
+			text: '<?php esc_attr_e( 'No', 'cbox' ); ?>',
+			action: function() {}
+		},
+		yes: {
+			text: '<?php esc_attr_e( 'Yes', 'cbox' ); ?>',
+			btnClass: 'btn-red',
+			action: function () {
+				location.href = this.$target.attr('href');
+			}
+		},
+	}
+});
+				</script>
+
 					<?php wp_nonce_field( 'cbox_update' ); ?>
 				</form>
 			</div>
@@ -982,8 +1020,8 @@ class CBox_Plugins {
 							// Uninstall - only for install-only plugins.
 							if ( 'install-only' == $r['type'] && 'install' !== $state ) {
 								$plugin_row_links[] = sprintf(
-									'<a title="%s" href="%s">%s</a>',
-									__( "Uninstall this plugin.", 'cbox' ),
+									'<a data-uninstall="1" title="%s" href="%s">%s</a>',
+									sprintf( __( "Uninstall %s", 'cbox' ), $plugin ),
 									self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=uninstall&amp;plugin=' . urlencode( $plugin ) . '&amp;_wpnonce=' . wp_create_nonce( 'bulk-plugins' ) ),
 									__( "Uninstall", 'cbox' )
 								);
