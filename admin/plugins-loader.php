@@ -680,7 +680,7 @@ class CBox_Plugins {
 
 	?>
 			<div class="wrap">
-				<h2><?php _e( 'Commons In A Box Plugins', 'cbox' ); ?></h2>
+				<h2><?php printf( __( 'Commons In A Box: %s Plugins', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></h2>
 
 				<?php if ( self::get_plugins( 'optional' ) || self::get_plugins( 'install-only' ) ) : ?>
 					<h2 class="nav-tab-wrapper wp-clearfix">
@@ -696,7 +696,7 @@ class CBox_Plugins {
 						<div id="required" class="cbox-plugins-section">
 							<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
-							<p><?php _e( 'Commons In A Box requires the following plugins.', 'cbox' ); ?></p>
+							<p><?php printf( __( 'Commons In A Box %s requires the following plugins.', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
 
 							<?php $this->render_plugin_table(); ?>
 						</div>
@@ -706,7 +706,7 @@ class CBox_Plugins {
 							<div id="recommended" class="cbox-plugins-section">
 								<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-								<p><?php _e( "The following plugins are recommended during initial Commons In A Box setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ); ?></p>
+								<p><?php printf( __( "The following plugins are recommended during initial Commons In A Box %s setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
 
 								<?php $this->render_plugin_table( 'type=recommended' ); ?>
 							</div>
@@ -722,7 +722,7 @@ class CBox_Plugins {
 							<div id="a-la-carte" class="cbox-plugins-section">
 								<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
 
-								<p><?php _e( "The following plugins work well with Commons In A Box, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ); ?></p>
+								<p><?php printf( __( "The following plugins work well with Commons In A Box %s, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
 								<p><?php _e( "To install, check the plugins you want to install and click 'Update'.", 'cbox' ); ?></p>
 
 								<?php $this->render_plugin_table( 'type=optional' ); ?>
