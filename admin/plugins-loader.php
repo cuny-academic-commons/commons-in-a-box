@@ -704,9 +704,7 @@ class CBox_Plugins {
 					<?php if ( '' === $type ) : ?>
 
 						<div id="required" class="cbox-plugins-section">
-							<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
-
-							<p><?php printf( __( 'Commons In A Box %s requires the following plugins.', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
+							<?php cbox_get_template_part( 'plugins-required-header' ); ?>
 
 							<?php $this->render_plugin_table(); ?>
 						</div>
@@ -714,9 +712,7 @@ class CBox_Plugins {
 						<?php if ( self::get_plugins( 'recommended' ) ) : ?>
 
 							<div id="recommended" class="cbox-plugins-section">
-								<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
-
-								<p><?php printf( __( "The following plugins are recommended during initial Commons In A Box %s setup.  We like them, but feel free to deactivate them if you don't need certain functionality.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
+								<?php cbox_get_template_part( 'plugins-recommended-header' ); ?>
 
 								<?php $this->render_plugin_table( 'type=recommended' ); ?>
 							</div>
@@ -730,10 +726,7 @@ class CBox_Plugins {
 						<?php if ( self::get_plugins( 'optional' ) ) : ?>
 
 							<div id="a-la-carte" class="cbox-plugins-section">
-								<h2><?php _e( '&Agrave; la carte', 'cbox' ); ?></h2>
-
-								<p><?php printf( __( "The following plugins work well with Commons In A Box %s, but they require a bit of additional setup, so we do not install them by default.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
-								<p><?php _e( "To install, check the plugins you want to install and click 'Update'.", 'cbox' ); ?></p>
+								<?php cbox_get_template_part( 'plugins-optional-header' ); ?>
 
 								<?php $this->render_plugin_table( 'type=optional' ); ?>
 							</div>
@@ -743,10 +736,7 @@ class CBox_Plugins {
 						<?php if ( self::get_plugins( 'install-only' ) ) : ?>
 
 							<div id="site-plugins" class="cbox-plugins-section">
-								<h2><?php _e( 'Site Plugins', 'cbox' ); ?></h2>
-
-								<p><?php _e( "The following plugins can improve the WordPress site experience for your users.", 'cbox' ); ?></p>
-								<p><?php _e( "Installing a plugin here makes it available for members in the Plugins area of their site.", 'cbox' ); ?></p>
+								<?php cbox_get_template_part( 'plugins-installonly-header' ); ?>
 
 								<?php $this->render_plugin_table( 'type=install-only' ); ?>
 							</div>
