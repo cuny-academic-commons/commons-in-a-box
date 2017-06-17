@@ -497,6 +497,10 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		if ( '' === $redirect_link ) {
 			$redirect_link = self_admin_url( 'admin.php?page=cbox-plugins' );
 			$redirect_text = __( 'Return to the CBOX Plugins page', 'cbox' );
+
+			if ( ! empty( $_GET['type'] ) ) {
+				$redirect_link = add_query_arg( 'type', esc_attr( $_GET['type'] ), $redirect_link );
+			}
 		}
 
 		// CBOX hasn't been installed ever, so change button to theme install.

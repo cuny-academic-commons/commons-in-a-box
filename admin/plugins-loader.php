@@ -510,8 +510,18 @@ class CBox_Plugins {
 		if ( ! empty( $_REQUEST['cbox-action'] ) && ! empty( $_REQUEST['plugin'] ) ) {
 			$plugin = $_REQUEST['plugin'];
 
-			if ( ! current_user_can('activate_plugins') )
-				wp_die(__('You do not have sufficient permissions to deactivate plugins for this site.'));
+			if ( ! current_user_can('activate_plugins') ) {
+				wp_die( __( 'You do not have sufficient permissions to deactivate plugins for this site.' ) );
+			}
+
+			// Parse referer.
+			$qs = parse_url( wp_get_referer(), PHP_URL_QUERY );
+			parse_str( $qs, $qs );
+			$type = ! empty( $qs['type'] ) ? esc_attr( $qs['type'] ) : '';
+
+			// Set redirect URL
+			$url = self_admin_url( 'admin.php?page=cbox-plugins' );
+			$url = ! empty( $type ) ? add_query_arg( 'type', $type, $url ) : $url;
 
 			switch( $_REQUEST['cbox-action'] ) {
 				case 'deactivate' :
@@ -519,7 +529,7 @@ class CBox_Plugins {
 
 					// if plugin is already deactivated, redirect to CBOX dashboard and stop!
 					if ( ! self::is_plugin_active( $plugin ) ) {
-						wp_redirect( self_admin_url("admin.php?page=cbox") );
+						wp_safe_redirect( $url );
 						exit;
 
 					// start deactivating!
@@ -562,7 +572,7 @@ class CBox_Plugins {
 						if ( ! is_network_admin() )
 							update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
 
-						wp_redirect( self_admin_url("admin.php?page=cbox-plugins&deactivate=true") );
+						wp_safe_redirect( add_query_arg( 'deactivate', 'true', $url ) );
 						exit;
 					}
 
@@ -597,7 +607,7 @@ class CBox_Plugins {
 						}
 					}
 
-					wp_redirect( self_admin_url("admin.php?page=cbox-plugins&uninstall={$result}") );
+					wp_safe_redirect( add_query_arg( 'uninstall', $result, $url ) );
 					exit;
 					break;
 			}
