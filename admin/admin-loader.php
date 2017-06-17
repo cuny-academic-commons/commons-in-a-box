@@ -388,9 +388,10 @@ class CBox_Admin {
 	 * Setup admin menu and any dependent page hooks.
 	 */
 	public function admin_menu() {
+		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX: %s', 'cbox' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'cbox' );
 		$page = add_menu_page(
-			__( 'Commons In A Box', 'cbox' ),
-			__( 'Commons In A Box', 'cbox' ),
+			$name,
+			$name,
 			'install_plugins', // todo - map cap?
 			'cbox',
 			array( $this, 'admin_page' )
