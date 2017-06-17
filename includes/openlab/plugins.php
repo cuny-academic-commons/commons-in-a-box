@@ -244,9 +244,11 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'DiRT Directory Client',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'DiRT Directory Client', 'cbox' ),
+			'cbox_description'  => __( 'Integrate the DiRT directory into BuddyPress groups and member profiles.', 'cbox' ),
 			'version'           => '1.1.0',
 			'depends'           => 'BuddyPress (>=1.5)',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/dirt-directory-client.1.1.0.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/dirt-directory-client/',
 			'network'           => false
 		) );
 	}
