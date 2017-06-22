@@ -167,7 +167,7 @@ function cbox_get_setup_step() {
 	// Haven't installed before.
 	} elseif ( ! cbox_get_installed_revision_date() ) {
 		// Get required plugins.
-		$required = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'required' ) );
+		$required = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'required' ) );
 		unset( $required['deactivate'] );
 
 		// Check to see if required plugins are needed.
@@ -176,7 +176,7 @@ function cbox_get_setup_step() {
 
 		// Recommended plugins.
 		} else {
-			$recommended = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
+			$recommended = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
 			unset( $recommended['deactivate'] );
 
 			if ( ! empty( $recommended ) ) {

@@ -1,66 +1,28 @@
 <?php
 /**
- * Set up plugin management
+ * Plugins code for the admin area.
  *
- * @since 0.1
+ * @since 1.1.0 Admin code split from {@link CBox_Plugins}
  *
  * @package Commons_In_A_Box
- * @subpackage Plugins
  */
 
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
-
-class CBox_Plugins {
+/**
+ * Setup plugin code for the CBOX admin area.
+ *
+ * @since 1.1.0
+ */
+class CBox_Admin_Plugins {
+	public static function init() {
+		return new self();
+	}
 
 	/**
-	 * Static variable to hold our various plugins
+	 * Constructor.
 	 *
-	 * @var array
+	 * @since 1.1.0
 	 */
-	private static $plugins = array();
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		// includes
-		$this->includes();
-
-		// setup our hooks
-		$this->setup_hooks();
-	}
-
-	/**
-	 * Includes.
-	 */
-	private function includes() {
-		// add the Plugin Dependencies plugin
-		if ( ! class_exists( 'Plugin_Dependencies' ) )
-			require_once( CBOX_LIB_DIR . 'wp-plugin-dependencies/plugin-dependencies.php' );
-
-		// make sure to include the WP Plugin API if it isn't available
-		//if ( ! function_exists( 'get_plugins' ) )
-		//	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-
-		// make sure to include the WP Update API if it isn't available
-		//if ( ! function_exists( 'get_plugin_updates' ) )
-		//	require( ABSPATH . '/wp-admin/includes/update.php' );
-
-		/**
-		 * Hook to declare when the CBOX plugins code is loaded at its earliest.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @param CBox_Plugins $this
-		 */
-		do_action( 'cbox_plugins_loaded', $this );
-	}
-
-	/**
-	 * Setup our hooks.
-	 */
-	private function setup_hooks() {
+	protected function __construct() {
 		// setup the CBOX plugin menu
 		add_action( 'cbox_admin_menu',                       array( $this, 'setup_plugins_page' ) );
 
@@ -101,250 +63,6 @@ class CBox_Plugins {
 	}
 
 	/**
-	 * Register a plugin in CBOX.
-	 *
-	 * Updates our private, static $plugins variable in the process.
-	 *
-	 * @since 1.1.0 Added $network as a parameter. Added 'install-only' as an option for $type.
-	 *
-	 * @param array $args {
-	 *     Array of parameters.
-	 *     @type string $plugin_name       Required. Name of the plugin as in the WP plugin header.
-	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', 'install-only' or
-	 *                                     'dependency'.
-	 *     @type string $cbox_name         Custom name for the plugin.
-	 *     @type string $cbox_description  Custom short description for the plugin.
-	 *     @type string $depends           Defined plugin dependencies for the plugin. See
-	 *                                     {@link Plugin_Dependencies::parse_requirements()} for syntax.
-	 *     @type string $version           Plugin version number.
-	 *     @type string $download_url      Plugin download URL. Used to downlaod the plugin if not installed.
-	 *     @type string $documentation_url Plugin documentation URL.
-	 *     @type string $admin_settings    Relative wp-admin link to plugin's admin settings page, if applicable.
-	 *     @type string $network_settings  Relative wp-admin link to plugin's network admin settings page, if
-	 *                                     applicable. If plugin's settings resides on the root blog, set this value
-	 *                                     to 'root-blog-only'.
-	 *     @type bool   $network           Should the plugin be activated network-wide? Default: true.
-	 * }
-	 */
-	public function register_plugin( $args = '' ) {
-		$defaults = array(
-			'plugin_name'       => false,
-			'type'              => 'required',
-			'cbox_name'         => false,
-			'cbox_description'  => false,
-			'depends'           => false,
-			'version'           => false,
-			'download_url'      => false,
-			'documentation_url' => false,
-			'admin_settings'    => false,
-			'network_settings'  => false,
-			'network'           => true
-		);
-
-		$r = wp_parse_args( $args, $defaults );
-
-		if ( empty( $r['plugin_name'] ) )
-			return false;
-
-		switch( $r['type'] ) {
-			case 'required' :
-			case 'recommended' :
-			case 'optional' :
-			case 'install-only' :
-			case 'dependency' :
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']         = $r['cbox_name'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description']  = $r['cbox_description'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']           = $r['depends'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['version']           = $r['version'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']      = $r['download_url'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['documentation_url'] = $r['documentation_url'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = 'install-only' === $r['type'] ? false : $r['network'];
-
-				break;
-		}
-
-	}
-
-	/**
-	 * Helper method to grab all CBOX plugins of a certain type.
-	 *
-	 * @param string $type Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional',
-	 *                     'install-only', 'dependency'.
-	 * @param string $omit_type The type of CBOX plugin to omit from returning
-	 * @return mixed Array of plugins on success. Boolean false on failure.
-	 */
-	public static function get_plugins( $type = 'all', $omit_type = false ) {
-		// if type is 'all', we want all CBOX plugins regardless of type
-		if ( $type == 'all' ) {
-			$plugins = self::$plugins;
-			if ( empty( $plugins ) ) {
-				return $plugins;
-			}
-
-			// okay, I lied, we want all plugins except dependencies!
-			unset( $plugins['dependency'] );
-
-			// if $omit_type was passed, use it to remove the plugin type we don't want
-			if ( ! empty( $omit_type ) )
-				unset( $plugins[$omit_type] );
-
-			// flatten associative array
-			return call_user_func_array( 'array_merge', $plugins );
-		}
-
-		if ( empty( self::$plugins[$type] ) )
-			return false;
-
-		return self::$plugins[$type];
-	}
-
-	/**
-	 * Helper method to check if a CBOX plugin is a certain type.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param  string $plugin_name Full plugin name.
-	 * @param  string $type        Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional',
-	 *                            'install-only', 'dependency'.
-	 * @return bool
-	 */
-	public static function is_plugin_type( $plugin_name = '', $type = '' ) {
-		if ( '' === $plugin_name || '' === $type ) {
-			return false;
-		}
-
-		if ( isset( self::$plugins[ $type ][ $plugin_name ] ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Organize plugins by state.
-	 *
-	 * @since 0.3
-	 *
-	 * @return Associative array with plugin state as array key
-	 */
-	public static function organize_plugins_by_state( $plugins ) {
-		$organized_plugins = array();
-
-		foreach ( (array) $plugins as $plugin => $data ) {
-			// attempt to get the plugin loader file
-			$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
-
-			// get the required plugin's state
-			$state  = self::get_plugin_state( $loader, $data );
-
-			$organized_plugins[$state][] = esc_attr( $plugin );
-		}
-
-		return $organized_plugins;
-	}
-
-	/**
-	 * Get settings links for our installed CBOX plugins.
-	 *
-	 * @since 0.3
-	 *
-	 * @return Assosicate array with CBOX plugin name as key and admin settings URL as the value.
-	 */
-	public static function get_settings() {
-		// get all installed CBOX plugins
-		$cbox_plugins = self::get_plugins();
-
-		// get active CBOX plugins
-		$active = self::organize_plugins_by_state( $cbox_plugins );
-
-		if ( empty( $active ) )
-			return false;
-
-		$active = isset( $active['deactivate'] ) ? $active['deactivate'] : array();
-
-		$settings = array();
-
-		foreach ( $active as $plugin ) {
-			// network CBOX install and CBOX plugin has a network settings page
-			if ( is_network_admin() && ! empty( $cbox_plugins[$plugin]['network_settings'] ) ) {
-				// if network plugin's settings resides on the root blog,
-				// then make sure we use the root blog's domain to generate the admin settings URL
-				if ( $cbox_plugins[$plugin]['network_settings'] == 'root-blog-only' ) {
-					// sanity check!
-					// make sure BP is active so we can use bp_core_get_root_domain()
-					if ( in_array( 'BuddyPress', $active ) ) {
-						$settings[$plugin] = bp_core_get_root_domain() . '/wp-admin/' . $cbox_plugins[$plugin]['admin_settings'];
-					}
-				}
-				// if the network plugin resides in the network area, use network_admin_url()!
-				else {
-					$settings[$plugin] = network_admin_url( $cbox_plugins[$plugin]['network_settings'] );
-				}
-			}
-
-			// single-site CBOX install and CBOX plugin has an admin settings page
-			elseif( ! is_network_admin() && ! empty( $cbox_plugins[$plugin]['admin_settings'] ) ) {
-				$settings[$plugin] = admin_url( $cbox_plugins[$plugin]['admin_settings'] );
-			}
-
-		}
-
-		return $settings;
-	}
-
-	/**
-	 * Get plugins that require upgrades.
-	 *
-	 * @since 0.3
-	 *
-	 * @param string $type The type of plugins to get upgrades for. Either 'all' or 'active'.
-	 * @return array of CBOX plugin names that require upgrading
-	 */
-	public static function get_upgrades( $type = 'all' ) {
-		// get all CBOX plugins that require upgrades
-		$upgrades = self::organize_plugins_by_state( self::get_plugins() );
-
-		if ( empty( $upgrades['upgrade'] ) )
-			return false;
-
-		$upgrades = $upgrades['upgrade'];
-
-		switch ( $type ) {
-			case 'all' :
-				return $upgrades;
-
-				break;
-
-			case 'active' :
-				// get all active plugins
-				$active_plugins = array_flip( Plugin_Dependencies::$active_plugins );
-
-				$plugins = array();
-
-				foreach ( $upgrades as $plugin ) {
-					// attempt to get the plugin loader file
-					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
-
-					// if the plugin is active, add it to our plugin array
-					if ( isset( $active_plugins[$loader] ) )
-						$plugins[] = $plugin;
-				}
-
-				if ( empty( $plugins ) )
-					return false;
-
-				return $plugins;
-
-				break;
-		}
-
-	}
-
-	/** HOOKS *********************************************************/
-
-	/**
 	 * Filter PD's dependencies to add our own specs.
 	 *
 	 * @return array
@@ -352,7 +70,7 @@ class CBox_Plugins {
 	public function filter_pd_dependencies( $plugins ) {
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
-		foreach( self::get_plugins() as $plugin => $data ) {
+		foreach( CBox_Plugins::get_plugins() as $plugin => $data ) {
 			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
@@ -374,10 +92,10 @@ class CBox_Plugins {
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
 		if ( is_multisite() ) {
-			$dependency = self::get_plugins( 'dependency' );
+			$dependency = CBox_Plugins::get_plugins( 'dependency' );
 		}
 
-		foreach( self::get_plugins() as $plugin => $data ) {
+		foreach( CBox_Plugins::get_plugins() as $plugin => $data ) {
 			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
 
@@ -404,7 +122,7 @@ class CBox_Plugins {
 	public function remove_cbox_plugins_from_updates( $plugins ) {
 		$i = 0;
 
-		foreach ( self::get_plugins() as $plugin => $data ) {
+		foreach ( CBox_Plugins::get_plugins() as $plugin => $data ) {
 			// get the plugin loader file
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
@@ -450,7 +168,201 @@ class CBox_Plugins {
 		);
 	}
 
-	/** ADMIN-SPECIFIC ************************************************/
+	/**
+	 * Organize plugins by state.
+	 *
+	 * @since 0.3
+	 *
+	 * @return Associative array with plugin state as array key
+	 */
+	public static function organize_plugins_by_state( $plugins ) {
+		$organized_plugins = array();
+
+		foreach ( (array) $plugins as $plugin => $data ) {
+			// attempt to get the plugin loader file
+			$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+			// get the required plugin's state
+			$state  = self::get_plugin_state( $loader, $data );
+
+			$organized_plugins[$state][] = esc_attr( $plugin );
+		}
+
+		return $organized_plugins;
+	}
+
+	/**
+	 * Helper method to see if a plugin is active.
+	 *
+	 * This is a resource-friendly version that already references the active
+	 * plugins in the Plugin Dependencies variable.
+	 *
+	 * @since 0.2
+	 *
+	 * @param string $loader Plugin loader filename.
+	 * @return bool
+	 */
+	public static function is_plugin_active( $loader ) {
+		$is_active = null;
+
+		// BuddyPress complicates things due to a different root blog ID.
+		if ( 1 !== cbox_get_main_site_id() ) {
+			$cbox_plugins = self::get_plugins();
+			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
+
+			// 'network' flag is false, so switch to root blog.
+			if ( false === $cbox_plugins[ $plugin_data['Name'] ]['network'] ) {
+				switch_to_blog( cbox_get_main_site_id() );
+				$is_active = is_plugin_active( $loader );
+				restore_current_blog();
+
+			// 'network' flag is true.
+			} else {
+				$is_active = is_plugin_active_for_network( $loader );
+			}
+		}
+
+		// Use already-queried active plugins from PD.
+		if ( null === $is_active ) {
+			$is_active = in_array( $loader, (array) Plugin_Dependencies::$active_plugins );
+		}
+
+		return $is_active;
+	}
+
+	/**
+	 * Helper method to get the CBOX required plugin's state.
+	 *
+	 * @since 0.2
+	 *
+	 * @param str $loader The required plugin's loader filename
+ 	 * @param array $data The required plugin's data. See $this->register_required_plugins().
+	 */
+	public static function get_plugin_state( $loader, $data ) {
+		$state = false;
+
+		// plugin exists
+		if ( $loader ) {
+			// if plugin is active, set state to 'deactivate'
+			if ( self::is_plugin_active( $loader ) )
+				$state = 'deactivate';
+			else
+				$state = 'activate';
+
+			// a required version was passed
+			if ( ! empty( $data['version'] ) ) {
+				// get the current, installed plugin's version
+				$current_version = Plugin_Dependencies::$all_plugins[$loader]['Version'];
+
+				// if current plugin is older than required plugin version, set state to 'upgrade'
+				if ( version_compare( $current_version, $data['version'] ) < 0  )
+					$state = 'upgrade';
+			}
+		}
+		// plugin doesn't exist
+		else {
+			$state = 'install';
+		}
+
+		return $state;
+	}
+
+	/**
+	 * Get plugins that require upgrades.
+	 *
+	 * @since 0.3
+	 *
+	 * @param string $type The type of plugins to get upgrades for. Either 'all' or 'active'.
+	 * @return array of CBOX plugin names that require upgrading
+	 */
+	public static function get_upgrades( $type = 'all' ) {
+		// get all CBOX plugins that require upgrades
+		$upgrades = self::organize_plugins_by_state( CBox_Plugins::get_plugins() );
+
+		if ( empty( $upgrades['upgrade'] ) )
+			return false;
+
+		$upgrades = $upgrades['upgrade'];
+
+		switch ( $type ) {
+			case 'all' :
+				return $upgrades;
+
+				break;
+
+			case 'active' :
+				// get all active plugins
+				$active_plugins = array_flip( Plugin_Dependencies::$active_plugins );
+
+				$plugins = array();
+
+				foreach ( $upgrades as $plugin ) {
+					// attempt to get the plugin loader file
+					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+					// if the plugin is active, add it to our plugin array
+					if ( isset( $active_plugins[$loader] ) )
+						$plugins[] = $plugin;
+				}
+
+				if ( empty( $plugins ) )
+					return false;
+
+				return $plugins;
+
+				break;
+		}
+
+	}
+
+	/**
+	 * Get settings links for our installed CBOX plugins.
+	 *
+	 * @since 0.3
+	 *
+	 * @return Assosicate array with CBOX plugin name as key and admin settings URL as the value.
+	 */
+	public static function get_settings() {
+		// get all installed CBOX plugins
+		$cbox_plugins = CBox_Plugins::get_plugins();
+
+		// get active CBOX plugins
+		$active = self::organize_plugins_by_state( $cbox_plugins );
+
+		if ( empty( $active ) )
+			return false;
+
+		$active = isset( $active['deactivate'] ) ? $active['deactivate'] : array();
+
+		$settings = array();
+
+		foreach ( $active as $plugin ) {
+			// network CBOX install and CBOX plugin has a network settings page
+			if ( is_network_admin() && ! empty( $cbox_plugins[$plugin]['network_settings'] ) ) {
+				// if network plugin's settings resides on the root blog,
+				// then make sure we use the root blog's domain to generate the admin settings URL
+				if ( $cbox_plugins[$plugin]['network_settings'] == 'root-blog-only' ) {
+					// sanity check!
+					// make sure BP is active so we can use bp_core_get_root_domain()
+					if ( in_array( 'BuddyPress', $active ) ) {
+						$settings[$plugin] = bp_core_get_root_domain() . '/wp-admin/' . $cbox_plugins[$plugin]['admin_settings'];
+					}
+				}
+				// if the network plugin resides in the network area, use network_admin_url()!
+				else {
+					$settings[$plugin] = network_admin_url( $cbox_plugins[$plugin]['network_settings'] );
+				}
+			}
+
+			// single-site CBOX install and CBOX plugin has an admin settings page
+			elseif( ! is_network_admin() && ! empty( $cbox_plugins[$plugin]['admin_settings'] ) ) {
+				$settings[$plugin] = admin_url( $cbox_plugins[$plugin]['admin_settings'] );
+			}
+
+		}
+
+		return $settings;
+	}
 
 	/**
 	 * Setup CBOX's plugin menu item.
@@ -583,7 +495,7 @@ class CBox_Plugins {
 					check_admin_referer( 'bulk-plugins' );
 
 					$result = true;
-					if ( self::is_plugin_type( $plugin, 'install-only' ) ) {
+					if ( CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) {
 						$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 						$result = delete_plugins( (array) $loader );
 
@@ -692,7 +604,7 @@ class CBox_Plugins {
 			<div class="wrap">
 				<h2><?php printf( __( 'Commons In A Box: %s Plugins', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></h2>
 
-				<?php if ( self::get_plugins( 'optional' ) || self::get_plugins( 'install-only' ) ) : ?>
+				<?php if ( CBox_Plugins::get_plugins( 'optional' ) || CBox_Plugins::get_plugins( 'install-only' ) ) : ?>
 					<h2 class="nav-tab-wrapper wp-clearfix">
 						<a href="<?php echo remove_query_arg( 'type', $url ); ?>" class="nav-tab<?php echo '' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Core', 'cbox' ); ?></a>
 						<a href="<?php echo add_query_arg( 'type', 'optional', $url ); ?>" class="nav-tab<?php echo 'optional' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Optional', 'cbox' ); ?></a>
@@ -706,15 +618,15 @@ class CBox_Plugins {
 						<div id="required" class="cbox-plugins-section">
 							<?php cbox_get_template_part( 'plugins-required-header' ); ?>
 
-							<?php $this->render_plugin_table(); ?>
+							<?php self::render_plugin_table(); ?>
 						</div>
 
-						<?php if ( self::get_plugins( 'recommended' ) ) : ?>
+						<?php if ( CBox_Plugins::get_plugins( 'recommended' ) ) : ?>
 
 							<div id="recommended" class="cbox-plugins-section">
 								<?php cbox_get_template_part( 'plugins-recommended-header' ); ?>
 
-								<?php $this->render_plugin_table( 'type=recommended' ); ?>
+								<?php self::render_plugin_table( 'type=recommended' ); ?>
 							</div>
 
 						<?php endif; ?>
@@ -723,22 +635,22 @@ class CBox_Plugins {
 
 					<?php if( 'optional' === $type ) : ?>
 
-						<?php if ( self::get_plugins( 'optional' ) ) : ?>
+						<?php if ( CBox_Plugins::get_plugins( 'optional' ) ) : ?>
 
 							<div id="a-la-carte" class="cbox-plugins-section">
 								<?php cbox_get_template_part( 'plugins-optional-header' ); ?>
 
-								<?php $this->render_plugin_table( 'type=optional' ); ?>
+								<?php self::render_plugin_table( 'type=optional' ); ?>
 							</div>
 
 						<?php endif; ?>
 
-						<?php if ( self::get_plugins( 'install-only' ) ) : ?>
+						<?php if ( CBox_Plugins::get_plugins( 'install-only' ) ) : ?>
 
 							<div id="site-plugins" class="cbox-plugins-section">
 								<?php cbox_get_template_part( 'plugins-installonly-header' ); ?>
 
-								<?php $this->render_plugin_table( 'type=install-only' ); ?>
+								<?php self::render_plugin_table( 'type=install-only' ); ?>
 							</div>
 
 							<div class="prompt" style="display:none">
@@ -830,98 +742,6 @@ jQuery('a[data-uninstall="1"]').confirm({
 	<?php
 	}
 
-	/** HELPERS *******************************************************/
-
-	/**
-	 * Helper method to parse a comma-delimited dependency string.
-	 *
-	 * eg. "BuddyPress (>=1.5), BuddyPress Docs, Invite Anyone"
-	 *
-	 * @since 0.2
-	 *
-	 * @param string $dependency_str Comma-delimited list of plugins. Can include version dependencies. See PHPDoc.
-	 * @uses Plugin_Dependencies::parse_field()
-	 * @return array
-	 */
-	private function parse_dependency_str( $dependency_str ) {
-		return Plugin_Dependencies::parse_field( $dependency_str );
-	}
-
-	/**
-	 * Helper method to see if a plugin is active.
-	 *
-	 * This is a resource-friendly version that already references the active
-	 * plugins in the Plugin Dependencies variable.
-	 *
-	 * @since 0.2
-	 *
-	 * @param string $loader Plugin loader filename.
-	 * @return bool
-	 */
-	public static function is_plugin_active( $loader ) {
-		$is_active = null;
-
-		// BuddyPress complicates things due to a different root blog ID.
-		if ( 1 !== cbox_get_main_site_id() ) {
-			$cbox_plugins = self::get_plugins();
-			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
-
-			// 'network' flag is false, so switch to root blog.
-			if ( false === $cbox_plugins[ $plugin_data['Name'] ]['network'] ) {
-				switch_to_blog( cbox_get_main_site_id() );
-				$is_active = is_plugin_active( $loader );
-				restore_current_blog();
-
-			// 'network' flag is true.
-			} else {
-				$is_active = is_plugin_active_for_network( $loader );
-			}
-		}
-
-		// Use already-queried active plugins from PD.
-		if ( null === $is_active ) {
-			$is_active = in_array( $loader, (array) Plugin_Dependencies::$active_plugins );
-		}
-
-		return $is_active;
-	}
-
-	/**
-	 * Helper method to get the CBOX required plugin's state.
-	 *
-	 * @since 0.2
-	 *
-	 * @param str $loader The required plugin's loader filename
- 	 * @param array $data The required plugin's data. See $this->register_required_plugins().
-	 */
-	public static function get_plugin_state( $loader, $data ) {
-		$state = false;
-
-		// plugin exists
-		if ( $loader ) {
-			// if plugin is active, set state to 'deactivate'
-			if ( self::is_plugin_active( $loader ) )
-				$state = 'deactivate';
-			else
-				$state = 'activate';
-
-			// a required version was passed
-			if ( ! empty( $data['version'] ) ) {
-				// get the current, installed plugin's version
-				$current_version = Plugin_Dependencies::$all_plugins[$loader]['Version'];
-
-				// if current plugin is older than required plugin version, set state to 'upgrade'
-				if ( version_compare( $current_version, $data['version'] ) < 0  )
-					$state = 'upgrade';
-			}
-		}
-		// plugin doesn't exist
-		else {
-			$state = 'install';
-		}
-
-		return $state;
-	}
 
 	/**
 	 * Helper method to return the deactivation URL for a plugin on the CBOX
@@ -932,7 +752,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 	 * @param str $loader The plugin's loader filename
 	 * @return str Deactivation link
 	 */
-	private function deactivate_link( $loader ) {
+	public static function deactivate_link( $loader ) {
 		return self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=deactivate&amp;plugin=' . urlencode( $loader ) . '&amp;_wpnonce=' . wp_create_nonce( 'deactivate-plugin_' . $loader ) );
 	}
 
@@ -943,7 +763,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 	 *
 	 * @param mixed $args Querystring or array of parameters. See inline doc for more details.
 	 */
-	public function render_plugin_table( $args = '' ) {
+	public static function render_plugin_table( $args = '' ) {
 		$defaults = array(
 			'type'           => 'required', // 'required' (default), 'recommended', 'optional', 'dependency'
 			'omit_activated' => false,      // if set to true, this omits activated plugins from showing up in the plugin table
@@ -976,7 +796,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 			<tbody>
 
 			<?php
-				foreach ( self::get_plugins( $r['type'] ) as $plugin => $data ) :
+				foreach ( CBox_Plugins::get_plugins( $r['type'] ) as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 					$settings = self::get_settings();
@@ -1044,7 +864,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s">%s</a>',
 									__( "Deactivate this plugin.", 'cbox' ),
-									$this->deactivate_link( $loader ),
+									self::deactivate_link( $loader ),
 									__( "Deactivate", 'cbox' )
 								);
 							}
@@ -1084,7 +904,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 									echo '<p>';
 									_e( 'Requires: ', 'cbox' );
 
-									foreach( $this->parse_dependency_str( $data['depends'] ) as $dependency ) :
+									foreach( Plugin_Dependencies::parse_field( $data['depends'] ) as $dependency ) :
 										// a dependent name can contain a version number, so let's get just the name
 										$plugin_name = rtrim( strtok( $dependency, '(' ) );
 
@@ -1116,5 +936,4 @@ jQuery('a[data-uninstall="1"]').confirm({
 		<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : __( 'Update', 'cbox' ) ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
 	<?php
 	}
-
 }

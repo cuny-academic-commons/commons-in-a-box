@@ -106,11 +106,11 @@ class Commons_In_A_Box {
 	private function includes() {
 		// pertinent functions used everywhere
 		require( $this->plugin_dir . 'includes/functions.php' );
+		require( $this->plugin_dir . 'includes/plugins.php' );
 
 		// admin area
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
-			require( $this->plugin_dir . 'admin/plugins-loader.php' );
 
 		// frontend
 		} else {

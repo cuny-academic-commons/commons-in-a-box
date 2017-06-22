@@ -18,7 +18,7 @@
 
 					<?php
 						$cbox_plugins = CBox_Plugins::get_plugins();
-						foreach ( CBox_Plugins::get_settings() as $plugin => $settings_url ) {
+						foreach ( CBox_Admin_Plugins::get_settings() as $plugin => $settings_url ) {
 							echo '<li><a title="' . __( "Click here to view this plugin's settings page", 'cbox' ) . '" href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'];
 
 							if ( ! empty( $cbox_plugins[$plugin]['documentation_url'] ) )

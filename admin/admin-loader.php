@@ -218,7 +218,7 @@ class CBox_Admin {
 				$plugins = CBox_Plugins::get_plugins( 'required' );
 
 				// sort plugins by plugin state
-				$plugins = CBox_Plugins::organize_plugins_by_state( $plugins );
+				$plugins = CBox_Admin_Plugins::organize_plugins_by_state( $plugins );
 
 				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
@@ -263,7 +263,7 @@ class CBox_Admin {
 			// upgrading installed plugins
 			case 'upgrade' :
 				// setup our upgrade plugins array
-				$plugins['upgrade'] = CBox_Plugins::get_upgrades( 'active' );
+				$plugins['upgrade'] = CBox_Admin_Plugins::get_upgrades( 'active' );
 
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
@@ -684,7 +684,7 @@ jQuery('a.activate-now').confirm({
 					<?php wp_nonce_field( 'cbox_bp_installed', 'cbox-recommended-nonce' ); ?>
 
 					<?php
-						cbox()->plugins->render_plugin_table( array(
+						CBox_Admin_Plugins::render_plugin_table( array(
 							'type'           => 'recommended',
 							'omit_activated' => true,
 							'check_all'      => true
@@ -751,7 +751,7 @@ jQuery('a.activate-now').confirm({
 			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 
 		// get activated CBOX plugins that need updating
-		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
+		$active_cbox_plugins_need_update = CBox_Admin_Plugins::get_upgrades( 'active' );
 
 		// check for theme upgrades
 		$is_theme_upgrade = cbox_get_theme_to_update();
