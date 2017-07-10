@@ -126,7 +126,7 @@ class Commons_In_A_Box {
 	private function setup_actions() {
 		// Package hooks.
 		add_action( 'cbox_admin_loaded',      array( $this, 'load_package' ), 11 );
-		add_action( 'cbox_frontend_includes', array( $this, 'package_autoloader' ) );
+		add_action( 'cbox_frontend_includes', array( $this, 'load_package_frontend' ) );
 
 		// Add actions to plugin activation and deactivation hooks
 		add_action( 'activate_'   . plugin_basename( __FILE__ ), function() { do_action( 'cbox_activation' ); } );
@@ -184,6 +184,33 @@ class Commons_In_A_Box {
 		$packages = cbox_get_packages();
 		if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
 			$this->package = call_user_func( array( $packages[$current], 'init' ) );
+		}
+	}
+
+	/**
+	 * Loads package code for the frontend.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_package_frontend() {
+		// Minimal package code needed for main site.
+		if ( get_current_blog_id() === cbox_get_main_site_id() ) {
+			$this->package_autoloader();
+
+		// Multisite: Load up all package code on sub-sites and if user is logged in.
+		} elseif ( is_multisite() && cbox_get_current_package_id() ) {
+			$this->load_package();
+
+			/**
+			 * Load registered package plugin list.
+			 *
+			 * Need to run this on 'init' due to user login check.
+			 */
+			add_action( 'init', function() {
+				if ( true === cbox_get_package_prop( 'network' ) && is_user_logged_in() ) {
+					self::$instance->package_plugins = new CBox_Plugins;
+				}
+			}, 0 );
 		}
 	}
 
