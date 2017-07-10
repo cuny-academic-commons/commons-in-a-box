@@ -37,6 +37,31 @@ class CBox_WP_Toolbar_Updates {
 	}
 
 	public function setup_hooks() {
+		// Create menu items on sub-sites if necessary.
+		add_action( 'admin_bar_menu', function() {
+			if ( ! isset( cbox()->package_plugins ) || ! function_exists( 'buddypress' ) ) {
+				return;
+			}
+
+			// Get package plugin manifest.
+			$plugins = CBox_Plugins::get_plugins();
+
+			// bbPress
+			if ( isset( $plugins['bbPress'] ) && false === $plugins['bbPress']['network'] && false === cbox()->plugins->bbpress->is_setup ) {
+				require __DIR__ . '/frontend-adminbar-bbpress.php';
+			}
+
+			// BuddyPress Docs
+			if ( isset( $plugins['BuddyPress Docs'] ) && false === $plugins['BuddyPress Docs']['network'] && false === function_exists( 'bp_docs_init' ) ) {
+				require __DIR__ . '/frontend-adminbar-bpdocs.php';
+			}
+
+			// BuddyPress Event Organiser
+			if ( isset( $plugins['BuddyPress Event Organiser'] ) && false === $plugins['BuddyPress Event Organiser']['network'] && false === function_exists( 'bpeo_include' ) ) {
+				require __DIR__ . '/frontend-adminbar-bpeo.php';
+			}
+		}, 0 );
+
 		// remove the current WP updates menu
 		remove_action( 'admin_bar_menu', 'wp_admin_bar_updates_menu', 40 );
 
