@@ -231,7 +231,7 @@ class CBox_Settings_Classic {
 		$cbox_plugins = cbox()->plugins->get_plugins();
 
 		// get all CBOX plugins by name
-		$active = cbox()->plugins->organize_plugins_by_state( $cbox_plugins );
+		$active = CBox_Admin_Plugins::organize_plugins_by_state( $cbox_plugins );
 
 		// sanity check.  will probably never encounter this use-case.
 		if ( empty( $active ) )
