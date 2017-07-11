@@ -49,8 +49,14 @@ class CBox_Admin {
 	 * Setup hooks.
 	 */
 	private function setup_hooks() {
-		// setup admin menu
-		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu',           array( $this, 'admin_menu' ) );
+		// Do not register menu if on a sub-site and package wants the main site only.
+		if ( ( false === cbox_get_package_prop( 'admin' ) || 'site' === cbox_get_package_prop( 'admin' ) ) &&
+			cbox_get_main_site_id() !== get_current_blog_id() ) {
+
+		// Admin menu registration.
+		} else {
+			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
+		}
 
 		// see if an admin notice should be shown
 		add_action( 'admin_init',                                                   array( $this, 'setup_notice' ) );
@@ -270,7 +276,7 @@ class CBox_Admin {
 				if ( ! empty( cbox()->theme_upgrades ) ) {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
-					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
+					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
 					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'cbox' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
 
 
@@ -311,7 +317,7 @@ class CBox_Admin {
 				echo '<div style="margin-top:2em;">';
 					echo '<a href="' . self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' ) . '" style="display:inline-block; margin:5px 15px 0 0;">' . esc_html__( 'Skip', 'cbox' ) . '</a>';
 
-					echo '<a class="button button-primary" href="' . wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . esc_html__( 'Install Theme', 'cbox' ). '</a>';
+					echo '<a class="button button-primary" href="' . wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . esc_html__( 'Install Theme', 'cbox' ). '</a>';
 				echo '</div>';
 
 				echo '</div>';
@@ -775,14 +781,14 @@ jQuery('a.activate-now').confirm({
 		$plugin_count = $total_count = count( $active_cbox_plugins_need_update );
 
 		// setup default upgrade URL
-		$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
+		$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
 
 		// theme is available for upgrade
 		if ( ! empty( $active_cbox_plugins_need_update ) && ! empty( $is_theme_upgrade ) ) {
 			++$total_count;
 
 			// theme has update, so add an extra parameter to the querystring
-			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
+			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
 			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
 
@@ -793,7 +799,7 @@ jQuery('a.activate-now').confirm({
 		// just themes
 		} else {
 			// theme has update, so switch up the upgrade URL
-			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
+			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
 			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), cbox_get_theme_prop( 'name' ) );
 		}
@@ -968,21 +974,21 @@ jQuery('a.activate-now').confirm({
 			case 'no-package' :
 			case 'required-plugins' :
 				$notice_text = __( "Let's get started!", 'cbox' );
-				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to get set up', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
 
 			case 'theme-update' :
 				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
-				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
+				$button_link = wp_nonce_url( cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
 
 			case 'recommended-plugins' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
-				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to finish up!', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
@@ -1041,7 +1047,7 @@ jQuery('a.activate-now').confirm({
 			if ( $single_site )
 				echo '<p>' . __( "Don't forget that CBOX plugins can be managed from the CBOX plugins page!", 'cbox' ) .'</p>';
 
-			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), network_admin_url( 'admin.php?page=cbox-plugins' ) ) . '</p>';
+			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ) ) . '</p>';
 
 			if ( $single_site )
 				echo '<h3>' . sprintf( __( 'Plugins on %s', 'cbox' ), get_bloginfo( 'name' ) ) . '</h3>';

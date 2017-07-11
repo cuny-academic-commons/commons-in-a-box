@@ -518,7 +518,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 			} else {
 				$directory_name = cbox_get_theme_prop( 'directory_name' );
 				if ( ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
-					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 					$redirect_text = __( 'Continue to theme installation', 'cbox' );
 
 					remove_all_actions( 'cbox_after_updater' );

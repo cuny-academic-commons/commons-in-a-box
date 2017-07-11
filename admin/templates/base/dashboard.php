@@ -31,7 +31,7 @@
 
 					<div class="login postbox">
 						<div class="message" style="text-align:center;">
-							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
+							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
 						</div>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 
 						if ( $theme->errors() ) :
 							echo '<p>';
-							printf( __( '<a href="%1$s">Install the %2$s theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
+							printf( __( '<a href="%1$s">Install the %2$s theme to get started</a>.', 'cbox' ), wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
 							echo '</p>';
 						else:
 
@@ -71,7 +71,7 @@
 
 									<div class="login postbox">
 										<div class="message" style="text-align:center;">
-											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
+											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
 										</div>
 									</div>
 
