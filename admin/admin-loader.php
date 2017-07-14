@@ -401,7 +401,8 @@ class CBox_Admin {
 			'install_plugins', // todo - map cap?
 			'cbox',
 			array( $this, 'admin_page' ),
-			'none'
+			'none',
+			2
 		);
 
 		$subpage = add_submenu_page(
