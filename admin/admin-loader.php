@@ -100,7 +100,7 @@ class CBox_Admin {
 			} else {
 				update_site_option( '_cbox_current_package', $_REQUEST['cbox-package'] );
 			}
-			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+			wp_redirect( cbox_admin_prop( 'url', 'admin.php?page=cbox' ) );
 			die();
 
 		// virgin setup
