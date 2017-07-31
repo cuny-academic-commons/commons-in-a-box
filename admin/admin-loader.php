@@ -1251,9 +1251,11 @@ jQuery('a.activate-now').confirm({
 		}
 
 		/* plugins table */
-		.cbox-plugins-section {margin-top:0; padding:20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+		.cbox-plugins-section {margin-top:0; padding:10px 20px 20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+		.cbox-plugins-section .check-column {padding:10px 0 0;}
 
-		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
+		.cbox-plugins-section table {margin:1.6em 0;}
+		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:rgb(249, 255, 240);}
 		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
 
 		.column-cbox-plugin-name {width:220px;}
@@ -1261,6 +1263,11 @@ jQuery('a.activate-now').confirm({
 		span.enabled       {color:#008800;}
 		span.disabled      {color:#880000;}
 		span.not-installed {color:#9f9f9f;}
+
+		.cbox-admin-content .cbox-plugins-section {padding-left:5px; padding-right:5px;}
+		.cbox-admin-content .cbox-plugins-section:first-child {padding-top:0;}
+		.cbox-admin-content .cbox-plugins-section:first-child h2 {margin-top:0;}
+		.cbox-admin-content .cbox-plugins-section:last-of-type {border:0; padding-bottom:0;}
 
 		/* Responsive */
 		@media screen and (max-width: 600px) {
