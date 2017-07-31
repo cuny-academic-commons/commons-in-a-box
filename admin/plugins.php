@@ -933,7 +933,10 @@ jQuery('a[data-uninstall="1"]').confirm({
 			</tbody>
 		</table>
 
-		<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : __( 'Update', 'cbox' ) ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
+		<?php if ( 'required' !== $r['type'] ) : ?>
+			<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : __( 'Update', 'cbox' ) ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
+		<?php endif; ?>
+
 	<?php
 	}
 }
