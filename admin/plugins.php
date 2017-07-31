@@ -601,8 +601,8 @@ class CBox_Admin_Plugins {
 			$url  = ! empty( $type ) ? add_query_arg( 'type', esc_attr( $_GET['type'] ), $url ) : $url;
 
 	?>
-			<div class="wrap">
-				<h2><?php printf( __( 'Commons In A Box: %s Plugins', 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></h2>
+			<div class="wrap cbox-admin-wrap">
+				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), ucfirst( $type ? $type : 'Core' ) ); ?></h2>
 
 				<?php if ( CBox_Plugins::get_plugins( 'optional' ) || CBox_Plugins::get_plugins( 'install-only' ) ) : ?>
 					<h2 class="nav-tab-wrapper wp-clearfix">
@@ -611,6 +611,8 @@ class CBox_Admin_Plugins {
 					</h2>
 
 				<?php endif; ?>
+
+				<div class="cbox-admin-content cbox-plugins-content">
 
 				<form method="post" action="<?php echo $url; ?>">
 					<?php if ( '' === $type ) : ?>
@@ -697,6 +699,8 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 					<?php wp_nonce_field( 'cbox_update' ); ?>
 				</form>
+				</div>
+
 			</div>
 	<?php
 		}

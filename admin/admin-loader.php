@@ -1109,6 +1109,12 @@ jQuery('a.activate-now').confirm({
 
 		#toplevel_page_cbox .wp-menu-image img {display:none;}
 
+		.cbox-admin-wrap .nav-tab:first-child {margin-left: 0;}
+		.cbox-admin-wrap .nav-tab-active {background: #fff; border-bottom: 1px solid #fff;}
+
+		.cbox-admin-content {background: #fff; border: 1px solid #ccc; border-top: none; margin-bottom: 40px; padding: 20px 20px;}
+		.cbox-admin-content.has-top-border {border-top: 1px solid #ccc;}
+
 		/* Retina */
 		@media
 			only screen and (-webkit-min-device-pixel-ratio: 1.5),
