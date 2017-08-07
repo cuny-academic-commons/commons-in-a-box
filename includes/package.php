@@ -164,7 +164,6 @@ abstract class CBox_Package {
 	 * @return array {
 	 *     Array of parameters.
 	 *     @var bool   $network           Whether the package requires multisite. Default: false.
-	 *     @var string $admin             Location where admin code should load. Either 'site' or 'network'.
 	 *     @var string $template_path     Absolute filepath for custom admin template parts. If your package is not
 	 *                                    bundled with CBOX and you need to override the default admin templates,
 	 *                                    then override this parameter.
