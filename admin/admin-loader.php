@@ -49,12 +49,8 @@ class CBox_Admin {
 	 * Setup hooks.
 	 */
 	private function setup_hooks() {
-		// Do not register menu if on a sub-site and package wants the main site only.
-		if ( ( false === cbox_get_package_prop( 'admin' ) || 'site' === cbox_get_package_prop( 'admin' ) ) &&
-			cbox_get_main_site_id() !== get_current_blog_id() ) {
-
-		// Admin menu registration.
-		} else {
+		// Only register menu on the main site (this also accounts for Network Admin)
+		if ( cbox_get_main_site_id() === get_current_blog_id() ) {
 			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
 		}
 
