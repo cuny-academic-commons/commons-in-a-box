@@ -204,34 +204,13 @@ function cbox_get_setup_step() {
 function cbox_admin_prop( $prop = '', $arg = '' ) {
 	$retval = '';
 
-	switch ( cbox_get_package_prop( 'admin' ) ) {
-		case 'site' :
-			if ( 'menu' === $prop ) {
-				$retval = 'admin_menu';
-			} elseif ( 'url' === $prop ) {
-				$retval = get_admin_url( cbox_get_main_site_id(), $arg );
-			}
-			break;
-
-		case 'network' :
-			if ( 'menu' === $prop ) {
-				$retval = 'network_admin_menu';
-			} elseif ( 'url' === $prop ) {
-				$retval = network_admin_url( $arg );
-			}
-			break;
-
-		default :
-			if ( 'menu' === $prop ) {
-				$retval = is_network_admin() ? 'network_admin_menu' : 'admin_menu';
-			} elseif ( 'url' === $prop ) {
-				$retval = self_admin_url( $arg );
-
-				if ( cbox_get_main_site_id() !== get_current_blog_id() ) {
-					$retval = network_admin_url( $arg );
-				}
-			}
-			break;
+	if ( 'menu' === $prop ) {
+		$retval = is_network_admin() ? 'network_admin_menu' : 'admin_menu';
+	} elseif ( 'url' === $prop ) {
+		$retval = self_admin_url( $arg );
+		if ( cbox_get_main_site_id() !== get_current_blog_id() ) {
+			$retval = network_admin_url( $arg );
+		}
 	}
 
 	return $retval;
