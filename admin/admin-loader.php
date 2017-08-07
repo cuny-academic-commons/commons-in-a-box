@@ -96,7 +96,15 @@ class CBox_Admin {
 			} else {
 				update_site_option( '_cbox_current_package', $_REQUEST['cbox-package'] );
 			}
-			wp_redirect( cbox_admin_prop( 'url', 'admin.php?page=cbox' ) );
+
+			// Redirect to required plugins installation, if necessary.
+			if ( 'required-plugins' === cbox_get_setup_step() ) {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) );
+			} else {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
+			}
+
+			wp_redirect( $url );
 			die();
 
 		// virgin setup
