@@ -611,7 +611,7 @@ class CBox_Admin_Plugins {
 			}
 	?>
 			<div class="wrap cbox-admin-wrap">
-				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ $type ] ); ?></h2>
+				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ '' === $type ? 'required' : $type ] ); ?></h2>
 
 				<h2 class="nav-tab-wrapper wp-clearfix">
 					<?php foreach ( $plugin_types as $plugin_type => $label ) : ?>
