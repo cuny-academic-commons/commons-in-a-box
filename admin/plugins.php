@@ -769,9 +769,10 @@ jQuery('a[data-uninstall="1"]').confirm({
 	 */
 	public static function render_plugin_table( $args = '' ) {
 		$defaults = array(
-			'type'           => 'required', // 'required' (default), 'recommended', 'optional', 'dependency'
-			'omit_activated' => false,      // if set to true, this omits activated plugins from showing up in the plugin table
-			'check_all'      => false,      // if set to true, this will mark all the checkboxes in the plugin table as checked
+			'type'            => 'required', // 'required' (default), 'recommended', 'optional', 'dependency'
+			'omit_activated'  => false,      // if set to true, this omits activated plugins from showing up in the plugin table
+			'check_all'       => false,      // if set to true, this will mark all the checkboxes in the plugin table as checked
+			'submit_btn_text' => __( 'Update', 'cbox' )
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -938,7 +939,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 		</table>
 
 		<?php if ( 'required' !== $r['type'] ) : ?>
-			<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : __( 'Update', 'cbox' ) ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
+			<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : $r['submit_btn_text']; ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
 		<?php endif; ?>
 
 	<?php

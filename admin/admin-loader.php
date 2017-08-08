@@ -697,9 +697,10 @@ jQuery('a.activate-now').confirm({
 
 					<?php
 						CBox_Admin_Plugins::render_plugin_table( array(
-							'type'           => 'recommended',
-							'omit_activated' => true,
-							'check_all'      => true
+							'type'            => 'recommended',
+							'omit_activated'  => true,
+							'check_all'       => true,
+							'submit_btn_text' => __( 'Install', 'cbox' )
 						) );
 					?>
 				</form>
