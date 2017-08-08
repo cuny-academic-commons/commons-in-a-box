@@ -40,4 +40,17 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'documentation_url' => 'https://openlab.citytech.cuny.edu/about/'
 		);
 	}
+
+	/**
+	 * String setter method.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array
+	 */
+	protected static function strings() {
+		return array(
+			'tab_plugin_optional' => __( 'Community Features', 'cbox' )
+		);
+	}
 }
