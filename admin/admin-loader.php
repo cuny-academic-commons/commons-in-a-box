@@ -241,7 +241,7 @@ class CBox_Admin {
 				// start the upgrade!
 				$installer = new CBox_Updater( $plugins, array(
 					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
+					'redirect_text' => __( 'Continue to the CBOX Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -263,7 +263,7 @@ class CBox_Admin {
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
 					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
+					'redirect_text' => __( 'Continue to the CBOX Dashboard', 'cbox' )
 				) );
 
 				echo '</div>';
@@ -288,7 +288,7 @@ class CBox_Admin {
 					$title = esc_html__( 'Upgrading CBOX Plugins', 'cbox' );
 
 					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-					$redirect_text = __( 'Return to the CBOX Dashboard', 'cbox' );
+					$redirect_text = __( 'Continue to the CBOX Dashboard', 'cbox' );
 				}
 
 				// include the CBOX Plugin Upgrade and Install API
