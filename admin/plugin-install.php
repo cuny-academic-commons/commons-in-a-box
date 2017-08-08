@@ -523,7 +523,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 					remove_all_actions( 'cbox_after_updater' );
 				} elseif ( '' === $step ) {
-					$redirect_text = __( 'Return to the CBOX dashboard', 'cbox' );
+					$redirect_text = __( 'Continue to the CBOX dashboard', 'cbox' );
 					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
 				}
 			}
