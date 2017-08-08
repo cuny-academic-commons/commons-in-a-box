@@ -166,7 +166,7 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 
 	$packages = cbox_get_packages();
 	if ( isset( $packages[$package_id] ) && class_exists( $packages[$package_id] ) ) {
-		if ( 'name' === $prop || 'theme' === $prop ) {
+		if ( 'name' === $prop || 'theme' === $prop || 'strings' === $prop ) {
 			return $packages[$package_id]::$$prop;
 		}
 
@@ -213,4 +213,34 @@ function cbox_get_theme_prop( $prop = '', $package_id = '' ) {
 	}
 
 	return false;
+}
+
+/**
+ * Get a specific string from a registered CBOX package.
+ *
+ * @since 1.1.0
+ *
+ * @param  string $prop       The string to fetch from the CBOX package.
+ * @param  string $package_id The CBOX package to query. If empty, falls back to current package ID.
+ * @return string
+ */
+function cbox_get_string( $string = '', $package_id = '' ) {
+	if ( empty( $package_id ) ) {
+		$package_id = cbox_get_current_package_id();
+	}
+
+	if ( empty( $package_id ) ) {
+		return '';
+	}
+
+	$strings = cbox_get_package_prop( 'strings', $package_id );
+	if ( false === $strings ) {
+		return '';
+	}
+
+	if ( isset( $strings[$string] ) ) {
+		return $strings[$string];
+	}
+
+	return '';
 }

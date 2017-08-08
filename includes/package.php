@@ -47,6 +47,15 @@ abstract class CBox_Package {
 	public static $theme = array();
 
 	/**
+	 * String holder.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var array See {@link CBox_Package::register_strings()} for parameters.
+	 */
+	public static $strings = array();
+
+	/**
 	 * Starts the extended class.
 	 *
 	 * @since 1.1.0
@@ -116,7 +125,8 @@ abstract class CBox_Package {
 	 * @since 1.1.0
 	 */
 	public static function set_props() {
-		static::$config = array_merge( (array) self::config(), (array) static::config() );
+		static::$config  = array_merge( (array) self::config(),  (array) static::config() );
+		static::$strings = array_merge( (array) self::strings(), (array) static::strings() );
 	}
 
 	/**
@@ -178,6 +188,21 @@ abstract class CBox_Package {
 			'template_path' => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
 			'icon_url'      => includes_url( 'images/crystal/archive.png' ),
 			'network'       => false
+		);
+	}
+
+	/**
+	 * Strings setter method, extend if necessary.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array
+	 */
+	protected static function strings() {
+		return array(
+			'tab_plugin_required' => __( 'Core Plugins', 'cbox' ),
+			'tab_plugin_optional' => __( 'Optional Plugins', 'cbox' ),
+			'tab_plugin_install'  => __( 'Member Site Plugins', 'cbox' )
 		);
 	}
 
