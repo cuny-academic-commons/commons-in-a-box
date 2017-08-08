@@ -600,30 +600,40 @@ class CBox_Admin_Plugins {
 			$url  = self_admin_url( 'admin.php?page=cbox-plugins' );
 			$url  = ! empty( $type ) ? add_query_arg( 'type', esc_attr( $_GET['type'] ), $url ) : $url;
 
+			$plugin_types = array(
+				'required' => cbox_get_string( 'tab_plugin_required' ),
+			);
+			if ( CBox_Plugins::get_plugins( 'optional' ) ) {
+				$plugin_types['optional'] = cbox_get_string( 'tab_plugin_optional' );
+			}
+			if ( CBox_Plugins::get_plugins( 'install-only' ) ) {
+				$plugin_types['install-only'] = cbox_get_string( 'tab_plugin_install' );
+			}
 	?>
 			<div class="wrap cbox-admin-wrap">
-				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), ucfirst( $type ? $type : 'Core' ) ); ?></h2>
+				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ $type ] ); ?></h2>
 
-				<?php if ( CBox_Plugins::get_plugins( 'optional' ) || CBox_Plugins::get_plugins( 'install-only' ) ) : ?>
-					<h2 class="nav-tab-wrapper wp-clearfix">
-						<a href="<?php echo remove_query_arg( 'type', $url ); ?>" class="nav-tab<?php echo '' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Core', 'cbox' ); ?></a>
-						<a href="<?php echo add_query_arg( 'type', 'optional', $url ); ?>" class="nav-tab<?php echo 'optional' === $type ? ' nav-tab-active' : ''; ?>"><?php esc_html_e( 'Optional', 'cbox' ); ?></a>
-					</h2>
-
-				<?php endif; ?>
+				<h2 class="nav-tab-wrapper wp-clearfix">
+					<?php foreach ( $plugin_types as $plugin_type => $label ) : ?>
+						<a href="<?php echo 'required' === $plugin_type ? remove_query_arg( 'type', $url ) : add_query_arg( 'type', $plugin_type, $url ); ?>" class="nav-tab<?php echo $plugin_type === $type || ( '' === $type && 'required' === $plugin_type ) ? ' nav-tab-active' : ''; ?>"><?php echo esc_html( $label ); ?></a>
+					<?php endforeach; ?>
+				</h2>
 
 				<div class="cbox-admin-content cbox-plugins-content">
 
 				<form method="post" action="<?php echo $url; ?>">
-					<?php if ( '' === $type ) : ?>
+					<?php if ( '' === $type ) { $type = 'required'; } ?>
+					<?php if ( ! empty( $plugin_types[ $type ] ) ) : ?>
 
-						<div id="required" class="cbox-plugins-section">
-							<?php cbox_get_template_part( 'plugins-required-header' ); ?>
+						<div id="<?php echo esc_attr( $type ); ?>" class="cbox-plugins-section">
+							<h2><?php echo esc_html( $plugin_types[ $type ]  ); ?></h2>
 
-							<?php self::render_plugin_table(); ?>
+							<?php cbox_get_template_part( "plugins-{$type}-header" ); ?>
+
+							<?php self::render_plugin_table( array( 'type' => $type ) ); ?>
 						</div>
 
-						<?php if ( CBox_Plugins::get_plugins( 'recommended' ) ) : ?>
+						<?php if ( 'required' === $type && CBox_Plugins::get_plugins( 'recommended' ) ) : ?>
 
 							<div id="recommended" class="cbox-plugins-section">
 								<?php cbox_get_template_part( 'plugins-recommended-header' ); ?>
@@ -633,27 +643,7 @@ class CBox_Admin_Plugins {
 
 						<?php endif; ?>
 
-					<?php endif; ?>
-
-					<?php if( 'optional' === $type ) : ?>
-
-						<?php if ( CBox_Plugins::get_plugins( 'optional' ) ) : ?>
-
-							<div id="a-la-carte" class="cbox-plugins-section">
-								<?php cbox_get_template_part( 'plugins-optional-header' ); ?>
-
-								<?php self::render_plugin_table( 'type=optional' ); ?>
-							</div>
-
-						<?php endif; ?>
-
-						<?php if ( CBox_Plugins::get_plugins( 'install-only' ) ) : ?>
-
-							<div id="site-plugins" class="cbox-plugins-section">
-								<?php cbox_get_template_part( 'plugins-installonly-header' ); ?>
-
-								<?php self::render_plugin_table( 'type=install-only' ); ?>
-							</div>
+						<?php if ( 'install-only' === $type ) : ?>
 
 							<div class="prompt" style="display:none">
 								<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'cbox' ); ?></p>
