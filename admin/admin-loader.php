@@ -418,6 +418,13 @@ class CBox_Admin {
 			array( $this, 'admin_page' )
 		);
 
+		/**
+		 * Hook to do so something during CBOX admin menu registration.
+		 *
+		 * @since 1.0-beta1
+		 */
+		do_action( 'cbox_admin_menu' );
+
 		$package_id = cbox_get_current_package_id();
 		if ( ! empty( $package_id ) ) {
 			/**
@@ -427,13 +434,6 @@ class CBox_Admin {
 			 */
 			do_action( "cbox_{$package_id}_admin_menu" );
 		}
-
-		/**
-		 * Hook to do so something during CBOX admin menu registration.
-		 *
-		 * @since 1.0-beta1
-		 */
-		do_action( 'cbox_admin_menu' );
 
 		// dashboard CSS
 		add_action( "admin_head-{$subpage}",          array( $this, 'dashboard_css' ) );
