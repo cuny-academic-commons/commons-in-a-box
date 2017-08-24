@@ -428,6 +428,11 @@ class CBox_Admin {
 			do_action( "cbox_{$package_id}_admin_menu" );
 		}
 
+		/**
+		 * Hook to do so something during CBOX admin menu registration.
+		 *
+		 * @since 1.0-beta1
+		 */
 		do_action( 'cbox_admin_menu' );
 
 		// dashboard CSS
