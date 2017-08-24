@@ -418,6 +418,16 @@ class CBox_Admin {
 			array( $this, 'admin_page' )
 		);
 
+		$package_id = cbox_get_current_package_id();
+		if ( ! empty( $package_id ) ) {
+			/**
+			 * Admin menu hook for the current active package.
+			 *
+			 * @since 1.1.0
+			 */
+			do_action( "cbox_{$package_id}_admin_menu" );
+		}
+
 		do_action( 'cbox_admin_menu' );
 
 		// dashboard CSS
