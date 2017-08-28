@@ -53,4 +53,21 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'tab_plugin_optional' => __( 'Community Features', 'cbox' )
 		);
 	}
+
+	/**
+	 * Custom hooks used during package initialization.
+	 *
+	 * @since 1.1.0
+	 */
+	protected function custom_init() {
+		/**
+	         * Always enable the "Plugins" page on sub-sites.
+	         */
+		add_filter( 'site_option_menu_items', function( $retval ) {
+			if ( empty( $retval['plugins'] ) ) {
+				$retval['plugins'] = 1;
+			}
+			return $retval;
+		} );
+	}
 }
