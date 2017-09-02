@@ -27,6 +27,7 @@
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
 						<li>BuddyPress 2.9.1</li>
+						<li>bbPress 2.5.13</li>
 						<li>BuddyPress Docs 1.9.4</li>
 						<li>BuddyPress Group Email Subscription 3.7.2</li>
 						<li>Invite Anyone 1.3.18</li>
