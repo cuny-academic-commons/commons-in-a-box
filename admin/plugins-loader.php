@@ -120,7 +120,7 @@ class CBox_Plugins {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '2.8.2',
+			'version'           => '2.9.1',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -356,7 +356,7 @@ class CBox_Plugins {
 		self::register_plugin( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.8.2.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.9.1.zip'
 		) );
 	}
 
