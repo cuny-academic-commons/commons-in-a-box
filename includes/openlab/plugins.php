@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '2.8.2',
+			'version'           => '2.9.1',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -54,8 +54,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'bbPress',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
-			'version'           => '2.5.12',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.12.zip',
+			'version'           => '2.5.13',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.5.13.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
@@ -67,9 +67,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress Docs',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.9.3',
+			'version'           => '1.9.4',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.9.3.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.9.4.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -95,8 +95,8 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '3.7.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.7.0.zip',
+			'version'           => '3.7.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.7.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'root-blog-only'
@@ -122,9 +122,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'Invite Anyone',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.3.16',
+			'version'           => '1.3.18',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.16.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.18.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone',
@@ -183,14 +183,14 @@ class CBox_Plugins_OpenLab {
 		$instance( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.8.2.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.9.1.zip'
 		) );
 
 		// Event Organiser
 		$instance( array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.1.7.zip',
+			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.2.0.zip',
 			'network'      => false
 		) );
 	}
@@ -296,8 +296,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'WP Grade Comments', 'cbox' ),
 			'cbox_description'  => __( 'A plugin for instructors using their WordPress site in a course setting. Provides ability to give private feedback and/or grades to post authors, all without leaving the familiar commenting interface.', 'cbox' ),
-			'version'           => '1.1.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.1.1.zip',
+			'version'           => '1.2.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.2.0.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/wp-grade-comments',
 		) );
 	}
