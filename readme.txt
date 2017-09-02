@@ -2,7 +2,7 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: 1.0.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -42,6 +42,10 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Spanish: Andrew Kurtis
 
 == Changelog ==
+
+= 1.0.16 =
+* Compatibility with WordPress 4.8 and BuddyPress 2.9
+* Update plugins: BuddyPress 2.9.1, BuddyPress Docs 1.9.4, BuddyPress Group Email Subscription 3.7.2, Invite Anyone 1.3.18
 
 = 1.0.15 =
 * Compatibility with BuddyPress 2.8
