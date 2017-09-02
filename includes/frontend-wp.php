@@ -73,3 +73,33 @@ class CBox_WP_Toolbar_Updates {
 		) );
 	}
 }
+
+/**
+ * Create .htaccess in WordPress uploads directory for Apache environments.
+ *
+ * @since 1.0.16
+ */
+add_action( 'wp', function() {
+	// If not an Apache install, bail.
+	if ( ! $GLOBALS['is_apache'] ) {
+		return;
+	}
+
+	$dir = wp_upload_dir();
+
+	$htaccess = trailingslashit( $dir['basedir'] ) . '.htaccess';
+	if ( true !== apply_filters( 'cbox_create_uploads_htaccess', true ) || file_exists( $htaccess ) ) {
+		return;
+	}
+
+	if ( ! function_exists( 'insert_with_markers' ) ) {
+		require ABSPATH . '/wp-admin/includes/misc.php';
+	}
+
+	insert_with_markers( $htaccess, 'CBOX PHP BLOCK', array(
+		'<FilesMatch "\.(php|php\.)$">',
+		'Order Allow,Deny',
+		'Deny from all',
+		'</FilesMatch>'
+	) );
+} );
