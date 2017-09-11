@@ -1273,6 +1273,7 @@ jQuery('a.activate-now').confirm({
 		/* plugins table */
 		.cbox-plugins-section {margin-top:0; padding:10px 20px 20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
 		.cbox-plugins-section .check-column {padding:10px 0 0;}
+		.cbox-plugins-section h3 {font-size:1.15em;}
 
 		.cbox-plugins-section table {margin:1.6em 0;}
 		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:rgb(249, 255, 240);}
