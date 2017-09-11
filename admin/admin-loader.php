@@ -121,13 +121,12 @@ class CBox_Admin {
 			if ( 'recommended-plugins' === cbox_get_setup_step() ) {
 				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-recommended-nonce=' . wp_create_nonce( 'cbox_bp_installed' ) );
 
-			// Theme prompt.
-			} elseif ( 'theme-update' === cbox_get_setup_step() ) {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
-
-			// All done!
+			// All done! Offer to install theme if it doesn't exist.
 			} elseif ( '' === cbox_get_setup_step() ) {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+				$directory_name = cbox_get_theme_prop( 'directory_name' );
+				if ( ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
+					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+				}
 			}
 
 			if ( $url ) {
