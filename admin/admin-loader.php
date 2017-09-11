@@ -115,6 +115,26 @@ class CBox_Admin {
 			// set reference pointer for later use
 			cbox()->setup = 'virgin-setup';
 
+			$url = '';
+
+			// Redirect to a specific installation step, if necessary.
+			if ( 'recommended-plugins' === cbox_get_setup_step() ) {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-recommended-nonce=' . wp_create_nonce( 'cbox_bp_installed' ) );
+
+			// Theme prompt.
+			} elseif ( 'theme-update' === cbox_get_setup_step() ) {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
+
+			// All done!
+			} elseif ( '' === cbox_get_setup_step() ) {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+			}
+
+			if ( $url ) {
+				wp_redirect( $url );
+				die();
+			}
+
 		// BP installed, but no CBOX
 		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
 			// verify nonce
