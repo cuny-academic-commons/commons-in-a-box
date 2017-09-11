@@ -601,21 +601,30 @@ class CBox_Admin_Plugins {
 			$url  = ! empty( $type ) ? add_query_arg( 'type', esc_attr( $_GET['type'] ), $url ) : $url;
 
 			$plugin_types = array(
-				'required' => cbox_get_string( 'tab_plugin_required' ),
+				'required' => array(
+					'label'      => cbox_get_string( 'tab_plugin_required' ),
+					'submit_btn' => __( 'Update', 'cbox' )
+				)
 			);
 			if ( CBox_Plugins::get_plugins( 'optional' ) ) {
-				$plugin_types['optional'] = cbox_get_string( 'tab_plugin_optional' );
+				$plugin_types['optional'] = array(
+					'label'      => cbox_get_string( 'tab_plugin_optional' ),
+					'submit_btn' => __( 'Activate', 'cbox' )
+				);
 			}
 			if ( CBox_Plugins::get_plugins( 'install-only' ) ) {
-				$plugin_types['install-only'] = cbox_get_string( 'tab_plugin_install' );
+				$plugin_types['install-only'] = array(
+					'label'      => cbox_get_string( 'tab_plugin_optional' ),
+					'submit_btn' => __( 'Update', 'cbox' )
+				);
 			}
 	?>
 			<div class="wrap cbox-admin-wrap">
-				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ '' === $type ? 'required' : $type ] ); ?></h2>
+				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ '' === $type ? 'required' : $type ]['label'] ); ?></h2>
 
 				<h2 class="nav-tab-wrapper wp-clearfix">
-					<?php foreach ( $plugin_types as $plugin_type => $label ) : ?>
-						<a href="<?php echo 'required' === $plugin_type ? remove_query_arg( 'type', $url ) : add_query_arg( 'type', $plugin_type, $url ); ?>" class="nav-tab<?php echo $plugin_type === $type || ( '' === $type && 'required' === $plugin_type ) ? ' nav-tab-active' : ''; ?>"><?php echo esc_html( $label ); ?></a>
+					<?php foreach ( $plugin_types as $plugin_type => $data ) : ?>
+						<a href="<?php echo 'required' === $plugin_type ? remove_query_arg( 'type', $url ) : add_query_arg( 'type', $plugin_type, $url ); ?>" class="nav-tab<?php echo $plugin_type === $type || ( '' === $type && 'required' === $plugin_type ) ? ' nav-tab-active' : ''; ?>"><?php echo esc_html( $data['label'] ); ?></a>
 					<?php endforeach; ?>
 				</h2>
 
@@ -626,11 +635,11 @@ class CBox_Admin_Plugins {
 					<?php if ( ! empty( $plugin_types[ $type ] ) ) : ?>
 
 						<div id="<?php echo esc_attr( $type ); ?>" class="cbox-plugins-section">
-							<h2><?php echo esc_html( $plugin_types[ $type ]  ); ?></h2>
+							<h2><?php echo esc_html( $plugin_types[ $type ]['label']  ); ?></h2>
 
 							<?php cbox_get_template_part( "plugins-{$type}-header" ); ?>
 
-							<?php self::render_plugin_table( array( 'type' => $type ) ); ?>
+							<?php self::render_plugin_table( array( 'type' => $type, 'submit_btn_text' => $plugin_types[ $type ]['submit_btn'] ) ); ?>
 						</div>
 
 						<?php if ( 'required' === $type && CBox_Plugins::get_plugins( 'recommended' ) ) : ?>
