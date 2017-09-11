@@ -115,7 +115,8 @@ class CBox_Admin {
 			// set reference pointer for later use
 			cbox()->setup = 'virgin-setup';
 
-			$url = '';
+			$url  = '';
+			$step = cbox_get_setup_step();
 
 			// Redirect to a specific installation step, if necessary.
 			if ( 'recommended-plugins' === cbox_get_setup_step() ) {
@@ -127,6 +128,11 @@ class CBox_Admin {
 				if ( ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
 					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 				}
+			}
+
+			// Required plugins are already installed.
+			if ( '' === $url && 'required-plugins' !== $step ) {
+				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 			}
 
 			if ( $url ) {
