@@ -31,10 +31,6 @@ function cbox_is_setup() {
 	if ( cbox_is_upgraded() )
 		return false;
 
-	// if BuddyPress doesn't exist, stop now
-	if ( ! defined( 'BP_VERSION' ) )
-		return false;
-
 	// theme needs an update
 	if ( cbox_get_theme_to_update() ) {
 		return false;
@@ -74,11 +70,6 @@ function cbox_get_theme_to_update() {
 	}
 
 	if ( is_multisite() ) {
-		// sanity check
-		if ( ! defined( 'BP_VERSION' ) ) {
-			return false;
-		}
-
 		$current_theme = cbox_get_theme();
 	} else {
 		$current_theme = wp_get_theme();
