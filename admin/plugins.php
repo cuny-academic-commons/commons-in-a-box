@@ -305,6 +305,16 @@ class CBox_Admin_Plugins {
 						$plugins[] = $plugin;
 				}
 
+				// Get install-only plugins as well.
+				$install_only_plugins = CBox_Plugins::get_plugins( 'install-only' );
+				if ( ! empty( $install_only_plugins ) ) {
+					$install_only_plugins = array_intersect( $upgrades, array_keys( $install_only_plugins ) );
+
+					if ( ! empty( $install_only_plugins ) ) {
+						$plugins = array_merge( $plugins, $install_only_plugins );
+					}
+				}
+
 				if ( empty( $plugins ) )
 					return false;
 
