@@ -624,7 +624,7 @@ class CBox_Admin_Plugins {
 			}
 			if ( CBox_Plugins::get_plugins( 'install-only' ) ) {
 				$plugin_types['install-only'] = array(
-					'label'      => cbox_get_string( 'tab_plugin_optional' ),
+					'label'      => cbox_get_string( 'tab_plugin_install' ),
 					'submit_btn' => __( 'Update', 'cbox' )
 				);
 			}
