@@ -591,8 +591,6 @@ class CBox_Admin {
 		switch ( cbox_get_setup_step() ) {
 			// (0) No package.
 			case 'no-package' :
-				wp_enqueue_script( 'thickbox' );
-				wp_enqueue_style( 'thickbox' );
 			?>
 
 				<div style="text-align:center;">
@@ -629,16 +627,6 @@ class CBox_Admin {
 					<?php cbox_get_template_part( 'description', $package ); ?>
 					<!--<p class="authors"> <cite>By <a href="">CBOX Team</a></cite></p>-->
 				</div>
-
-				<div class="prompt" style="display:none">
-					<p><?php esc_html_e( 'Selecting this box can:', 'cbox' ); ?></p>
-
-					<ul>
-					<?php cbox_get_template_part( 'permissions', $package ); ?>
-					</ul>
-
-					<p><?php esc_html_e( 'Are you sure you want to continue?', 'cbox' ); ?></p>
-				</div>
 			</div>
 
 			<div class="plugin-card-bottom">
@@ -659,45 +647,6 @@ class CBox_Admin {
 					</div>
 					</div>
 				</form>
-
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.js"></script>
-
-				<script>
-jQuery('a.activate-now').confirm({
-	type: 'red',
-	content: function() {
-		var package = this.$target.closest( '.plugin-card' );
-
-		// Set modal title.
-		this.setTitle( package.find( 'h3' )[0].textContent );
-
-		// Set modal content.
-		return package.find( '.prompt' )[0].innerHTML;
-	},
-	title: function() {},
-	boxWidth: '500px',
-	useBootstrap: false,
-	bgOpacity: 0.7,
-	buttons: {
-	        no: {
-			text: '<?php esc_attr_e( 'No', 'cbox' ); ?>',
-			action: function() {}
-		},
-		yes: {
-			text: '<?php esc_attr_e( 'Yes', 'cbox' ); ?>',
-			btnClass: 'btn-red',
-			action: function () {
-				location.href = this.$target.attr('href');
-			}
-		},
-	}
-});
-				</script>
-
-<style type="text/css">
-.jconfirm ul {list-style-type:disc; padding-left:25px;}
-</style>
 
 			<?php
 				break;
