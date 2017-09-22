@@ -166,19 +166,44 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 
 	$packages = cbox_get_packages();
 	if ( isset( $packages[$package_id] ) && class_exists( $packages[$package_id] ) ) {
-		if ( 'name' === $prop || 'theme' === $prop || 'strings' === $prop ) {
+		// Name is set early.
+		if ( 'name' === $prop ) {
 			return $packages[$package_id]::$$prop;
 		}
 
-		// If we've never set up the package properties before, do it now.
-		$props = $packages[$package_id]::get_props();
-		if ( empty( $props ) ) {
-			$packages[$package_id]::set_props();
-			$props = $packages[$package_id]::get_props();
+		// Try to fetch props.
+		switch ( $prop ) {
+			case 'theme' :
+			case 'strings' :
+				$props = $packages[$package_id]::$$prop;
+				break;
+
+			default :
+				$props = $packages[$package_id]::get_props();
+				break;
 		}
 
-		if ( isset( $props[$prop] ) ) {
-			return $props[$prop];
+		// If we've never set up the package properties before, do it now.
+		if ( empty( $props ) ) {
+			$packages[$package_id]::set_props();
+		}
+
+		// See if our prop exists and return.
+		switch ( $prop ) {
+			case 'theme' :
+			case 'strings' :
+				if ( isset( $packages[$package_id]::$$prop ) ) {
+					return $packages[$package_id]::$$prop;
+				}
+				break;
+
+			default :
+				$props = $packages[$package_id]::get_props();
+				if ( isset( $props[$prop] ) ) {
+					return $props[$prop];
+				}
+
+				break;
 		}
 	}
 

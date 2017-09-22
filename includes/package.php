@@ -71,7 +71,6 @@ abstract class CBox_Package {
 	 */
 	final protected function __construct() {
 		// Set props.
-		$this->set_theme();
 		self::set_props();
 
 		// Custom init method.
@@ -108,18 +107,6 @@ abstract class CBox_Package {
 	}
 
 	/**
-	 * Set theme.
-	 *
-	 * @since 1.1.0
-	 */
-	final protected function set_theme() {
-		$_theme = $this->register_theme();
-		if ( ! empty( $_theme ) && is_array( $_theme ) ) {
-			static::$theme = $_theme;
-		}
-	}
-
-	/**
 	 * Set miscellaneous props.
 	 *
 	 * @since 1.1.0
@@ -127,6 +114,7 @@ abstract class CBox_Package {
 	public static function set_props() {
 		static::$config  = array_merge( (array) self::config(),  (array) static::config() );
 		static::$strings = array_merge( (array) self::strings(), (array) static::strings() );
+		static::$theme   = array_merge( (array) self::theme(),   (array) static::theme() );
 	}
 
 	/**
