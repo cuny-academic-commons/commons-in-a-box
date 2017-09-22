@@ -46,7 +46,7 @@ class CBox_Package_Classic extends CBox_Package {
 	 *
 	 * @since 1.1.0
 	 */
-	protected function register_theme() {
+	protected static function theme() {
 		return array(
 			'name'           => 'Commons In A Box',
 			'version'        => '1.0.15',

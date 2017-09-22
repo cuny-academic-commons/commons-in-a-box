@@ -162,7 +162,7 @@ abstract class CBox_Package {
 	 *     @var string $screenshot_url Optional. URL to screenshot.
 	 * }
 	 */
-	protected function register_theme() {
+	protected static function theme() {
 		return array();
 	}
 
