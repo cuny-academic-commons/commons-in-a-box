@@ -67,21 +67,13 @@
 
 									<p><?php printf( __( 'Did you know that <strong>%s</strong> comes with a cool theme? Check it out below!', 'cbox' ), esc_html( cbox_get_package_prop( 'name' ) ) ); ?></p>
 
-									<a rel="leanModal" title="<?php printf( esc_attr__( 'View a larger screenshot of the %s theme', 'cbox' ), cbox_get_theme_prop( 'name' ) ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>" alt="" /></a>
+									<a class="thickbox" title="<?php printf( esc_attr__( 'Screenshot of the %s theme', 'cbox' ), cbox_get_theme_prop( 'name' ) ); ?>" href="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>"><img width="200" src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>" alt="" /></a>
 
 									<div class="login postbox">
 										<div class="message" style="text-align:center;">
 											<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'cbox' ), wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
 										</div>
 									</div>
-
-									<!-- hidden modal window -->
-									<div id="cbox-theme-screenshot" style="display:none;">
-										<img src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url' ) ); ?>" alt="" />
-									</div>
-									<!-- #cbox-theme-screenshot -->
-
-									<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
 
 								<?php endif; ?>
 

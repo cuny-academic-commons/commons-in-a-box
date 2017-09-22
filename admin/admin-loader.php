@@ -1063,13 +1063,8 @@ class CBox_Admin {
 	 * @uses wp_enqueue_script() Enqueues a given JS file in WordPress
 	 */
 	public function enqueue_js() {
-		// enqueue leanModal - lightweight modals
-		// http://leanmodal.finelysliced.com.au/
-		wp_enqueue_script(
-			'cbox-lean-modal',
-			'https://cdn.rawgit.com/FinelySliced/leanModal.js/master/jquery.leanModal.js',
-			array( 'jquery' )
-		);
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_style( 'thickbox' );
 	}
 
 	/**
