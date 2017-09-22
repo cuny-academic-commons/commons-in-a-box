@@ -1,4 +1,6 @@
 
+<a class="thickbox" title="<?php esc_html_e( 'Screenshot of theme', 'cbox' ); ?>" href="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url', $_GET[ 'cbox-package-details' ] ) ); ?>" style="float:right; margin-left:2em;"><img width="200" src="<?php echo esc_url( cbox_get_theme_prop( 'screenshot_url', $_GET[ 'cbox-package-details' ] ) ); ?>" alt="" /></a>
+
 <h3><?php esc_html_e( 'Theme', 'cbox' ); ?></h3>
 <p><?php esc_html_e( "The OpenLab theme will change the way your site looks, and much of its architecture. Any posts and pages that you currently have may be hidden from your site's homepage (though they will still be accessible in the Dashboard) and new pages will be added.", 'cbox' ); ?></p>
 
