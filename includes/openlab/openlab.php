@@ -13,7 +13,6 @@
  * For plugin manifest, see {@link CBox_Plugins_OpenLab}.
  *
  * @todo Name subject to change.
- * @todo Add theme.
  *
  * @since 1.1.0
  */
@@ -51,6 +50,23 @@ class CBox_Package_OpenLab extends CBox_Package {
 	protected static function strings() {
 		return array(
 			'tab_plugin_optional' => __( 'Community Features', 'cbox' )
+		);
+	}
+
+	/**
+	 * Register theme.
+	 *
+	 * @since 1.1.0
+	 */
+	protected static function theme() {
+		return array(
+			'name'           => 'OpenLab',
+			'version'        => '0.1',
+			'directory_name' => 'openlab-theme',
+			//'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/master.zip',
+			//'download_url'   => CBOX_PLUGIN_DIR . 'includes/zip/openlab-theme-master.zip',
+			'admin_settings' => 'admin.php?page=cbox-ol-brand-settings',
+			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_openlab_theme.png' ),
 		);
 	}
 
