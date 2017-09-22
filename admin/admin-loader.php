@@ -132,7 +132,7 @@ class CBox_Admin {
 			// All done! Offer to install theme if it doesn't exist.
 			} elseif ( '' === cbox_get_setup_step() ) {
 				$directory_name = cbox_get_theme_prop( 'directory_name' );
-				if ( ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
+				if ( cbox_get_theme_prop( 'download_url' ) && ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
 					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 				}
 			}
@@ -158,7 +158,7 @@ class CBox_Admin {
 			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
-				if ( ! cbox_get_installed_revision_date() && ! cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) )->exists() ) {
+				if ( ! cbox_get_installed_revision_date() && cbox_get_theme_prop( 'download_url' ) && ! cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) )->exists() ) {
 					cbox()->setup = 'theme-prompt';
 
 				// Bump the revision date in the DB after updating

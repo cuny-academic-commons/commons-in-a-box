@@ -79,6 +79,9 @@ function cbox_get_theme_to_update() {
 
 	// get our package theme specs
 	$package_theme = cbox_get_package_prop( 'theme' );
+	if ( empty( $package_theme['download_url'] ) ) {
+		return $retval;
+	}
 
 	// if current theme is not the CBOX package theme, no need to proceed!
 	if ( ! empty( $package_theme ) ) {
