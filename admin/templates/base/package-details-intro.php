@@ -1,0 +1,2 @@
+
+<p><?php printf( esc_html__( "Welcome to CBOX %s! We're excited that you've decided to install and use this open source software for your site. Please know that this package will overhaul your site's theme and plugins. In particular:", 'cbox' ), cbox_get_package_prop( 'name', $_GET[ 'cbox-package-details' ] ) ); ?></p>

@@ -107,6 +107,13 @@ class CBox_Admin {
 			wp_redirect( $url );
 			die();
 
+		// Package details.
+		} elseif ( ! empty( $_GET['cbox-package-details'] ) ) {
+			// verify nonce
+			check_admin_referer( 'cbox_package_details' );
+
+			cbox()->setup = 'package-details';
+
 		// virgin setup
 		} elseif ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
 			// verify nonce
@@ -273,7 +280,32 @@ class CBox_Admin {
 
 				break;
 
-			// BP installed, but no CBOX
+			case 'package-details' :
+				$package = sanitize_title( $_GET['cbox-package-details'] );
+				// some HTML markup!
+				echo '<div class="wrap">';
+				echo '<h2>' . sprintf( esc_html__( '%s Details', 'cbox' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
+
+				cbox_get_template_part( 'package-details-intro', $package );
+				cbox_get_template_part( 'package-details', $package );
+			?>
+
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin-top:2em; text-align:right;, ">
+					<?php wp_nonce_field( 'cbox_select_package' ); ?>
+
+					<input type="hidden" name="cbox-package" value="<?php echo $package; ?>" />
+
+					<a class="button button-secondary" href="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin:0 15px 0 0;"><?php esc_html_e( 'Return to dashboard', 'cbox' ); ?></a>
+
+					<input type="submit" value="<?php printf( esc_html__( 'Install %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" class="button-primary" name="package-details" />
+				</form>
+
+			<?php
+				echo '</div>';
+
+				break;
+
+			// Installed, but haven't run through setup.
 			case 'install' :
 				$plugins = $_REQUEST['cbox_plugins'];
 
@@ -618,7 +650,7 @@ class CBox_Admin {
 
 				<div class="action-links">
 					<ul class="plugin-action-buttons">
-						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=' . $package ), 'cbox_select_package' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
+						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package-details=' . $package ), 'cbox_package_details' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
 						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'cbox' ); ?></a></li>
 					</ul>
 				</div>
