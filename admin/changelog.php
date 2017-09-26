@@ -31,7 +31,7 @@
 						<li>BuddyPress Docs 1.9.4</li>
 						<li>BuddyPress Group Email Subscription 3.7.2</li>
 						<li>BuddyPress Reply By Email 1.0-RC5</li>
-						<li>Invite Anyone 1.3.18</li>
+						<li>Invite Anyone 1.3.19</li>
 					</ul>
 
 				</div>
