@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
-Tested up to: 4.8
-Stable tag: 1.0.15
+Tested up to: 4.9
+Stable tag: 1.0.16
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
