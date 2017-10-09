@@ -76,6 +76,19 @@ class CBox_Plugins_OpenLab {
 			'network'           => false
 		) );
 
+		// BuddyPress Docs In Group
+		$instance( array(
+			'plugin_name'       => 'BuddyPress Docs in Group',
+			'cbox_name'         => __( 'Docs in Group', 'cbox' ),
+			'cbox_description'  => __( 'Put BuddyPress Docs into the Group context.', 'cbox' ),
+			'version'           => '1.0.0',
+			'depends'           => 'BuddyPress (>=1.5)',
+			'download_url'      => 'https://github.com/boonebgorges/buddypress-docs-in-group/archive/1.0.0.zip',
+			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
+			'network_settings'  => 'root-blog-only',
+			'network'           => false,
+		) );
+
 		// BP Group Documents
 		$instance( array(
 			'plugin_name'       => 'BP Group Documents',
