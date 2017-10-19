@@ -78,7 +78,7 @@ class CBox_Plugins_OpenLab {
 
 		// BuddyPress Docs In Group
 		$instance( array(
-			'plugin_name'       => 'BuddyPress Docs in Group',
+			'plugin_name'       => 'BuddyPress Docs In Group',
 			'cbox_name'         => __( 'Docs in Group', 'cbox' ),
 			'cbox_description'  => __( 'Put BuddyPress Docs into the Group context.', 'cbox' ),
 			'version'           => '1.0.1',
