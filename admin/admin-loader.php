@@ -1178,7 +1178,7 @@ class CBox_Admin {
 		.metabox-holder .stuffbox {border-width:0 0 1px 0;}
 		#getting-started .inside ol {columns:2; -webkit-columns: 2; -moz-columns:2; list-style:none; counter-reset:counter; margin:1.5em 1em 0;}
 		#getting-started .inside li {width:calc(100% - 20px); position:relative; padding-left:20px;}
-		#getting-started .inside li:before {content:counter(counter); counter-increment:counter; position:absolute; top:0; left:-5px; font-size:1.5em; font-weight:bold; color:gray;}
+		#getting-started .inside li:before {content:counter(counter) "."; counter-increment:counter; position:absolute; top:0; left:-5px; font-size:1.5em; font-weight:bold; color:gray;}
 
 		#getting-started .inside h4 {margin:0;}
 		#getting-started .inside h4 a {text-decoration:none; font-size:1.3em;}
