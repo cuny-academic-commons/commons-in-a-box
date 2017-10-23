@@ -1168,10 +1168,22 @@ class CBox_Admin {
 			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
-		#welcome-panel {overflow:visible;min-height: 280px;}
+		#welcome-panel {overflow:visible;min-height: 280px; padding:0 1em 1em;}
+		#welcome-panel h2 {margin:.5em 0;}
+
+		.plugin-icon {height:auto;}
+		.plugin-card-OpenLab .column-description {min-height:140px;}
+
+		#wpbody-content .metabox-holder {padding-top:0;}
+		.metabox-holder .stuffbox {border-width:0 0 1px 0;}
+		#getting-started .inside ol {columns:2; -webkit-columns: 2; -moz-columns:2; list-style:none; counter-reset:counter; margin:1.5em 1em 0;}
+		#getting-started .inside li {width:calc(100% - 20px); position:relative; padding-left:20px;}
+		#getting-started .inside li:before {content:counter(counter); counter-increment:counter; position:absolute; top:0; left:-5px; font-size:1.5em; font-weight:bold; color:gray;}
+
+		#getting-started .inside h4 {margin:0;}
+		#getting-started .inside h4 a {text-decoration:none; font-size:1.3em;}
 
 		.about-text {margin-right:220px;}
-		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:210px; margin-bottom:.5em;}
 		.welcome-panel-dismiss {margin-bottom:0;}
 
 		#wpbody .login .message {margin:15px 0; text-align:center;}
@@ -1191,31 +1203,31 @@ class CBox_Admin {
 
 		.secondary-panel h2 {line-height:1;}
 
-		.secondary-panel h4 {font-size:14px;}
-			.secondary-panel h4 .icon16 {margin-top:-10px; margin-left: -32px;}
+		.getting-started-cbox-classic h4 {font-size:14px;}
+			.getting-started-cbox-classic h4 .icon16 {margin-top:-12px; margin-left: -32px;}
 
-		.secondary-panel .welcome-panel-column-container {
+		.metabox-holder .welcome-panel-column-container {
 		    clear: both;
 		    overflow: hidden;
 		    padding-left: 26px;
 		    position: relative;
 		}
 
-		.secondary-panel .welcome-panel-column {
+		.metabox-holder .welcome-panel-column {
 		    float: left;
 		    margin: 0 5% 0 -25px;
 		    min-width: 200px;
 		    padding-left: 25px;
 		    width: 47%;
 		}
-			.secondary-panel .welcome-panel-last {margin-right:0;}
+			.metabox-holder .welcome-panel-last {margin-right:0;}
 
 
-		.secondary-panel .welcome-panel-column ul {
+		.metabox-holder .welcome-panel-column ul {
 			margin: 1.6em 1em 1em 1.3em;
 		}
 
-		.secondary-panel .welcome-panel-column li {
+		.metabox-holder .welcome-panel-column li {
 			list-style-type: disc;
 			padding-left: 2px;
 		}
@@ -1233,14 +1245,10 @@ class CBox_Admin {
 			background-size:auto;
 			background-repeat: no-repeat;
 			padding-top:200px;
-		        color:#999; text-shadow:none;
+		        color:#999; text-shadow:none; box-shadow:none;
 		}
 
-		#welcome-panel .wp-badge {
-			border: 1px solid #DFDFDF;
-			border-radius: 4px;
-			top:50px; right: 20px;
-		}
+		.welcome-panel-content {margin-left:200px;}
 
 		/* Retina */
 		@media
@@ -1257,18 +1265,6 @@ class CBox_Admin {
 					height: 34px;
 					top: 50px;
 				}
-		}
-
-		/* modal */
-		#lean_overlay {
-			position: fixed;
-			z-index:100;
-			top: 0px;
-			left: 0px;
-			height:100%;
-			width:100%;
-			background: #000;
-			display: none;
 		}
 
 		/* plugins table */
@@ -1294,10 +1290,11 @@ class CBox_Admin {
 		/* Responsive */
 		@media screen and (max-width: 600px) {
 			#welcome-panel {min-height:0;}
-			#welcome-panel .wp-badge, .welcome-panel-close {display:none;}
-			.welcome-panel-content .about-description, .welcome-panel h3 {margin-right:10px;}
-			.welcome-panel-dismiss {margin-bottom:2em;}
-			.secondary-panel .welcome-panel-column {width:auto;}
+			#welcome-panel .wp-badge {display:none;}
+			.welcome-panel-content {margin-left:0;}
+			#getting-started .inside ol {columns:1; -webkit-columns:1; -moz-columns:1;}
+			#getting-started .inside li {height:auto;}
+			.metabox-holder .welcome-panel-column {width:auto;}
 		}
 		</style>
 
