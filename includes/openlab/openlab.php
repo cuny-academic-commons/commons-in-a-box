@@ -35,7 +35,8 @@ class CBox_Package_OpenLab extends CBox_Package {
 	protected static function config() {
 		return array(
 			'network'           => true,
-			'icon_url'          => 'https://openlab.citytech.cuny.edu/wp-content/themes/openlab/images/default-avatar.jpg',
+			'icon_url'          => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
+			'badge_url'         => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
 			'documentation_url' => 'https://openlab.citytech.cuny.edu/about/'
 		);
 	}
