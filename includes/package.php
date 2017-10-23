@@ -169,12 +169,14 @@ abstract class CBox_Package {
 	 *     @var string $documentation_url Optional. Documentation URL. Currently used in package selection screen's
 	 *                                    "More Details" link.
 	 *     @var string $icon_url          Optional. Icon URL.
+	 *     @var string $badge_url         Optional. Shows on dashboard's "Welcome" block.
 	 * }
 	 */
 	protected static function config() {
 		return array(
 			'template_path' => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
 			'icon_url'      => includes_url( 'images/crystal/archive.png' ),
+			'badge_url'     => cbox()->plugin_url( 'admin/images/logo-cbox_vert.png' ),
 			'network'       => false
 		);
 	}
