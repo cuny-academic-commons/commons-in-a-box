@@ -154,16 +154,6 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
-		// Post Gallery Widget
-		$instance( array(
-			'plugin_name'       => 'Rotating Post Gallery',
-			'cbox_name'         => __( 'Post Gallery Widget', 'cbox' ),
-			'cbox_description'  => __( 'Adds a rotating slider to your frontpage.', 'cbox' ),
-			'version'           => '0.3.1.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/post-gallery-widget.0.3.1.1.zip',
-			'network'           => false
-		) );
-
 		// More Privacy Options
 		$instance( array(
 			'plugin_name'       => 'More Privacy Options',
