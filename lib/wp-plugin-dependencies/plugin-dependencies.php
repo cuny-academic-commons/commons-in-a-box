@@ -82,8 +82,10 @@ class Plugin_Dependencies {
 			}
 
 			// parse "Provides" header from each plugin
-			self::$provides[ $plugin ] = self::parse_field( $plugin_data['Provides'] );
-			self::$provides[ $plugin ][] = $plugin;
+			if ( ! empty( $plugin_data['Provides'] ) ) {
+				self::$provides[ $plugin ] = self::parse_field( $plugin_data['Provides'] );
+				self::$provides[ $plugin ][] = $plugin;
+			}
 
 			$deps = $requirements = array();
 
@@ -107,23 +109,25 @@ class Plugin_Dependencies {
 			}
 
 			// parse "Depends" header from each plugin
-			foreach ( self::parse_field( $plugin_data['Depends'] ) as $dep ) {
-				// a dependent name can contain a version number, so let's get just the name
-				$plugin_name = rtrim( strtok( $dep, '(' ) );
+			if ( ! empty( $plugin_data['Depends'] ) ) {
+				foreach ( self::parse_field( $plugin_data['Depends'] ) as $dep ) {
+					// a dependent name can contain a version number, so let's get just the name
+					$plugin_name = rtrim( strtok( $dep, '(' ) );
 
-				// see if plugin has any requirements
-				$requirement = self::parse_requirements( $dep );
+					// see if plugin has any requirements
+					$requirement = self::parse_requirements( $dep );
 
-				// try to get the plugin loader file
-				// perhaps remove the conditional?
-				if ( self::get_pluginloader_by_name( $plugin_name ) )
-					$dep = self::get_pluginloader_by_name( $plugin_name );
+					// try to get the plugin loader file
+					// perhaps remove the conditional?
+					if ( self::get_pluginloader_by_name( $plugin_name ) )
+						$dep = self::get_pluginloader_by_name( $plugin_name );
 
-				if ( ! empty( $dep ) )
-					$deps[] = $dep;
+					if ( ! empty( $dep ) )
+						$deps[] = $dep;
 
-				if ( ! empty( $requirement ) )
-					$requirements = array_merge_recursive( $requirements, $requirement );
+					if ( ! empty( $requirement ) )
+						$requirements = array_merge_recursive( $requirements, $requirement );
+				}
 			}
 
 			if ( ! empty( $deps ) )
