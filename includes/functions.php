@@ -171,6 +171,9 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 			return $packages[$package_id]::$$prop;
 		}
 
+		// Ensure props are set.
+		$packages[$package_id]::set_props();
+
 		// Try to fetch props.
 		switch ( $prop ) {
 			case 'theme' :
@@ -181,11 +184,6 @@ function cbox_get_package_prop( $prop = '', $package_id = '' ) {
 			default :
 				$props = $packages[$package_id]::get_props();
 				break;
-		}
-
-		// If we've never set up the package properties before, do it now.
-		if ( empty( $props ) ) {
-			$packages[$package_id]::set_props();
 		}
 
 		// See if our prop exists and return.
