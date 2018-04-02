@@ -98,8 +98,9 @@ class CBox_Plugins {
 
 		$r = wp_parse_args( $args, $defaults );
 
-		if ( empty( $r['plugin_name'] ) )
+		if ( empty( $r['plugin_name'] ) ) {
 			return false;
+		}
 
 		switch( $r['type'] ) {
 			case 'required' :
@@ -107,15 +108,10 @@ class CBox_Plugins {
 			case 'optional' :
 			case 'install-only' :
 			case 'dependency' :
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_name']         = $r['cbox_name'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['cbox_description']  = $r['cbox_description'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['depends']           = $r['depends'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['version']           = $r['version'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['download_url']      = $r['download_url'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['documentation_url'] = $r['documentation_url'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['admin_settings']    = $r['admin_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network_settings']  = $r['network_settings'];
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network']           = 'install-only' === $r['type'] ? false : $r['network'];
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ] = $r;
+				unset( self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['plugin_name'] );
+
+				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network'] = 'install-only' === $r['type'] ? false : $r['network'];
 
 				break;
 		}
