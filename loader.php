@@ -171,6 +171,11 @@ class Commons_In_A_Box {
 			$this->frontend = new CBox_Frontend;
 		}
 
+		// WP-CLI integration
+		if ( defined( 'WP_CLI' ) ) {
+			\WP_CLI::add_command( 'cbox',         '\CBOX\CLI\Core' );
+		}
+
 		/**
 		 * Hook to load components.
 		 *
