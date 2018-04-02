@@ -31,6 +31,10 @@ function cbox_is_admin() {
 		$is_admin = is_admin();
 	}
 
+	if ( defined( 'WP_CLI' ) ) {
+		$is_admin = true;
+	}
+
 	return $is_admin;
 }
 
