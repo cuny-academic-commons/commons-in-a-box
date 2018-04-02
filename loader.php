@@ -141,6 +141,18 @@ class Commons_In_A_Box {
 		// we only fire this in the admin area, since we have no strings to localize
 		// on the frontend... yet!
 		add_action( 'admin_init', array( $this, 'localization' ), 0 );
+
+		/*
+		 * CLI-specific actions.
+		 *
+		 * This could be improved...
+		 */
+		if ( defined( 'WP_CLI') ) {
+			add_action( 'cbox_plugins_loaded', function() {
+				require ABSPATH . 'wp-admin/includes/plugin.php';
+			}, 91 );
+			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
+		}
 	}
 
 	/**
