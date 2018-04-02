@@ -116,6 +116,11 @@ class Commons_In_A_Box {
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
 		}
+
+		// WP-CLI integration
+		if ( defined( 'WP_CLI' ) ) {
+			$this->cli_autoloader();
+		}
 	}
 
 	/**
@@ -249,6 +254,35 @@ class Commons_In_A_Box {
 	}
 
 	/** HELPERS *******************************************************/
+
+	/**
+	 * WP-CLI autoloader.
+	 *
+	 * @since 1.1.0
+	 */
+	public function cli_autoloader() {
+		spl_autoload_register( function( $class ) {
+			$prefix = 'CBOX\\CLI\\';
+			$base_dir = __DIR__ . '/includes/CLI/';
+
+			// Does the class use the namespace prefix?
+			$len = strlen( $prefix );
+			if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+				return;
+			}
+
+			// Get the relative class name.
+			$relative_class = substr( $class, $len );
+
+			// Swap directory separators and namespace to create filename.
+			$file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+
+			// If the file exists, require it.
+			if ( file_exists( $file ) ) {
+				require $file;
+			}
+		} );
+	}
 
 	/**
 	 * Package autoloader.
