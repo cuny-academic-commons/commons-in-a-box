@@ -276,8 +276,22 @@ class CBox_Admin_Plugins {
 	 * @return array of CBOX plugin names that require upgrading
 	 */
 	public static function get_upgrades( $type = 'all' ) {
-		// get all CBOX plugins that require upgrades
-		$upgrades = self::organize_plugins_by_state( CBox_Plugins::get_plugins() );
+		$cbox_plugins = CBox_Plugins::get_plugins();
+
+		// Make sure dependency plugins are checked as well.
+		$dependencies = CBox_Plugins::get_plugins( 'dependency' );
+		foreach ( $dependencies as $plugin => $data ) {
+			// If plugin is already listed, skip.
+			if ( isset( $cbox_plugins[ $plugin ] ) ) {
+				continue;
+			}
+
+			// Add dependency plugin.
+			$cbox_plugins[ $plugin ] = $data;
+		}
+
+		// Get all CBOX plugins that require upgrades.
+		$upgrades = self::organize_plugins_by_state( $cbox_plugins );
 
 		if ( empty( $upgrades['upgrade'] ) )
 			return false;
