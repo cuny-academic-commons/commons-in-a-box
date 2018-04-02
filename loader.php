@@ -174,6 +174,7 @@ class Commons_In_A_Box {
 		// WP-CLI integration
 		if ( defined( 'WP_CLI' ) ) {
 			\WP_CLI::add_command( 'cbox',         '\CBOX\CLI\Core' );
+			\WP_CLI::add_command( 'cbox package', '\CBOX\CLI\Package' );
 		}
 
 		/**
