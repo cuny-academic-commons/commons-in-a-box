@@ -49,6 +49,16 @@ class CBox_Plugins_OpenLab {
 			'network_settings'  => 'settings.php?page=bp-components'
 		) );
 
+		// CBOX-OpenLab Core
+		$instance( array(
+			'plugin_name'       => 'CBOX-OpenLab Core',
+			'cbox_name'         => __( 'OpenLab Core', 'cbox' ),
+			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'cbox' ),
+			'version'           => '0.1.0',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/master.zip',
+			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
+		) );
+
 		// bbPress
 		$instance( array(
 			'plugin_name'       => 'bbPress',
