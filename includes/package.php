@@ -104,6 +104,22 @@ abstract class CBox_Package {
 				$i->settings = new $settings_class;
 			}
 		} );
+
+		// Plugin defaults.
+		add_action( 'cbox_before_updater', function() {
+			add_action( 'activate_plugin', function( $plugin_file ) {
+				$plugin_dir = substr( $plugin_file, 0, strpos( $plugin_file, '/' ) );
+				$class = new ReflectionClass( get_called_class() );
+
+				/*
+				 * Handle individual plugin activation routine if available.
+				 */
+				$file = dirname( $class->getFileName() ) . '/defaults/' . $plugin_dir . '.php';
+				if ( file_exists( $file ) ) {
+					require $file;
+				}
+			} );
+		} );
 	}
 
 	/**
