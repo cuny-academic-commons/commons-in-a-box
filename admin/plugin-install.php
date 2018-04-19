@@ -703,6 +703,13 @@ class CBox_Updater {
 		// setup our plugin defaults
 		CBox_Plugin_Defaults::init();
 
+		/**
+		 * Hook to do something before the CBOX updater fires.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'cbox_before_updater' );
+
 		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
 		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
 
