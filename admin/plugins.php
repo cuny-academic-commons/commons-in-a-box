@@ -32,9 +32,6 @@ class CBox_Admin_Plugins {
 		// filter PD's dependency list
 		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );
 
-		// Make sure BuddyPress is installed with all components enabled
-		add_filter( 'bp_new_install_default_components',     array( $this, 'bp_default_components' ) );
-
 		// prevent CBOX plugins from being seen in the regular Plugins table and from WP updates
 		if ( ! $this->is_override() ) {
 			// exclude CBOX plugins from the "Plugins" list table
@@ -139,33 +136,6 @@ class CBox_Admin_Plugins {
 		}
 
 		return $plugins;
-	}
-
-	/**
-	 * Return an array of all BP components to be activated by default
-	 *
-	 * Since BuddyPress 1.7, BP has only activated the Profile and Activity
-	 * components on new installations. For Commons In A Box, we want to
-	 * keep the old behavior of turning all components on.
-	 *
-	 * BuddyPress's filter 'bp_new_install_default_components' allows us to
-	 * modify the standard BP behavior, but it's run on the admin pageload
-	 * after BP is initially activated. That means that we have to add the
-	 * filter here in the general plugin loader class.
-	 *
-	 * @since 1.0.2
-	 */
-	public function bp_default_components( $components ) {
-		return array(
-			'activity' => 1,
-			'blogs'    => 1,
-			'friends'  => 1,
-			'groups'   => 1,
-			'members'  => 1,
-			'messages' => 1,
-			'settings' => 1,
-			'xprofile' => 1,
-		);
 	}
 
 	/**
