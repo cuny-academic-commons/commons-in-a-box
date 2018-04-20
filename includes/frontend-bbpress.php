@@ -265,7 +265,7 @@ class CBox_BBP_Autoload {
 	 * @return string
 	 */
 	public function override_the_permalink_with_group_permalink( $retval = '' ) {
-		return bp_get_group_permalink();
+		return bp_get_group_permalink() . 'forum/';
 	}
 
 	/**
