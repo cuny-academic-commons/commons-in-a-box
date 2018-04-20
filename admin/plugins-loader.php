@@ -645,17 +645,19 @@ class CBox_Plugins {
 	 * filter here in the general plugin loader class.
 	 *
 	 * @since 1.0.2
+	 * @since 1.0.17 Added 'notifications' to component list.
 	 */
 	public function bp_default_components( $components ) {
 		return array(
-			'activity' => 1,
-			'blogs'    => 1,
-			'friends'  => 1,
-			'groups'   => 1,
-			'members'  => 1,
-			'messages' => 1,
-			'settings' => 1,
-			'xprofile' => 1,
+			'activity'      => 1,
+			'blogs'         => 1,
+			'friends'       => 1,
+			'groups'        => 1,
+			'members'       => 1,
+			'notifications' => 1,
+			'messages'      => 1,
+			'settings'      => 1,
+			'xprofile'      => 1,
 		);
 	}
 
