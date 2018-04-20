@@ -739,8 +739,9 @@ class CBox_Plugin_Defaults {
 					}
 
 					// stop if our bb-config-location was found
-					if ( false !== $option )
+					if ( file_exists( $option ) ) {
 						return;
+					}
 
 					/** See if a bbPress forum named 'Group Forums' exists *********/
 
