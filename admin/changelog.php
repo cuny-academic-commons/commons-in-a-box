@@ -26,6 +26,7 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
+						<li>BP MPO Activity Filter 1.2.1</li>
 						<li>BuddyPress 2.9.4</li>
 						<li>BuddyPress Docs 2.0.1</li>
 						<li>BuddyPress Group Email Subscription 3.8.1</li>

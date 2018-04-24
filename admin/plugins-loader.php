@@ -260,8 +260,8 @@ class CBox_Plugins {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'Activity Privacy', 'cbox' ),
 				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'cbox' ),
-				'version'           => '1.2',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.zip',
+				'version'           => '1.2.1',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.1.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
