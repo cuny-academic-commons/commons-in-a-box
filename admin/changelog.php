@@ -29,6 +29,7 @@
 						<li>BuddyPress 2.9.4</li>
 						<li>BuddyPress Docs 2.0.1</li>
 						<li>BuddyPress Group Email Subscription 3.8.1</li>
+						<li>CAC Featured Content 1.0.9</li>
 						<li>Invite Anyone 1.3.20</li>
 					</ul>
 
