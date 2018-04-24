@@ -28,6 +28,7 @@
 					<ul>
 						<li>BuddyPress 2.9.4</li>
 						<li>BuddyPress Docs 2.0.1</li>
+						<li>BuddyPress Group Email Subscription 3.8.1</li>
 					</ul>
 
 				</div>
