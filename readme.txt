@@ -44,7 +44,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.17 =
-* Update plugins: BuddyPress 2.9.4
+* Update plugins: BuddyPress 2.9.4, BuddyPress Docs 2.0.1
 
 = 1.0.16 =
 * Compatibility with WordPress 4.8 and BuddyPress 2.9
