@@ -44,7 +44,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 == Changelog ==
 
 = 1.0.17 =
-* Update plugins: BP MPO Activity Filter 1.2.1, BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.1, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
+* Update plugins: BP MPO Activity Filter 1.2.1, BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.1, BuddyPress Groupblog 1.9.0, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
 
 = 1.0.16 =
 * Compatibility with WordPress 4.8 and BuddyPress 2.9
