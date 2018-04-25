@@ -45,6 +45,9 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 = 1.0.17 =
 * Update plugins: BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.2, BuddyPress Groupblog 1.9.0, BP MPO Activity Filter 1.2.1, BP Reply By Email 1.0-RC6, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
+* Introduce new technique for setting plugin defaults at the time of CBOX setup.
+* Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.
+* Fix bug that causes bbPress topic replies not to go through in certain cases.
 
 = 1.0.16 =
 * Compatibility with WordPress 4.8 and BuddyPress 2.9

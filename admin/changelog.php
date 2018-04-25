@@ -64,7 +64,9 @@
 
 					<div class="last-feature">
 
-						<p>Security hardening for protection against certain upload vulnerabilities.</p>
+						<p><?php esc_html_e( 'Introduce new technique for setting plugin defaults at the time of CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that causes bbPress topic replies not to go through in certain cases.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
