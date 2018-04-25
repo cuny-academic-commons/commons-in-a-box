@@ -48,6 +48,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Introduce new technique for setting plugin defaults at the time of CBOX setup.
 * Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.
 * Fix bug that causes bbPress topic replies not to go through in certain cases.
+* Theme improvements: Add search form to Members directory and to Manage > Members page in groups.
 
 = 1.0.16 =
 * Compatibility with WordPress 4.8 and BuddyPress 2.9
