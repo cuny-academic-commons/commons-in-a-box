@@ -26,11 +26,12 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BP MPO Activity Filter 1.2.1</li>
 						<li>BuddyPress 2.9.4</li>
 						<li>BuddyPress Docs 2.0.1</li>
 						<li>BuddyPress Group Email Subscription 3.8.1</li>
 						<li>BuddyPress Groupblog 1.9.0</li>
+						<li>BP MPO Activity Filter 1.2.1</li>
+						<li>BP Reply By Email 1.0-RC6</li>
 						<li>CAC Featured Content 1.0.9</li>
 						<li>Invite Anyone 1.3.20</li>
 					</ul>
