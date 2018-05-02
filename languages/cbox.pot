@@ -1,14 +1,14 @@
-# Copyright (C) 2017 Commons In A Box
+# Copyright (C) 2018 Commons In A Box
 # This file is distributed under the same license as the Commons In A Box package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Commons In A Box 1.0.16\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commons-in-a-box\n"
-"POT-Creation-Date: 2017-10-05 16:38:16+00:00\n"
+"POT-Creation-Date: 2018-05-02 17:50:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -227,7 +227,7 @@ msgstr ""
 msgid "Quick Links"
 msgstr ""
 
-#: admin/admin-loader.php:810 admin/plugins-loader.php:1068
+#: admin/admin-loader.php:810 admin/plugins-loader.php:1070
 #: admin/settings-loader.php:145
 msgid "Settings"
 msgstr ""
@@ -239,7 +239,7 @@ msgid ""
 "for these plugins below."
 msgstr ""
 
-#: admin/admin-loader.php:816 admin/plugins-loader.php:1066
+#: admin/admin-loader.php:816 admin/plugins-loader.php:1068
 msgid "Click here to view this plugin's settings page"
 msgstr ""
 
@@ -403,13 +403,11 @@ msgid "What&#8217;s New"
 msgstr ""
 
 #: admin/changelog.php:19
-msgid "1.0.16 maintenance Release"
+msgid "1.0.17 maintenance Release"
 msgstr ""
 
 #: admin/changelog.php:20
-msgid ""
-"The 1.0.16 release brings a number of plugins up to date, and improves "
-"compatibility with BuddyPress 2.9."
+msgid "The 1.0.17 release brings a number of plugins up to date."
 msgstr ""
 
 #: admin/changelog.php:24
@@ -421,11 +419,43 @@ msgid ""
 "Since the last version release, the following plugins were updated in CBOX:"
 msgstr ""
 
-#: admin/changelog.php:59
+#: admin/changelog.php:43
+msgid "Theme Improvements"
+msgstr ""
+
+#: admin/changelog.php:46
+msgid ""
+"Since the last version release, the following bugfixes and enhancements were "
+"added to the Commons In A Box theme:"
+msgstr ""
+
+#: admin/changelog.php:48
+msgid ""
+"Add search form to Members directory and to Manage > Members page in groups."
+msgstr ""
+
+#: admin/changelog.php:55
 msgid "Under the Hood"
 msgstr ""
 
-#: admin/changelog.php:72 admin/credits.php:107
+#: admin/changelog.php:61
+msgid ""
+"Introduce new technique for setting plugin defaults at the time of CBOX "
+"setup."
+msgstr ""
+
+#: admin/changelog.php:62
+msgid ""
+"Fix bug that caused BuddyPress Notifications component not to be activated "
+"at CBOX setup."
+msgstr ""
+
+#: admin/changelog.php:63
+msgid ""
+"Fix bug that causes bbPress topic replies not to go through in certain cases."
+msgstr ""
+
+#: admin/changelog.php:70 admin/credits.php:107
 msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
 msgstr ""
 
@@ -553,11 +583,11 @@ msgstr ""
 msgid "Activating Plugins..."
 msgstr ""
 
-#: admin/plugin-install.php:740 admin/plugin-install.php:748
+#: admin/plugin-install.php:760 admin/plugin-install.php:768
 msgid "Group Forums"
 msgstr ""
 
-#: admin/plugin-install.php:749
+#: admin/plugin-install.php:769
 msgid "All forums created in groups can be found here."
 msgstr ""
 
@@ -687,118 +717,118 @@ msgid ""
 "inbox"
 msgstr ""
 
-#: admin/plugins-loader.php:679 admin/plugins-loader.php:827
+#: admin/plugins-loader.php:681 admin/plugins-loader.php:829
 msgid "Commons In A Box Plugins"
 msgstr ""
 
-#: admin/plugins-loader.php:680
+#: admin/plugins-loader.php:682
 msgid "Plugins"
 msgstr ""
 
-#: admin/plugins-loader.php:723
+#: admin/plugins-loader.php:725
 msgid ""
 "You do not have sufficient permissions to deactivate plugins for this site."
 msgstr ""
 
-#: admin/plugins-loader.php:776
+#: admin/plugins-loader.php:778
 #: lib/wp-plugin-dependencies/plugin-dependencies.php:496
 msgid "The following plugins have also been deactivated:"
 msgstr ""
 
-#: admin/plugins-loader.php:831
+#: admin/plugins-loader.php:833
 msgid "Required Plugins"
 msgstr ""
 
-#: admin/plugins-loader.php:833
+#: admin/plugins-loader.php:835
 msgid "Commons In A Box requires the following plugins."
 msgstr ""
 
-#: admin/plugins-loader.php:839
+#: admin/plugins-loader.php:841
 msgid "Recommended Plugins"
 msgstr ""
 
-#: admin/plugins-loader.php:841
+#: admin/plugins-loader.php:843
 msgid ""
 "The following plugins are installed automatically during initial Commons In "
 "A Box setup.  We like them, but feel free to deactivate them if you don't "
 "need certain functionality."
 msgstr ""
 
-#: admin/plugins-loader.php:847
+#: admin/plugins-loader.php:849
 msgid "&Agrave; la carte"
 msgstr ""
 
-#: admin/plugins-loader.php:849
+#: admin/plugins-loader.php:851
 msgid ""
 "The following plugins work well with Commons In A Box, but they require a "
 "bit of additional setup, so we do not install them by default."
 msgstr ""
 
-#: admin/plugins-loader.php:850
+#: admin/plugins-loader.php:852
 msgid "To install, check the plugins you want to install and click 'Update'."
 msgstr ""
 
-#: admin/plugins-loader.php:882
+#: admin/plugins-loader.php:884
 msgid "Update CBOX"
 msgstr ""
 
-#: admin/plugins-loader.php:1011 admin/plugins-loader.php:1019
+#: admin/plugins-loader.php:1013 admin/plugins-loader.php:1021
 msgid "Plugin"
 msgstr ""
 
-#: admin/plugins-loader.php:1012 admin/plugins-loader.php:1020
+#: admin/plugins-loader.php:1014 admin/plugins-loader.php:1022
 msgid "Description"
 msgstr ""
 
-#: admin/plugins-loader.php:1041
+#: admin/plugins-loader.php:1043
 msgid "Check this box to install the plugin."
 msgstr ""
 
-#: admin/plugins-loader.php:1043
+#: admin/plugins-loader.php:1045
 msgid "Plugin is already active!"
 msgstr ""
 
-#: admin/plugins-loader.php:1076
+#: admin/plugins-loader.php:1078
 msgid "Click here for documentation on this plugin, from commonsinabox.org"
 msgstr ""
 
-#: admin/plugins-loader.php:1078
+#: admin/plugins-loader.php:1080
 msgid "Info"
 msgstr ""
 
-#: admin/plugins-loader.php:1090
+#: admin/plugins-loader.php:1092
 msgid "Deactivate this plugin."
 msgstr ""
 
-#: admin/plugins-loader.php:1092
+#: admin/plugins-loader.php:1094
 msgid "Deactivate"
 msgstr ""
 
-#: admin/plugins-loader.php:1103
+#: admin/plugins-loader.php:1105
 msgid "Select the checkbox and click on 'Update' to upgrade this plugin."
 msgstr ""
 
-#: admin/plugins-loader.php:1103
+#: admin/plugins-loader.php:1105
 msgid "Update available."
 msgstr ""
 
-#: admin/plugins-loader.php:1120
+#: admin/plugins-loader.php:1122
 msgid "Requires: "
 msgstr ""
 
-#: admin/plugins-loader.php:1130
+#: admin/plugins-loader.php:1132
 msgid "(enabled)"
 msgstr ""
 
-#: admin/plugins-loader.php:1132
+#: admin/plugins-loader.php:1134
 msgid "(disabled)"
 msgstr ""
 
-#: admin/plugins-loader.php:1134
+#: admin/plugins-loader.php:1136
 msgid "(not installed)"
 msgstr ""
 
-#: admin/plugins-loader.php:1151
+#: admin/plugins-loader.php:1153
 msgid "Update"
 msgstr ""
 
