@@ -40,6 +40,7 @@ class Package extends \WP_CLI_Command {
 	 * * Package
 	 * * Name
 	 * * Theme
+	 * * Network
 	 * * Active
 	 *
 	 * These fields are optionally available:
@@ -50,12 +51,12 @@ class Package extends \WP_CLI_Command {
 	 *
 	 *     # Lists all available CBOX packages.
 	 *     $ wp cbox package list
-	 *     +---------+---------+---------------+--------+
-	 *     | Package | Name    | Theme         | Active |
-	 *     +---------+---------+---------------+--------+
-	 *     | classic | Classic | cbox-theme    | No     |
-	 *     | openlab | OpenLab | openlab-theme | Yes    |
-	 *     +---------+---------+---------------+--------+
+	 *     +---------+---------+---------------+--------------+--------+
+	 *     | Package | Name    | Theme         | Network      | Active |
+	 *     +---------+---------+---------------+--------------+--------+
+	 *     | classic | Classic | cbox-theme    | Not required | Yes    |
+	 *     | openlab | OpenLab | openlab-theme | Required     | No     |
+	 *     +---------+---------+---------------+--------------+--------+
 	 *
 	 * @subcommand list
 	 */
@@ -64,7 +65,7 @@ class Package extends \WP_CLI_Command {
 
 		$r = array_merge( array(
 			'format' => 'table',
-			'fields' => array( 'Package', 'Name', 'Theme', 'Active' )
+			'fields' => array( 'Package', 'Name', 'Theme', 'Network', 'Active' )
 		), $assoc_args );
 
 		if ( ! is_array( $r['fields'] ) ) {
@@ -83,10 +84,11 @@ class Package extends \WP_CLI_Command {
 			$theme = cbox_get_theme_prop( 'directory_name', $package );
 
 			$items[$i] = array(
-				'Package'     => $package,
-				'Name'        => cbox_get_package_prop( 'name', $package ),
-				'Theme'       => $theme ? $theme : 'No theme available',
-				'Active'      => cbox_get_current_package_id() === $package ? 'Yes' : 'No'
+				'Package' => $package,
+				'Name'    => cbox_get_package_prop( 'name', $package ),
+				'Theme'   => $theme ? $theme : 'No theme available',
+				'Network' => cbox_get_package_prop( 'network', $package ) ? 'Required' : 'Not required',
+				'Active'  => cbox_get_current_package_id() === $package ? 'Yes' : 'No',
 			);
 
 			if ( $description_enabled ) {
