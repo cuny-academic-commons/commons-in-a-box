@@ -149,7 +149,7 @@ class Commons_In_A_Box {
 		 */
 		if ( defined( 'WP_CLI') ) {
 			add_action( 'cbox_plugins_loaded', function() {
-				require ABSPATH . 'wp-admin/includes/plugin.php';
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}, 91 );
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
 		}
