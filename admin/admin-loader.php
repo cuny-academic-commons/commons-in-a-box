@@ -129,10 +129,9 @@ class CBox_Admin {
 			if ( 'recommended-plugins' === cbox_get_setup_step() ) {
 				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-recommended-nonce=' . wp_create_nonce( 'cbox_bp_installed' ) );
 
-			// All done! Offer to install theme if it doesn't exist.
+			// All done! Offer to install theme if available.
 			} elseif ( '' === cbox_get_setup_step() ) {
-				$directory_name = cbox_get_theme_prop( 'directory_name' );
-				if ( cbox_get_theme_prop( 'download_url' ) && ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
+				if ( cbox_get_theme_prop( 'download_url' ) ) {
 					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 				}
 			}
@@ -158,7 +157,7 @@ class CBox_Admin {
 			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
-				if ( ! cbox_get_installed_revision_date() && cbox_get_theme_prop( 'download_url' ) && ! cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) )->exists() ) {
+				if ( ! cbox_get_installed_revision_date() ) {
 					cbox()->setup = 'theme-prompt';
 
 				// Bump the revision date in the DB after updating
@@ -207,15 +206,24 @@ class CBox_Admin {
 			// CBOX theme exists! so let's activate it and redirect to the
 			// CBOX Theme options page!
 			if ( empty( $errors['theme_not_found'] ) ) {
+				// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
+				if ( 1 !== cbox_get_main_site_id() ) {
+					switch_to_blog( cbox_get_main_site_id() );
+				}
+
+				// switch the theme
 				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
-				/**
-				 * Mark the theme as having just been activated so that we can run the setup
-				 * on next pageload
-				 */
+				// restore blog after switching
+				if ( 1 !== cbox_get_main_site_id() ) {
+					restore_current_blog();
+				}
+
+				// Mark the theme as having just been activated
+				// so that we can run the setup on next pageload
 				update_site_option( '_cbox_theme_activated', '1' );
 
-				wp_redirect( admin_url( cbox_get_theme_prop( 'admin_settings' ) ) );
+				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 				return;
 			}
 
@@ -368,6 +376,8 @@ class CBox_Admin {
 
 			// prompt for theme install
 			case 'theme-prompt' :
+				$directory_name = cbox_get_theme_prop( 'directory_name' );
+
 				// some HTML markup!
 				echo '<div class="wrap">';
 
@@ -378,7 +388,16 @@ class CBox_Admin {
 				echo '<div style="margin-top:2em;">';
 					echo '<a href="' . self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' ) . '" style="display:inline-block; margin:5px 15px 0 0;">' . esc_html__( 'Skip', 'cbox' ) . '</a>';
 
-					echo '<a class="button button-primary" href="' . wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . esc_html__( 'Install Theme', 'cbox' ). '</a>';
+					// Activate theme if it already exists.
+					if ( ! empty( $directory_name ) && cbox_get_theme( $directory_name )->exists() ) {
+						$label = esc_html__( 'Activate Theme', 'cbox' );
+					// Install theme.
+					} else {
+						$label = esc_html__( 'Install Theme', 'cbox' );
+					}
+
+					echo '<a class="button button-primary" href="' . wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . $label . '</a>';
+
 				echo '</div>';
 
 				echo '</div>';
