@@ -187,7 +187,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload
-			update_blog_option( cbox_get_main_site_id(), '_cbox_theme_activated', '1' );
+			update_site_option( '_cbox_theme_activated', '1' );
 		}
 
 		return $bool;
