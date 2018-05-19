@@ -250,14 +250,16 @@ class CBox_Admin_Plugins {
 
 		// Make sure dependency plugins are checked as well.
 		$dependencies = CBox_Plugins::get_plugins( 'dependency' );
-		foreach ( $dependencies as $plugin => $data ) {
-			// If plugin is already listed, skip.
-			if ( isset( $cbox_plugins[ $plugin ] ) ) {
-				continue;
-			}
+		if ( ! empty( $dependencies ) ) {
+			foreach ( $dependencies as $plugin => $data ) {
+				// If plugin is already listed, skip.
+				if ( isset( $cbox_plugins[ $plugin ] ) ) {
+					continue;
+				}
 
-			// Add dependency plugin.
-			$cbox_plugins[ $plugin ] = $data;
+				// Add dependency plugin.
+				$cbox_plugins[ $plugin ] = $data;
+			}
 		}
 
 		// Get all CBOX plugins that require upgrades.
