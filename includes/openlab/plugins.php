@@ -104,9 +104,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BP Group Documents',
 			'cbox_name'         => __( 'Group Documents', 'cbox' ),
 			'cbox_description'  => __( 'Allow your members to attach documents to groups.', 'cbox' ),
-			'version'           => '1.10',
+			'version'           => '1.12.1',
 			'depends'           => 'BuddyPress (>=2.7)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.10.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.12.1.zip',
 			'documentation_url' => '', // @todo
 			'network_settings'  => 'settings.php?page=bp-group-documents-settings',
 			'network'          => false
