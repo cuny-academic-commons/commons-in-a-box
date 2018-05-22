@@ -161,6 +161,50 @@ abstract class CBox_Package {
 	protected static function register_plugins( $instance ) {}
 
 	/**
+	 * Get list of plugins for the package, sorted by type.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array
+	 */
+	public static function get_plugins() {
+		$packages = cbox_get_packages();
+
+		// If we're already done this before, load existing plugin list.
+		if ( $packages[ cbox_get_current_package_id() ] === get_called_class() ) {
+			$plugins = CBox_Plugins::get_plugins( '' );
+
+		// Fetch the plugin list for the package.  This isn't elegant...
+		} else {
+			global $wp_filter;
+
+			// Backup current plugins list and package registrar.
+			CBox_Plugins::backup();
+			$backup = $wp_filter['cbox_plugins_loaded']->callbacks[10];
+			unset( $wp_filter['cbox_plugins_loaded']->callbacks[10] );
+
+			// Load up plugin registrar.
+			add_action( 'cbox_plugins_loaded', array( get_called_class(), 'plugin_registrar' ) );
+
+			// Perform plugin registration.
+			$instance = clone cbox()->plugins;
+			/** This hook is documented in /commons-in-a-box/includes/plugins.php */
+			do_action_ref_array( 'cbox_plugins_loaded', array( $instance ) );
+
+			// Fetch package plugins.
+			$plugins = $instance::get_plugins( '' );
+
+			// Clean-up and restore.
+			$wp_filter['cbox_plugins_loaded']->callbacks[10] = $backup;
+			unset( $instance, $backup );
+			remove_action( 'cbox_plugins_loaded', array( get_called_class(), 'plugin_registrar' ) );
+			CBox_Plugins::restore();
+		}
+
+		return $plugins;
+	}
+
+	/**
 	 * Register theme, only extend if your package requires a theme
 	 *
 	 * @since 1.1.0
