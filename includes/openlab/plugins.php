@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '2.9.4',
+			'version'           => '3.0.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -104,9 +104,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BP Group Documents',
 			'cbox_name'         => __( 'Group Documents', 'cbox' ),
 			'cbox_description'  => __( 'Allow your members to attach documents to groups.', 'cbox' ),
-			'version'           => '1.10',
+			'version'           => '1.12.1',
 			'depends'           => 'BuddyPress (>=2.7)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.10.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.12.1.zip',
 			'documentation_url' => '', // @todo
 			'network_settings'  => 'settings.php?page=bp-group-documents-settings',
 			'network'          => false
@@ -196,7 +196,7 @@ class CBox_Plugins_OpenLab {
 		$instance( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.2.9.4.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.0.0.zip'
 		) );
 
 		// Event Organiser
