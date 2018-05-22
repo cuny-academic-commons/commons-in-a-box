@@ -86,6 +86,10 @@ class CBox_Admin_Plugins {
 	 * @return array
 	 */
 	public function exclude_cbox_plugins( $plugins ) {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			return $plugins;
+		}
+
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
 
 		if ( is_multisite() ) {
