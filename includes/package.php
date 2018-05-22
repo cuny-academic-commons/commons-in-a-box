@@ -76,22 +76,8 @@ abstract class CBox_Package {
 		// Custom init method.
 		$this->custom_init();
 
-		// Handle plugin registration here.
-		add_action( 'cbox_plugins_loaded', function( $i ) {
-			if ( false === strpos( get_called_class(), 'CBox_Package_' ) ) {
-				return;
-			}
-
-			// Try to automatically load plugins manifest class if found.
-			$plugins_class = 'CBox_Plugins_' . substr( get_called_class(), 13 );
-			if ( class_exists( $plugins_class ) ) {
-				call_user_func( array( $plugins_class, 'init' ), array( $i, 'register_plugin' ) );
-
-			// Else, use the register_plugins() method to do plugin registration.
-			} else {
-				$this->register_plugins( array( $i, 'register_plugin' ) );
-			}
-		} );
+		// Handle plugin registration.
+		add_action( 'cbox_plugins_loaded', array( get_called_class(), 'plugin_registrar' ) );
 
 		// Automatically handle settings registration here.
 		add_action( 'cbox_load_components', function( $i ) {
@@ -143,13 +129,36 @@ abstract class CBox_Package {
 	}
 
 	/**
-	 * Register plugins in this method for 3rd-party packages.
+	 * Plugin registrar method.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function plugin_registrar( $i ) {
+		$class = get_called_class();
+		if ( false === strpos( $class, 'CBox_Package_' ) ) {
+			return;
+		}
+
+		// Try to automatically load plugins manifest class if found.
+		$plugins_class = 'CBox_Plugins_' . substr( $class, 13 );
+
+		if ( class_exists( $plugins_class ) ) {
+			call_user_func( array( $plugins_class, 'init' ), array( $i, 'register_plugin' ) );
+
+		// Else, use the register_plugins() method to do plugin registration.
+		} else {
+			static::register_plugins( array( $i, 'register_plugin' ) );
+		}
+	}
+
+	/**
+	 * Alternate method to register plugins for a package.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @param callable $instance {@see CBox_Plugins::register_plugin()}.
 	 */
-	protected function register_plugins( $instance ) {}
+	protected static function register_plugins( $instance ) {}
 
 	/**
 	 * Register theme, only extend if your package requires a theme
