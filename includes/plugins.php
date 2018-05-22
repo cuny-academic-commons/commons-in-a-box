@@ -179,4 +179,26 @@ class CBox_Plugins {
 
 		return false;
 	}
+
+	/**
+	 * Backup the current plugins list.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function backup() {
+		cbox()->temp_plugins = self::$plugins;
+		self::$plugins = array();
+	}
+
+	/**
+	 * Restore plugins list from a previous backup.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function restore() {
+		if ( isset( cbox()->temp_plugins ) ) {
+			self::$plugins = cbox()->temp_plugins;
+			unset( cbox()->temp_plugins );
+		}
+	}
 }
