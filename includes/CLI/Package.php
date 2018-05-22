@@ -131,9 +131,6 @@ class Package extends \WP_CLI_Command {
 		if ( empty( $packages ) ) {
 			WP_CLI::error( 'No CBOX packages are available.' );
 		}
-		if ( empty( $args[0] ) ) {
-			WP_CLI::error( 'Please enter a package name as an argument.' );
-		}
 		if ( empty( $packages[ $args[0] ] ) ) {
 			WP_CLI::error( "Package '{$args[0]}' does not exist." );
 		}
