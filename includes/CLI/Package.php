@@ -108,4 +108,55 @@ class Package extends \WP_CLI_Command {
 
 		WP_CLI\Utils\format_items( $r['format'], $items, $r['fields'] );
 	}
+
+	/**
+	 * Lists the plugins for a package.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <package-id>
+	 * : The package ID to list the plugins for.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     # Lists all registered plugins for the 'classic' package
+	 *     $ wp cbox package list-plugins classic
+	 *
+	 * @subcommand list-plugins
+	 */
+	public function list_plugins( $args, $assoc_args ) {
+		$packages = cbox_get_packages();
+
+		// Error messaging.
+		if ( empty( $packages ) ) {
+			WP_CLI::error( 'No CBOX packages are available.' );
+		}
+		if ( empty( $args[0] ) ) {
+			WP_CLI::error( 'Please enter a package name as an argument.' );
+		}
+		if ( empty( $packages[ $args[0] ] ) ) {
+			WP_CLI::error( "Package '{$args[0]}' does not exist." );
+		}
+
+		$class   = $packages[ $args[0] ];
+		$plugins = $class::get_plugins( '' );
+
+		// Don't show dependency tier.
+		unset( $plugins['dependency'] );
+
+		$header = "Plugins for {$args[0]}";
+		WP_CLI::line( $header );
+		WP_CLI::line( str_repeat( '=', strlen( $header ) ) . "\n" );
+
+		foreach ( $plugins as $tier => $tier_plugins ) {
+			WP_CLI::line( ucfirst( $tier ) . ":" );
+
+			$t_plugins = array();
+			foreach ( $tier_plugins as $plugin_name => $data ) {
+				$t_plugins[] = "{$plugin_name} {$data['version']}";
+			}
+
+			WP_CLI::line( wp_sprintf_l( '%l', $t_plugins ) . "\n" );
+		}
+	}
 }
