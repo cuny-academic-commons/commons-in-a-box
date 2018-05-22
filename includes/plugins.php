@@ -121,8 +121,10 @@ class CBox_Plugins {
 	/**
 	 * Helper method to grab all CBOX plugins of a certain type.
 	 *
+	 * @since 1.1.0 $type can be passed as '' to return all plugins sorted by type as key.
+	 *
 	 * @param string $type Type of CBOX plugin. Either 'all', 'required', 'recommended', 'optional',
-	 *                     'install-only', 'dependency'.
+	 *                     'install-only', 'dependency'. If empty, all plugins are returned by type.
 	 * @param string $omit_type The type of CBOX plugin to omit from returning
 	 * @return mixed Array of plugins on success. Boolean false on failure.
 	 */
@@ -143,6 +145,11 @@ class CBox_Plugins {
 
 			// flatten associative array
 			return call_user_func_array( 'array_merge', $plugins );
+		}
+
+		// Return plugins as-is if $type is empty.
+		if ( empty( $type ) ) {
+			return self::$plugins;
 		}
 
 		if ( empty( self::$plugins[$type] ) )
