@@ -577,20 +577,25 @@ class CBox_Updater {
 	function __construct( $plugins = false, $settings = array() ) {
 		$skin_args = array();
 
-		if ( ! empty( $plugins['upgrade'] ) )
+		if ( ! empty( $plugins['upgrade'] ) ) {
 			self::$is_upgrade  = true;
+		}
 
-		if( ! empty( $plugins['install'] ) )
+		if ( ! empty( $plugins['install'] ) ) {
 			self::$is_install  = true;
+		}
 
-		if( ! empty( $plugins['activate'] ) )
+		if ( ! empty( $plugins['activate'] ) ) {
 			self::$is_activate = true;
+		}
 
-		if ( ! empty( $settings['redirect_link'] ) )
+		if ( ! empty( $settings['redirect_link'] ) ) {
 			$skin_args['redirect_link'] = $settings['redirect_link'];
+		}
 
-		if ( ! empty( $settings['redirect_text'] ) )
+		if ( ! empty( $settings['redirect_text'] ) ) {
 			$skin_args['redirect_text'] = $settings['redirect_text'];
+		}
 
 		// if no plugins passed, stop the updater now!
 		if ( ! $plugins ) {
@@ -649,13 +654,13 @@ class CBox_Updater {
 		}
 
 		// loop through each submitted plugin and check for any dependencies
-		foreach( $plugin_list as $plugin ) {
+		foreach ( $plugin_list as $plugin ) {
 			// we have dependents!
 			if ( ! empty( $requirements[$plugin] ) ) {
 
 				// now loop through each dependent plugin state and add that plugin to our list
 				// before we start the whole process!
-				foreach( $requirements[$plugin] as $dep_state => $dep_plugins ) {
+				foreach ( $requirements[$plugin] as $dep_state => $dep_plugins ) {
 					switch( $dep_state ) {
 						case 'inactive' :
 							if ( ! self::$is_activate ) {
@@ -742,10 +747,9 @@ class CBox_Updater {
 
  			// now start the upgrade!
  			$installer->bulk_upgrade( $plugins['upgrade'] );
- 		}
 
 		// if no upgrades are available, move on to installs
- 		elseif( self::$is_install ) {
+		} elseif( self::$is_install ) {
 			// if activations are available as well, this tells CBox_Plugin_Upgrader
 			// to activate plugins after the upgrader is done
 			if ( self::$is_activate ) {
@@ -764,10 +768,9 @@ class CBox_Updater {
 
  			// now start the install!
  			$installer->bulk_install( $plugins['install'] );
- 		}
 
 		// if no upgrades or installs are available, move on to activations
- 		elseif( self::$is_activate ) {
+		} elseif( self::$is_activate ) {
 			echo '<h3>' . __( 'Activating Plugins...', 'cbox' ) . '</h3>';
 
  			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
@@ -778,7 +781,6 @@ class CBox_Updater {
 			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $settings ); ?></p>
  		<?php
  		}
-
 	}
 
 	/**
