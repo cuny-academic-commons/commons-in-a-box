@@ -69,7 +69,8 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
-			'network'           => false
+			'network'           => false,
+			'hide'              => get_current_blog_id() === cbox_get_main_site_id()
 		) );
 
 		// BuddyPress Docs
@@ -204,7 +205,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
 			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.2.0.zip',
-			'network'      => false
+			'network'      => false,
+			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
 		) );
 
 		// Braille

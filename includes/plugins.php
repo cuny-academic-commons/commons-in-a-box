@@ -80,8 +80,6 @@ class CBox_Plugins {
 	 *                                     applicable. If plugin's settings resides on the root blog, set this value
 	 *                                     to 'root-blog-only'.
 	 *     @type bool   $network           Should the plugin be activated network-wide? Default: true.
-	 *                                     If set to false, also displays the plugin on sub-site admin dashboards.
-	 *                                     Use $hide if you need granular control of the plugin's visibility.
 	 *     @type mixed  $hide              Hides plugin from the admin dashboard's "Plugins" page.  Needs to be set
 	 *                                     explicitly to boolean false to hide the plugin. Default: null.
 	 * }
