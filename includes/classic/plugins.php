@@ -156,7 +156,8 @@ class CBox_Plugins_Classic {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
-			'network'           => false
+			'network'           => false,
+			'hide'              => get_current_blog_id() === cbox_get_main_site_id()
 		) );
 
 		// CAC Featured Content

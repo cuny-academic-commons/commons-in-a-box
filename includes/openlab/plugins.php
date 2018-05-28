@@ -206,7 +206,7 @@ class CBox_Plugins_OpenLab {
 			'type'         => 'dependency',
 			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.2.0.zip',
 			'network'      => false,
-			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
+			'hide'         => false
 		) );
 
 		// Braille
@@ -287,8 +287,7 @@ class CBox_Plugins_OpenLab {
 			'depends'           => 'Braille (>=0.0.3)',
 			'download_url'      => 'http://github.com/hard-g/bp-braille/archive/master.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/braille',
-			'network'           => false,
-			'hide'              => true
+			'network'           => false
 		) );
 	}
 
