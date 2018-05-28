@@ -118,11 +118,7 @@ class CBox_Plugins {
 
 				if ( 'install-only' === $r['type'] ) {
 					self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network'] = false;
-
-					// Ensure install-only plugins are always visible on sub-sites.
-					if ( get_current_blog_id() !== cbox_get_main_site_id() ) {
-						self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['hide'] = false;
-					}
+					self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['hide']    = false;
 				}
 
 				break;
