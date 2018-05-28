@@ -91,21 +91,34 @@ class CBox_Admin_Plugins {
 		}
 
 		$plugins_by_name = Plugin_Dependencies::$plugins_by_name;
+		$cbox_plugins    = CBox_Plugins::get_plugins();
 
 		if ( is_multisite() ) {
 			$dependency = CBox_Plugins::get_plugins( 'dependency' );
+			if ( ! empty( $dependency ) ) {
+				$cbox_plugins = $cbox_plugins + $dependency;
+			}
 		}
 
-		foreach( CBox_Plugins::get_plugins() as $plugin => $data ) {
+		foreach( $cbox_plugins as $plugin => $data ) {
 			// try and see if our required plugin is installed
 			$loader = ! empty( $plugins_by_name[ $plugin ] ) ? $plugins_by_name[ $plugin ] : false;
+
+			$skip = false;
 
 			// if our CBOX plugin is found, get rid of it
 			if( ! empty( $loader ) && ! empty( $plugins[ $loader ] ) ) {
 				// Don't omit network = false plugins on sub-sites.
 				if ( get_current_blog_id() !== cbox_get_main_site_id() && false === $data['network'] ) {
-					continue;
-				} elseif ( get_current_blog_id() !== cbox_get_main_site_id() && isset( $dependency[ $plugin ] ) && false === $dependency[ $plugin ]['network'] ) {
+					$skip = true;
+				}
+
+				// 'hide' is explicitly set to true.
+				if ( true === $data['hide'] ) {
+					$skip = false;
+				}
+
+				if ( $skip ) {
 					continue;
 				}
 

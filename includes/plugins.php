@@ -60,7 +60,8 @@ class CBox_Plugins {
 	 *
 	 * Updates our private, static $plugins variable in the process.
 	 *
-	 * @since 1.1.0 Added $network as a parameter. Added 'install-only' as an option for $type.
+	 * @since 1.1.0 Added $network and $hide as a parameter. Added 'install-only' as an option
+	 *              for $type.
 	 *
 	 * @param array $args {
 	 *     Array of parameters.
@@ -79,6 +80,10 @@ class CBox_Plugins {
 	 *                                     applicable. If plugin's settings resides on the root blog, set this value
 	 *                                     to 'root-blog-only'.
 	 *     @type bool   $network           Should the plugin be activated network-wide? Default: true.
+	 *                                     If set to false, also displays the plugin on sub-site admin dashboards.
+	 *                                     Use $hide if you need granular control of the plugin's visibility.
+	 *     @type mixed  $hide              Hides plugin from the admin dashboard's "Plugins" page.  Needs to be set
+	 *                                     explicitly to boolean false to hide the plugin. Default: null.
 	 * }
 	 */
 	public function register_plugin( $args = '' ) {
@@ -93,7 +98,8 @@ class CBox_Plugins {
 			'documentation_url' => false,
 			'admin_settings'    => false,
 			'network_settings'  => false,
-			'network'           => true
+			'network'           => true,
+			'hide'              => null
 		);
 
 		$r = wp_parse_args( $args, $defaults );
