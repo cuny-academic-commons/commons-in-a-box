@@ -67,7 +67,7 @@ class CBox_Plugins {
 	 *     Array of parameters.
 	 *     @type string $plugin_name       Required. Name of the plugin as in the WP plugin header.
 	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', 'install-only' or
-	 *                                     'dependency'. If set to 'install-lnly', $network and $hide are
+	 *                                     'dependency'. If set to 'install-only', $network and $hide are
 	 *                                     always set to boolean false.
 	 *     @type string $cbox_name         Custom name for the plugin.
 	 *     @type string $cbox_description  Custom short description for the plugin.
