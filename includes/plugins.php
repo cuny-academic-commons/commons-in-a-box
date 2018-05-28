@@ -60,14 +60,15 @@ class CBox_Plugins {
 	 *
 	 * Updates our private, static $plugins variable in the process.
 	 *
-	 * @since 1.1.0 Added $network and $hide as a parameter. Added 'install-only' as an option
+	 * @since 1.1.0 Added $network and $hide as parameters. Added 'install-only' as an option
 	 *              for $type.
 	 *
 	 * @param array $args {
 	 *     Array of parameters.
 	 *     @type string $plugin_name       Required. Name of the plugin as in the WP plugin header.
 	 *     @type string $type              Required. Either 'required', 'recommended', 'optional', 'install-only' or
-	 *                                     'dependency'.
+	 *                                     'dependency'. If set to 'install-lnly', $network and $hide are
+	 *                                     always set to boolean false.
 	 *     @type string $cbox_name         Custom name for the plugin.
 	 *     @type string $cbox_description  Custom short description for the plugin.
 	 *     @type string $depends           Defined plugin dependencies for the plugin. See
@@ -115,7 +116,14 @@ class CBox_Plugins {
 				self::$plugins[ $r['type'] ][ $r['plugin_name'] ] = $r;
 				unset( self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['plugin_name'] );
 
-				self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network'] = 'install-only' === $r['type'] ? false : $r['network'];
+				if ( 'install-only' === $r['type'] ) {
+					self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['network'] = false;
+
+					// Ensure install-only plugins are always visible on sub-sites.
+					if ( get_current_blog_id() !== cbox_get_main_site_id() ) {
+						self::$plugins[ $r['type'] ][ $r['plugin_name'] ]['hide'] = false;
+					}
+				}
 
 				break;
 		}
