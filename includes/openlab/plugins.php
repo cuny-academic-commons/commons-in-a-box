@@ -206,6 +206,16 @@ class CBox_Plugins_OpenLab {
 			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.2.0.zip',
 			'network'      => false
 		) );
+
+		// Braille
+		$instance( array(
+			'plugin_name'  => 'Braille',
+			'type'         => 'dependency',
+			'version'      => '0.0.3',
+			'download_url' => 'http://downloads.wordpress.org/plugin/braille.0.0.5.zip',
+			'network'      => false,
+			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
+		) );
 	}
 
 	/**
@@ -264,6 +274,20 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/dirt-directory-client/',
 			'network'           => false
 		) );
+
+		// BP Braille
+		$instance( array(
+			'plugin_name'       => 'BP Braille',
+			'type'              => 'optional',
+			'cbox_name'         => __( 'Braille Support', 'cbox' ),
+			'cbox_description'  => __( 'Provides a number of Braille-related services to BuddyPress, WordPress and the Anthologize plugin.', 'cbox' ),
+			'version'           => '0.2.0',
+			'depends'           => 'Braille (>=0.0.3)',
+			'download_url'      => 'http://github.com/hard-g/bp-braille/archive/master.zip',
+			'documentation_url' => 'https://wordpress.org/plugins/braille',
+			'network'           => false,
+			'hide'              => true
+		) );
 	}
 
 	/**
@@ -282,16 +306,6 @@ class CBox_Plugins_OpenLab {
 			'version'           => '0.7.7',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.7.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
-		) );
-
-		$instance( array(
-			'plugin_name'       => 'Braille',
-			'type'              => 'install-only',
-			'cbox_name'         => __( 'Braille', 'cbox' ),
-			'cbox_description'  => __( 'Provides a number of Braille-related services to WordPress and the Anthologize plugin.', 'cbox' ),
-			'version'           => '0.0.3',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/braille.0.0.5.zip',
-			'documentation_url' => 'https://wordpress.org/plugins/braille',
 		) );
 
 		$instance( array(
