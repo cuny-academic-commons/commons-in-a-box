@@ -403,7 +403,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php self::after_updater(); ?></p>
+			<p><?php self::after_updater( $this->options ); ?></p>
  		<?php
 		}
 
