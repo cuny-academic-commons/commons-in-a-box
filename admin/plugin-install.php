@@ -493,6 +493,12 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 			$redirect_text = $this->options['redirect_text'];
 		}
 
+		// CBOX hasn't been installed ever.
+		if ( ! cbox_get_installed_revision_date() && empty( $redirect_link ) ) {
+			$redirect_text = __( 'Continue to the CBOX dashboard', 'cbox' );
+			$redirect_link = self_admin_url( 'admin.php?page=cbox' );
+		}
+
 		// default fallback
 		if ( '' === $redirect_link ) {
 			$redirect_link = self_admin_url( 'admin.php?page=cbox-plugins' );
@@ -500,32 +506,6 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			if ( ! empty( $_GET['type'] ) ) {
 				$redirect_link = add_query_arg( 'type', esc_attr( $_GET['type'] ), $redirect_link );
-			}
-		}
-
-		// CBOX hasn't been installed ever, so change button to theme install.
-		if ( ! cbox_get_installed_revision_date() ) {
-			// Ensure PD uses the latest plugin data.
-			Plugin_Dependencies::init();
-
-			$step = cbox_get_setup_step();
-
-			if ( 'recommended-plugins' === $step ) {
-				$redirect_text = __( 'Continue to recommended plugins', 'cbox' );
-				$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-
-				remove_all_actions( 'cbox_after_updater' );
-			} else {
-				$directory_name = cbox_get_theme_prop( 'directory_name' );
-				if ( ! empty( $directory_name ) && ! cbox_get_theme( $directory_name )->exists() ) {
-					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
-					$redirect_text = __( 'Continue to theme installation', 'cbox' );
-
-					remove_all_actions( 'cbox_after_updater' );
-				} elseif ( '' === $step ) {
-					$redirect_text = __( 'Continue to the CBOX dashboard', 'cbox' );
-					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-				}
 			}
 		}
 
