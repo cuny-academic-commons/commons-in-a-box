@@ -99,9 +99,9 @@ class CBox_Admin {
 
 			// Redirect to required plugins installation, if necessary.
 			if ( 'required-plugins' === cbox_get_setup_step() ) {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) );
+				$url = self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) );
 			} else {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
+				$url = self_admin_url( 'admin.php?page=cbox' );
 			}
 
 			wp_redirect( $url );
@@ -138,7 +138,7 @@ class CBox_Admin {
 
 			// Required plugins are already installed.
 			if ( '' === $url && 'required-plugins' !== $step ) {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
+				$url = self_admin_url( 'admin.php?page=cbox' );
 			}
 
 			if ( $url ) {
