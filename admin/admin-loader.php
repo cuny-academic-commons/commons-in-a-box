@@ -126,11 +126,7 @@ class CBox_Admin {
 			$step = cbox_get_setup_step();
 
 			// Redirect to a specific installation step, if necessary.
-			if ( 'recommended-plugins' === cbox_get_setup_step() ) {
-				$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-recommended-nonce=' . wp_create_nonce( 'cbox_bp_installed' ) );
-
-			// All done! Offer to install theme if available.
-			} elseif ( '' === cbox_get_setup_step() ) {
+			if ( '' === cbox_get_setup_step() ) {
 				if ( cbox_get_theme_prop( 'download_url' ) ) {
 					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 				}
@@ -270,6 +266,10 @@ class CBox_Admin {
 				// sort plugins by plugin state
 				$plugins = CBox_Admin_Plugins::organize_plugins_by_state( $plugins );
 
+				// Check for recommended plugins.
+				$recommended = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
+				unset( $recommended['deactivate'] );
+
 				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
 					require( CBOX_PLUGIN_DIR . 'admin/plugin-install.php' );
@@ -278,11 +278,16 @@ class CBox_Admin {
 				echo '<div class="wrap">';
 				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'cbox' ) . '</h2>';
 
-				// start the upgrade!
-				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Continue to the CBOX Dashboard', 'cbox' )
-				) );
+				// Start the installer.
+				$options = array();
+				if ( ! empty( $recommended ) ) {
+					$options = array(
+						'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
+						'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
+					);
+				}
+
+				$installer = new CBox_Updater( $plugins, $options );
 
 				echo '</div>';
 
@@ -325,10 +330,19 @@ class CBox_Admin {
 				echo '<div class="wrap">';
 				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
 
+				// Prompt for theme install afterwards, if available.
+				if ( cbox_get_theme_prop( 'download_url' ) ) {
+					$url  = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+					$text = __( 'Continue to theme installation', 'cbox' );
+				} else {
+					$url  = self_admin_url( 'admin.php?page=cbox' );
+					$text = __( 'Continue to the CBOX Dashboard', 'cbox' );
+				}
+
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Continue to the CBOX Dashboard', 'cbox' )
+					'redirect_link' => $url,
+					'redirect_text' => $text
 				) );
 
 				echo '</div>';
