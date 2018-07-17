@@ -231,7 +231,11 @@ class Commons_In_A_Box {
 			 * Need to run this on 'init' due to user login check.
 			 */
 			add_action( 'init', function() {
-				if ( true === cbox_get_package_prop( 'network' ) && is_user_logged_in() ) {
+				$plugins = get_site_option( 'active_sitewide_plugins' );
+				$loader  = plugin_basename( __FILE__ );
+				$is_network_active = isset( $plugins[$loader] );
+
+				if ( $is_network_active && is_user_logged_in() ) {
 					self::$instance->package_plugins = new CBox_Plugins;
 				}
 			}, 0 );
