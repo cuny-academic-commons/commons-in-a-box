@@ -45,6 +45,8 @@ class CBox_BBP_Autoload {
 		$this->get_activity_id_hotfix();
 
 		$this->fix_form_actions();
+
+		$this->save_notification_meta();
 	}
 
 	/**
@@ -276,5 +278,24 @@ class CBox_BBP_Autoload {
 	public function remove_the_permalink_override() {
 		remove_filter( 'the_permalink', array( $this, 'override_the_permalink_with_group_permalink' ) );
 	}
-}
 
+	/**
+	 * Save various forum data to notification meta.
+	 *
+	 * Used on multisite installs to format forum notifications on sub-sites.
+	 *
+	 * @since 1.1.0
+	 */
+	public function save_notification_meta() {
+		add_action( 'bp_notification_after_save', function( $n ) {
+			// Bail if not on our bbPress new reply action or if notification is empty.
+			if ( 'bbp_new_reply' !== $n->component_action || empty( $n->id ) ) {
+				return;
+			}
+
+			// Save some meta.
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_reply_permalink', bbp_get_reply_url( $n->item_id ) );
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_topic_title',     bbp_get_topic_title( $n->item_id ) );			
+		} );
+	}
+}

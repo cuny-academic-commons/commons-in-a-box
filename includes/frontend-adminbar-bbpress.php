@@ -95,3 +95,63 @@ function cbox_frontend_adminbar_bbpress() {
 	}
 }
 add_action( 'bp_setup_admin_bar', 'cbox_frontend_adminbar_bbpress', 75 );
+
+/*
+ * Ensure bbPress' 'forums' component is registered to BP notifications.
+ *
+ * This allows bbPress notifications to be displayed on sub-sites, even when
+ * bbPress isn't activated on the current site.
+ *
+ * @since 1.1.0
+ */
+add_filter( 'bp_notifications_get_registered_components', function( $retval ) {
+	if ( ! function_exists( 'bbp_activation') ) {
+		$retval[] = 'forums';
+	}
+	return $retval;
+} );
+
+/*
+ * Re-apply logic to format bbPress notifications.
+ *
+ * @since 1.1.0
+ *
+ * @see bbp_format_buddypress_notifications()
+ */
+add_filter( 'bp_notifications_get_notifications_for_user', function( $retval, $item_id, $secondary_item_id, $total_items, $format, $action, $component, $id ) {
+	// If not on our bbPress action, bail.
+	if ( 'bbp_new_reply' !== $action ) {
+		return $retval;
+	}
+
+	$topic_id    = $item_id;
+	$topic_title = bp_notifications_get_meta( $id, 'cbox_bbp_topic_title' );
+	$topic_link  = wp_nonce_url( bp_notifications_get_meta( $id, 'cbox_bbp_reply_permalink' ), 'bbp_mark_topic_' . $topic_id );
+	$title_attr  = __( 'Topic Replies', 'bbpress' );
+
+	if ( (int) $total_items > 1 ) {
+		$text   = sprintf( __( 'You have %d new replies', 'bbpress' ), (int) $total_items );
+	} else {
+		if ( ! empty( $secondary_item_id ) ) {
+			$text = sprintf( __( 'You have %d new reply to %2$s from %3$s', 'bbpress' ), (int) $total_items, $topic_title, bp_core_get_user_displayname( $secondary_item_id ) );
+		} else {
+			$text = sprintf( __( 'You have %d new reply to %s',             'bbpress' ), (int) $total_items, $topic_title );
+		}
+	}
+
+	/*
+	 * We're not applying bbPress notification filters here since plugins might
+	 * expect bbPress to be loaded and might try using bbPress functions, which
+	 * would throw fatal errors.
+	 *
+	 * https://bbpress.trac.wordpress.org/browser/tags/2.5.14/includes/extend/buddypress/notifications.php?marks=52,59#L41
+	 */
+	if ( 'string' === $format ) {
+		return '<a href="' . esc_url( $topic_link ) . '" title="' . esc_attr( $title_attr ) . '">' . esc_html( $text ) . '</a>';
+	} else {
+		return array(
+			'text' => $text,
+			'link' => $topic_link
+		);
+	}
+}, 10, 8 );
