@@ -425,7 +425,7 @@ class CBox_Admin {
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 				}
 
-				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), cbox_get_theme_prop( 'name' ) . ' ' . cbox_get_theme_prop( 'version' ) );
+				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), cbox_get_theme_prop( 'name' ) );
 
 				$cbox_theme = new CBox_Theme_Installer( new Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
