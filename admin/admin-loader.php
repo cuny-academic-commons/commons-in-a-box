@@ -741,9 +741,9 @@ class CBox_Admin {
 				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "You're almost finished the setup process!", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "You're almost finished with the setup process!", 'cbox' ); ?></p>
 
-					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few, recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
+					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
 
 					<p class="submitted-on"><?php _e( "We have automatically selected the following plugins to install for you. However, feel free to uncheck some of these plugins based on your site's needs.", 'cbox' ); ?></p>
 
