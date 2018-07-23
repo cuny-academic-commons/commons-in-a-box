@@ -61,7 +61,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 */
 	protected static function theme() {
 		return array(
-			'name'           => 'OpenLab',
+			'name'           => 'CBOX-OpenLab',
 			'version'        => '0.1',
 			'directory_name' => 'openlab-theme',
 			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/master.zip',
