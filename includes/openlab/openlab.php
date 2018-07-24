@@ -37,7 +37,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'network'           => true,
 			'icon_url'          => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
 			'badge_url'         => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
-			'documentation_url' => 'https://openlab.citytech.cuny.edu/about/'
+			'documentation_url' => 'http://commonsinabox.org/documentation/openlab/?modal=1'
 		);
 	}
 
