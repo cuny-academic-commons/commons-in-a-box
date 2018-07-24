@@ -31,31 +31,34 @@ if $download ; then
 	# delete everything in the /includes/zip/ directory
 	rm includes/zip/* 2> /dev/null
 
-	# grab all github links from plugins-loader.php and download them to /includes/zip/
+	# plugins - grab all github links and download them to /includes/zip/
 	# requires wget
-	grep -o --null "https\?://github\.com.*\w" admin/plugins-loader.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
+	grep -o --null "https\?://github\.com.*\w" includes/classic/plugins.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
+	grep -o --null "https\?://github\.com.*\w" includes/openlab/plugins.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
 
-	# grab all github links from theme-install.php and download them to /includes/zip/
+	# themes - grab all github links and download them to /includes/zip/
 	# requires wget
-	grep -o --null "https\?://github\.com.*\w" admin/theme-install.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
-
-	# previous try with curl resulted in downloaded zips that WP didn't like
-	#grep -o --null "https\?://github\.com.*\w" admin/plugins-loader.php | awk '{split($0,a,"/"); b[0] = "curl -L -o includes/zip/" a[5] "-" a[7] " -i " $0; print b[0]; b[0] | getline v; close(b[0]); }'
+	grep -o --null "https\?://github\.com.*\w" includes/classic/classic.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
+	grep -o --null "https\?://github\.com.*\w" includes/openlab/openlab.php | awk '{split($0,a,"/"); b[0] = "wget --no-check-certificate " $0 " -O includes/zip/" a[5] "-" a[7]; print b[0]; b[0] | getline v; close(b[0]); }'
 
 	# output message
 	echo Github downloads complete and moved to /includes/zip/ folder.
 fi
 
-# replace references of github links to internal file paths in plugins-loader.php
+# plugins - replace references of github links to internal file paths
 sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
-s,/archive/,-,g" admin/plugins-loader.php
+s,/archive/,-,g" includes/classic/plugins.php
+sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
+s,/archive/,-,g" includes/openlab/plugins.php
 
-# replace references of github links to internal file paths in theme-install.php
+# themes - replace references of github links to internal file paths
 sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
-s,/archive/,-,g" admin/theme-install.php
+s,/archive/,-,g" includes/classic/classic.php
+sed -i.bak -E "s,'(http|https)://github.com/[^/]*/,CBOX_PLUGIN_DIR . 'includes/zip/,g
+s,/archive/,-,g" includes/openlab/openlab.php
 
 # remove .bak files needed during sed replacement
-rm `find admin/ -name *.bak`
+rm `find includes/ -name *.bak`
 
 # output message
 echo Github references changed to use local filepath.
