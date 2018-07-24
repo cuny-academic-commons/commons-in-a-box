@@ -922,7 +922,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 										elseif( $dep_loader )
 											$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'cbox' ) . '</span>';
 										else
-											$dep_str .= ' <span class="not-installed">' . __( '(not installed)', 'cbox' ) . '</span>';
+											$dep_str .= ' <span class="not-installed">' . sprintf( __( '(automatically installed with %s)', 'cbox' ), $data['cbox_name'] ) . '</span>';
 										$deps[] = $dep_str;
 									endforeach;
 
