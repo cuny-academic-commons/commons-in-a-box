@@ -9,7 +9,7 @@
 
 	<ol>
 	<li>
-		<h4><a href="<?php echo cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ); ?>"><?php esc_html_e( 'CBOX-OL Plugins', 'cbox' ); ?></a></h4>
+		<h4><a href="<?php echo cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ); ?>"><?php esc_html_e( 'Plugins', 'cbox' ); ?></a></h4>
 		<p><?php esc_html_e( 'Manage Community Feature plugins for your site and Member Site Plugins that you would like to make available to your members for their individual WordPress sites.', 'cbox' ); ?></p>
 	</li>
 	<li>
