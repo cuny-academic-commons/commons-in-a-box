@@ -86,4 +86,14 @@ class CBox_Package_OpenLab extends CBox_Package {
 			return $retval;
 		} );
 	}
+
+	/**
+	 * Deactivation routine.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function deactivate() {
+		// Deactivate CBOX-OpenLab-Core plugin, as it's OL-specific only.
+		deactivate_plugins( 'cbox-openlab-core/cbox-openlab-core.php', true );
+	}
 }
