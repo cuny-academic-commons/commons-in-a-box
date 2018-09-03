@@ -89,6 +89,18 @@ class CBox_Admin {
 
 			// We want to select a new package.
 			if ( empty( $_REQUEST['cbox-package'] ) ) {
+				$current = get_site_option( '_cbox_current_package' );
+				if ( ! empty( $current ) ) {
+					/**
+					 * Hook to do something when a package is about to be deactivated.
+					 *
+					 * This is a dynamic hook based on the package ID name.
+					 *
+					 * @since 1.1.0
+					 */
+					do_action( "cbox_package_{$current}_deactivation" );
+				}
+
 				delete_site_option( '_cbox_current_package' );
 				delete_site_option( '_cbox_revision_date' );
 

@@ -76,6 +76,9 @@ abstract class CBox_Package {
 		// Custom init method.
 		$this->custom_init();
 
+		// Deactivation routine.
+		add_action( 'cbox_package_' . cbox_get_current_package_id() . '_deactivation', array( get_called_class(), 'deactivate' ) );
+
 		// Handle plugin registration.
 		add_action( 'cbox_plugins_loaded', array( get_called_class(), 'plugin_registrar' ) );
 
@@ -276,4 +279,13 @@ abstract class CBox_Package {
 	 * @since 1.1.0
 	 */
 	protected function custom_init() {}
+
+	/**
+	 * Deactivation method, extend if necessary.
+	 *
+	 * Do something when the current package is being reset.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function deactivate() {}
 }
