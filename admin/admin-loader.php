@@ -1361,8 +1361,10 @@ class CBox_Admin {
 		.cbox-admin-content .cbox-plugins-section:last-of-type {border:0; padding-bottom:0;}
 
 		/* Responsive */
+		@media screen and (max-width: 960px) {
+			#welcome-panel {overflow:auto;}
+		}
 		@media screen and (max-width: 600px) {
-			#welcome-panel {min-height:0;}
 			#welcome-panel .wp-badge {display:none;}
 			.welcome-panel-content {margin-left:0;}
 			#getting-started .inside ol {columns:1; -webkit-columns:1; -moz-columns:1;}
