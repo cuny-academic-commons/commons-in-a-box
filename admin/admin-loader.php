@@ -209,11 +209,10 @@ class CBox_Admin {
 
 			// get cbox theme
 			$theme = cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) );
-			$errors = $theme->errors()->errors;
 
 			// CBOX theme exists! so let's activate it and redirect to the
 			// CBOX Theme options page!
-			if ( empty( $errors['theme_not_found'] ) ) {
+			if ( $theme->exists() ) {
 				// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
 				if ( 1 !== cbox_get_main_site_id() ) {
 					switch_to_blog( cbox_get_main_site_id() );
