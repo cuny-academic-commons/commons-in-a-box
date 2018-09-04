@@ -707,6 +707,14 @@ class CBox_Admin {
 			</div>
 
 			<div class="plugin-card-bottom">
+				<div class="column-updated">
+					<?php if ( cbox_get_theme_prop( 'force_install', $package ) ) : ?>
+						<span class="update-now theme-required"><?php esc_html_e( 'Theme required. Will override existing theme during installation.', 'cbox' ); ?></span>
+					<?php else : ?>
+						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional. Can be skipped during installation.', 'cbox' ); ?></span>
+					<?php endif; ?>
+				</div>
+
 				<div class="column-compatibility">
 					<?php if ( $incompatible ) : ?>
 						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'cbox' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
@@ -1218,6 +1226,9 @@ class CBox_Admin {
 
 		.plugin-icon {height:auto;}
 		.plugin-card-OpenLab .column-description {min-height:140px;}
+		.plugin-card .theme-required:before, .plugin-card .theme-optional:before {margin-top:-1px; margin-left:-5px;}
+		.plugin-card .theme-required:before {content:"\f534"}
+		.plugin-card .theme-optional:before {content:"\f348"; color:darkslateblue;}
 
 		#wpbody-content .metabox-holder {padding-top:0;}
 		.metabox-holder .stuffbox {border-width:0 0 1px 0;}
