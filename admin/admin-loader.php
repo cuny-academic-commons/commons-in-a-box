@@ -404,6 +404,31 @@ class CBox_Admin {
 			case 'theme-prompt' :
 				$directory_name = cbox_get_theme_prop( 'directory_name' );
 
+				// Button text.
+				if ( ! empty( $directory_name ) && cbox_get_theme( $directory_name )->exists() ) {
+					$btn_text = esc_html__( 'Activate Theme', 'cbox' );
+				} else {
+					$btn_text = esc_html__( 'Install Theme', 'cbox' );
+				}
+
+				// Theme needs to be force-installed.
+				if ( cbox_get_theme_prop( 'force_install' ) ) {
+					$bail_text = esc_html__( 'Return to dashboard', 'cbox' );
+					$bail_link = esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=0' ), 'cbox_select_package' ) );
+					$warning = sprintf( '<p>%s</p>', __( 'Please note: This theme is <strong>required</strong>.', 'cbox' ) );
+					$warning .= sprintf( '<p>%s</p>',
+						sprintf( __( 'Clicking on "%1$s" will change your current theme.  If you would rather choose another box or keep your existing theme, click on the "%2$s" link.', 'cbox' ), $btn_text, $bail_text )
+					);
+
+				// Theme installation is optional.
+				} else {
+					$bail_text = esc_html__( 'Skip', 'cbox' );
+					$bail_link = self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' );
+					$warning = sprintf( '<p>%s</p>',
+						sprintf( esc_html__( 'Please note: Clicking on "%1$s" will change your current theme.  If you would rather keep your existing theme, click on the "%2$s" link.', 'cbox' ), $btn_text, $bail_text )
+					);
+				}
+
 				// some HTML markup!
 				echo '<div class="wrap">';
 
@@ -411,19 +436,12 @@ class CBox_Admin {
 
 				cbox_get_template_part( 'theme-prompt' );
 
+				echo $warning;
+
 				echo '<div style="margin-top:2em;">';
-					echo '<a href="' . self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' ) . '" style="display:inline-block; margin:5px 15px 0 0;">' . esc_html__( 'Skip', 'cbox' ) . '</a>';
+					printf( '<a href="%1$s" style="display:inline-block; margin:5px 15px 0 0;">%2$s</a>', $bail_link, $bail_text );
 
-					// Activate theme if it already exists.
-					if ( ! empty( $directory_name ) && cbox_get_theme( $directory_name )->exists() ) {
-						$label = esc_html__( 'Activate Theme', 'cbox' );
-					// Install theme.
-					} else {
-						$label = esc_html__( 'Install Theme', 'cbox' );
-					}
-
-					echo '<a class="button button-primary" href="' . wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) . '">' . $label . '</a>';
-
+					printf( '<a href="%1$s" class="button button-primary">%2$s</a>', wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), $btn_text );
 				echo '</div>';
 
 				echo '</div>';
