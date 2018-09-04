@@ -220,6 +220,7 @@ abstract class CBox_Package {
 	 *     @var string $download_url   Download location for theme, either URL or absolute filepath to .zip file.
 	 *     @var string $admin_settings Relative admin path to your theme's settings. eg. 'themes.php?page=X'
 	 *     @var string $screenshot_url Optional. URL to screenshot.
+	 *     @var bool   $force_install  Whether to force theme install during initial package install.
 	 * }
 	 */
 	protected static function theme() {
