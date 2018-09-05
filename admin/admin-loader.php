@@ -737,7 +737,7 @@ class CBox_Admin {
 						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'cbox' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
 						'Find out how to convert to a WordPress Multisite network here.', 'cbox' ) ); ?></span>
 					<?php else : ?>
-						<span class="compatibility-compatible"><strong>Compatible</strong> with your version of WordPress</span>
+						<span class="compatibility-compatible"><?php _e( '<strong>Compatible</strong> with your version of WordPress', 'cbox' ); ?></span>
 					<?php endif; ?>
 				</div>
 			</div>
