@@ -37,6 +37,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'network'           => true,
 			'icon_url'          => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
 			'badge_url'         => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
+			'badge_url_x2'      => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert-x2.png' ),
 			'documentation_url' => 'http://commonsinabox.org/documentation/openlab/?modal=1'
 		);
 	}
