@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '3.0.0',
+			'version'           => '3.1.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -78,9 +78,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress Docs',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '1.9.4',
+			'version'           => '2.1.0',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.1.9.4.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -105,9 +105,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BP Group Documents',
 			'cbox_name'         => __( 'Group Documents', 'cbox' ),
 			'cbox_description'  => __( 'Allow your members to attach documents to groups.', 'cbox' ),
-			'version'           => '1.12.1',
+			'version'           => '1.12.2',
 			'depends'           => 'BuddyPress (>=2.7)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.12.1.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-group-documents.1.12.2.zip',
 			'documentation_url' => '', // @todo
 			'network_settings'  => 'settings.php?page=bp-group-documents-settings',
 			'network'          => false
@@ -119,8 +119,8 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '3.8.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.8.1.zip',
+			'version'           => '3.8.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.3.8.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'root-blog-only'
@@ -197,13 +197,14 @@ class CBox_Plugins_OpenLab {
 		$instance( array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.0.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.1.0.zip'
 		) );
 
 		// Event Organiser
 		$instance( array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
+			'version'      => '3.2.0',
 			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.2.0.zip',
 			'network'      => false,
 			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
@@ -256,9 +257,9 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'cbox' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'cbox' ),
-			'version'           => '1.0-RC4',
+			'version'           => '1.0-RC6',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC4.zip',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'
@@ -291,8 +292,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Anthologize', 'cbox' ),
 			'cbox_description'  => __( 'Create ebooks from your blog posts or other external content.', 'cbox' ),
-			'version'           => '0.7.7',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.7.zip',
+			'version'           => '0.7.8',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.8.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
 		) );
 
@@ -301,8 +302,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'PressForward', 'cbox' ),
 			'cbox_description'  => __( 'A plugin providing an editorial workflow for content aggregation and curation within the WordPress dashboard. Designed for bloggers and editorial teams wishing to collect, discuss, and share content from a variety of sources on the open web.', 'cbox' ),
-			'version'           => '4.3.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.4.3.0.zip',
+			'version'           => '5.1.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.1.1.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
@@ -311,8 +312,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'WP Grade Comments', 'cbox' ),
 			'cbox_description'  => __( 'A plugin for instructors using their WordPress site in a course setting. Provides ability to give private feedback and/or grades to post authors, all without leaving the familiar commenting interface.', 'cbox' ),
-			'version'           => '1.2.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.2.0.zip',
+			'version'           => '1.3.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.3.0.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/wp-grade-comments',
 		) );
 	}
