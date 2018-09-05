@@ -124,13 +124,25 @@ add_filter( 'bp_notifications_get_notifications_for_user', function( $retval, $i
 		return $retval;
 	}
 
-	$topic_id    = $item_id;
-	$topic_title = bp_notifications_get_meta( $id, 'cbox_bbp_topic_title' );
-	$topic_link  = wp_nonce_url( bp_notifications_get_meta( $id, 'cbox_bbp_reply_permalink' ), 'bbp_mark_topic_' . $topic_id );
 	$title_attr  = __( 'Topic Replies', 'bbpress' );
 
+	$topic_id = bp_notifications_get_meta( $id, 'cbox_bbp_reply_topic_id' );
+	if ( ! empty( $topic_id ) ) {
+		$topic_title = bp_notifications_get_meta( $id, 'cbox_bbp_topic_title' );
+		$n_args      = array(
+			'action'   => 'bbp_mark_read',
+			'topic_id' => $topic_id
+		);
+		$topic_link  = wp_nonce_url( add_query_arg( $n_args, bp_notifications_get_meta( $id, 'cbox_bbp_reply_permalink' ) ), 'bbp_mark_topic_' . $topic_id );
+
+	// No topic meta, so add generic title and link.
+	} else {
+		$topic_title = esc_html_( 'a forum topic', 'cbox' );
+		$topic_link  = add_query_arg( 'type', 'bbp_new_reply', bp_get_notifications_permalink() );
+	}
+
 	if ( (int) $total_items > 1 ) {
-		$text   = sprintf( __( 'You have %d new replies', 'bbpress' ), (int) $total_items );
+		$text = sprintf( __( 'You have %d new replies', 'bbpress' ), (int) $total_items );
 	} else {
 		if ( ! empty( $secondary_item_id ) ) {
 			$text = sprintf( __( 'You have %d new reply to %2$s from %3$s', 'bbpress' ), (int) $total_items, $topic_title, bp_core_get_user_displayname( $secondary_item_id ) );
