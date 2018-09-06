@@ -8,7 +8,7 @@ Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
 Network: true
-Core: >=4.1.1
+Core: >=4.9.8
 */
 
 // Exit if accessed directly
