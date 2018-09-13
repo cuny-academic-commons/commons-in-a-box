@@ -265,7 +265,11 @@ class Plugin_Dependencies {
 	 * @return array List of dependencies
 	 */
 	public static function get_provided( $plugin_id ) {
-		return self::$provides[ $plugin_id ];
+		if ( ! empty( self::$provides[ $plugin_id ] ) ) {
+			return self::$provides[ $plugin_id ];
+		}
+
+		return array();
 	}
 
 	/**
