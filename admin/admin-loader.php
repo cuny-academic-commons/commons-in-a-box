@@ -1063,9 +1063,10 @@ class CBox_Admin {
 	 * @uses cbox_get_setup_step() Which setup step is CBOX at?
 	 */
 	public function display_notice() {
-		// if our notice marker isn't set, stop now!
-		if ( empty( cbox()->show_notice ) )
+		// If our notice marker isn't set or if we're on the CBOX page, stop now!
+		if ( empty( cbox()->show_notice ) || 'cbox' === get_current_screen()->parent_base ) {
 			return;
+		}
 
 		// setup some variables depending on the setup step
 		switch ( cbox_get_setup_step() ) {
