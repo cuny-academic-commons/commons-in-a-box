@@ -184,8 +184,8 @@ class CBox_Plugins_Classic {
 			'network'           => false
 		) );
 
-		// only show the following plugins in network mode
-		if ( is_network_admin() ) :
+		// Only show the following plugins if multisite is enabled.
+		if ( is_multisite() ) :
 			// More Privacy Options
 			$instance( array(
 				'plugin_name'       => 'More Privacy Options',
