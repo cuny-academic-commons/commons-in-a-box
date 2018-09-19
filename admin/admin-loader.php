@@ -298,7 +298,7 @@ class CBox_Admin {
 					);
 
 				// Add theme step if recommended plugins are already active.
-				} elseif ( cbox_get_package_prop( 'theme' ) ) {
+				} elseif ( cbox_get_theme_prop( 'download_url' ) ) {
 					$options = array(
 						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
 						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
@@ -806,7 +806,12 @@ class CBox_Admin {
 			<?php
 				break;
 
-			// (3) bump revision date if we ever reach here.
+			// (3) Show theme installation.
+			case 'theme-prompt' :
+				printf( '<script type="text/javascript">window.location = "%s";</script>', str_replace( '&amp;', '&', wp_nonce_url( self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt' ), 'cbox_theme_prompt' ) ) );
+				break;
+
+			// (4) bump revision date if we ever reach here.
 			default :
 				cbox_bump_revision_date();
 				echo '<script type="text/javascript">window.location = document.URL;</script>';

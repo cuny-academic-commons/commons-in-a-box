@@ -175,6 +175,10 @@ function cbox_get_setup_step() {
 
 			if ( ! empty( $recommended ) ) {
 				$step = 'recommended-plugins';
+
+			// Theme install.
+			} elseif ( cbox_get_theme_prop( 'download_url' ) ) {
+				$step = 'theme-prompt';
 			}
 		}
 
