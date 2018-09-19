@@ -296,6 +296,13 @@ class CBox_Admin {
 						'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
 						'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
 					);
+
+				// Add theme step if recommended plugins are already active.
+				} elseif ( cbox_get_package_prop( 'theme' ) ) {
+					$options = array(
+						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
+						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
+					);
 				}
 
 				$installer = new CBox_Updater( $plugins, $options );
