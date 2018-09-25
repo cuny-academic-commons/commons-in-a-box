@@ -784,7 +784,7 @@ class CBox_Admin {
 
 				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
+				<form id="cbox-recommended" method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
 					<p class="submitted-on"><?php _e( "You're almost finished with the setup process!", 'cbox' ); ?></p>
 
 					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
@@ -798,10 +798,26 @@ class CBox_Admin {
 							'type'            => 'recommended',
 							'omit_activated'  => true,
 							'check_all'       => true,
-							'submit_btn_text' => __( 'Install', 'cbox' )
+							'submit_btn_text' => __( 'Continue', 'cbox' )
 						) );
 					?>
 				</form>
+
+				<script>
+				jQuery(function() {
+					cboxRecommendedChecked();
+					jQuery("#cbox-recommended input[type='checkbox']").change(function() {
+						cboxRecommendedChecked();
+					})
+				})
+				function cboxRecommendedChecked() {
+					if ( jQuery("#cbox-recommended input:checked").length > 0) {
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Install', 'cbox' ); ?>");
+					} else {
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Continue', 'cbox' ); ?>");
+					}
+				}
+				</script>
 
 			<?php
 				break;
