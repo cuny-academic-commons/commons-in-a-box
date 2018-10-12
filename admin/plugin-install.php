@@ -344,7 +344,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		if ( ! empty( $this->options['install_strings'] ) ) {
 			$this->upgrader->strings['skin_before_update_header'] = __( 'Installing Plugin %1$s (%2$d/%3$d)', 'cbox' );
 
-			$this->upgrader->strings['skin_upgrade_start']        = __( 'The installation process is starting. This process may take a while on some hosts, so please be patient.', 'cbox' );
+			$this->upgrader->strings['skin_upgrade_start']        = __( 'The installation process is starting. This process may take a while, so please be patient.', 'cbox' );
 			$this->upgrader->strings['skin_update_failed_error']  = __( 'An error occurred while installing %1$s: <strong>%2$s</strong>.', 'cbox' );
 			$this->upgrader->strings['skin_update_failed']        = __( 'The installation of %1$s failed.', 'cbox' );
 			$this->upgrader->strings['skin_update_successful']    = __( '%1$s installed successfully.', 'cbox' ) . ' <a onclick="%2$s" href="#" class="hide-if-no-js"><span>' . __( 'Show Details', 'cbox' ) . '</span><span class="hidden">' . __( 'Hide Details', 'cbox' ) . '</span>.</a>';

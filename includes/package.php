@@ -268,7 +268,7 @@ abstract class CBox_Package {
 			'tab_plugin_required' => __( 'Core Plugins', 'cbox' ),
 			'tab_plugin_optional' => __( 'Optional Plugins', 'cbox' ),
 			'tab_plugin_install'  => __( 'Member Site Plugins', 'cbox' ),
-			'dashboard_header'    => sprintf( esc_html__( 'Welcome to Commons In A Box - %s', 'cbox' ), cbox_get_package_prop( 'name' ) )
+			'dashboard_header'    => sprintf( esc_html__( 'Welcome to Commons In A Box %s', 'cbox' ), cbox_get_package_prop( 'name' ) )
 		);
 	}
 

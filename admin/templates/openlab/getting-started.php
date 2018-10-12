@@ -1,11 +1,11 @@
 
 <div id="getting-started" class="metabox-holder postbox">
 	<div class="stuffbox">
-		<h3><?php esc_html_e( 'Getting Started with Commons in A Box - OpenLab', 'cbox' ); ?></h3>
+		<h3><?php esc_html_e( 'Getting Started with Commons in A Box OpenLab', 'cbox' ); ?></h3>
 	</div>
 
 	<div class="inside">
-	<p><?php esc_html_e( "We've assembled some links to get you started.", 'cbox' ); ?></p>
+	<p><?php printf( __( 'We\'ve assembled some links to get you started. Check out our <a href="%1$s" target="_blank">documentation</a> for detailed instructions. Questions? Post them on our <a href="%2$s" target="_blank">CBOX OpenLab Support Forum</a>.', 'cbox' ), 'http://commonsinabox.org/cbox-openlab-dashboard', 'http://commonsinabox.org/groups/openlab-help-support/forum/' ); ?></p>
 
 	<ol>
 	<li>

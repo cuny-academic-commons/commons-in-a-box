@@ -1,6 +1,6 @@
 <div class="metabox-holder postbox getting-started-cbox-classic">
 	<div class="stuffbox">
-		<h3><?php esc_html_e( 'Getting Started with Commons in A Box - Classic', 'cbox' ); ?></h3>
+		<h3><?php esc_html_e( 'Getting Started with Commons in A Box Classic', 'cbox' ); ?></h3>
 	</div>
 
 	<div class="inside">

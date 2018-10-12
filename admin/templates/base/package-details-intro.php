@@ -1,2 +1,10 @@
 
-<p><?php printf( esc_html__( "Welcome to CBOX %s! We're excited that you've decided to install and use this open source software for your site. Please know that this package will overhaul your site's theme and plugins. In particular:", 'cbox' ), cbox_get_package_prop( 'name', $_GET[ 'cbox-package-details' ] ) ); ?></p>
+<?php if ( cbox_get_package_prop( 'network', $_GET[ 'cbox-package-details' ] ) ) : ?>
+
+	<p><?php printf( __( 'Welcome to CBOX %1$s! If this is a new WordPress Multisite installation, just click Install to continue. If you are adding CBOX %1$s to an existing installation, please consult the <a href="%2$s">documentation</a> before continuing.', 'cbox' ), cbox_get_package_prop( 'name', $_GET[ 'cbox-package-details' ] ), 'http://commonsinabox.org/installing-cbox' ); ?></p>
+
+<?php else : ?>
+
+	<p><?php printf( __( 'Welcome to CBOX %1$s! If this is a new WordPress installation, just click Install to continue. If you are adding CBOX %1$s to an existing installation, please consult the <a href="%2$s">documentation</a> before continuing.', 'cbox' ), cbox_get_package_prop( 'name', $_GET[ 'cbox-package-details' ] ), 'http://commonsinabox.org/installing-cbox' ); ?></p>
+
+<?php endif; ?>

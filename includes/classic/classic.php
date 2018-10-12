@@ -37,7 +37,7 @@ class CBox_Package_Classic extends CBox_Package {
 		return array(
 			'icon_url'          => cbox()->plugin_url( 'admin/images/logo-cbox_icon-2x.png' ),
 			'settings_key'      => '_cbox_admin_settings',
-			'documentation_url' => 'http://commonsinabox.org/about-the-project'
+			'documentation_url' => 'http://commonsinabox.org/cbox-classic-overview/?modal=1'
 		);
 	}
 

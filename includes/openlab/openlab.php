@@ -38,7 +38,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'icon_url'          => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
 			'badge_url'         => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert.png' ),
 			'badge_url_x2'      => cbox()->plugin_url( 'admin/images/logo-cbox-ol_vert-x2.png' ),
-			'documentation_url' => 'http://commonsinabox.org/documentation/openlab/?modal=1'
+			'documentation_url' => 'http://commonsinabox.org/cbox-openlab-overview/?modal=1'
 		);
 	}
 
@@ -62,7 +62,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 */
 	protected static function theme() {
 		return array(
-			'name'           => 'CBOX-OpenLab',
+			'name'           => 'CBOX OpenLab',
 			'version'        => '1.1.0-beta1',
 			'directory_name' => 'openlab-theme',
 			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.1.0-beta1.zip',

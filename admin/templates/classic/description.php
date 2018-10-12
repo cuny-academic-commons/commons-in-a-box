@@ -1,4 +1,2 @@
 
-<p>Available since v1.0, this is the original configuration of Commons In A Box.</p>
-
-<p>Suitable for small communities and working groups.</p>
+<p><?php _e( '<strong>CBOX Classic is designed for communities of all kinds.</strong> It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.', 'cbox' ); ?></p>

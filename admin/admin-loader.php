@@ -315,7 +315,7 @@ class CBox_Admin {
 				$package = sanitize_title( $_GET['cbox-package-details'] );
 				// some HTML markup!
 				echo '<div class="wrap">';
-				echo '<h2>' . sprintf( esc_html__( '%s Details', 'cbox' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
+				echo '<h2>' . sprintf( esc_html__( 'Confirm CBOX %s Installation', 'cbox' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
 
 				cbox_get_template_part( 'package-details-intro', $package );
 				cbox_get_template_part( 'package-details', $package );
@@ -328,7 +328,7 @@ class CBox_Admin {
 
 					<a class="button button-secondary" href="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin:0 15px 0 0;"><?php esc_html_e( 'Return to dashboard', 'cbox' ); ?></a>
 
-					<input type="submit" value="<?php printf( esc_html__( 'Install %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" class="button-primary" name="package-details" />
+					<input type="submit" value="<?php esc_html_e( 'Install', 'cbox' ); ?>" class="button-primary" name="package-details" />
 				</form>
 
 			<?php
@@ -419,11 +419,12 @@ class CBox_Admin {
 
 				// Theme needs to be force-installed.
 				if ( cbox_get_theme_prop( 'force_install' ) ) {
-					$bail_text = esc_html__( 'Return to dashboard', 'cbox' );
+					$bail_text = esc_html__( 'Return to package selection', 'cbox' );
 					$bail_link = esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=0' ), 'cbox_select_package' ) );
-					$warning = sprintf( '<p>%s</p>', __( 'Please note: This theme is <strong>required</strong>.', 'cbox' ) );
+					$warning = sprintf( __( 'Please note: This theme is <strong>required</strong> for use with Commons In A Box %s.', 'cbox' ), cbox_get_package_prop( 'name' ) );
+					$warning = sprintf( '<p>%s</p>', $warning );
 					$warning .= sprintf( '<p>%s</p>',
-						sprintf( __( 'Clicking on "%1$s" will change your current theme.  If you would rather choose another box or keep your existing theme, click on the "%2$s" link.', 'cbox' ), $btn_text, $bail_text )
+						sprintf( __( 'Clicking on "%1$s" will change your current theme. If you do not wish to change the theme, please click "%2$s" and choose a different package.', 'cbox' ), $btn_text, $bail_text )
 					);
 
 				// Theme installation is optional.
@@ -524,7 +525,7 @@ class CBox_Admin {
 	 * Setup admin menu and any dependent page hooks.
 	 */
 	public function admin_menu() {
-		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX: %s', 'cbox' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'cbox' );
+		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX %s', 'cbox' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'cbox' );
 		$page = add_menu_page(
 			$name,
 			$name,
@@ -695,9 +696,9 @@ class CBox_Admin {
 			?>
 
 				<div style="text-align:center;">
-					<h2><?php _e( 'Select a box', 'cbox' ); ?></h2>
+					<h2><?php _e( 'Select a Package', 'cbox' ); ?></h2>
 
-					<p><?php _e( 'A box is a specially-crafted bundle of plugins and a theme for WordPress, designed for quick installation and configuration. Select the box that best suits your site.', 'cbox' ); ?></p>
+					<p><?php esc_html_e( 'Commons In A Box includes two packages, each containing selected WordPress plugins and a WordPress theme. The packages are designed to make it easier for you to install and configure your site. Select the package that best suits your needs.', 'cbox' ); ?></p>
 				</div>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
@@ -733,9 +734,9 @@ class CBox_Admin {
 			<div class="plugin-card-bottom">
 				<div class="column-updated">
 					<?php if ( cbox_get_theme_prop( 'force_install', $package ) ) : ?>
-						<span class="update-now theme-required"><?php esc_html_e( 'Theme required. Will override existing theme during installation.', 'cbox' ); ?></span>
+						<span class="update-now theme-required"><?php esc_html_e( 'Theme required; existing theme will be replaced during installation.', 'cbox' ); ?></span>
 					<?php else : ?>
-						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional. Can be skipped during installation.', 'cbox' ); ?></span>
+						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional; theme installation can be skipped.', 'cbox' ); ?></span>
 					<?php endif; ?>
 				</div>
 
@@ -785,7 +786,7 @@ class CBox_Admin {
 				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
 				<form id="cbox-recommended" method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "You're almost finished with the setup process!", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "You're almost finished with the installation process.", 'cbox' ); ?></p>
 
 					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
 
