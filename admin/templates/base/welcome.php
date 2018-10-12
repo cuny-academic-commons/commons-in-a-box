@@ -5,8 +5,9 @@
 			<div class="cbox-badge">
 				<img src="<?php echo esc_url( cbox_get_package_prop( 'badge_url' ) ); ?>" srcset="<?php echo esc_url( cbox_get_package_prop( 'badge_url_x2' ) ); ?> 2x" alt="<?php esc_attr_e( 'Badge', 'cbox' ); ?>" />
 				<div class="cbox-version">
-					<?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
+					<?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?>
 				</div>
+			</div>
 
 			<div class="welcome-panel-content">
 				<?php cbox_get_template_part( 'welcome-description' ); ?>
