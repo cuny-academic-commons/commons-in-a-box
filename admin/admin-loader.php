@@ -1306,7 +1306,7 @@ class CBox_Admin {
 
 		.secondary-panel h2 {line-height:1;}
 
-		.getting-started-cbox-classic h4 {font-size:14px;}
+		.getting-started-cbox-classic h4 {font-size:14px; margin-top:.3em;}
 			.getting-started-cbox-classic h4 .icon16 {margin-top:-12px; margin-left: -32px;}
 
 		.metabox-holder .welcome-panel-column-container {
@@ -1339,36 +1339,10 @@ class CBox_Admin {
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
 
-		.svg .wp-badge {
-		        position:absolute;
-		        width:190px; height:30px;
-		        background-color:#fff;
-		        background-image: url( <?php echo $badge_url; ?> );
-			background-position:22px 10px;
-			background-size:auto;
-			background-repeat: no-repeat;
-			padding-top:200px;
-		        color:#999; text-shadow:none; box-shadow:none;
-		}
+		.cbox-badge {float:left; width:180px; text-align:center;}
+		.cbox-version {color:#444; font-weight:600;}
 
-		.welcome-panel-content {margin-left:200px;}
-
-		/* Retina */
-		@media
-			only screen and (-webkit-min-device-pixel-ratio: 1.5),
-			only screen and (-moz-min-device-pixel-ratio: 1.5),
-			only screen and (-o-min-device-pixel-ratio: 3/2),
-			only screen and (min-device-pixel-ratio: 1.5) {
-				.wp-badge {
-					background-image: url( <?php echo $badge_url_2x; ?> );
-					background-size: 77%;
-					background-repeat: no-repeat;
-					width: 152px;
-					padding-top: 157px;
-					height: 34px;
-					top: 50px;
-				}
-		}
+		.welcome-panel-content {margin-left:200px; margin-top:1.5em;}
 
 		/* plugins table */
 		.cbox-plugins-section {margin-top:0; padding:10px 20px 20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
@@ -1395,7 +1369,7 @@ class CBox_Admin {
 			#welcome-panel {overflow:auto;}
 		}
 		@media screen and (max-width: 600px) {
-			#welcome-panel .wp-badge {display:none;}
+			#welcome-panel .cbox-badge {display:none;}
 			.welcome-panel-content {margin-left:0;}
 			#getting-started .inside ol {columns:1; -webkit-columns:1; -moz-columns:1;}
 			#getting-started .inside li {height:auto;}
