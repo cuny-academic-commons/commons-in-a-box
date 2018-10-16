@@ -5,5 +5,5 @@
 <ul class="subsubsub">
 <li><a href="<?php echo cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php esc_html_e( "What's New", 'cbox' ); ?></a> |</li>
 <li><a href="http://commonsinabox.org/project-team" target="_blank"><?php esc_html_e( 'Credits', 'cbox' ); ?></a> |</li>
-<li><a href="http://commonsinabox.org/documentation/" target="_blank"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
+<li><a href="http://commonsinabox.org/cbox-classic-overview" target="_blank"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
 </ul>
