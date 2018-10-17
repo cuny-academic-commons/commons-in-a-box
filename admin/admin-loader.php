@@ -573,9 +573,6 @@ class CBox_Admin {
 
 		// catch form submission
 		add_action( "load-{$subpage}",                array( $this, 'catch_form_submission' ) );
-
-		// contextual help
-		add_action( "load-{$subpage}",                array( $this, 'contextual_help' ) );
 	}
 
 	/**
@@ -608,29 +605,6 @@ class CBox_Admin {
 			</div>
 		<?php
 		}
-	}
-
-	/**
-	 * Registers contextual help for the CBOX dashboard page.
-	 *
-	 * @uses get_current_screen() Gets info about the current screen.
-	 */
-	public function contextual_help() {
-		// about
-		get_current_screen()->add_help_tab( array(
-			'id'      => 'cbox-about',
-			'title'   => __( 'About', 'cbox' ),
-			'content' =>
-				'<p>' . sprintf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ) . '</p>' .
-				'<p>' . __( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ) . '</p>'
-		) );
-
-		// sidebar links
-		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'Useful Links:', 'cbox' ) . '</strong></p>' .
-			'<p>' . sprintf( __( '<a href="%s">Changelog</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&whatsnew=1' ) ) ) . '</p>' .
-			'<p>' . sprintf( __( '<a href="%s">Show Welcome Message</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&welcome=1' ) ) ) . '</p>'
-		);
 	}
 
 	/**
