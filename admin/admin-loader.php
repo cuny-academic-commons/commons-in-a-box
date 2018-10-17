@@ -593,7 +593,6 @@ class CBox_Admin {
 			<div class="wrap">
 				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
 
-				<?php $this->welcome_panel(); ?>
 				<?php $this->steps(); ?>
 				<?php $this->upgrades(); ?>
 				<?php $this->metaboxes(); ?>
@@ -613,18 +612,6 @@ class CBox_Admin {
 			return true;
 
 		return false;
-	}
-
-	/**
-	 * The CBOX welcome panel.
-	 *
-	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
-	 */
-	private function welcome_panel() {
-		if ( isset( $_GET['welcome'] ) ) {
-			$welcome_checked = empty( $_GET['welcome'] ) ? 0 : 1;
-			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
-		}
 	}
 
 	/**
