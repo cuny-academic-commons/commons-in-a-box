@@ -5,4 +5,4 @@
 
 	<p><?php esc_html_e( 'One last step!', 'cbox' ); ?></p>
 	
-	<p><?php printf( __( 'The %1$s Theme is the final piece of the Commons In A Box %2$s experience.  It ties together all functionality offered by the %2$s box in a beautiful package.', 'cbox' ), cbox_get_theme_prop( 'name' ), cbox_get_package_prop( 'name' ) ); ?></p>
+	<p><?php printf( __( 'The %1$s Theme is the final piece of the Commons In A Box %2$s experience.', 'cbox' ), cbox_get_theme_prop( 'name' ), cbox_get_package_prop( 'name' ) ); ?></p>
