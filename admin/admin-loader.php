@@ -583,10 +583,6 @@ class CBox_Admin {
 		if ( $this->is_changelog() ) {
 			cbox_get_template_part( 'changelog' );
 
-		// credits page
-		} elseif ( $this->is_credits() ) {
-			cbox_get_template_part( 'credits' );
-
 		// setup screen
 		} elseif( ! empty( cbox()->setup ) ) {
 			$this->setup_screen();
@@ -614,18 +610,6 @@ class CBox_Admin {
 	 */
 	private function is_changelog() {
 		if ( ! empty( $_GET['whatsnew'] ) )
-			return true;
-
-		return false;
-	}
-
-	/**
-	 * Should we show the credits screen?
-	 *
-	 * @return bool
-	 */
-	private function is_credits() {
-		if ( ! empty( $_GET['credits'] ) )
 			return true;
 
 		return false;
