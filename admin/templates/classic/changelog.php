@@ -42,6 +42,19 @@
 				</div>
 			</div>
 
+			<div class="changelog">
+				<h3><?php esc_html_e( 'Theme Updates', 'cbox' ); ?></h3>
+
+				<div class="feature-section">
+					<ul>
+						<li>Accessibility improvements</li>
+						<li>Improved compatibility with BuddyPress 3.0+ registration</li>
+						<li>Improved PHP 7.2 compatibility</li>
+						<li>Improved WP 4.9+ compatibility</li>
+					</ul>
+				</div>
+			</div>
+
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
 			</div>

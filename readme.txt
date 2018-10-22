@@ -47,6 +47,7 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 * Added "package" functionality
 * Introducing the OpenLab package. See http://commonsinabox.org/cbox-openlab-overview/ for more details.
 * Updated plugins: BuddyPress 3.2.0, BuddyPress Docs 2.1.1
+* Classic improvements: Improved accessibility for theme; improved compatibility with updated versions of WP and BP; improved PHP 7.2 compatibility
 
 = 1.0.15 =
 * Compatibility with BuddyPress 2.8
