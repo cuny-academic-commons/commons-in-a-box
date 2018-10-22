@@ -31,17 +31,6 @@
 				</div>
 			</div>
 
-			<div class="changelog">
-				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>
-
-				<div class="feature-section">
-					<ul>
-						<li>BuddyPress 3.2.0</li>
-						<li>BuddyPress Docs 2.1.1</li>
-					</ul>
-				</div>
-			</div>
-
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
 			</div>
