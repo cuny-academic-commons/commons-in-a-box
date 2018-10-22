@@ -17,7 +17,6 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -25,12 +24,12 @@
 
 					<div class="last-feature">
 
-						<p>Fixed a bug that could cause errors when installing Commons In A Box on top of an existing BuddyPress installation.</p>
+						<p><?php esc_html_e( 'Added "package" infrastructure.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Added OpenLab package.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
