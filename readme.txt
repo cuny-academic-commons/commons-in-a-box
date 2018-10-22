@@ -43,6 +43,11 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
+= 1.1.0 =
+* Added "package" functionality
+* Introducing the OpenLab package. See http://commonsinabox.org/cbox-openlab-overview/ for more details.
+* Updated plugins: BuddyPress 3.2.0, BuddyPress Docs 2.1.1
+
 = 1.0.15 =
 * Compatibility with BuddyPress 2.8
 * Updated plugins: BuddyPress 2.8.2, BuddyPress Docs 1.9.3, BuddyPress Group Email Subscription 3.7.1, Invite Anyone 1.3.16
