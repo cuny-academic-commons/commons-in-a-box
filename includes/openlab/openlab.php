@@ -7,7 +7,7 @@
  * @since      1.1.0
  */
 
-/** 
+/**
  * The "OpenLab" CBOX package.
  *
  * For plugin manifest, see {@link CBox_Plugins_OpenLab}.
