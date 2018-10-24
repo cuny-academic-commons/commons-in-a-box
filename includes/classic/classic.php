@@ -7,7 +7,7 @@
  * @since      1.1.0
  */
 
-/** 
+/**
  * The "classic" CBOX package.
  *
  * For plugin manifest, see {@link CBox_Plugins_Classic}.
