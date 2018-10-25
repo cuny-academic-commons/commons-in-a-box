@@ -1109,6 +1109,11 @@ class CBox_Admin {
 	 * @uses is_multisite() Check to see if WP is in network mode.
 	 */
 	public function plugins_page_header() {
+		// Multisite: Don't show if user doesn't have network admin access.
+		if ( is_multisite() && ! current_user_can( 'manage_network_plugins' ) ) {
+			return;
+		}
+
 		if ( cbox_is_setup() ) :
 			$single_site = ( current_user_can( 'manage_network_plugins' ) && ! is_network_admin() ) || ( ! is_multisite() && current_user_can( 'install_plugins' ) );
 
