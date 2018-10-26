@@ -270,7 +270,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BP Braille',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Braille Support', 'cbox' ),
-			'cbox_description'  => __( 'Provides a number of Braille-related services to BuddyPress, WordPress and the Anthologize plugin.', 'cbox' ),
+			'cbox_description'  => __( 'An addon for the Braille plugin providing support for BuddyPress Group Forums and Private Messaging', 'cbox' ),
 			'version'           => '0.2.0',
 			'depends'           => 'Braille (>=0.0.3)',
 			'download_url'      => 'http://github.com/hard-g/bp-braille/archive/master.zip',
@@ -295,6 +295,14 @@ class CBox_Plugins_OpenLab {
 			'version'           => '0.7.8',
 			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.8.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
+		) );
+
+		$instance( array(
+			'plugin_name'       => 'Braille',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'Braille', 'cbox' ),
+			'cbox_description'  => __( 'Provides a number of Braille-related services to WordPress.', 'cbox' ),
+			'documentation_url' => 'https://wordpress.org/plugins/braille',
 		) );
 
 		$instance( array(
