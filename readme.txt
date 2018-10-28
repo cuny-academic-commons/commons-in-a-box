@@ -15,9 +15,9 @@ Commons In A Box (CBOX) dramatically lowers the barrier to building community si
 
 Commons In A Box (CBOX) includes a choice of two packages that can be customized to meet the needs of your community:
 
-_CBOX Classic is designed for communities of all kinds._ It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.
+**CBOX Classic is designed for communities of all kinds.** It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.
 
-_CBOX OpenLab is specifically designed for teaching, learning, and collaboration._ It allows faculty members, departments, and entire institutions to create commons spaces for open learning. 
+**CBOX OpenLab is specifically designed for teaching, learning, and collaboration.** It allows faculty members, departments, and entire institutions to create commons spaces for open learning.
 
 Both packages feature:
 - Robust out-of-the-box functionality;

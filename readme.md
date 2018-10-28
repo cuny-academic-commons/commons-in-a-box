@@ -4,9 +4,9 @@
 
 [Commons In A Box](https://commonsinabox.org/) (CBOX) takes the complexity out of creating an online space, or digital commons, for community and collaboration. Built using the [WordPress](https://wordpress.org) publishing platform, with [BuddyPress](https://buddypress.org) for social networking, CBOX comes in two customizable packages:
 
-_CBOX Classic is designed for communities of all kinds._ It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.
+**CBOX Classic is designed for communities of all kinds.** It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.
 
-_CBOX OpenLab is specifically designed for teaching, learning, and collaboration._ It allows faculty members, departments, and entire institutions to create commons spaces for open learning. 
+**CBOX OpenLab is specifically designed for teaching, learning, and collaboration.** It allows faculty members, departments, and entire institutions to create commons spaces for open learning.
 
 Commons In A Box is developed by a team based at [The Graduate Center, CUNY](https://www.gc.cuny.edu). It was originally made possible by a grant from the [Alfred P. Sloan Foundation](https://sloan.org). CBOX OpenLab, a collaboration with [New York City College of Technology](http://www.citytech.cuny.edu), was created with funding from the National Endowment for the Humanities’ [Office of Digital Humanities](https://www.neh.gov/divisions/odh). CBOX receives continuing support from the City University of New York and The Graduate Center, CUNY. 
 
