@@ -255,6 +255,26 @@ class CBox_Admin {
 			die();
 		}
 
+		// Redirect to certain pages if necessary.
+		if ( ! cbox_is_setup() && empty( $_GET['cbox-action'] ) ) {
+			$redirect = '';
+			switch ( cbox_get_setup_step() ) {
+				case 'theme-prompt' :
+					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+					break;
+
+				case '' :
+					cbox_bump_revision_date();
+					$redirect = self_admin_url( 'admin.php?page=cbox' );
+					break;
+			}
+
+			if ( '' !== $redirect ) {
+				wp_redirect( $redirect );
+				die();
+			}
+		}
+
 		// Remove admin notice during setup mode.
 		if ( ! empty( cbox()->setup ) ) {
 			remove_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
@@ -766,18 +786,6 @@ class CBox_Admin {
 				</script>
 
 			<?php
-				break;
-
-			// (3) Show theme installation.
-			case 'theme-prompt' :
-				printf( '<script type="text/javascript">window.location = "%s";</script>', str_replace( '&amp;', '&', wp_nonce_url( self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt' ), 'cbox_theme_prompt' ) ) );
-				break;
-
-			// (4) bump revision date if we ever reach here.
-			default :
-				cbox_bump_revision_date();
-				echo '<script type="text/javascript">window.location = document.URL;</script>';
-
 				break;
 
 		} // end switch()
