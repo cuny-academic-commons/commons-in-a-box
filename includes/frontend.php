@@ -22,10 +22,12 @@ class CBox_Frontend {
 	 * Constructor.
 	 */
 	public function __construct() {
-		// Sanity check: ensure that BuddyPress is running.
-		if ( ! function_exists( 'buddypress' ) ) {
-			return;
-		}
+		/**
+		 * Hook to include various files on the frontend.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'cbox_frontend_includes' );
 
 		// setup globals
 		$this->setup_globals();
@@ -63,8 +65,9 @@ class CBox_Frontend {
 	 * @since 1.0.1
 	 */
 	private function setup_globals() {
-		// get our CBOX admin settings
-		$this->settings = (array) bp_get_option( cbox()->settings_key );
+		// get our admin settings; this is highly specific to the Classic package...
+		$settings_key   = cbox_get_package_prop( 'settings_key' );
+		$this->settings = ! empty( $settings_key ) ? (array) get_blog_option( cbox_get_main_site_id(), $settings_key ) : array();
 
 		// setup autoload classes
 		$this->setup_autoload();

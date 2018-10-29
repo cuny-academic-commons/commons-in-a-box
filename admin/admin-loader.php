@@ -34,17 +34,25 @@ class CBox_Admin {
 	 */
 	private function includes() {
 		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
+
+		/**
+		 * Hook to declare when the CBOX admin area is loaded at its earliest.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param CBox_Admin $this
+		 */
+		do_action( 'cbox_admin_loaded', $this );
 	}
 
 	/**
 	 * Setup hooks.
 	 */
 	private function setup_hooks() {
-		// setup admin menu
-		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu',           array( $this, 'admin_menu' ) );
-
-		// dashboard forums notice
-		add_action( "admin_init",                                                   array( $this, 'dashboard_forums_notice' ) );
+		// Only register menu on the main site (this also accounts for Network Admin)
+		if ( cbox_get_main_site_id() === get_current_blog_id() ) {
+			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
+		}
 
 		// see if an admin notice should be shown
 		add_action( 'admin_init',                                                   array( $this, 'setup_notice' ) );
@@ -61,13 +69,7 @@ class CBox_Admin {
 		// add a special header on the admin plugins page
 		add_action( 'pre_current_active_plugins', 	                            array( $this, 'plugins_page_header' ) );
 
-		// add a hook to manipulate BP's wizard steps
-		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_listener' ) );
-
-		// after the BP wizard completes, redirect to the CBOX dashboard
-		add_action( 'admin_init',                                                   array( $this, 'bp_wizard_redirect' ) );
-
-		// after installing the cbox-theme, run the activation hook
+		// after installing a theme, do something
 		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
 	}
 
@@ -80,16 +82,77 @@ class CBox_Admin {
 	 * @since 0.3
 	 */
 	public function catch_form_submission() {
-		// virgin setup - no CBOX or BP installed
-		if ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
+		// no package / reset package.
+		if ( isset( $_REQUEST['cbox-package'] ) ) {
+			// verify nonce
+			check_admin_referer( 'cbox_select_package' );
+
+			// We want to select a new package.
+			if ( empty( $_REQUEST['cbox-package'] ) ) {
+				$current = get_site_option( '_cbox_current_package' );
+				if ( ! empty( $current ) ) {
+					/**
+					 * Hook to do something when a package is about to be deactivated.
+					 *
+					 * This is a dynamic hook based on the package ID name.
+					 *
+					 * @since 1.1.0
+					 */
+					do_action( "cbox_package_{$current}_deactivation" );
+				}
+
+				delete_site_option( '_cbox_current_package' );
+				delete_site_option( '_cbox_revision_date' );
+
+			// We've selected a package.
+			} else {
+				update_site_option( '_cbox_current_package', $_REQUEST['cbox-package'] );
+			}
+
+			// Redirect to required plugins installation, if necessary.
+			if ( 'required-plugins' === cbox_get_setup_step() ) {
+				$url = self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) );
+			} else {
+				$url = self_admin_url( 'admin.php?page=cbox' );
+			}
+
+			wp_redirect( $url );
+			die();
+
+		// Package details.
+		} elseif ( ! empty( $_GET['cbox-package-details'] ) ) {
+			// verify nonce
+			check_admin_referer( 'cbox_package_details' );
+
+			cbox()->setup = 'package-details';
+
+		// virgin setup
+		} elseif ( ! empty( $_REQUEST['cbox-virgin-setup'] ) ) {
 			// verify nonce
 			check_admin_referer( 'cbox_virgin_setup', 'cbox-virgin-nonce' );
 
 			// set reference pointer for later use
 			cbox()->setup = 'virgin-setup';
 
-			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			$url  = '';
+			$step = cbox_get_setup_step();
+
+			// Redirect to a specific installation step, if necessary.
+			if ( '' === cbox_get_setup_step() ) {
+				if ( cbox_get_theme_prop( 'download_url' ) ) {
+					$url = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+				}
+			}
+
+			// Required plugins are already installed.
+			if ( '' === $url && 'required-plugins' !== $step ) {
+				$url = self_admin_url( 'admin.php?page=cbox' );
+			}
+
+			if ( $url ) {
+				wp_redirect( $url );
+				die();
+			}
 
 		// BP installed, but no CBOX
 		} elseif ( ! empty( $_REQUEST['cbox-recommended-nonce'] ) ) {
@@ -99,14 +162,20 @@ class CBox_Admin {
 			// set reference pointer for later use
 			cbox()->setup = 'install';
 
-			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
-
-			// if no plugins to install, redirect back to CBOX dashboard
+			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
-				do_action( 'cbox_after_updater' );
-				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
-				exit;
+				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
+				if ( ! cbox_get_installed_revision_date() ) {
+					cbox()->setup = 'theme-prompt';
+
+				// Bump the revision date in the DB after updating
+				} else {
+					add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
+					do_action( 'cbox_after_updater' );
+
+					wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+					exit;
+				}
 			}
 
 		// plugin upgrades available
@@ -121,7 +190,17 @@ class CBox_Admin {
 				cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 
 			// bump the revision date in the DB after updating
-			add_action( 'cbox_after_updater', create_function( '', 'cbox_bump_revision_date();' ) );
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
+
+		// theme prompt
+		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'theme-prompt' ) {
+			check_admin_referer( 'cbox_theme_prompt' );
+
+			// CBOX theme doesn't exist, so set reference pointer for later use
+			cbox()->setup = 'theme-prompt';
+
+			// bump the revision date in the DB after updating
+			add_action( 'cbox_after_updater', function() { cbox_bump_revision_date(); } );
 
 		// install CBOX theme
 		} elseif ( ! empty( $_REQUEST['cbox-action'] ) && $_REQUEST['cbox-action'] == 'install-theme' ) {
@@ -129,19 +208,29 @@ class CBox_Admin {
 			check_admin_referer( 'cbox_install_theme' );
 
 			// get cbox theme
-			$cbox_theme = wp_get_theme( 'cbox-theme' );
-			$errors = $cbox_theme->errors()->errors;
+			$theme = cbox_get_theme( cbox_get_theme_prop( 'directory_name' ) );
 
 			// CBOX theme exists! so let's activate it and redirect to the
 			// CBOX Theme options page!
-			if ( empty( $errors['theme_not_found'] ) ) {
-				switch_theme( 'cbox-theme', 'cbox-theme' );
+			if ( $theme->exists() ) {
+				// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
+				if ( 1 !== cbox_get_main_site_id() ) {
+					switch_to_blog( cbox_get_main_site_id() );
+				}
 
-                               // Mark the theme as having just been activated
-                               // so that we can run the setup on next pageload
-				bp_update_option( '_cbox_theme_activated', '1' );
+				// switch the theme
+				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
-				wp_redirect( admin_url( 'themes.php?page=infinity-theme' ) );
+				// restore blog after switching
+				if ( 1 !== cbox_get_main_site_id() ) {
+					restore_current_blog();
+				}
+
+				// Mark the theme as having just been activated
+				// so that we can run the setup on next pageload
+				update_site_option( '_cbox_theme_activated', '1' );
+
+				wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
 				return;
 			}
 
@@ -157,6 +246,39 @@ class CBox_Admin {
 			cbox()->setup = 'upgrade-theme';
 			cbox()->theme_upgrades = $_REQUEST['cbox-themes'];
 		}
+
+		// Complete step.
+		if ( ! empty( $_GET['cbox-action'] ) && 'complete' === $_GET['cbox-action'] && ! cbox_get_installed_revision_date() ) {
+			cbox_bump_revision_date();
+
+			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
+			die();
+		}
+
+		// Redirect to certain pages if necessary.
+		if ( ! cbox_is_setup() && empty( $_GET['cbox-action'] ) ) {
+			$redirect = '';
+			switch ( cbox_get_setup_step() ) {
+				case 'theme-prompt' :
+					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+					break;
+
+				case '' :
+					cbox_bump_revision_date();
+					$redirect = self_admin_url( 'admin.php?page=cbox' );
+					break;
+			}
+
+			if ( '' !== $redirect ) {
+				wp_redirect( $redirect );
+				die();
+			}
+		}
+
+		// Remove admin notice during setup mode.
+		if ( ! empty( cbox()->setup ) ) {
+			remove_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
+		}
 	}
 
 	/**
@@ -169,11 +291,15 @@ class CBox_Admin {
 		switch( cbox()->setup ) {
 			// virgin setup - no CBOX or BP installed
 			case 'virgin-setup' :
-				// get CBOX plugins except optional ones
-				$plugins = CBox_Plugins::get_plugins( 'all', 'optional' );
+				// get required CBOX plugins.
+				$plugins = CBox_Plugins::get_plugins( 'required' );
 
 				// sort plugins by plugin state
-				$plugins = CBox_Plugins::organize_plugins_by_state( $plugins );
+				$plugins = CBox_Admin_Plugins::organize_plugins_by_state( $plugins );
+
+				// Check for recommended plugins.
+				$recommended = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
+				unset( $recommended['deactivate'] );
 
 				// include the CBOX Plugin Upgrade and Install API
 				if ( ! class_exists( 'CBox_Plugin_Upgrader' ) )
@@ -181,20 +307,56 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Set Up CBOX Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'cbox' ) . '</h2>';
 
-				// start the upgrade!
-				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
-				) );
+				// Start the installer.
+				$options = array();
+				if ( ! empty( $recommended ) ) {
+					$options = array(
+						'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
+						'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
+					);
+
+				// Add theme step if recommended plugins are already active.
+				} elseif ( cbox_get_theme_prop( 'download_url' ) ) {
+					$options = array(
+						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
+						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
+					);
+				}
+
+				$installer = new CBox_Updater( $plugins, $options );
 
 				echo '</div>';
 
 				break;
 
-			// BP installed, but no CBOX
+			case 'package-details' :
+				$package = sanitize_title( $_GET['cbox-package-details'] );
+				// some HTML markup!
+				echo '<div class="wrap">';
+				echo '<h2>' . sprintf( esc_html__( 'Confirm CBOX %s Installation', 'cbox' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
+
+				cbox_get_template_part( 'package-details-intro', $package );
+				cbox_get_template_part( 'package-details', $package );
+			?>
+
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin-top:2em; text-align:right;, ">
+					<?php wp_nonce_field( 'cbox_select_package' ); ?>
+
+					<input type="hidden" name="cbox-package" value="<?php echo $package; ?>" />
+
+					<a class="button button-secondary" href="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin:0 15px 0 0;"><?php esc_html_e( 'Return to dashboard', 'cbox' ); ?></a>
+
+					<input type="submit" value="<?php esc_html_e( 'Install', 'cbox' ); ?>" class="button-primary" name="package-details" />
+				</form>
+
+			<?php
+				echo '</div>';
+
+				break;
+
+			// Installed, but haven't run through setup.
 			case 'install' :
 				$plugins = $_REQUEST['cbox_plugins'];
 
@@ -204,13 +366,21 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Install CBOX Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
+
+				// Prompt for theme install afterwards, if available.
+				if ( cbox_get_theme_prop( 'download_url' ) ) {
+					$url  = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+					$text = __( 'Continue to theme installation', 'cbox' );
+				} else {
+					$url  = self_admin_url( 'admin.php?page=cbox' );
+					$text = __( 'Continue to the CBOX Dashboard', 'cbox' );
+				}
 
 				// start the install!
 				$installer = new CBox_Updater( $plugins, array(
-					'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-					'redirect_text' => __( 'Return to the CBOX Dashboard', 'cbox' )
+					'redirect_link' => $url,
+					'redirect_text' => $text
 				) );
 
 				echo '</div>';
@@ -220,22 +390,22 @@ class CBox_Admin {
 			// upgrading installed plugins
 			case 'upgrade' :
 				// setup our upgrade plugins array
-				$plugins['upgrade'] = CBox_Plugins::get_upgrades( 'active' );
+				$plugins['upgrade'] = CBox_Admin_Plugins::get_upgrades( 'active' );
 
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
 				if ( ! empty( cbox()->theme_upgrades ) ) {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
-					$redirect_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
-					$redirect_text = __( "Now, let's upgrade the CBOX Default theme &rarr;", 'cbox' );
+					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
+					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'cbox' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
 
 
 				} else {
 					$title = esc_html__( 'Upgrading CBOX Plugins', 'cbox' );
 
 					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-					$redirect_text = __( 'Return to the CBOX Dashboard', 'cbox' );
+					$redirect_text = __( 'Continue to the CBOX Dashboard', 'cbox' );
 				}
 
 				// include the CBOX Plugin Upgrade and Install API
@@ -244,7 +414,6 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
 				echo '<h2>' . $title . '</h2>';
 
 				// start the upgrade!
@@ -257,18 +426,65 @@ class CBox_Admin {
 
 				break;
 
+			// prompt for theme install
+			case 'theme-prompt' :
+				$directory_name = cbox_get_theme_prop( 'directory_name' );
+
+				// Button text.
+				if ( ! empty( $directory_name ) && cbox_get_theme( $directory_name )->exists() ) {
+					$btn_text = esc_html__( 'Activate Theme', 'cbox' );
+				} else {
+					$btn_text = esc_html__( 'Install Theme', 'cbox' );
+				}
+
+				// Theme needs to be force-installed.
+				if ( cbox_get_theme_prop( 'force_install' ) ) {
+					$bail_text = esc_html__( 'Return to package selection', 'cbox' );
+					$bail_link = esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=0' ), 'cbox_select_package' ) );
+					$warning = sprintf( __( 'Please note: This theme is <strong>required</strong> for use with Commons In A Box %s.', 'cbox' ), cbox_get_package_prop( 'name' ) );
+					$warning = sprintf( '<p>%s</p>', $warning );
+					$warning .= sprintf( '<p>%s</p>',
+						sprintf( __( 'Clicking on "%1$s" will change your current theme. If you do not wish to change the theme, please click "%2$s" and choose a different package.', 'cbox' ), $btn_text, $bail_text )
+					);
+
+				// Theme installation is optional.
+				} else {
+					$bail_text = esc_html__( 'Skip', 'cbox' );
+					$bail_link = self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' );
+					$warning = sprintf( '<p>%s</p>',
+						sprintf( esc_html__( 'Please note: Clicking on "%1$s" will change your current theme.  If you would rather keep your existing theme, click on the "%2$s" link.', 'cbox' ), $btn_text, $bail_text )
+					);
+				}
+
+				// some HTML markup!
+				echo '<div class="wrap">';
+
+				echo '<h2>' . esc_html__( 'Theme Installation', 'cbox' ) . '</h2>';
+
+				cbox_get_template_part( 'theme-prompt' );
+
+				echo $warning;
+
+				echo '<div style="margin-top:2em;">';
+					printf( '<a href="%1$s" style="display:inline-block; margin:5px 15px 0 0;">%2$s</a>', $bail_link, $bail_text );
+
+					printf( '<a href="%1$s" class="button button-primary">%2$s</a>', wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), $btn_text );
+				echo '</div>';
+
+				echo '</div>';
+
+				break;
+
 			// install the cbox theme
 			case 'install-theme' :
 				// include the CBOX Theme Installer
-				if ( ! class_exists( 'CBox_Theme_Installer' ) )
+				if ( ! class_exists( 'CBox_Theme_Installer' ) ) {
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
+				}
 
-				// get CBOX theme specs
-				$theme = CBox_Theme_Specs::init()->get( 'cbox_theme' );
+				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), cbox_get_theme_prop( 'name' ) );
 
-				$title = sprintf( _x( 'Installing %s', 'references the theme that is currently being installed', 'cbox' ), $theme['name'] . ' ' . $theme['version'] );
-
-				$cbox_theme = new CBox_Theme_Installer( new CBox_Theme_Installer_Skin( compact( 'title' ) ) );
+				$cbox_theme = new CBox_Theme_Installer( new Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
 
 				break;
@@ -281,8 +497,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				screen_icon( 'cbox' );
-				echo '<h2>' . esc_html__('Upgrading CBOX Theme', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Upgrading Theme', 'cbox' ) . '</h2>';
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
@@ -300,98 +515,27 @@ class CBox_Admin {
 	}
 
 	/**
-	 * If we're on the BuddyPress Wizard, we do a couple of things to
-	 * manipulate BP for CBOX UX reasons.
-	 *
-	 * 1) Alter BuddyPress' wizard to remove the "Theme" step.
-	 * 2) Set a cookie if we're on the last step of the BP wizard. This
-	 *    is done so we can redirect back to the CBOX dashboard after BP
-	 *    wizard has done its thang.
-	 *
-	 * Warning: hackety-hack-hack!
-	 *
-	 * @since 0.3
-	 */
-	public function bp_wizard_listener() {
-		// if we're not on the BP wizard page, stop now!
-		if ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != 'bp-wizard' )
-			return;
-
-		global $bp;
-
-		// check to see if the 3rd key exists in the wizard
-		// this almost always exists, but just testing as a precaution!
-		if ( empty( $bp->admin->wizard->steps[3] ) ) {
-			return;
-		}
-
-		// alright, the 3rd key exists!
-		// now let's check to see if the key equals our 'Theme' step
-		// this usually occurs for BP 1.5-1.6 only as BP 1.7 removes this
-		if ( $bp->admin->wizard->steps[3] = __( 'Theme', 'buddypress' ) ) {
-			// 'Theme' step exists! now get rid of it!
-			unset( $bp->admin->wizard->steps[3] );
-
-			// rejig the keys
-			$bp->admin->wizard->steps = array_values( $bp->admin->wizard->steps );
-		}
-
-		/* lastly, set a cookie on the last step of the BP wizard */
-
-		// get the last step of the bp wizard
-		$last_step = array_pop( array_keys( $bp->admin->wizard->steps ) );
-
-		// get current step
-		$current_step = $bp->admin->wizard->current_step();
-
-		// set the cookie
-		if ( $last_step == $current_step ) {
-			@setcookie( 'cbox-bp-finish-wizard', 1, time() + 60 * 60 * 24, COOKIEPATH );
-		}
-	}
-
-	/**
-	 * Catch BP wizard's redirect after completion and redirect to the
-	 * CBOX dashboard.
-	 *
-	 * @since 0.3
-	 *
-	 * @see CBox_Admin::bp_wizard_listener()
-	 */
-	public function bp_wizard_redirect() {
-		// after the BP wizard completes, it gets redirected back to the BP
-		// components page.
-		//
-		// so check to see if we're on the BP components page, if not, stop now!
-		if ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != 'bp-components' )
-			return;
-
-		if ( ! empty( $_COOKIE['cbox-bp-finish-wizard'] ) ) {
-			// remove the cookie
-			@setcookie( 'cbox-bp-finish-wizard', '', time() - 3600, COOKIEPATH );
-
-			// do some stuff after CBOX is installed
-			cbox_bp_after_version_bump();
-
-			// redirect to the CBOX dashboard
-			wp_redirect( self_admin_url( 'admin.php?page=cbox' ) );
-		}
-	}
-
-	/**
-         * Trigger Infinity's activation hook, if necessary
+         * Do something just after a theme is activated on the next page load.
          *
-	 * Infinity, and therefore cbox-theme, run certain setup routines at
-         * 'infinity_dashboard_activated'. However, this hook doesn't fire
-         * properly when CBOX uses switch_theme() to set the current theme.
-         * Instread, we set a flag at activation, and then check on each admin
-         * pageload to see if the theme was just activated; if so, we run the
-         * activation hook.
+         * @since 1.0-beta1
          */
 	public function theme_activation_hook() {
-		if ( function_exists( 'bp_get_option' ) && bp_get_option( '_cbox_theme_activated' ) ) {
-			bp_delete_option( '_cbox_theme_activated' );
-			do_action( 'infinity_dashboard_activated' );
+		if ( get_site_option( '_cbox_theme_activated' ) ) {
+			delete_site_option( '_cbox_theme_activated' );
+
+			/**
+			 * Do something just after a theme is activated on the next page load.
+			 *
+			 * This is a dynamic hook, based off of the current package ID.
+			 *
+			 * @since 1.1.0
+			 */
+			do_action( 'cbox_' . cbox_get_current_package_id() . '_theme_activated' );
+
+			// CBOX finished updating, but DB version not saved; do it now.
+			if ( ! cbox_get_installed_revision_date() ) {
+				cbox_bump_revision_date();
+			}
 		}
 	}
 
@@ -401,12 +545,15 @@ class CBox_Admin {
 	 * Setup admin menu and any dependent page hooks.
 	 */
 	public function admin_menu() {
+		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX %s', 'cbox' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'cbox' );
 		$page = add_menu_page(
-			__( 'Commons In A Box', 'cbox' ),
-			__( 'Commons In A Box', 'cbox' ),
+			$name,
+			$name,
 			'install_plugins', // todo - map cap?
 			'cbox',
-			array( $this, 'admin_page' )
+			array( $this, 'admin_page' ),
+			'none',
+			2
 		);
 
 		$subpage = add_submenu_page(
@@ -418,7 +565,22 @@ class CBox_Admin {
 			array( $this, 'admin_page' )
 		);
 
+		/**
+		 * Hook to do so something during CBOX admin menu registration.
+		 *
+		 * @since 1.0-beta1
+		 */
 		do_action( 'cbox_admin_menu' );
+
+		$package_id = cbox_get_current_package_id();
+		if ( ! empty( $package_id ) ) {
+			/**
+			 * Admin menu hook for the current active package.
+			 *
+			 * @since 1.1.0
+			 */
+			do_action( "cbox_{$package_id}_admin_menu" );
+		}
 
 		// dashboard CSS
 		add_action( "admin_head-{$subpage}",          array( $this, 'dashboard_css' ) );
@@ -431,9 +593,6 @@ class CBox_Admin {
 
 		// catch form submission
 		add_action( "load-{$subpage}",                array( $this, 'catch_form_submission' ) );
-
-		// contextual help
-		add_action( "load-{$subpage}",                array( $this, 'contextual_help' ) );
 	}
 
 	/**
@@ -442,11 +601,7 @@ class CBox_Admin {
 	public function admin_page() {
 		// what's new page
 		if ( $this->is_changelog() ) {
-			require( CBOX_PLUGIN_DIR . 'admin/changelog.php' );
-
-		// credits page
-		} elseif ( $this->is_credits() ) {
-			require( CBOX_PLUGIN_DIR . 'admin/credits.php' );
+			cbox_get_template_part( 'changelog' );
 
 		// setup screen
 		} elseif( ! empty( cbox()->setup ) ) {
@@ -456,10 +611,8 @@ class CBox_Admin {
 		} else {
 		?>
 			<div class="wrap">
-				<?php screen_icon( 'cbox' ); ?>
 				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
 
-				<?php $this->welcome_panel(); ?>
 				<?php $this->steps(); ?>
 				<?php $this->upgrades(); ?>
 				<?php $this->metaboxes(); ?>
@@ -467,29 +620,6 @@ class CBox_Admin {
 			</div>
 		<?php
 		}
-	}
-
-	/**
-	 * Registers contextual help for the CBOX dashboard page.
-	 *
-	 * @uses get_current_screen() Gets info about the current screen.
-	 */
-	public function contextual_help() {
-		// about
-		get_current_screen()->add_help_tab( array(
-			'id'      => 'cbox-about',
-			'title'   => __( 'About', 'cbox' ),
-			'content' =>
-				'<p>' . sprintf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ) . '</p>' .
-				'<p>' . __( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ) . '</p>'
-		) );
-
-		// sidebar links
-		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'Useful Links:', 'cbox' ) . '</strong></p>' .
-			'<p>' . sprintf( __( '<a href="%s">Changelog</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&whatsnew=1' ) ) ) . '</p>' .
-			'<p>' . sprintf( __( '<a href="%s">Show Welcome Message</a>', 'cbox' ), esc_url( self_admin_url( 'admin.php?page=cbox&welcome=1' ) ) ) . '</p>'
-		);
 	}
 
 	/**
@@ -502,71 +632,6 @@ class CBox_Admin {
 			return true;
 
 		return false;
-	}
-
-	/**
-	 * Should we show the credits screen?
-	 *
-	 * @return bool
-	 */
-	private function is_credits() {
-		if ( ! empty( $_GET['credits'] ) )
-			return true;
-
-		return false;
-	}
-
-	/**
-	 * The CBOX welcome panel.
-	 *
-	 * This is pretty much ripped off from {@link wp_welcome_panel()} :)
-	 */
-	private function welcome_panel() {
-		if ( isset( $_GET['welcome'] ) ) {
-			$welcome_checked = empty( $_GET['welcome'] ) ? 0 : 1;
-			update_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', $welcome_checked );
-		}
-
-		global $wp_version;
-
-		// default class for our welcome panel container
-		$classes = 'welcome-panel';
-
-		// get our user's welcome panel setting
-		$option = get_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', true );
-
-		// if welcome panel option isn't set, set it to "1" to show the panel by default
-		if ( $option === '' )
-			$option = 1;
-
-		// this sets the CSS class needed to hide the welcome panel if needed
-		if ( ! (int) $option )
-			$classes .= ' hidden';
-
-	?>
-		<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
-			<?php wp_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
-
-			<?php if ( cbox_is_setup() ) : ?>
-				<a class="welcome-panel-close" href="<?php echo esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ); ?>"><?php _e( 'Dismiss', 'cbox' ); ?></a>
-			<?php endif; ?>
-
-			<div class="wp-badge"><?php printf( __( 'Version %s', 'cbox' ), cbox_get_version() ); ?></div>
-
-			<div class="welcome-panel-content">
-				<h3><?php _e( 'Welcome to Commons In A Box! ', 'cbox' ); ?></h3>
-
-				<p class="about-description"><?php _e( 'Need help getting started? Looking for support or ideas? Check out our documentation and join the community of CBOX users at <a href="http://commonsinabox.org">commonsinabox.org</a>.', 'cbox' ) ?></p>
-
-				<?php if ( cbox_is_setup() ) : ?>
-					<p class="about-description"><?php _e( 'If you&#8217;d rather dive right in, here are a few things most people do first when they set up a new CBOX site.', 'cbox' ); ?></p>
-					<p class="welcome-panel-dismiss"><?php printf( __( 'Already know what you&#8217;re doing? <a href="%s">Dismiss this message</a>.', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox&welcome=0' ) ) ); ?></p>
-				<?php endif; ?>
-			</div><!-- .welcome-panel-content -->
-
-		</div><!-- #welcome-panel -->
-
-	<?php
 	}
 
 	/**
@@ -591,16 +656,85 @@ class CBox_Admin {
 
 		// do something different depending on the setup step
 		switch ( cbox_get_setup_step() ) {
+			// (0) No package.
+			case 'no-package' :
+			?>
 
-			// (1) buddypress isn't activated or isn't installed
-			case 'no-buddypress' :
+				<div style="text-align:center;">
+					<h2><?php _e( 'Select a Package', 'cbox' ); ?></h2>
+
+					<p><?php esc_html_e( 'Commons In A Box includes two packages, each containing selected WordPress plugins and a WordPress theme. The packages are designed to make it easier for you to install and configure your site. Select the package that best suits your needs.', 'cbox' ); ?></p>
+				</div>
+
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
+					<div class="wp-list-table widefat">
+					<div id="the-list">
+
+			<?php foreach ( cbox_get_packages() as $package => $class ) :
+				$incompatible = ! is_multisite() && true === cbox_get_package_prop( 'network', $package );
+			?>
+
+			<div class="plugin-card plugin-card-<?php echo sanitize_html_class( cbox_get_package_prop( 'name', $package ) ); ?>" style="width:100%; margin-left:0;">
+			<div class="plugin-card-top">
+				<div class="name column-name">
+					<h3><?php esc_attr_e( cbox_get_package_prop( 'name', $package ) ); ?>
+
+					<img src="<?php echo esc_url( cbox_get_package_prop( 'icon_url', $package ) ); ?>" class="plugin-icon" alt="">
+					</h3>
+				</div>
+
+				<div class="action-links">
+					<ul class="plugin-action-buttons">
+						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package-details=' . $package ), 'cbox_package_details' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
+						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'cbox' ); ?></a></li>
+					</ul>
+				</div>
+
+				<div class="desc column-description">
+					<?php cbox_get_template_part( 'description', $package ); ?>
+					<!--<p class="authors"> <cite>By <a href="">CBOX Team</a></cite></p>-->
+				</div>
+			</div>
+
+			<div class="plugin-card-bottom">
+				<div class="column-updated">
+					<?php if ( cbox_get_theme_prop( 'force_install', $package ) ) : ?>
+						<span class="update-now theme-required"><?php esc_html_e( 'Theme required; existing theme will be replaced during installation.', 'cbox' ); ?></span>
+					<?php else : ?>
+						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional; theme installation can be skipped.', 'cbox' ); ?></span>
+					<?php endif; ?>
+				</div>
+
+				<div class="column-compatibility">
+					<?php if ( $incompatible ) : ?>
+						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'cbox' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
+						'Find out how to convert to a WordPress Multisite network here.', 'cbox' ) ); ?></span>
+					<?php else : ?>
+						<span class="compatibility-compatible"><?php _e( '<strong>Compatible</strong> with your version of WordPress', 'cbox' ); ?></span>
+					<?php endif; ?>
+				</div>
+			</div>
+
+			</div>
+
+			<?php endforeach; ?>
+
+					</div>
+					</div>
+				</form>
+
+			<?php
+				break;
+
+			// (1) required plugins need to be installed/upgraded first if necessary.
+			case 'required-plugins' :
 
 			?>
 
-				<h2><?php _e( 'Install BuddyPress', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "Before you can use Commons In A Box, we'll need to install BuddyPress and some recommended plugins. Click 'Continue' to get set up.", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php printf( __( "Before you can use Commons In A Box %s, we'll need to install some required plugins. Click 'Continue' to get set up.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
 
@@ -610,66 +744,48 @@ class CBox_Admin {
 			<?php
 				break;
 
-			// (2) buddypress is activated, but we just upgraded buddypress
-			case 'buddypress-wizard' :
-
+			// (2) next, recommended plugins are offered if available.
+			case 'recommended-plugins' :
 			?>
 
-				<h2><?php _e( 'Set Up BuddyPress', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
 
-				<p class="submitted-on"><?php _e( "We're almost there! Now we need to finish setting up BuddyPress.", 'cbox' ); ?></p>
+				<form id="cbox-recommended" method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
+					<p class="submitted-on"><?php _e( "You're almost finished with the installation process.", 'cbox' ); ?></p>
 
-				<p class="submitted-on"><?php printf( __( "Don't worry! BuddyPress has a simple wizard to guide you through the process.  However, if you want more help, check out this <a href='%s'>codex article</a>.", 'cbox' ), 'http://codex.buddypress.org/getting-started/setting-up-a-new-installation/installation-wizard/#step-1' ); ?></p>
-
-				<p><a class="button-primary" href="<?php cbox_the_bp_admin_wizard_url(); ?>"><?php _e( 'Continue to BuddyPress setup &rarr;', 'cbox' ); ?></a></p>
-
-			<?php
-				break;
-
-			// (3) we're on the last step!
-			case 'last-step' :
-
-				// get recommended plugins that are available to install / upgrade
-				$recommended_plugins = CBox_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
-
-				// we don't want already-installed plugins
-				if ( ! empty( $recommended_plugins['deactivate'] ) )
-					unset( $recommended_plugins['deactivate'] );
-
-				// we have some recommended plugins to bug the user about!
-				if ( ! empty( $recommended_plugins ) ) {
-			?>
-
-				<h2><?php _e( 'Install some other cool stuff!', 'cbox' ); ?></h2>
-
-				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "It looks like you're already running BuddyPress. Cool! You're almost finished the setup process!", 'cbox' ); ?></p>
-
-					<p class="submitted-on"><?php _e( "Did you know Commons In A Box comes prebundled with a few, recommended plugins?  These plugins help to add functionality to your existing WordPress and BuddyPress site. ", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
 
 					<p class="submitted-on"><?php _e( "We have automatically selected the following plugins to install for you. However, feel free to uncheck some of these plugins based on your site's needs.", 'cbox' ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_bp_installed', 'cbox-recommended-nonce' ); ?>
 
 					<?php
-						cbox()->plugins->render_plugin_table( array(
-							'type'           => 'recommended',
-							'omit_activated' => true,
-							'check_all'      => true
+						CBox_Admin_Plugins::render_plugin_table( array(
+							'type'            => 'recommended',
+							'omit_activated'  => true,
+							'check_all'       => true,
+							'submit_btn_text' => __( 'Continue', 'cbox' )
 						) );
 					?>
 				</form>
 
-			<?php
-				// all recommended plugins are already installed
-				// so bump the CBOX revision date and reload the page using javascript
-				// @todo make this <noscript> friendly
-				} else {
-					cbox_bump_revision_date();
-
-					echo '<script type="text/javascript">window.location = document.URL;</script>';
+				<script>
+				jQuery(function() {
+					cboxRecommendedChecked();
+					jQuery("#cbox-recommended input[type='checkbox']").change(function() {
+						cboxRecommendedChecked();
+					})
+				})
+				function cboxRecommendedChecked() {
+					if ( jQuery("#cbox-recommended input:checked").length > 0) {
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Install', 'cbox' ); ?>");
+					} else {
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Continue', 'cbox' ); ?>");
+					}
 				}
+				</script>
 
+			<?php
 				break;
 
 		} // end switch()
@@ -721,7 +837,7 @@ class CBox_Admin {
 			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 
 		// get activated CBOX plugins that need updating
-		$active_cbox_plugins_need_update = CBox_Plugins::get_upgrades( 'active' );
+		$active_cbox_plugins_need_update = CBox_Admin_Plugins::get_upgrades( 'active' );
 
 		// check for theme upgrades
 		$is_theme_upgrade = cbox_get_theme_to_update();
@@ -745,16 +861,16 @@ class CBox_Admin {
 		$plugin_count = $total_count = count( $active_cbox_plugins_need_update );
 
 		// setup default upgrade URL
-		$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
+		$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
 
 		// theme is available for upgrade
 		if ( ! empty( $active_cbox_plugins_need_update ) && ! empty( $is_theme_upgrade ) ) {
 			++$total_count;
 
 			// theme has update, so add an extra parameter to the querystring
-			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
+			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
-			$message = sprintf( _n( '%d installed plugin and the CBOX Default theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the CBOX Default theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
 
 		// just plugins
 		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
@@ -763,9 +879,9 @@ class CBox_Admin {
 		// just themes
 		} else {
 			// theme has update, so switch up the upgrade URL
-			$url = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
+			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
-			$message = __( 'The CBOX Default theme has an update available. Click on the button below to upgrade.', 'cbox' );
+			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), cbox_get_theme_prop( 'name' ) );
 		}
 
 	?>
@@ -797,143 +913,7 @@ class CBox_Admin {
 		if ( ! cbox_is_setup() )
 			return;
 
-		$cbox_plugins = CBox_Plugins::get_plugins();
-	?>
-
-		<div id="cbox-links" class="secondary-panel">
-			<h2><?php _e( 'Quick Links', 'cbox' ); ?></h2>
-
-			<div class="welcome-panel-column-container">
-
-				<!-- SETTINGS -->
-				<div class="welcome-panel-column">
-					<h4><span class="icon16 icon-settings"></span> <?php _e( 'Settings', 'cbox' ); ?></h4>
-					<p><?php _e( "Commons In A Box works by pulling together a number of independent WordPress and BuddyPress plugins. Customize your site by exploring the settings pages for these plugins below.", 'cbox' ); ?></p>
-					<ul>
-
-					<?php
-						foreach ( CBox_Plugins::get_settings() as $plugin => $settings_url ) {
-							echo '<li><a title="' . __( "Click here to view this plugin's settings page", 'cbox' ) . '" href="' . $settings_url .'">' . $plugin . '</a> - ' . $cbox_plugins[$plugin]['cbox_description'];
-
-							if ( ! empty( $cbox_plugins[$plugin]['documentation_url'] ) )
-								echo ' [<a title="' . __( "Click here for plugin documentation at commonsinabox.org", 'cbox' ) . '" href="' . esc_url( $cbox_plugins[$plugin]['documentation_url'] ) . '" target="_blank">' . __( 'Info...', 'cbox' ) . '</a>]';
-
-							echo '</li>';
-						}
-					?>
-					</ul>
-
-					<div class="login postbox">
-						<div class="message" style="text-align:center;">
-							<strong><?php printf( __( '<a href="%s">Manage all your CBOX plugins here!</a>', 'cbox' ), esc_url( network_admin_url( 'admin.php?page=cbox-plugins' ) ) ); ?></strong>
-						</div>
-					</div>
-				</div>
-
-				<!-- THEME -->
-				<div class="welcome-panel-column welcome-panel-last">
-					<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'cbox' ); ?></h4>
-					<?php
-						// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-						if ( ! bp_is_root_blog() ) {
-							switch_to_blog( bp_get_root_blog_id() );
-						}
-
-						$theme = wp_get_theme();
-
-						// restore blog after switching
-						if ( is_multisite() ) {
-							restore_current_blog();
-						}
-
-						if ( $theme->errors() ) :
-							echo '<p>';
-							printf( __( '<a href="%s">Install the CBOX Default theme to get started</a>.', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) );
-							echo '</p>';
-						else:
-
-							// current theme is not the CBOX default theme
-							if ( $theme->get_template() != 'cbox-theme' ) {
-								$is_bp_compatible = cbox_is_theme_bp_compatible();
-
-							?>
-								<p><?php printf( __( 'Your current theme is %s.', 'cbox' ), '<strong>' . $theme->display( 'Name' ) . '</strong>' ); ?></p>
-
-								<?php
-									if ( ! $is_bp_compatible ) {
-										echo '<p>';
-										_e( 'It looks like this theme is not compatible with BuddyPress.', 'cbox' );
-										echo '</p>';
-									}
-								?>
-
-								<p><?php _e( 'Did you know that <strong>CBOX</strong> comes with a cool theme? Check it out below!', 'cbox' ); ?></p>
-
-								<a rel="leanModal" title="<?php _e( 'View a larger screenshot of the CBOX theme', 'cbox' ); ?>" href="#cbox-theme-screenshot"><img width="200" src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" /></a>
-
-								<div class="login postbox">
-									<div class="message" style="text-align:center;">
-										<strong><?php printf( __( '<a href="%s">Like the CBOX Theme? Install it!</a>', 'cbox' ), wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ) ); ?></strong>
-									</div>
-								</div>
-
-								<!-- hidden modal window -->
-								<div id="cbox-theme-screenshot" style="display:none;">
-									<img src="<?php echo cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ); ?>" alt="" />
-								</div>
-								<!-- #cbox-theme-screenshot -->
-
-								<script type="text/javascript">jQuery("a[rel*=leanModal]").leanModal();</script>
-
-								<?php
-									if ( ! $is_bp_compatible ) {
-										echo '<p>';
-										printf( __( "You can also make your theme compatible with the <a href='%s'>BuddyPress Template Pack</a>.", 'buddypress' ), network_admin_url( 'plugin-install.php?type=term&tab=search&s=%22bp-template-pack%22' ) );
-										echo '</p>';
-									}
-								?>
-
-							<?php
-							// current theme is the CBOX default theme
-							} else {
-								// check for upgrades
-								//$is_upgrade = CBox_Theme_Specs::get_upgrades( $theme );
-							?>
-
-								<?php if ( $theme->get_stylesheet() != 'cbox-theme' ) : ?>
-									<p><?php _e( "You're using a child theme of the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
-								<?php else : ?>
-									<p><?php _e( "You're using the <strong>CBOX Default</strong> theme! Good on ya!", 'cbox' ); ?></p>
-								<?php endif; ?>
-
-								<?php /* HIDE THIS FOR NOW ?>
-								<?php if ( $is_upgrade ) : ?>
-									<div class="login postbox">
-										<div id="login_error" class="message">
-											<?php _e( 'Update available.', 'cbox' ); ?> <strong><a href="<?php echo wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_upgrade ), 'cbox_upgrade_theme' ); ?>"><?php _e( 'Update now!', 'cbox' ); ?></a></strong>
-										</div>
-									</div>
-								<?php endif; ?>
-								<?php */ ?>
-
-								<div class="login postbox">
-									<div class="message">
-										<strong><?php printf( __( '<a href="%s">Configure the CBOX Theme here!</a>', 'cbox' ), esc_url( get_admin_url( bp_get_root_blog_id(), 'themes.php?page=infinity-theme' ) ) ); ?></strong>
-									</div>
-								</div>
-
-							<?php
-							}
-
-						endif;
-					?>
-				</div>
-
-			</div><!-- .welcome-panel-column-container -->
-
-		</div><!-- .welcome-panel -->
-
-	<?php
+		cbox_get_template_part( 'dashboard' );
 	}
 
 	/**
@@ -948,80 +928,11 @@ class CBox_Admin {
 	private function about() {
 		if ( ! cbox_is_setup() )
 			return;
-	?>
-		<div id="cbox-about" class="secondary-panel">
-			<h2><?php _e( 'About', 'cbox' ); ?></h2>
 
-			<p><?php printf( __( "You're currently using <strong>Commons In A Box %s</strong>", 'cbox' ), cbox_get_version() ); ?>.</p>
-
-			<p><?php printf( __( '<strong>Commons In A Box</strong> is a software project aimed at turning the infrastructure that successfully powers the <a href="%s">CUNY Academic Commons</a> into a free, distributable, easy-to-install package.', 'cbox' ), esc_url( 'http://commons.gc.cuny.edu' ) ); ?></p>
-
-			<p><?php  _e( 'Commons In A Box is made possible by a generous grant from the Alfred P. Sloan Foundation.', 'cbox' ); ?></p>
-
-			<ul>
-				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;whatsnew=1' ); ?>"><?php _e( "What's New", 'cbox' ); ?></a></li>
-				<li><a href="<?php echo network_admin_url( 'admin.php?page=cbox&amp;credits=1' ); ?>"><?php _e( 'Credits', 'cbox' ); ?></a></li>
-				<li><a href="http://commonsinabox.org/documentation/"><?php _e( 'Documentation', 'cbox' ); ?></a></li>
-				<li><a href="https://github.com/cuny-academic-commons/commons-in-a-box/commits/1.0.x"><?php _e( 'Dev tracker', 'cbox' ); ?></a></li>
-			</ul>
-		</div>
-	<?php
+		cbox_get_template_part( 'footer' );
 	}
 
 	/** HEADER INJECTIONS *********************************************/
-
-	/**
-	 * Show a notice about BuddyPress' forums.
-	 *
-	 * The bundled forums component in BuddyPress combined with bbPress 2 leads to
-	 * conflicts between the two plugins.
-	 *
-	 * We show a notice if both BuddyPress' bundled forums and bbPress are enabled
-	 * so site admins are aware of the potential conflict with instructions of
-	 * what they can do to address the issue.
-	 *
-	 * This only shows up when CBOX is fully setup.
-	 *
-	 * @since 1.0-beta4
-	 *
-	 * @uses cbox_is_setup() To tell if CBOX is fully setup.
-	 * @uses is_network_admin() Check to see if we're in the network admin area.
-	 */
-	public function dashboard_forums_notice() {
-		// if CBOX isn't setup yet, stop now!
-		if ( ! cbox_is_setup() ) {
-			return;
-		}
-
-		// make sure BuddyPress is active
-		if ( ! defined( 'BP_VERSION' ) ) {
-			return;
-		}
-
-		// if bundled forums are not active stop now!
-		if ( ! class_exists( 'BP_Forums_Component' ) ) {
-			return;
-		}
-
-		// if bbPress isn't active, stop now!
-		if ( ! function_exists( 'bbpress' ) ) {
-			return;
-		}
-
-		// only super admins can view this notice
-		if ( ! is_super_admin( bp_loggedin_user_id() ) ) {
-			return;
-		}
-
-		// add an admin notice
-		$prefix = is_network_admin() ? 'network_' : '';
-		add_action( $prefix . 'admin_notices', create_function( '', "
-			echo '<div class=\'error\'>';
-			echo '<p>' . __( 'We see you\'re running BuddyPress\' bundled forums. Commons In A Box comes with bbPress 2.2, an upgraded and improved forum tool.', 'cbox' ) . '</p>';
-			echo '<p>' . sprintf( __( 'However, we don\'t recommend running BP\'s bundled forums alongside bbPress 2.2. <a href=\'%s\'>Click here</a> to learn more about your options.', 'cbox' ), 'http://commonsinabox.org/documentation/buddypress-vs-bbpress-forums' ) . '</p>';
-			echo '</div>';
-		" ) );
-	}
 
 	/**
 	 * Setup internal variable if the admin notice should be shown.
@@ -1134,38 +1045,37 @@ class CBox_Admin {
 	 * @uses cbox_get_setup_step() Which setup step is CBOX at?
 	 */
 	public function display_notice() {
-		// if our notice marker isn't set, stop now!
-		if ( empty( cbox()->show_notice ) )
+		// If our notice marker isn't set or if we're on the CBOX page, stop now!
+		if ( empty( cbox()->show_notice ) || 'cbox' === get_current_screen()->parent_base ) {
 			return;
+		}
 
 		// setup some variables depending on the setup step
 		switch ( cbox_get_setup_step() ) {
-			case 'no-buddypress' :
+			case 'no-package' :
+			case 'required-plugins' :
 				$notice_text = __( "Let's get started!", 'cbox' );
-				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to get set up', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
 
-			case 'buddypress-wizard' :
-				$notice_text = __( 'BuddyPress is installed, but needs some additional setup.', 'cbox' );
-				$button_link = cbox_get_the_bp_admin_wizard_url();
-				$button_text = __( 'Finish BuddyPress setup &rarr;', 'cbox' );
-				$disable_btn = 'bp-wizard';
-				break;
-
 			case 'theme-update' :
-				$notice_text = __( 'The CBOX Default theme needs an update.', 'cbox' );
-				$button_link = wp_nonce_url( network_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox_get_theme_to_update() ), 'cbox_upgrade_theme' );
+				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
+				$button_link = wp_nonce_url( cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'cbox' );
 				$disable_btn = 'cbox';
 				break;
 
-			case 'last-step' :
+			case 'recommended-plugins' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
-				$button_link = network_admin_url( 'admin.php?page=cbox' );
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to finish up!', 'cbox' );
 				$disable_btn = 'cbox';
+				break;
+
+			case '' :
+				return;
 				break;
 		}
 
@@ -1207,6 +1117,11 @@ class CBox_Admin {
 	 * @uses is_multisite() Check to see if WP is in network mode.
 	 */
 	public function plugins_page_header() {
+		// Multisite: Don't show if user doesn't have network admin access.
+		if ( is_multisite() && ! current_user_can( 'manage_network_plugins' ) ) {
+			return;
+		}
+
 		if ( cbox_is_setup() ) :
 			$single_site = ( current_user_can( 'manage_network_plugins' ) && ! is_network_admin() ) || ( ! is_multisite() && current_user_can( 'install_plugins' ) );
 
@@ -1218,7 +1133,7 @@ class CBox_Admin {
 			if ( $single_site )
 				echo '<p>' . __( "Don't forget that CBOX plugins can be managed from the CBOX plugins page!", 'cbox' ) .'</p>';
 
-			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), network_admin_url( 'admin.php?page=cbox-plugins' ) ) . '</p>';
+			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ) ) . '</p>';
 
 			if ( $single_site )
 				echo '<h3>' . sprintf( __( 'Plugins on %s', 'cbox' ), get_bloginfo( 'name' ) ) . '</h3>';
@@ -1238,13 +1153,8 @@ class CBox_Admin {
 	 * @uses wp_enqueue_script() Enqueues a given JS file in WordPress
 	 */
 	public function enqueue_js() {
-		// enqueue leanModal - lightweight modals
-		// http://leanmodal.finelysliced.com.au/
-		wp_enqueue_script(
-			'cbox-lean-modal',
-			'https://cdn.rawgit.com/FinelySliced/leanModal.js/master/jquery.leanModal.js',
-			array( 'jquery' )
-		);
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_style( 'thickbox' );
 	}
 
 	/**
@@ -1271,12 +1181,18 @@ class CBox_Admin {
 			background-repeat: no-repeat;
 		}
 
-		#adminmenu #toplevel_page_cbox .wp-menu-image {background-position:0 -33px;}
+		#adminmenu #toplevel_page_cbox .wp-menu-image {background-position:4px -32px;}
 
 		#adminmenu #toplevel_page_cbox:hover .wp-menu-image,
-		#adminmenu #toplevel_page_cbox.wp-has-current-submenu .wp-menu-image {background-position:0 -2px;}
+		#adminmenu #toplevel_page_cbox.wp-has-current-submenu .wp-menu-image {background-position:4px -1px;}
 
 		#toplevel_page_cbox .wp-menu-image img {display:none;}
+
+		.cbox-admin-wrap .nav-tab:first-child {margin-left: 0;}
+		.cbox-admin-wrap .nav-tab-active {background: #fff; border-bottom: 1px solid #fff;}
+
+		.cbox-admin-content {background: #fff; border: 1px solid #ccc; border-top: none; margin-bottom: 40px; padding: 20px 20px;}
+		.cbox-admin-content.has-top-border {border-top: 1px solid #ccc;}
 
 		/* Retina */
 		@media
@@ -1300,9 +1216,9 @@ class CBox_Admin {
 	 * Inline CSS for the main dashboard page.
 	 */
 	public static function dashboard_css() {
-		$badge_url        = cbox()->plugin_url( 'admin/images/logo-cbox_vert.png?ver='    . cbox()->version );
-		$badge_url_2x     = cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png?ver=' . cbox()->version );
-		$icon32_url       = cbox()->plugin_url( 'admin/images/icon32.png?ver='            . cbox()->version );
+		$badge_url    = add_query_arg( 'ver', cbox()->version, esc_url_raw( cbox_get_package_prop( 'badge_url' ) ) );
+		$badge_url_2x = add_query_arg( 'ver', cbox()->version, esc_url_raw( cbox_get_package_prop( 'badge_url_2x' ) ) );
+		$icon32_url   = cbox()->plugin_url( 'admin/images/icon32.png?ver=' . cbox()->version );
 	?>
 
 		<style type="text/css">
@@ -1310,10 +1226,25 @@ class CBox_Admin {
 			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
-		#welcome-panel {overflow:visible;min-height: 280px;}
+		#welcome-panel {overflow:visible;min-height: 280px; padding:0 1em 1em;}
+		#welcome-panel h2 {margin:.5em 0;}
+
+		.plugin-icon {height:auto;}
+		.plugin-card-OpenLab .column-description {min-height:140px;}
+		.plugin-card .theme-required:before, .plugin-card .theme-optional:before {margin-top:-1px; margin-left:-5px;}
+		.plugin-card .theme-required:before {content:"\f534"}
+		.plugin-card .theme-optional:before {content:"\f348"; color:darkslateblue;}
+
+		#wpbody-content .metabox-holder {padding-top:0;}
+		.metabox-holder .stuffbox {border-width:0 0 1px 0;}
+		#getting-started .inside ol {columns:2; -webkit-columns: 2; -moz-columns:2; list-style:none; counter-reset:counter; margin:1.5em 1em 0;}
+		#getting-started .inside li {width:calc(100% - 20px); position:relative; padding-left:20px;}
+		#getting-started .inside li:before {content:counter(counter) "."; counter-increment:counter; position:absolute; top:0; left:-5px; font-size:1.5em; font-weight:bold; color:gray;}
+
+		#getting-started .inside h4 {margin:0;}
+		#getting-started .inside h4 a {text-decoration:none; font-size:1.3em;}
 
 		.about-text {margin-right:220px;}
-		.welcome-panel-content .about-description, .welcome-panel h3 {margin-left:0; margin-right:210px; margin-bottom:.5em;}
 		.welcome-panel-dismiss {margin-bottom:0;}
 
 		#wpbody .login .message {margin:15px 0; text-align:center;}
@@ -1333,31 +1264,31 @@ class CBox_Admin {
 
 		.secondary-panel h2 {line-height:1;}
 
-		.secondary-panel h4 {font-size:14px;}
-			.secondary-panel h4 .icon16 {margin-top:-10px; margin-left: -32px;}
+		.getting-started-cbox-classic h4 {font-size:14px; margin-top:.3em;}
+			.getting-started-cbox-classic h4 .icon16 {margin-top:-12px; margin-left: -32px;}
 
-		.secondary-panel .welcome-panel-column-container {
+		.metabox-holder .welcome-panel-column-container {
 		    clear: both;
 		    overflow: hidden;
 		    padding-left: 26px;
 		    position: relative;
 		}
 
-		.secondary-panel .welcome-panel-column {
+		.metabox-holder .welcome-panel-column {
 		    float: left;
 		    margin: 0 5% 0 -25px;
 		    min-width: 200px;
 		    padding-left: 25px;
 		    width: 47%;
 		}
-			.secondary-panel .welcome-panel-last {margin-right:0;}
+			.metabox-holder .welcome-panel-last {margin-right:0;}
 
 
-		.secondary-panel .welcome-panel-column ul {
+		.metabox-holder .welcome-panel-column ul {
 			margin: 1.6em 1em 1em 1.3em;
 		}
 
-		.secondary-panel .welcome-panel-column li {
+		.metabox-holder .welcome-panel-column li {
 			list-style-type: disc;
 			padding-left: 2px;
 		}
@@ -1365,58 +1296,22 @@ class CBox_Admin {
 		#wpbody .update-message {margin:5px 0;}
 
 		.submitted-on {font-size:1.3em; line-height:1.4;}
+		.about-wrap {margin-top:35px;}
 
-		.svg .wp-badge {
-		        position:absolute;
-		        width:190px; height:30px;
-		        background-color:#fff;
-		        background-image: url( <?php echo $badge_url; ?> );
-			background-position:22px 10px;
-			background-size:auto;
-			background-repeat: no-repeat;
-			padding-top:200px;
-		        color:#999; text-shadow:none;
-		}
+		.cbox-badge {float:left; width:180px; text-align:center;}
+			.about-wrap .cbox-badge {background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.2); float:none; padding:1em 0;position:absolute; right:0; top:0;}
 
-		#welcome-panel .wp-badge {
-			border: 1px solid #DFDFDF;
-			border-radius: 4px;
-			top:50px; right: 20px;
-		}
+		.cbox-version {color:#444; font-weight:600;}
 
-		/* Retina */
-		@media
-			only screen and (-webkit-min-device-pixel-ratio: 1.5),
-			only screen and (-moz-min-device-pixel-ratio: 1.5),
-			only screen and (-o-min-device-pixel-ratio: 3/2),
-			only screen and (min-device-pixel-ratio: 1.5) {
-				.wp-badge {
-					background-image: url( <?php echo $badge_url_2x; ?> );
-					background-size: 77%;
-					background-repeat: no-repeat;
-					width: 152px;
-					padding-top: 157px;
-					height: 34px;
-					top: 50px;
-				}
-		}
-
-		/* modal */
-		#lean_overlay {
-			position: fixed;
-			z-index:100;
-			top: 0px;
-			left: 0px;
-			height:100%;
-			width:100%;
-			background: #000;
-			display: none;
-		}
+		.welcome-panel-content {margin-left:200px; margin-top:1.5em;}
 
 		/* plugins table */
-		.cbox-plugins-section {margin-top:0; padding:20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+		.cbox-plugins-section {margin-top:0; padding:10px 20px 20px 20px; line-height:1.6em; border-bottom:1px solid #dfdfdf;}
+		.cbox-plugins-section .check-column {padding:10px 0 0;}
+		.cbox-plugins-section h3 {font-size:1.15em;}
 
-		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:#fff;}
+		.cbox-plugins-section table {margin:1.6em 0;}
+		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:rgb(249, 255, 240);}
 		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
 
 		.column-cbox-plugin-name {width:220px;}
@@ -1425,13 +1320,22 @@ class CBox_Admin {
 		span.disabled      {color:#880000;}
 		span.not-installed {color:#9f9f9f;}
 
+		.cbox-admin-content .cbox-plugins-section {padding-left:5px; padding-right:5px;}
+		.cbox-admin-content .cbox-plugins-section:first-child {padding-top:0;}
+		.cbox-admin-content .cbox-plugins-section:first-child h2 {margin-top:0;}
+		.cbox-admin-content .cbox-plugins-section:last-of-type {border:0; padding-bottom:0;}
+
 		/* Responsive */
+		@media screen and (max-width: 960px) {
+			#welcome-panel {overflow:auto;}
+		}
 		@media screen and (max-width: 600px) {
-			#welcome-panel {min-height:0;}
-			#welcome-panel .wp-badge, .welcome-panel-close {display:none;}
-			.welcome-panel-content .about-description, .welcome-panel h3 {margin-right:10px;}
-			.welcome-panel-dismiss {margin-bottom:2em;}
-			.secondary-panel .welcome-panel-column {width:auto;}
+			.cbox-badge {display:none;}
+			.about-wrap h1, .about-wrap .about-text {margin-right:0;}
+			.welcome-panel-content {margin-left:0;}
+			#getting-started .inside ol {columns:1; -webkit-columns:1; -moz-columns:1;}
+			#getting-started .inside li {height:auto;}
+			.metabox-holder .welcome-panel-column {width:auto;}
 		}
 		</style>
 

@@ -45,6 +45,8 @@ class CBox_BBP_Autoload {
 		$this->get_activity_id_hotfix();
 
 		$this->fix_form_actions();
+
+		$this->save_notification_meta();
 	}
 
 	/**
@@ -85,7 +87,7 @@ class CBox_BBP_Autoload {
 	 */
 	public function enable_visual_editor() {
 		// create function to re-enable TinyMCE
-		$enable_tinymce = create_function( '$retval', '
+		$enable_tinymce = function( $retval ) {
 			// enable tinymce
 			$retval["tinymce"] = true;
 
@@ -96,7 +98,7 @@ class CBox_BBP_Autoload {
 			CBox_BBP_Autoload::tinymce_buttons();
 
 			return $retval;
-		' );
+		};
 
 		// add our function to bbPress
 		add_filter( 'bbp_after_get_the_content_parse_args', $enable_tinymce );
@@ -113,7 +115,7 @@ class CBox_BBP_Autoload {
 	 */
 	public static function tinymce_buttons() {
 		// create function to add / remove some TinyMCE buttons
-		$buttons = create_function( '$retval', '
+		$buttons = function( $retval ) {
 			global $wp_version;
 
 			// remove some buttons to emulate teeny mode
@@ -134,13 +136,13 @@ class CBox_BBP_Autoload {
 			array_push( $retval, "image", $paste, "undo", "redo" );
 
 			return $retval;
-		' );
+		};
 
 		// add our function to bbPress
 		add_filter( 'mce_buttons',   $buttons, 20 );
 
 		// wipe out the second row of TinyMCE buttons
-		add_filter( 'mce_buttons_2', create_function( '', "return array();" ) );
+		add_filter( 'mce_buttons_2', '__return_empty_array' );
 	}
 
 	/**
@@ -265,7 +267,7 @@ class CBox_BBP_Autoload {
 	 * @return string
 	 */
 	public function override_the_permalink_with_group_permalink( $retval = '' ) {
-		return bp_get_group_permalink();
+		return bp_get_group_permalink() . 'forum/';
 	}
 
 	/**
@@ -276,5 +278,25 @@ class CBox_BBP_Autoload {
 	public function remove_the_permalink_override() {
 		remove_filter( 'the_permalink', array( $this, 'override_the_permalink_with_group_permalink' ) );
 	}
-}
 
+	/**
+	 * Save various forum data to notification meta.
+	 *
+	 * Used on multisite installs to format forum notifications on sub-sites.
+	 *
+	 * @since 1.1.0
+	 */
+	public function save_notification_meta() {
+		add_action( 'bp_notification_after_save', function( $n ) {
+			// Bail if not on our bbPress new reply action or if notification is empty.
+			if ( 'bbp_new_reply' !== $n->component_action || empty( $n->id ) ) {
+				return;
+			}
+
+			// Save some meta.
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_reply_permalink', bbp_get_reply_url( $n->item_id ) );
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_topic_title',     bbp_get_topic_title( $n->item_id ) );			
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_reply_topic_id',  bbp_get_reply_topic_id( $n->item_id ) );
+		} );
+	}
+}

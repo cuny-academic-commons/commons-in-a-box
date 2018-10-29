@@ -1,9 +1,9 @@
 === Commons In A Box ===
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
-Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 1.0.15
+Requires at least: 4.9.8
+Tested up to: 5.0
+Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -11,16 +11,34 @@ A platform for easy and powerful community websites. Powered by BuddyPress.
 
 == Description ==
 
-Commons In A Box dramatically lowers the barrier to building community sites on WordPress. CBOX helps you to install BuddyPress along with a number of carefully selected and vetted BuddyPress plugins, so that you don't have to worry about which plugins are best and which are compatible with each other.
+Commons In A Box (CBOX) dramatically lowers the barrier to building community sites on WordPress. CBOX helps you to install BuddyPress along with a number of carefully selected and vetted BuddyPress plugins, so that you don’t have to worry about which plugins are best and which are compatible with each other.
 
-CBOX also comes with a beautiful and flexible BuddyPress theme, designed from the bottom up for fostering community engagement. Powered by the [Infinity Theme Engine](http://presscrew.com/commons-in-a-box), the CBOX default theme gets you from zero to a fully-functional community theme in minutes, and also contains extensive tools for customization.
+Commons In A Box (CBOX) includes a choice of two packages that can be customized to meet the needs of your community:
 
-CBOX puts unique community sites within the reach of all users, no matter their technical aptitude. Visit [commonsinabox.org](http://commonsinabox.org) for support, documentation, and a growing user community.
+**CBOX Classic is designed for communities of all kinds.** It is used by groups and organizations to create flexible social networks where members can collaborate on projects, publish research, and create repositories of knowledge.
+
+**CBOX OpenLab is specifically designed for teaching, learning, and collaboration.** It allows faculty members, departments, and entire institutions to create commons spaces for open learning.
+
+Both packages feature:
+- Robust out-of-the-box functionality;
+- An intuitive setup process that guides site administrators through installation and customization;
+- Responsive design for easy use on many devices, including tablets and smartphones;
+- Ensured compatibility with a core set of plugins – when it’s time to update, you simply update CBOX and we take care of the rest;
+- Compatibility with many additional WordPress and BuddyPress plugins and themes.
+
+Visit [commonsinabox.org](https://commonsinabox.org/) for support and documentation.
 
 == Installation ==
 
-1. Install the Commons In A Box plugin in `wp-content/plugins/` and activate at Dashboard > Plugins
-1. Follow the on-screen guide to get your community set up in just minutes
+Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide], which explains the technical requirements for Commons In A Box (CBOX).
+
+When you’re ready, there are two ways to download CBOX :
+1. Search for it in the plugins section of your WordPress Dashboard and install it as you would any other WordPress plugin.
+1. Download it from the WordPress plugin repository: [https://wordpress.org/plugins/commons-in-a-box](https://wordpress.org/plugins/commons-in-a-box/)
+
+Once you’ve downloaded and installed CBOX, you’ll be able to choose which package you wish to use: CBOX Classic or CBOX OpenLab. See our documentation for step-by-step instructions for installing [CBOX Classic](http://commonsinabox.org/cbox-classic-installation-guide) or [CBOX OpenLab](http://commonsinabox.org/openlab-installation-guide).
+
+If you want to find out more before you begin, you can read our [Documentation](http://commonsinabox.org/cbox-documentation), visit our [Showcase](http://commonsinabox.org/cbox-showcase), or try a [Demo](http://commonsinabox.org/demo).
 
 == Frequently Asked Questions ==
 
@@ -28,21 +46,36 @@ CBOX puts unique community sites within the reach of all users, no matter their 
 
 Support forums and robust documentation are available at [commonsinabox.org](http://commonsinabox.org).
 
-= Can I use Commons In A Box if I'm already using BuddyPress? =
+= Can I use Commons In A Box if I have an existing WordPress site? =
 
-Yes! CBOX will take over the management of BuddyPress and some of your other BuddyPress-specific plugins, so that future upgrades can be accomplished with a single click.
+It is possible to install Commons In A Box on an existing WordPress site, and it can also be integrated into existing Multisite and BuddyPress setups. However, please read [our documentation](http://commonsinabox.org/installing-cbox) for more details.
 
 == Screenshots ==
 
-1. The Commons In A Box Dashboard panel
-2. The Commons In A Box default theme
-
-== Translation credits ==
-
-* Spanish: Andrew Kurtis
+1. CBOX Classic dashboard
+2. CBOX Classic homepage
+3. CBOX OpenLab dashboard
+4. CBOX-OL homepage
 
 == Changelog ==
 
+= 1.1.0 =
+* Added "package" functionality
+* Introducing the OpenLab package. See http://commonsinabox.org/cbox-openlab-overview/ for more details.
+* Updated plugins: BuddyPress 3.2.0, BuddyPress Docs 2.1.1, BuddyPress Reply By Email 1.0-RC7
+* Classic improvements: Improved accessibility for theme; improved compatibility with updated versions of WP and BP; improved PHP 7.2 compatibility
+
+= 1.0.17 =
+* Update plugins: BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.2, BuddyPress Groupblog 1.9.0, BP MPO Activity Filter 1.2.1, BP Reply By Email 1.0-RC6, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
+* Introduce new technique for setting plugin defaults at the time of CBOX setup.
+* Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.
+* Fix bug that causes bbPress topic replies not to go through in certain cases.
+* Theme improvements: Add search form to Members directory and to Manage > Members page in groups.
+
+= 1.0.16 =
+* Compatibility with WordPress 4.8 and BuddyPress 2.9
+* Update plugins: BuddyPress 2.9.1, bbPress 2.5.14, BuddyPress Docs 1.9.4, BuddyPress Group Email Subscription 3.7.2, BP Reply By Email 1.0-RC5, Invite Anyone 1.3.19
+* Security hardening against certain upload vulnerabilities
 = 1.0.15 =
 * Compatibility with BuddyPress 2.8
 * Updated plugins: BuddyPress 2.8.2, BuddyPress Docs 1.9.3, BuddyPress Group Email Subscription 3.7.1, Invite Anyone 1.3.16
@@ -157,6 +190,6 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Credits ==
 
-Commons In A Box is a generalized, distributable version of the platform powering the [CUNY Academic Commons](http://commons.gc.cuny.edu).
+Commons In A Box is a generalized, distributable version of the platform powering the [CUNY Academic Commons](https://commons.gc.cuny.edu). CBOX OpenLab is modeled on the [OpenLab at City Tech](https://openlab.citytech.cuny.edu/).
 
-Commons In A Box is made possible by a grant from the [Alfred P. Sloan Foundation](http://sloan.org).
+Commons In A Box is developed by a team based at [The Graduate Center, CUNY](https://www.gc.cuny.edu). It was originally made possible by a grant from the [Alfred P. Sloan Foundation](https://sloan.org). CBOX OpenLab, a collaboration with [New York City College of Technology](http://www.citytech.cuny.edu), was created with funding from the National Endowment for the Humanities’ [Office of Digital Humanities](https://www.neh.gov/divisions/odh). CBOX receives continuing support from the City University of New York and The Graduate Center, CUNY.

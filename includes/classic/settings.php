@@ -1,6 +1,16 @@
 <?php
 /**
- * Set up the settings page.
+ * Package: Classic Settings class
+ *
+ * Part of the CLassic package.
+ *
+ * @package    Commons_In_A_Box
+ * @subpackage Package
+ * @since      1.1.0
+ */
+
+/**
+ * Admin settings page for the Classic package.
  *
  * @since 1.0-beta2
  *
@@ -12,11 +22,12 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Setup the CBOX settings area.
+ * Setup the CBOX settings area for the Classic package.
  *
  * @since 1.0-beta2
+ * @since 1.1.0 Renamed class from CBox_Settings to CBox_Settings_Classic.
  */
-class CBox_Settings {
+class CBox_Settings_Classic {
 
 	/**
 	 * Static variable to hold our various settings
@@ -24,6 +35,15 @@ class CBox_Settings {
 	 * @var array
 	 */
 	private static $settings = array();
+
+	/**
+	 * The settings options key used by the Classic package
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var string
+	 */
+	public static $settings_key = '_cbox_admin_settings';
 
 	/**
 	 * Constructor.
@@ -172,13 +192,13 @@ class CBox_Settings {
 		$submitted = (array) $_REQUEST['cbox_settings'];
 
 		// update settings
-		bp_update_option( cbox()->settings_key, $submitted );
+		bp_update_option( self::$settings_key, $submitted );
 
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
-		add_action( $prefix . 'admin_notices', create_function( '', "
-			echo '<div class=\'updated\'><p><strong>' . __( 'Settings saved.', 'cbox' ) . '</strong></p></div>';
-		" ) );
+		add_action( $prefix . 'admin_notices', function() {
+			echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'cbox' ) . '</strong></p></div>';
+		} );
 	}
 
 	/**
@@ -187,7 +207,6 @@ class CBox_Settings {
 	public function admin_page() {
 	?>
 		<div class="wrap">
-			<?php screen_icon( 'cbox' ); ?>
 			<h2><?php _e( 'Commons In A Box Settings', 'cbox' ); ?></h2>
 
 			<p><?php _e( 'CBOX can configure some important options for certain plugins.', 'cbox' ); ?>
@@ -212,7 +231,7 @@ class CBox_Settings {
 		$cbox_plugins = cbox()->plugins->get_plugins();
 
 		// get all CBOX plugins by name
-		$active = cbox()->plugins->organize_plugins_by_state( $cbox_plugins );
+		$active = CBox_Admin_Plugins::organize_plugins_by_state( $cbox_plugins );
 
 		// sanity check.  will probably never encounter this use-case.
 		if ( empty( $active ) )
@@ -222,7 +241,7 @@ class CBox_Settings {
 		$active = array_flip( $active['deactivate'] );
 
 		// get saved settings
-		$cbox_settings = bp_get_option( cbox()->settings_key );
+		$cbox_settings = bp_get_option( self::$settings_key );
 
 		// parse and output settings
 		foreach( self::$settings as $plugin => $settings ) {

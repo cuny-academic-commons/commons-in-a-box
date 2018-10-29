@@ -36,6 +36,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 	 * @param str $plugins Array of plugin names
 	 */
 	function bulk_upgrade( $plugins, $args = array() ) {
+		$parsed_args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
 
 		$this->init();
 		$this->bulk = true;
@@ -64,7 +67,25 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$maintenance = is_multisite(); // @TODO: This should only kick in for individual sites if at all possible.
 		foreach ( $plugins as $plugin ) {
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
-			$maintenance = $maintenance || (is_plugin_active($plugin_loader) ); // Only activate Maintenance mode if a plugin is active
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			$is_active = is_plugin_active( $plugin_loader );
+
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
+
+			// Only activate Maintenance mode if a plugin is active.
+			$maintenance = $maintenance || $is_active;
 		}
 
 		if ( $maintenance )
@@ -90,7 +111,22 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 
 			// see if plugin is active
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
 			$this->skin->plugin_active = is_plugin_active( $plugin_loader );
+
+			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 
 			$result = $this->run( array(
 				'package'           => $download_url,
@@ -119,9 +155,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ) );
 		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification', 10, 2 );
 
-		// Force refresh of plugin update information
-		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
+		// Force refresh of plugin update information.
+		wp_clean_plugins_cache( $parsed_args['clear_update_cache'] );
 
 		return $results;
 	}
@@ -201,9 +236,8 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
 		remove_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
 
-		// Force refresh of plugin update information
-		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
+		// Force refresh of plugin update information.
+		wp_clean_plugins_cache();
 
 		return $results;
 	}
@@ -218,20 +252,55 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		if ( empty( $plugins ) )
 			return false;
 
-		// Only activate plugins which are not already active.
-		$check = is_multisite() ? 'is_plugin_active_for_network' : 'is_plugin_active';
+		$current    = CBox_Plugins::get_plugins();
+		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 
 		foreach ( $plugins as $i => $plugin ) {
+			// Do not activate if plugin is install-only.
+			if ( true === CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) {
+				continue;
+			}
+
 			$plugin_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
 
+			if ( ! is_multisite() ) {
+				$network_activate = false;
+			} elseif ( isset( $current[ $plugin ] ) ) {
+				$network_activate = $current[ $plugin ]['network'];
+			} else {
+				$network_activate = $dependency[ $plugin ]['network'];
+			}
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			$is_active = is_plugin_active( $plugin_loader );
+
 			// if already active, skip!
-			if ( ! empty( $plugin_loader ) && $check( $plugin ) ) {
+			if ( ! empty( $plugin_loader ) && $is_active ) {
 				unset( $plugins[ $i ] );
+
+				// Remember to restore blog, if we're skipping!
+				if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+					restore_current_blog();
+				}
+
 				continue;
 			}
 
 			// activate the plugin
-			activate_plugin( $plugin_loader, '', is_network_admin() );
+			activate_plugin( $plugin_loader, '', $network_activate );
+
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 		}
 
 		if ( ! is_network_admin() ) {
@@ -275,7 +344,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		if ( ! empty( $this->options['install_strings'] ) ) {
 			$this->upgrader->strings['skin_before_update_header'] = __( 'Installing Plugin %1$s (%2$d/%3$d)', 'cbox' );
 
-			$this->upgrader->strings['skin_upgrade_start']        = __( 'The installation process is starting. This process may take a while on some hosts, so please be patient.', 'cbox' );
+			$this->upgrader->strings['skin_upgrade_start']        = __( 'The installation process is starting. This process may take a while, so please be patient.', 'cbox' );
 			$this->upgrader->strings['skin_update_failed_error']  = __( 'An error occurred while installing %1$s: <strong>%2$s</strong>.', 'cbox' );
 			$this->upgrader->strings['skin_update_failed']        = __( 'The installation of %1$s failed.', 'cbox' );
 			$this->upgrader->strings['skin_update_successful']    = __( '%1$s installed successfully.', 'cbox' ) . ' <a onclick="%2$s" href="#" class="hide-if-no-js"><span>' . __( 'Show Details', 'cbox' ) . '</span><span class="hidden">' . __( 'Hide Details', 'cbox' ) . '</span>.</a>';
@@ -334,7 +403,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
 
-			<p><?php self::after_updater(); ?></p>
+			<p><?php self::after_updater( $this->options ); ?></p>
  		<?php
 		}
 
@@ -343,7 +412,8 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 		else {
 			usleep(500000);
 
-			self::after_updater();
+			$args = ! empty( $this->options ) ? $this->options : array();
+			self::after_updater( $args );
 		}
 	}
 
@@ -410,20 +480,33 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	 * @since 0.3
 	 */
 	public static function after_updater( $args = array() ) {
+		$redirect_link = $redirect_text = '';
+
 		// if a redirect link is passed, use it.
 		if ( ! empty( $args ) ) {
- 			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : false;
- 			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : false;
+			$redirect_link = ! empty( $args['redirect_link'] ) ? $args['redirect_link'] : '';
+			$redirect_text = ! empty( $args['redirect_text'] ) ? $args['redirect_text'] : '';
 
 		// if a redirect link is passed during the class constructor, use it
 		} elseif ( ! self::_is_static() && ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
 			$redirect_link = $this->options['redirect_link'];
 			$redirect_text = $this->options['redirect_text'];
+		}
+
+		// CBOX hasn't been installed ever.
+		if ( ! cbox_get_installed_revision_date() && empty( $redirect_link ) ) {
+			$redirect_text = __( 'Continue to the CBOX dashboard', 'cbox' );
+			$redirect_link = self_admin_url( 'admin.php?page=cbox' );
+		}
 
 		// default fallback
-		} else {
+		if ( '' === $redirect_link ) {
 			$redirect_link = self_admin_url( 'admin.php?page=cbox-plugins' );
 			$redirect_text = __( 'Return to the CBOX Plugins page', 'cbox' );
+
+			if ( ! empty( $_GET['type'] ) ) {
+				$redirect_link = add_query_arg( 'type', esc_attr( $_GET['type'] ), $redirect_link );
+			}
 		}
 
 		echo '<br /><a class="button-primary" href="' . esc_url( $redirect_link ) . '">' . esc_attr( $redirect_text ) . '</a>';
@@ -435,7 +518,7 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 	/**
 	 * Detect whether a class is called statically.
 	 *
-	 * Lighter than using Reflection to determine this. 
+	 * Lighter than using Reflection to determine this.
 	 *
 	 * @since 1.0.6
 	 *
@@ -472,20 +555,27 @@ class CBox_Updater {
 	 * @param array $plugins Associative array of plugin names
 	 */
 	function __construct( $plugins = false, $settings = array() ) {
-		if ( ! empty( $plugins['upgrade'] ) )
+		$skin_args = array();
+
+		if ( ! empty( $plugins['upgrade'] ) ) {
 			self::$is_upgrade  = true;
+		}
 
-		if( ! empty( $plugins['install'] ) )
+		if ( ! empty( $plugins['install'] ) ) {
 			self::$is_install  = true;
+		}
 
-		if( ! empty( $plugins['activate'] ) )
+		if ( ! empty( $plugins['activate'] ) ) {
 			self::$is_activate = true;
+		}
 
-		if ( ! empty( $settings['redirect_link'] ) )
+		if ( ! empty( $settings['redirect_link'] ) ) {
 			$skin_args['redirect_link'] = $settings['redirect_link'];
+		}
 
-		if ( ! empty( $settings['redirect_text'] ) )
+		if ( ! empty( $settings['redirect_text'] ) ) {
 			$skin_args['redirect_text'] = $settings['redirect_text'];
+		}
 
 		// if no plugins passed, stop the updater now!
 		if ( ! $plugins ) {
@@ -498,16 +588,59 @@ class CBox_Updater {
 		$plugin_list = call_user_func_array( 'array_merge', $plugins );
 
 		// get requirements
-		$requirements = Plugin_Dependencies::get_requirements();
+		$requirements = (array) Plugin_Dependencies::get_requirements();
+
+		/*
+		 * If a plugin is not installed, but has dependencies, we have to parse those
+		 * dependencies before looping through the rest of the plugins.
+		 *
+		 * This is done because the Plugin Dependencies library cannot parse plugins
+		 * it doesn't know about.
+		 */
+		if ( ! empty( $plugins['install'] ) ) {
+			$cbox_plugins = CBox_Plugins::get_plugins();
+			$dependencies = array_flip( array_keys( CBox_Plugins::get_plugins( 'dependency' ) ) );
+
+			foreach ( $plugins['install'] as $plugin ) {
+				if ( ! isset( $cbox_plugins[ $plugin ]['depends'] ) ) {
+					continue;
+				}
+
+				foreach ( Plugin_Dependencies::parse_field( $cbox_plugins[ $plugin ]['depends'] ) as $dep ) {
+					// a dependent name can contain a version number, so let's get just the name
+					$plugin_name = rtrim( strtok( $dep, '(' ) );
+
+					// see if plugin has any requirements
+					$requirement = Plugin_Dependencies::parse_requirements( $dep );
+					if ( empty( $requirement ) ) {
+						continue;
+					}
+
+					if ( isset( $requirement['not-installed'] ) ) {
+						// Check if uninstalled plugin is part of our CBOX plugin spec.
+						foreach ( $requirement['not-installed'] as $i => $_plugin ) {
+							if ( ! isset( $dependencies[ $_plugin ] ) ) {
+								unset( $requirement['not-installed'][$i] );
+							}
+						}
+					}
+
+					// We've found the dependent plugin in our spec; add it to our requirements.
+					if ( ! empty( $requirement['not-installed'] ) ) {
+						$requirements[ $plugin ] = $requirement;
+					}
+				}
+			}
+		}
 
 		// loop through each submitted plugin and check for any dependencies
-		foreach( $plugin_list as $plugin ) {
+		foreach ( $plugin_list as $plugin ) {
 			// we have dependents!
 			if ( ! empty( $requirements[$plugin] ) ) {
 
 				// now loop through each dependent plugin state and add that plugin to our list
 				// before we start the whole process!
-				foreach( $requirements[$plugin] as $dep_state => $dep_plugins ) {
+				foreach ( $requirements[$plugin] as $dep_state => $dep_plugins ) {
 					switch( $dep_state ) {
 						case 'inactive' :
 							if ( ! self::$is_activate ) {
@@ -548,8 +681,16 @@ class CBox_Updater {
 			}
 		}
 
-		// setup our plugin defaults
-		CBox_Plugin_Defaults::init();
+		foreach ( $plugins as $state => $p ) {
+			$plugins[$state] = array_unique( $p );
+		}
+
+		/**
+		 * Hook to do something before the CBOX updater fires.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'cbox_before_updater' );
 
 		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
 		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
@@ -586,10 +727,9 @@ class CBox_Updater {
 
  			// now start the upgrade!
  			$installer->bulk_upgrade( $plugins['upgrade'] );
- 		}
 
 		// if no upgrades are available, move on to installs
- 		elseif( self::$is_install ) {
+		} elseif( self::$is_install ) {
 			// if activations are available as well, this tells CBox_Plugin_Upgrader
 			// to activate plugins after the upgrader is done
 			if ( self::$is_activate ) {
@@ -608,10 +748,9 @@ class CBox_Updater {
 
  			// now start the install!
  			$installer->bulk_install( $plugins['install'] );
- 		}
 
 		// if no upgrades or installs are available, move on to activations
- 		elseif( self::$is_activate ) {
+		} elseif( self::$is_activate ) {
 			echo '<h3>' . __( 'Activating Plugins...', 'cbox' ) . '</h3>';
 
  			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
@@ -622,159 +761,87 @@ class CBox_Updater {
 			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $settings ); ?></p>
  		<?php
  		}
-
 	}
 
 	/**
 	 * Activates a plugin after upgrading or installing a plugin
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
+		$plugin = '';
+		$network_activate = $install_only = false;
 
 		// activates a plugin post-upgrade
 		if ( ! empty( $hook_extra['plugin'] ) ) {
-			activate_plugin( $hook_extra['plugin'], '', is_network_admin() );
-		}
+			$plugin = $hook_extra['plugin'];
+
+			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+			$plugin_name = $plugin_data['Name'];
+
 		// activates a plugin post-install
-		elseif ( ! empty( $result['destination_name'] ) ) {
-			// when a plugin is installed, we need to find the plugin loader file
-			$plugin_loader = array_keys( get_plugins( '/' . $result['destination_name'] ) );
-			$plugin_loader = $plugin_loader[0];
+		} elseif ( ! empty( $result['destination_name'] ) ) {
+			// Fetch data for plugin.
+			$plugin_data = get_plugins( '/' . $result['destination_name'] );
+
+			// When a plugin is installed, we need to find the plugin loader file
+			$plugin_loader = key( $plugin_data );
+
+			// Grab the plugin name.
+			$plugin_name = $plugin_data[ $plugin_loader ]['Name'];
 
 			// this makes sure that validate_plugin() works in activate_plugin()
-			wp_cache_flush();
+			if ( ! wp_using_ext_object_cache() ) {
+				wp_cache_flush();
+			}
 
-			// now activate the plugin
-			activate_plugin( $result['destination_name'] . '/' . $plugin_loader, '', is_network_admin() );
+			$plugin = $result['destination_name'] . '/' . $plugin_loader;
+		}
+
+		// Do not activate if plugin is install-only.
+		if ( true === CBox_Plugins::is_plugin_type( $plugin_name, 'install-only' ) ) {
+			// Allow activation if this is also a dependent plugin.
+			$dependency = CBox_Plugins::get_plugins( 'dependency' );
+			if ( empty( $dependency[ $plugin_name ] ) ) {
+				return $bool;
+			}
+		}
+
+		if ( '' !== $plugin ) {
+			$cbox_plugins = CBox_Plugins::get_plugins();
+
+			// If CBOX plugin manifest is empty, must load package data again.
+			if ( empty( $cbox_plugins ) ) {
+				/** This hook is documented in admin/plugins-loader.php */
+				do_action( 'cbox_plugins_loaded', cbox()->plugins );
+
+				$cbox_plugins = CBox_Plugins::get_plugins();
+			}
+
+			if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
+				$network_activate = $cbox_plugins[ $plugin_name ]['network'];
+			} else {
+				$dependency = CBox_Plugins::get_plugins( 'dependency' );
+				$network_activate = $dependency[ $plugin_name ]['network'];
+			}
+
+			/*
+			 * Special case for root-blog plugins.
+			 *
+			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
+			 * we need to switch to that blog to get the correct active plugins list.
+			 */
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
+			}
+
+			// activate the plugin
+			activate_plugin( $plugin, '', $network_activate );
+
+			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				restore_current_blog();
+			}
 		}
 
 		return $bool;
 	}
 
-}
-
-/**
- * Set some defaults for certain CBOX plugins after their activation.
- *
- * Not currently used at the moment.
- *
- * @since 1.0-beta2
- *
- * @package Commons_In_A_Box
- * @subpackage Plugins
- */
-class CBox_Plugin_Defaults {
-	/**
-	 * Alternate method to initialize the class.
-	 */
-	public static function init() {
-		new self();
-	}
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		// setup our hooks
-		$this->setup_hooks();
-	}
-
-	/**
-	 * Setup our hooks.
-	 */
-	public function setup_hooks() {
-		add_action( 'activated_plugin', array( $this, 'plugin_defaults' ), 999, 2 );
-	}
-
-	/**
-	 * At the moment, we hardcode any defaults for our CBOX plugins here and fire
-	 * them after that plugin is activated.
-	 *
-	 * We are not doing anything special here like looking for plugins by name b/c
-	 * that would require parsing that plugin's header metadata and this might not
-	 * be efficient when activating plugins in a loop.
-	 *
-	 * Instead, we just take the plugin loader file as-is and do our checks there.
-	 *
-	 * @todo Might be nice to separate each plugin's defaults into its own PHP file.
-	 *       We'll cross that bridge once we have a ton of defaults!
-	 */
-	public function plugin_defaults( $plugin, $network_wide ) {
-		switch ( $plugin ) {
-			// BuddyPress
-			case 'buddypress/bp-loader.php' :
-				// don't let BP redirect to its about page after activating
-				delete_transient( '_bp_activation_redirect' );
-
-				break;
-
-			// bbPress
-			case 'bbpress/bbpress.php' :
-				// don't let bbPress redirect to its about page after activating
-				delete_transient( '_bbp_activation_redirect' );
-
-				/** If BP bundled forums exists, stop now! *********************/
-
-				// do check for multisite
-				if ( is_multisite() ) {
-					$bp_root_blog = defined( 'BP_ROOT_BLOG' ) ? constant( 'BP_ROOT_BLOG' ) : 1;
-
-					$option = get_blog_option( $bp_root_blog, 'bb-config-location' );
-
-				// single WP
-				} else {
-					$option = get_option( 'bb-config-location' );
-				}
-
-				// stop if our bb-config-location was found
-				if ( false !== $option )
-					return;
-
-				/** See if a bbPress forum named 'Group Forums' exists *********/
-
-				// add a filter to WP_Query so we can search by post title
-				add_filter( 'posts_where', array( $this, 'search_by_post_title' ), 10, 2 );
-
-				// do our search
-				$search = new WP_Query( array(
-					'post_type'       => bbp_get_forum_post_type(),
-					'cbox_post_title' => __( 'Group Forums', 'bbpress' )
-				) );
-
-				/** No match, create our forum! ********************************/
-
-				if ( ! $search->have_posts() ) {
-					// create a forum for BP groups
-					$forum_id = bbp_insert_forum( array(
-						'post_title'   => __( 'Group Forums', 'bbpress' ),
-						'post_content' => __( 'All forums created in groups can be found here.', 'cbox' )
-					) );
-
-					// update the bbP marker for group forums
-					if ( is_multisite() ) {
-						update_blog_option( $bp_root_blog, '_bbp_group_forums_root_id', $forum_id );
-					} else {
-						update_option( '_bbp_group_forums_root_id', $forum_id );
-					}
-				}
-
-				break;
-		}
-	}
-
-	/** HELPERS *******************************************************/
-
-	/**
-	 * Filter WP_Query to allow searching by post title.
-	 *
-	 * @since 1.0-beta4
-	 */
-	public function search_by_post_title( $where, $wp_query ) {
-		global $wpdb;
-
-		if ( $post_title = $wp_query->get( 'cbox_post_title' ) ) {
-			$where .= " AND {$wpdb->posts}.post_title = '" . esc_sql( $post_title ) . "'";
-		}
-
-		return $where;
-	}
 }

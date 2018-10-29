@@ -41,7 +41,10 @@ class Plugin_Dependencies {
 		// setup $active_plugins variable
 		// if we're in the network admin area, we check for sitewide plugins,
 		// otherwise on single site, check the current site's plugins only
-		self::$active_plugins = ! is_network_admin() ? get_option( 'active_plugins', array() ) : array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
+		self::$active_plugins = get_option( 'active_plugins', array() );
+		if ( is_multisite() ) {
+			self::$active_plugins = array_merge( self::$active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
+		}
 
 		// get all plugins
 		self::$all_plugins = get_plugins();
@@ -79,8 +82,10 @@ class Plugin_Dependencies {
 			}
 
 			// parse "Provides" header from each plugin
-			self::$provides[ $plugin ] = self::parse_field( $plugin_data['Provides'] );
-			self::$provides[ $plugin ][] = $plugin;
+			if ( ! empty( $plugin_data['Provides'] ) ) {
+				self::$provides[ $plugin ] = self::parse_field( $plugin_data['Provides'] );
+				self::$provides[ $plugin ][] = $plugin;
+			}
 
 			$deps = $requirements = array();
 
@@ -104,23 +109,25 @@ class Plugin_Dependencies {
 			}
 
 			// parse "Depends" header from each plugin
-			foreach ( self::parse_field( $plugin_data['Depends'] ) as $dep ) {
-				// a dependent name can contain a version number, so let's get just the name
-				$plugin_name = rtrim( strtok( $dep, '(' ) );
+			if ( ! empty( $plugin_data['Depends'] ) ) {
+				foreach ( self::parse_field( $plugin_data['Depends'] ) as $dep ) {
+					// a dependent name can contain a version number, so let's get just the name
+					$plugin_name = rtrim( strtok( $dep, '(' ) );
 
-				// see if plugin has any requirements
-				$requirement = self::parse_requirements( $dep );
+					// see if plugin has any requirements
+					$requirement = self::parse_requirements( $dep );
 
-				// try to get the plugin loader file
-				// perhaps remove the conditional?
-				if ( self::get_pluginloader_by_name( $plugin_name ) )
-					$dep = self::get_pluginloader_by_name( $plugin_name );
+					// try to get the plugin loader file
+					// perhaps remove the conditional?
+					if ( self::get_pluginloader_by_name( $plugin_name ) )
+						$dep = self::get_pluginloader_by_name( $plugin_name );
 
-				if ( ! empty( $dep ) )
-					$deps[] = $dep;
+					if ( ! empty( $dep ) )
+						$deps[] = $dep;
 
-				if ( ! empty( $requirement ) )
-					$requirements = array_merge_recursive( $requirements, $requirement );
+					if ( ! empty( $requirement ) )
+						$requirements = array_merge_recursive( $requirements, $requirement );
+				}
 			}
 
 			if ( ! empty( $deps ) )
@@ -187,7 +194,7 @@ class Plugin_Dependencies {
 				$active = true;
 
 				// check network plugins first
-				if ( is_multisite() && ! is_plugin_active_for_network( $loader ) ) {
+				if ( is_multisite() && is_network_admin() && ! is_plugin_active_for_network( $loader ) ) {
 					$active = false;
 				}
 				// single site
@@ -258,7 +265,11 @@ class Plugin_Dependencies {
 	 * @return array List of dependencies
 	 */
 	public static function get_provided( $plugin_id ) {
-		return self::$provides[ $plugin_id ];
+		if ( ! empty( self::$provides[ $plugin_id ] ) ) {
+			return self::$provides[ $plugin_id ];
+		}
+
+		return array();
 	}
 
 	/**

@@ -14,106 +14,6 @@ if ( ! class_exists( 'Plugin_Upgrader' ) )
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
 /**
- * Sets up our CBOX theme requirements.
- *
- * In this class, we setup our required specs for the CBOX Default theme.
- *
- * Use the init() method to construct the class.
- *
- * Is chainable, so you can do something like this:
- *      // get infinity theme specs
- *      CBox_Theme_Specs::init()->get( 'cbox-theme' );
- *
- *      // get our version for infinity'
- *      CBox_Theme_Specs::init()->get( 'cbox-theme', 'version' );
- *
- * @package Commons_In_A_Box
- * @subpackage Themes
- */
-class CBox_Theme_Specs {
-
-	/**
-	 * Setup our theme info.
-	 *
-	 * We offer the PressCrew-developed CBOX Theme to be installed during CBOX setup.
-	 *
-	 * @static
-	 */
-	private static $cbox_theme = array(
-		'name'           => 'Commons In A Box Theme',
-		'version'        => '1.0.15',
-		'directory_name' => 'cbox-theme'
-	);
-
-	/**
-	 * Static bootstrapping init method.
-	 */
-	public static function init() {
-		self::$cbox_theme['download_url'] = 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.0.15.zip';
-		return new self();
-	}
-
-	/**
-	 * Fetch our theme info depending on the passed variables.
-	 *
-	 * @param str $theme The theme we want specs for. Only 'cbox_theme' will work.
-	 * @param str $param The theme parameter we want to fetch. 'name', 'version', 'directory_name', 'download_url' will work.
-	 * @return mixed Array of theme specs if $param isn't passed. String if $param is successfully passed.
-	 */
-	public function get( $theme_name, $param = '' ) {
-		if ( empty( self::$$theme_name ) )
-			return false;
-
-		$theme = self::$$theme_name;
-
-		if ( ! empty( $theme[$param] ) )
-			return $theme[$param];
-
-		return $theme;
-	}
-
-
-	/**
-	 * Check to see if our CBOX themes need to be upgraded.
-	 *
-	 * @param WP_Theme $current_theme The current running theme.
-	 * @uses wp_get_theme() If not passed, will grab the current running theme.
-	 * @uses CBox_Theme_Specs::init() To initialize our CBOX theme specs
-	 * @uses version_compare() To compare the current CBOX theme with our internal specs.
-	 * @return mixed String of what themes to update. Boolean false on failure.
-	 */
-	public static function get_upgrades( WP_Theme $current_theme = NULL ) {
-		// get current theme if not passed
-		if ( empty( $current_theme ) || ! is_object( $current_theme ) )
-			$current_theme = wp_get_theme();
-
-		// get our CBOX theme specs
-		$cbox_theme_specs = self::$cbox_theme;
-
-		// if current theme is not the CBOX theme, no need to proceed!
-		if ( $current_theme->get_template() != $cbox_theme_specs['directory_name'] )
-			return false;
-
-		// child theme support
-		// if child theme, we need to grab the CBOX parent theme's data
-		if ( $current_theme->get_stylesheet() != $cbox_theme_specs['directory_name'] ) {
-			$current_theme = wp_get_theme( $cbox_theme_specs['directory_name'] );
-		}
-
-		// version checking
-		$retval = false;
-
-		// check if current CBOX theme is less than our internal spec
-		// if so, we want to update it!
-		if ( version_compare( $current_theme->Version, $cbox_theme_specs['version'] ) < 0 )
-			$retval = $cbox_theme_specs['directory_name'];
-
-		return $retval;
-	}
-
-}
-
-/**
  * CBOX's custom theme upgrader.
  *
  * Extends the {@link Theme_Upgrader} class to allow for our custom required spec.
@@ -131,6 +31,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 * Why? So we can use our custom download URLs from Github.
 	 */
 	function install( $package = false, $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
+
 		$this->init();
 		$this->install_strings();
 
@@ -140,11 +44,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
 		add_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
-		$this->options['url'] = CBox_Theme_Specs::init()->get( 'cbox_theme', 'download_url' );
+		$this->options['url'] = cbox_get_theme_prop( 'download_url' );
 
 		$this->run( array(
 			// get download URL for the CBOX theme
-			'package'           => CBox_Theme_Specs::init()->get( 'cbox_theme', 'download_url' ),
+			'package'           => cbox_get_theme_prop( 'download_url' ),
 
 			'destination'       => WP_CONTENT_DIR . '/themes',
 
@@ -163,12 +67,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
-		// Force refresh of theme update information
-		delete_site_transient( 'update_themes' );
-		search_theme_directories( true );
-
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
+		// Refresh the Theme Update information
+		wp_clean_themes_cache( $args['clear_update_cache'] );
 
 		return true;
 	}
@@ -178,11 +78,15 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 *
 	 * Why? So we can use our custom download URLs from Github.
 	 *
-	 * @param str $upgrades The value from CBox_Theme_Specs::get_upgrades()
+	 * @param str $upgrades The value from cbox_get_theme_to_update()
 	 */
 	function bulk_upgrade( $upgrades = false, $args = array() ) {
 		if ( empty( $upgrades ) )
 			return false;
+
+		$args = wp_parse_args( $args, array(
+			'clear_update_cache' => true,
+		) );
 
 		$this->init();
 		$this->bulk = true;
@@ -211,16 +115,8 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		$results = $themes = array();
 
-		// initialize our theme specs
-		$theme_specs = CBox_Theme_Specs::init();
-
-		// setup our themes to upgrade
-		switch ( $upgrades ) {
-			case 'cbox-theme' :
-				$themes[] = $theme_specs->get( 'cbox_theme' );
-
-				break;
-		}
+		// @todo Potential to have multiple themes attached to a CBOX package...
+		$themes[] = cbox_get_package_prop( 'theme' );
 
 		$this->update_count   = count( $themes );
 		$this->update_current = 0;
@@ -247,6 +143,9 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		$this->maintenance_mode( false );
 
+		// Refresh the Theme Update information
+		wp_clean_themes_cache( $args['clear_update_cache'] );
+
 		$this->skin->bulk_footer();
 
 		$this->skin->footer();
@@ -257,13 +156,6 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
 		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
 		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
-
-		// Force refresh of theme update information
-		delete_site_transient('update_themes');
-		search_theme_directories( true );
-
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
 
 		return $results;
 	}
@@ -277,26 +169,25 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	 */
 	public function activate_post_install( $bool, $hook_extra, $result ) {
 		// get our theme directory names
-		$theme_specs        = CBox_Theme_Specs::init();
-		$cbox_theme_dir     = $theme_specs->get( 'cbox_theme', 'directory_name' );
+		$directory_name = cbox_get_theme_prop( 'directory_name' );
 
-		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $cbox_theme_dir ) {
+		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $directory_name ) {
 			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-			if ( ! bp_is_root_blog() ) {
-				switch_to_blog( bp_get_root_blog_id() );
+			if ( 1 !== cbox_get_main_site_id() ) {
+				switch_to_blog( cbox_get_main_site_id() );
 			}
 
-			// switch the theme to the CBOX theme!
-			switch_theme( $cbox_theme_dir, $cbox_theme_dir );
+			// switch the theme
+			switch_theme( $directory_name, $directory_name );
 
 			// restore blog after switching
-			if ( is_multisite() ) {
+			if ( 1 !== cbox_get_main_site_id() ) {
 				restore_current_blog();
 			}
 
 			// Mark the theme as having just been activated
 			// so that we can run the setup on next pageload
-			bp_update_option( '_cbox_theme_activated', '1' );
+			update_site_option( '_cbox_theme_activated', '1' );
 		}
 
 		return $bool;
@@ -309,39 +200,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	public function remove_theme_actions( $actions ) {
 		unset( $actions );
 
-		$actions['theme_page'] = '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" class="button-primary">' . __( 'Return to CBOX Dashboard &rarr;', 'cbox' ) . '</a>';
+		$actions['theme_page'] = '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" class="button-primary">' . __( 'Continue to CBOX Dashboard &rarr;', 'cbox' ) . '</a>';
 		return $actions;
-	}
-}
-
-/**
- * The UI for CBOX's Theme Installer.
- *
- * Extends the {@link Theme_Installer_Skin} class just to change an icon!
- *
- * @since 0.3
- *
- * @package Commons_In_A_Box
- * @subpackage Themes
- */
-class CBox_Theme_Installer_Skin extends Theme_Installer_Skin {
-
-	/**
-	 * Overrides the parent {@link WP_Upgrader_Skin::header()} method.
-	 *
-	 * Why? Just to change a lousy icon! :)
-	 */
-	function header() {
-		if ( $this->done_header )
-			return;
-
-		$this->done_header = true;
-
-		echo '<div class="wrap">';
-
-		// and here's the lousy change!
-		echo screen_icon( 'themes' );
-
-		echo '<h2>' . $this->options['title'] . '</h2>';
 	}
 }

@@ -91,7 +91,17 @@ class CBox_BP_Group_Forum_Tab {
 		// BP 2.6+.
 		if ( function_exists( 'bp_rest_api_init' ) ) {
 			buddypress()->groups->nav->edit_nav( array( 'position' => 0 ), 'forum', $group_slug );
-			buddypress()->groups->nav->edit_nav( array( 'name' => __( 'Activity', 'buddypress' ) ), 'home', $group_slug );
+
+			$rename_home = true;
+
+			// Bail for Nouveau template pack and if custom group front page is enabled.
+			if ( function_exists( 'bp_nouveau_groups_do_group_boxes' ) && bp_nouveau_groups_do_group_boxes() ) {
+				$rename_home = false;
+			}
+
+			if ( $rename_home ) {
+				buddypress()->groups->nav->edit_nav( array( 'name' => __( 'Activity', 'buddypress' ) ), 'home', $group_slug );
+			}
 
 		// Older versions of BP.
 		} else {
