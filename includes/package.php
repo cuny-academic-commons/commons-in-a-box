@@ -243,7 +243,7 @@ abstract class CBox_Package {
 	 *                                    "More Details" link.
 	 *     @var string $icon_url          Optional. Icon URL.
 	 *     @var string $badge_url         Optional. Shows on dashboard's "Welcome" block.
-	 *     @var string $badge_url_x2      Optional. Double-sized version of $badge_url for retina-sized displays.
+	 *     @var string $badge_url_2x      Optional. Double-sized version of $badge_url for retina-sized displays.
 	 * }
 	 */
 	protected static function config() {
@@ -251,7 +251,7 @@ abstract class CBox_Package {
 			'template_path' => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
 			'icon_url'      => includes_url( 'images/crystal/archive.png' ),
 			'badge_url'     => cbox()->plugin_url( 'admin/images/logo-cbox_vert.png' ),
-			'badge_url_x2'  => cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png' ),
+			'badge_url_2x'  => cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png' ),
 			'network'       => false
 		);
 	}
