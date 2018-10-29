@@ -800,7 +800,7 @@ class CBox_Updater {
 		if ( true === CBox_Plugins::is_plugin_type( $plugin_name, 'install-only' ) ) {
 			// Allow activation if this is also a dependent plugin.
 			$dependency = CBox_Plugins::get_plugins( 'dependency' );
-			if ( empty( $dependency[ $plugin_name ] ) {
+			if ( empty( $dependency[ $plugin_name ] ) ) {
 				return $bool;
 			}
 		}
