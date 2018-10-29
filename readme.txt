@@ -11,7 +11,7 @@ A platform for easy and powerful community websites. Powered by BuddyPress.
 
 == Description ==
 
-Commons In A Box (CBOX) dramatically lowers the barrier to building community sites on WordPress. CBOX helps you to install BuddyPress along with a number of carefully selected and vetted BuddyPress plugins, so that you don’t have to worry about which plugins are best and which are compatible with each other. 
+Commons In A Box (CBOX) dramatically lowers the barrier to building community sites on WordPress. CBOX helps you to install BuddyPress along with a number of carefully selected and vetted BuddyPress plugins, so that you don’t have to worry about which plugins are best and which are compatible with each other.
 
 Commons In A Box (CBOX) includes a choice of two packages that can be customized to meet the needs of your community:
 
@@ -30,7 +30,7 @@ Visit [commonsinabox.org](https://commonsinabox.org/) for support and documentat
 
 == Installation ==
 
-Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide], which explains the technical requirements for Commons In A Box (CBOX). 
+Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide], which explains the technical requirements for Commons In A Box (CBOX).
 
 When you’re ready, there are two ways to download CBOX :
 1. Search for it in the plugins section of your WordPress Dashboard and install it as you would any other WordPress plugin.
@@ -192,4 +192,4 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 Commons In A Box is a generalized, distributable version of the platform powering the [CUNY Academic Commons](https://commons.gc.cuny.edu). CBOX OpenLab is modeled on the [OpenLab at City Tech](https://openlab.citytech.cuny.edu/).
 
-Commons In A Box is developed by a team based at [The Graduate Center, CUNY](https://www.gc.cuny.edu). It was originally made possible by a grant from the [Alfred P. Sloan Foundation](https://sloan.org). CBOX OpenLab, a collaboration with [New York City College of Technology](http://www.citytech.cuny.edu), was created with funding from the National Endowment for the Humanities’ [Office of Digital Humanities](https://www.neh.gov/divisions/odh). CBOX receives continuing support from the City University of New York and The Graduate Center, CUNY. 
+Commons In A Box is developed by a team based at [The Graduate Center, CUNY](https://www.gc.cuny.edu). It was originally made possible by a grant from the [Alfred P. Sloan Foundation](https://sloan.org). CBOX OpenLab, a collaboration with [New York City College of Technology](http://www.citytech.cuny.edu), was created with funding from the National Endowment for the Humanities’ [Office of Digital Humanities](https://www.neh.gov/divisions/odh). CBOX receives continuing support from the City University of New York and The Graduate Center, CUNY.
