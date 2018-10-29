@@ -65,6 +65,17 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 * Updated plugins: BuddyPress 3.2.0, BuddyPress Docs 2.1.1, BuddyPress Reply By Email 1.0-RC7
 * Classic improvements: Improved accessibility for theme; improved compatibility with updated versions of WP and BP; improved PHP 7.2 compatibility
 
+= 1.0.17 =
+* Update plugins: BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.2, BuddyPress Groupblog 1.9.0, BP MPO Activity Filter 1.2.1, BP Reply By Email 1.0-RC6, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
+* Introduce new technique for setting plugin defaults at the time of CBOX setup.
+* Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.
+* Fix bug that causes bbPress topic replies not to go through in certain cases.
+* Theme improvements: Add search form to Members directory and to Manage > Members page in groups.
+
+= 1.0.16 =
+* Compatibility with WordPress 4.8 and BuddyPress 2.9
+* Update plugins: BuddyPress 2.9.1, bbPress 2.5.14, BuddyPress Docs 1.9.4, BuddyPress Group Email Subscription 3.7.2, BP Reply By Email 1.0-RC5, Invite Anyone 1.3.19
+* Security hardening against certain upload vulnerabilities
 = 1.0.15 =
 * Compatibility with BuddyPress 2.8
 * Updated plugins: BuddyPress 2.8.2, BuddyPress Docs 1.9.3, BuddyPress Group Email Subscription 3.7.1, Invite Anyone 1.3.16
