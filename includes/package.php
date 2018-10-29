@@ -251,7 +251,7 @@ abstract class CBox_Package {
 			'template_path' => CBOX_PLUGIN_DIR . 'admin/templates/' . sanitize_file_name( strtolower( static::$name ) ) . '/',
 			'icon_url'      => includes_url( 'images/crystal/archive.png' ),
 			'badge_url'     => cbox()->plugin_url( 'admin/images/logo-cbox_vert.png' ),
-			'badge_url_x2'  => cbox()->plugin_url( 'admin/images/logo-cbox_vert-x2.png' ),
+			'badge_url_x2'  => cbox()->plugin_url( 'admin/images/logo-cbox_vert-2x.png' ),
 			'network'       => false
 		);
 	}
