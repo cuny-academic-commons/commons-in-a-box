@@ -140,7 +140,7 @@ class CBox_Admin {
 			// Redirect to a specific installation step, if necessary.
 			if ( '' === cbox_get_setup_step() ) {
 				if ( cbox_get_theme_prop( 'download_url' ) ) {
-					$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
+					$url = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 				}
 			}
 
