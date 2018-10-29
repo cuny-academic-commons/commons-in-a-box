@@ -1,209 +1,237 @@
-# Copyright (C) 2016 Commons In A Box
+# Copyright (C) 2018 Commons In A Box
 # This file is distributed under the same license as the Commons In A Box package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Commons In A Box 1.0.14\n"
+"Project-Id-Version: Commons In A Box 1.1.0-beta2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/commons-in-a-box\n"
-"POT-Creation-Date: 2016-12-19 19:12:26+00:00\n"
+"POT-Creation-Date: 2018-10-29 14:48:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: admin/admin-loader.php:185
-msgid "Set Up CBOX Plugins"
+#: admin/admin-loader.php:310
+msgid "Installing Required Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:190 admin/admin-loader.php:213
-#: admin/admin-loader.php:238
-msgid "Return to the CBOX Dashboard"
+#: admin/admin-loader.php:317
+msgid "Continue to recommended plugins"
 msgstr ""
 
-#: admin/admin-loader.php:208
-msgid "Install CBOX Plugins"
+#: admin/admin-loader.php:324 admin/admin-loader.php:374
+msgid "Continue to theme installation"
 msgstr ""
 
-#: admin/admin-loader.php:228
+#: admin/admin-loader.php:338
+msgid "Confirm CBOX %s Installation"
+msgstr ""
+
+#: admin/admin-loader.php:349
+msgid "Return to dashboard"
+msgstr ""
+
+#: admin/admin-loader.php:351
+msgid "Install"
+msgstr ""
+
+#: admin/admin-loader.php:369
+msgid "Installing Selected Plugins"
+msgstr ""
+
+#: admin/admin-loader.php:377 admin/admin-loader.php:408
+msgid "Continue to the CBOX Dashboard"
+msgstr ""
+
+#: admin/admin-loader.php:398
 msgid "Upgrading CBOX Plugins and Themes"
 msgstr ""
 
-#: admin/admin-loader.php:231
-msgid "Now, let's upgrade the CBOX Default theme &rarr;"
+#: admin/admin-loader.php:401
+msgid "Now, let's upgrade the %s theme &rarr;"
 msgstr ""
 
-#: admin/admin-loader.php:235
+#: admin/admin-loader.php:405
 msgid "Upgrading CBOX Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:269
+#: admin/admin-loader.php:435
+msgid "Activate Theme"
+msgstr ""
+
+#: admin/admin-loader.php:437
+msgid "Install Theme"
+msgstr ""
+
+#: admin/admin-loader.php:442
+msgid "Return to package selection"
+msgstr ""
+
+#: admin/admin-loader.php:444
+msgid ""
+"Please note: This theme is <strong>required</strong> for use with Commons In "
+"A Box %s."
+msgstr ""
+
+#: admin/admin-loader.php:447
+msgid ""
+"Clicking on \"%1$s\" will change your current theme. If you do not wish to "
+"change the theme, please click \"%2$s\" and choose a different package."
+msgstr ""
+
+#: admin/admin-loader.php:452
+msgid "Skip"
+msgstr ""
+
+#: admin/admin-loader.php:455
+msgid ""
+"Please note: Clicking on \"%1$s\" will change your current theme.  If you "
+"would rather keep your existing theme, click on the \"%2$s\" link."
+msgstr ""
+
+#: admin/admin-loader.php:462
+msgid "Theme Installation"
+msgstr ""
+
+#: admin/admin-loader.php:485
 msgctxt "references the theme that is currently being installed"
-msgid "Installing %s"
+msgid "Installing %s theme"
 msgstr ""
 
-#: admin/admin-loader.php:289
-msgid "Upgrading CBOX Theme"
+#: admin/admin-loader.php:500
+msgid "Upgrading Theme"
 msgstr ""
 
-#: admin/admin-loader.php:330 admin/admin-loader.php:834
-msgid "Theme"
+#: admin/admin-loader.php:548
+msgid "CBOX %s"
 msgstr ""
 
-#. #-#-#-#-#  cbox.pot (Commons In A Box 1.0.14)  #-#-#-#-#
+#. #-#-#-#-#  cbox.pot (Commons In A Box 1.1.0-beta2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: admin/admin-loader.php:404 admin/admin-loader.php:405
+#: admin/admin-loader.php:548
 msgid "Commons In A Box"
 msgstr ""
 
-#: admin/admin-loader.php:413 admin/admin-loader.php:459
+#: admin/admin-loader.php:561 admin/admin-loader.php:614
 msgid "Commons In A Box Dashboard"
 msgstr ""
 
-#: admin/admin-loader.php:414
+#: admin/admin-loader.php:562
 msgid "Dashboard"
 msgstr ""
 
-#: admin/admin-loader.php:480 admin/admin-loader.php:952
-msgid "About"
+#: admin/admin-loader.php:664
+msgid "Select a Package"
 msgstr ""
 
-#: admin/admin-loader.php:482 admin/admin-loader.php:956
+#: admin/admin-loader.php:666
 msgid ""
-"<strong>Commons In A Box</strong> is a software project aimed at turning the "
-"infrastructure that successfully powers the <a href=\"%s\">CUNY Academic "
-"Commons</a> into a free, distributable, easy-to-install package."
+"Commons In A Box includes two packages, each containing selected WordPress "
+"plugins and a WordPress theme. The packages are designed to make it easier "
+"for you to install and configure your site. Select the package that best "
+"suits your needs."
 msgstr ""
 
-#: admin/admin-loader.php:483 admin/admin-loader.php:958
+#: admin/admin-loader.php:688
+msgid "Select %s"
+msgstr ""
+
+#: admin/admin-loader.php:688
+msgid "Select"
+msgstr ""
+
+#: admin/admin-loader.php:689
+msgid "More information about %s"
+msgstr ""
+
+#: admin/admin-loader.php:689
+msgid "More Details"
+msgstr ""
+
+#: admin/admin-loader.php:702
+msgid "Theme required; existing theme will be replaced during installation."
+msgstr ""
+
+#: admin/admin-loader.php:704
+msgid "Theme optional; theme installation can be skipped."
+msgstr ""
+
+#: admin/admin-loader.php:710
+msgid "Requires WordPress Multisite."
+msgstr ""
+
+#: admin/admin-loader.php:710
+msgid "Find out how to convert to a WordPress Multisite network here."
+msgstr ""
+
+#: admin/admin-loader.php:713
+msgid "<strong>Compatible</strong> with your version of WordPress"
+msgstr ""
+
+#: admin/admin-loader.php:734
+msgid "Required Plugins"
+msgstr ""
+
+#: admin/admin-loader.php:737
 msgid ""
-"Commons In A Box is made possible by a generous grant from the Alfred P. "
-"Sloan Foundation."
+"Before you can use Commons In A Box %s, we'll need to install some required "
+"plugins. Click 'Continue' to get set up."
 msgstr ""
 
-#: admin/admin-loader.php:488
-msgid "Useful Links:"
-msgstr ""
-
-#: admin/admin-loader.php:489
-msgid "<a href=\"%s\">Changelog</a>"
-msgstr ""
-
-#: admin/admin-loader.php:490
-msgid "<a href=\"%s\">Show Welcome Message</a>"
-msgstr ""
-
-#: admin/admin-loader.php:550
-msgid "Dismiss"
-msgstr ""
-
-#: admin/admin-loader.php:553 admin/changelog.php:7 admin/credits.php:7
-msgid "Version %s"
-msgstr ""
-
-#: admin/admin-loader.php:556
-msgid "Welcome to Commons In A Box! "
-msgstr ""
-
-#: admin/admin-loader.php:558
-msgid ""
-"Need help getting started? Looking for support or ideas? Check out our "
-"documentation and join the community of CBOX users at <a href=\"http://"
-"commonsinabox.org\">commonsinabox.org</a>."
-msgstr ""
-
-#: admin/admin-loader.php:561
-msgid ""
-"If you&#8217;d rather dive right in, here are a few things most people do "
-"first when they set up a new CBOX site."
-msgstr ""
-
-#: admin/admin-loader.php:562
-msgid ""
-"Already know what you&#8217;re doing? <a href=\"%s\">Dismiss this message</"
-"a>."
-msgstr ""
-
-#: admin/admin-loader.php:599
-msgid "Install BuddyPress"
-msgstr ""
-
-#: admin/admin-loader.php:602
-msgid ""
-"Before you can use Commons In A Box, we'll need to install BuddyPress and "
-"some recommended plugins. Click 'Continue' to get set up."
-msgstr ""
-
-#: admin/admin-loader.php:606
+#: admin/admin-loader.php:741
 msgid "Continue &rarr;"
 msgstr ""
 
-#: admin/admin-loader.php:617
-msgid "Set Up BuddyPress"
+#: admin/admin-loader.php:751
+msgid "Recommended Plugins"
 msgstr ""
 
-#: admin/admin-loader.php:619
-msgid "We're almost there! Now we need to finish setting up BuddyPress."
+#: admin/admin-loader.php:754
+msgid "You're almost finished with the installation process."
 msgstr ""
 
-#: admin/admin-loader.php:621
+#: admin/admin-loader.php:756
 msgid ""
-"Don't worry! BuddyPress has a simple wizard to guide you through the "
-"process.  However, if you want more help, check out this <a href='%s'>codex "
-"article</a>."
-msgstr ""
-
-#: admin/admin-loader.php:623
-msgid "Continue to BuddyPress setup &rarr;"
-msgstr ""
-
-#: admin/admin-loader.php:642
-msgid "Install some other cool stuff!"
-msgstr ""
-
-#: admin/admin-loader.php:645
-msgid ""
-"It looks like you're already running BuddyPress. Cool! You're almost "
-"finished the setup process!"
-msgstr ""
-
-#: admin/admin-loader.php:647
-msgid ""
-"Did you know Commons In A Box comes prebundled with a few, recommended "
+"Did you know Commons In A Box %s comes prebundled with a few recommended "
 "plugins?  These plugins help to add functionality to your existing WordPress "
-"and BuddyPress site. "
+"site."
 msgstr ""
 
-#: admin/admin-loader.php:649
+#: admin/admin-loader.php:758
 msgid ""
 "We have automatically selected the following plugins to install for you. "
 "However, feel free to uncheck some of these plugins based on your site's "
 "needs."
 msgstr ""
 
-#: admin/admin-loader.php:701 admin/admin-loader.php:772
+#: admin/admin-loader.php:767
+msgid "Continue"
+msgstr ""
+
+#: admin/admin-loader.php:818 admin/admin-loader.php:889
 msgid "Upgrade Available"
 msgstr ""
 
-#: admin/admin-loader.php:705
+#: admin/admin-loader.php:822
 msgid "Commons In A Box %s requires WordPress %s"
 msgstr ""
 
-#: admin/admin-loader.php:707
+#: admin/admin-loader.php:824
 msgid "Upgrade now!"
 msgstr ""
 
-#: admin/admin-loader.php:756
+#: admin/admin-loader.php:873
 msgid ""
-"%d installed plugin and the CBOX Default theme have an update available. "
-"Click on the button below to upgrade."
+"%d installed plugin and the theme have an update available. Click on the "
+"button below to upgrade."
 msgid_plural ""
-"%d installed plugins and the CBOX Default theme have updates available. "
-"Click on the button below to upgrade."
+"%d installed plugins and the theme have updates available. Click on the "
+"button below to upgrade."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/admin-loader.php:760
+#: admin/admin-loader.php:877
 msgid ""
 "%d installed plugin has an update available. Click on the button below to "
 "upgrade."
@@ -213,722 +241,1086 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/admin-loader.php:767
+#: admin/admin-loader.php:884
 msgid ""
-"The CBOX Default theme has an update available. Click on the button below to "
-"upgrade."
+"The %s theme has an update available. Click on the button below to upgrade."
 msgstr ""
 
-#: admin/admin-loader.php:778
+#: admin/admin-loader.php:895
 msgid "Upgrade"
 msgstr ""
 
-#: admin/admin-loader.php:803
-msgid "Quick Links"
+#: admin/admin-loader.php:1057
+msgid "Let's get started!"
 msgstr ""
 
-#: admin/admin-loader.php:809 admin/plugins-loader.php:1068
-#: admin/settings-loader.php:145
+#: admin/admin-loader.php:1059
+msgid "Click here to get set up"
+msgstr ""
+
+#: admin/admin-loader.php:1064
+msgid "The %1$s theme needs an update."
+msgstr ""
+
+#: admin/admin-loader.php:1066
+msgid "Update the theme &rarr;"
+msgstr ""
+
+#: admin/admin-loader.php:1071
+msgid "You only have one last thing to do. We promise!"
+msgstr ""
+
+#: admin/admin-loader.php:1073
+msgid "Click here to finish up!"
+msgstr ""
+
+#: admin/admin-loader.php:1085
+msgid "Upgrading theme..."
+msgstr ""
+
+#: admin/admin-loader.php:1087
+msgid "Installing plugins..."
+msgstr ""
+
+#: admin/admin-loader.php:1095
+msgid "Commons In A Box is almost ready!"
+msgstr ""
+
+#: admin/admin-loader.php:1129
+msgid "CBOX Plugins"
+msgstr ""
+
+#: admin/admin-loader.php:1131
+msgid "CBOX Network Plugins"
+msgstr ""
+
+#: admin/admin-loader.php:1134
+msgid ""
+"Don't forget that CBOX plugins can be managed from the CBOX plugins page!"
+msgstr ""
+
+#: admin/admin-loader.php:1136
+msgid "You can <a href=\"%s\">manage your CBOX plugins here</a>."
+msgstr ""
+
+#: admin/admin-loader.php:1139
+msgid "Plugins on %s"
+msgstr ""
+
+#: admin/admin-loader.php:1141
+msgid "Other Network Plugins"
+msgstr ""
+
+#: admin/plugin-install.php:345
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: admin/plugin-install.php:347
+msgid ""
+"The installation process is starting. This process may take a while, so "
+"please be patient."
+msgstr ""
+
+#: admin/plugin-install.php:348
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: admin/plugin-install.php:349
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: admin/plugin-install.php:350
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: admin/plugin-install.php:350
+msgid "Show Details"
+msgstr ""
+
+#: admin/plugin-install.php:350
+msgid "Hide Details"
+msgstr ""
+
+#: admin/plugin-install.php:351
+msgid "Plugins finished installing."
+msgstr ""
+
+#: admin/plugin-install.php:378
+msgid "Plugins updated."
+msgstr ""
+
+#: admin/plugin-install.php:382
+msgid "Now Installing Plugins..."
+msgstr ""
+
+#: admin/plugin-install.php:397
+msgid "Now Activating Plugins..."
+msgstr ""
+
+#: admin/plugin-install.php:404 admin/plugin-install.php:759
+msgid "Plugins activated."
+msgstr ""
+
+#: admin/plugin-install.php:498
+msgid "Continue to the CBOX dashboard"
+msgstr ""
+
+#: admin/plugin-install.php:505
+msgid "Return to the CBOX Plugins page"
+msgstr ""
+
+#: admin/plugin-install.php:720
+msgid "Upgrading Existing Plugins..."
+msgstr ""
+
+#: admin/plugin-install.php:741
+msgid "Installing Plugins..."
+msgstr ""
+
+#: admin/plugin-install.php:754
+msgid "Activating Plugins..."
+msgstr ""
+
+#: admin/plugins.php:384
+msgid "Commons In A Box Plugins"
+msgstr ""
+
+#: admin/plugins.php:385 admin/templates/base/package-details.php:13
+#: admin/templates/openlab/getting-started.php:12
+#: admin/templates/openlab/package-details.php:7
+msgid "Plugins"
+msgstr ""
+
+#: admin/plugins.php:428
+msgid ""
+"You do not have sufficient permissions to deactivate plugins for this site."
+msgstr ""
+
+#: admin/plugins.php:535
+msgid "Plugin deactivated."
+msgstr ""
+
+#: admin/plugins.php:547 lib/wp-plugin-dependencies/plugin-dependencies.php:507
+msgid "The following plugins have also been deactivated:"
+msgstr ""
+
+#: admin/plugins.php:583
+msgid "Plugin uninstalled."
+msgstr ""
+
+#: admin/plugins.php:608 admin/plugins.php:620 admin/plugins.php:776
+msgid "Update"
+msgstr ""
+
+#: admin/plugins.php:614
+msgid "Activate"
+msgstr ""
+
+#: admin/plugins.php:625
+msgid "%1$s Plugins: %2$s"
+msgstr ""
+
+#: admin/plugins.php:660
+msgid ""
+"This plugin might be active on other member sites.  If so, removing the "
+"plugin will remove this functionality on those sites."
+msgstr ""
+
+#: admin/plugins.php:661
+msgid "Are you sure you want to continue uninstalling?"
+msgstr ""
+
+#: admin/plugins.php:683
+msgid "No"
+msgstr ""
+
+#: admin/plugins.php:687
+msgid "Yes"
+msgstr ""
+
+#: admin/plugins.php:729
+msgid "Update CBOX"
+msgstr ""
+
+#: admin/plugins.php:789 admin/plugins.php:797
+msgid "Plugin"
+msgstr ""
+
+#: admin/plugins.php:790 admin/plugins.php:798
+msgid "Description"
+msgstr ""
+
+#: admin/plugins.php:822
+msgid "Plugin is already installed"
+msgstr ""
+
+#: admin/plugins.php:825
+msgid "Check this box to install the plugin."
+msgstr ""
+
+#: admin/plugins.php:828
+msgid "Plugin is already active!"
+msgstr ""
+
+#: admin/plugins.php:852 admin/templates/classic/getting-started.php:18
+msgid "Click here to view this plugin's settings page"
+msgstr ""
+
+#: admin/plugins.php:854 admin/templates/classic/getting-started.php:11
+#: includes/classic/settings.php:165
 msgid "Settings"
 msgstr ""
 
-#: admin/admin-loader.php:810
+#: admin/plugins.php:862
+msgid "Click here for documentation on this plugin, from commonsinabox.org"
+msgstr ""
+
+#: admin/plugins.php:864
+msgid "Info"
+msgstr ""
+
+#: admin/plugins.php:872
+msgid "Deactivate this plugin."
+msgstr ""
+
+#: admin/plugins.php:874
+msgid "Deactivate"
+msgstr ""
+
+#: admin/plugins.php:882
+msgid "Uninstall %s"
+msgstr ""
+
+#: admin/plugins.php:884
+msgid "Uninstall"
+msgstr ""
+
+#: admin/plugins.php:894
+msgid "Select the checkbox and click on 'Update' to upgrade this plugin."
+msgstr ""
+
+#: admin/plugins.php:894
+msgid "Update available."
+msgstr ""
+
+#: admin/plugins.php:911
+msgid "Requires: "
+msgstr ""
+
+#: admin/plugins.php:921
+msgid "(enabled)"
+msgstr ""
+
+#: admin/plugins.php:923
+msgid "(disabled)"
+msgstr ""
+
+#: admin/plugins.php:925
+msgid "(automatically installed with %s)"
+msgstr ""
+
+#: admin/templates/base/footer.php:4
+msgid "Change packages"
+msgstr ""
+
+#: admin/templates/base/package-details-intro.php:4
+msgid ""
+"Welcome to CBOX %1$s! If this is a new WordPress Multisite installation, "
+"just click Install to continue. If you are adding CBOX %1$s to an existing "
+"installation, please consult the <a href=\"%2$s\">documentation</a> before "
+"continuing."
+msgstr ""
+
+#: admin/templates/base/package-details-intro.php:8
+msgid ""
+"Welcome to CBOX %1$s! If this is a new WordPress installation, just click "
+"Install to continue. If you are adding CBOX %1$s to an existing "
+"installation, please consult the <a href=\"%2$s\">documentation</a> before "
+"continuing."
+msgstr ""
+
+#: admin/templates/base/package-details-plugins.php:2
+msgid ""
+"CBOX %s will install and activate plugins that you do not already have "
+"installed."
+msgstr ""
+
+#: admin/templates/base/package-details-theme.php:2
+msgid ""
+"The CBOX %s theme will change how your site looks, and will alter its "
+"architecture. Any widgets or menus that you currently have set will need to "
+"be reconfigured under the Appearance menu in the Dashboard."
+msgstr ""
+
+#: admin/templates/base/package-details.php:5
+#: admin/templates/base/theme-prompt.php:3
+#: admin/templates/openlab/package-details.php:2
+msgid "Screenshot of theme"
+msgstr ""
+
+#: admin/templates/base/package-details.php:8
+#: admin/templates/classic/getting-started.php:37
+#: admin/templates/openlab/package-details.php:4
+msgid "Theme"
+msgstr ""
+
+#: admin/templates/base/plugins-install-only-header.php:2
+msgid ""
+"The following plugins can improve the WordPress site experience for your "
+"users."
+msgstr ""
+
+#: admin/templates/base/plugins-install-only-header.php:3
+msgid ""
+"Installing a plugin here makes it available for members in the Plugins area "
+"of their site."
+msgstr ""
+
+#: admin/templates/base/plugins-install-only-header.php:4
+msgid ""
+"If you would like to add or manage other plugins for your members to access, "
+"you can access that area <a href=\"%s\">here</a>."
+msgstr ""
+
+#: admin/templates/base/plugins-install-only-header.php:5
+msgid "To install, check the plugins you want to install and click 'Install'."
+msgstr ""
+
+#: admin/templates/base/plugins-optional-header.php:2
+msgid ""
+"The following plugins work well with Commons In A Box %s, but they require a "
+"bit of additional setup, so we do not install them by default."
+msgstr ""
+
+#: admin/templates/base/plugins-optional-header.php:3
+#: admin/templates/openlab/plugins-optional-header.php:3
+msgid "To install, check the plugins you want to install and click 'Activate'."
+msgstr ""
+
+#: admin/templates/base/plugins-recommended-header.php:1
+msgid "Recommended"
+msgstr ""
+
+#: admin/templates/base/plugins-recommended-header.php:3
+msgid ""
+"The following plugins are recommended during initial Commons In A Box %s "
+"setup.  We like them, but feel free to deactivate them if you don't need "
+"certain functionality."
+msgstr ""
+
+#: admin/templates/base/plugins-required-header.php:1
+msgid "To update, check the plugins you want to update and click 'Update'."
+msgstr ""
+
+#: admin/templates/base/plugins-required-header.php:3
+msgid "Required"
+msgstr ""
+
+#: admin/templates/base/plugins-required-header.php:5
+msgid "Commons In A Box %s requires the following plugins."
+msgstr ""
+
+#: admin/templates/base/theme-prompt.php:6
+msgid "One last step!"
+msgstr ""
+
+#: admin/templates/base/theme-prompt.php:8
+msgid ""
+"The %1$s Theme is the final piece of the Commons In A Box %2$s experience."
+msgstr ""
+
+#: admin/templates/base/welcome.php:6 admin/templates/classic/changelog.php:8
+#: admin/templates/openlab/changelog.php:8
+msgid "Badge"
+msgstr ""
+
+#: admin/templates/base/welcome.php:8
+msgid "Version %s"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:3 includes/package.php:271
+msgid "Welcome to Commons In A Box %s"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:5
+#: admin/templates/openlab/changelog.php:5
+msgid "Thank you for updating to the latest version!"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:13
+#: admin/templates/openlab/changelog.php:13
+msgid "What&#8217;s New"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:16
+#: admin/templates/classic/welcome-description.php:7
+#: admin/templates/openlab/changelog.php:16
+#: admin/templates/openlab/welcome-description.php:7
+msgid "Credits"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:21
+#: admin/templates/openlab/changelog.php:21
+msgid "Under the Hood"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:27
+#: admin/templates/openlab/changelog.php:27
+msgid "Added \"package\" infrastructure."
+msgstr ""
+
+#: admin/templates/classic/changelog.php:28
+#: admin/templates/openlab/changelog.php:28
+msgid "Added OpenLab package."
+msgstr ""
+
+#: admin/templates/classic/changelog.php:35
+msgid "Plugin Updates"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:47
+msgid "Theme Updates"
+msgstr ""
+
+#: admin/templates/classic/changelog.php:60
+#: admin/templates/openlab/changelog.php:35
+msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
+msgstr ""
+
+#: admin/templates/classic/description.php:2
+msgid ""
+"<strong>CBOX Classic is designed for communities of all kinds.</strong> It "
+"is used by groups and organizations to create flexible social networks where "
+"members can collaborate on projects, publish research, and create "
+"repositories of knowledge."
+msgstr ""
+
+#: admin/templates/classic/getting-started.php:3
+msgid "Getting Started with Commons in A Box Classic"
+msgstr ""
+
+#: admin/templates/classic/getting-started.php:12
 msgid ""
 "Commons In A Box works by pulling together a number of independent WordPress "
 "and BuddyPress plugins. Customize your site by exploring the settings pages "
 "for these plugins below."
 msgstr ""
 
-#: admin/admin-loader.php:815 admin/plugins-loader.php:1066
-msgid "Click here to view this plugin's settings page"
-msgstr ""
-
-#: admin/admin-loader.php:818
+#: admin/templates/classic/getting-started.php:21
 msgid "Click here for plugin documentation at commonsinabox.org"
 msgstr ""
 
-#: admin/admin-loader.php:818
+#: admin/templates/classic/getting-started.php:21
 msgid "Info..."
 msgstr ""
 
-#: admin/admin-loader.php:827
-msgid "<a href=\"%s\">Manage all your CBOX plugins here!</a>"
+#: admin/templates/classic/getting-started.php:30
+msgid "<a href=\"%s\">Manage all your CBOX plugins here</a>"
 msgstr ""
 
-#: admin/admin-loader.php:850
-msgid "<a href=\"%s\">Install the CBOX Default theme to get started</a>."
+#: admin/templates/classic/getting-started.php:43
+msgid "<a href=\"%1$s\">Install the %2$s theme to get started</a>."
 msgstr ""
 
-#: admin/admin-loader.php:859
+#: admin/templates/classic/getting-started.php:52
 msgid "Your current theme is %s."
 msgstr ""
 
-#: admin/admin-loader.php:864
+#: admin/templates/classic/getting-started.php:57
 msgid "It looks like this theme is not compatible with BuddyPress."
 msgstr ""
 
-#: admin/admin-loader.php:869
+#: admin/templates/classic/getting-started.php:64
 msgid ""
-"Did you know that <strong>CBOX</strong> comes with a cool theme? Check it "
-"out below!"
+"Did you know that <strong>%s</strong> comes with a cool theme? Check it out "
+"below!"
 msgstr ""
 
-#: admin/admin-loader.php:871
-msgid "View a larger screenshot of the CBOX theme"
+#: admin/templates/classic/getting-started.php:66
+msgid "Screenshot of the %s theme"
 msgstr ""
 
-#: admin/admin-loader.php:875
-msgid "<a href=\"%s\">Like the CBOX Theme? Install it!</a>"
+#: admin/templates/classic/getting-started.php:70
+msgid "<a href=\"%1$s\">Like the %2$s theme? Install it!</a>"
 msgstr ""
 
-#: admin/admin-loader.php:890
+#: admin/templates/classic/getting-started.php:79
 msgid ""
 "You can also make your theme compatible with the <a href='%s'>BuddyPress "
 "Template Pack</a>."
 msgstr ""
 
-#: admin/admin-loader.php:903
+#: admin/templates/classic/getting-started.php:90
+msgid "You're using a child theme of the <strong>%1$s</strong> theme."
+msgstr ""
+
+#: admin/templates/classic/getting-started.php:92
+msgid "You're using the <strong>%1$s</strong> theme."
+msgstr ""
+
+#: admin/templates/classic/getting-started.php:97
+msgid "<a href=\"%1$s\">Configure the %2$s theme here</a>"
+msgstr ""
+
+#: admin/templates/classic/package-details-plugins.php:2
 msgid ""
-"You're using a child theme of the <strong>CBOX Default</strong> theme! Good "
-"on ya!"
+"The CBOX Classic package includes several required plugins that provide "
+"important features such as groups, user profiles, discussion forums, "
+"collaborative document editing, and other functionality. These plugins may "
+"interact with any existing plugins you have installed."
 msgstr ""
 
-#: admin/admin-loader.php:905
-msgid "You're using the <strong>CBOX Default</strong> theme! Good on ya!"
+#: admin/templates/classic/welcome-description.php:1
+msgid ""
+"CBOX Classic is designed for communities of all kinds. It is used by groups "
+"and organizations to create flexible social networks where members can "
+"collaborate on projects, publish research, and create repositories of "
+"knowledge."
 msgstr ""
 
-#: admin/admin-loader.php:920
-msgid "<a href=\"%s\">Configure the CBOX Theme here!</a>"
+#: admin/templates/classic/welcome-description.php:3
+msgid ""
+"Commons In A Box was made possible by a generous grant from the <a href="
+"\"%1$s\" target=\"_blank\">Alfred P. Sloan Foundation</a> that allowed us to "
+"turn the infrastructure that successfully powers the <a href=\"%2$s\" target="
+"\"_blank\">CUNY Academic Commons</a> into a distributable, easy-to-install "
+"package."
 msgstr ""
 
-#: admin/admin-loader.php:954
-msgid "You're currently using <strong>Commons In A Box %s</strong>"
-msgstr ""
-
-#: admin/admin-loader.php:961
+#: admin/templates/classic/welcome-description.php:6
+#: admin/templates/openlab/welcome-description.php:6
 msgid "What's New"
 msgstr ""
 
-#: admin/admin-loader.php:962 admin/changelog.php:14 admin/credits.php:14
-msgid "Credits"
-msgstr ""
-
-#: admin/admin-loader.php:963
+#: admin/templates/classic/welcome-description.php:8
+#: admin/templates/openlab/welcome-description.php:8
 msgid "Documentation"
 msgstr ""
 
-#: admin/admin-loader.php:964
-msgid "Dev tracker"
+#: admin/templates/openlab/changelog.php:3
+msgid "Welcome to Commons In A Box OpenLab %s"
 msgstr ""
 
-#: admin/admin-loader.php:1143
-msgid "Let's get started!"
-msgstr ""
-
-#: admin/admin-loader.php:1145
-msgid "Click here to get set up"
-msgstr ""
-
-#: admin/admin-loader.php:1150
-msgid "BuddyPress is installed, but needs some additional setup."
-msgstr ""
-
-#: admin/admin-loader.php:1152
-msgid "Finish BuddyPress setup &rarr;"
-msgstr ""
-
-#: admin/admin-loader.php:1157
-msgid "The CBOX Default theme needs an update."
-msgstr ""
-
-#: admin/admin-loader.php:1159
-msgid "Update the theme &rarr;"
-msgstr ""
-
-#: admin/admin-loader.php:1164
-msgid "You only have one last thing to do. We promise!"
-msgstr ""
-
-#: admin/admin-loader.php:1166
-msgid "Click here to finish up!"
-msgstr ""
-
-#: admin/admin-loader.php:1174
-msgid "Upgrading theme..."
-msgstr ""
-
-#: admin/admin-loader.php:1176
-msgid "Installing plugins..."
-msgstr ""
-
-#: admin/admin-loader.php:1184
-msgid "Commons In A Box is almost ready!"
-msgstr ""
-
-#: admin/admin-loader.php:1213
-msgid "CBOX Plugins"
-msgstr ""
-
-#: admin/admin-loader.php:1215
-msgid "CBOX Network Plugins"
-msgstr ""
-
-#: admin/admin-loader.php:1218
+#: admin/templates/openlab/description.php:2
 msgid ""
-"Don't forget that CBOX plugins can be managed from the CBOX plugins page!"
+"<strong>New! CBOX OpenLab is specifically designed for teaching, learning, "
+"and collaboration</strong>. It allows faculty members, departments, and "
+"entire institutions to create commons spaces for open learning."
 msgstr ""
 
-#: admin/admin-loader.php:1220
-msgid "You can <a href=\"%s\">manage your CBOX plugins here</a>."
+#: admin/templates/openlab/getting-started.php:4
+msgid "Getting Started with Commons in A Box OpenLab"
 msgstr ""
 
-#: admin/admin-loader.php:1223
-msgid "Plugins on %s"
-msgstr ""
-
-#: admin/admin-loader.php:1225
-msgid "Other Network Plugins"
-msgstr ""
-
-#: admin/changelog.php:3 admin/credits.php:3
-msgid "Welcome to Commons In A Box %s"
-msgstr ""
-
-#: admin/changelog.php:5
-msgid "Thank you for updating to the latest version!"
-msgstr ""
-
-#: admin/changelog.php:11 admin/credits.php:11
-msgid "What&#8217;s New"
-msgstr ""
-
-#: admin/changelog.php:19
-msgid "1.0.14 maintenance Release"
-msgstr ""
-
-#: admin/changelog.php:20
+#: admin/templates/openlab/getting-started.php:8
 msgid ""
-"The 1.0.14 release brings a number of plugins up to date, and improves "
-"compatibility with WordPress 4.7 and BuddyPress 2.7."
+"We've assembled some links to get you started. Check out our <a href=\"%1$s"
+"\" target=\"_blank\">documentation</a> for detailed instructions. Questions? "
+"Post them on our <a href=\"%2$s\" target=\"_blank\">CBOX OpenLab Support "
+"Forum</a>."
 msgstr ""
 
-#: admin/changelog.php:24
-msgid "Plugin Updates"
-msgstr ""
-
-#: admin/changelog.php:27
+#: admin/templates/openlab/getting-started.php:13
 msgid ""
-"Since the last version release, the following plugins were updated in CBOX:"
+"Manage Community Feature plugins for your site and Member Site Plugins that "
+"you would like to make available to your members for their individual "
+"WordPress sites."
 msgstr ""
 
-#: admin/changelog.php:40
-msgid "Theme Improvements"
+#: admin/templates/openlab/getting-started.php:16
+msgid "Member Settings"
 msgstr ""
 
-#: admin/changelog.php:43
+#: admin/templates/openlab/getting-started.php:17
 msgid ""
-"Since the last version release, the following bugfixes and enhancements were "
-"added to the Commons In A Box theme:"
+"Modify member categories, their capabilities and permissions, who can create "
+"an account, and what types of accounts different members can create. These "
+"settings also include email domain whitelisting and registration codes to "
+"restrict access by account type."
 msgstr ""
 
-#: admin/changelog.php:45
+#: admin/templates/openlab/getting-started.php:20
+msgid "Group Settings"
+msgstr ""
+
+#: admin/templates/openlab/getting-started.php:21
 msgid ""
-"Fix bug that prevented secondary profile group tabs from appearing in Edit "
-"mode."
+"Affect the appearance and functionality of groups across your site. You can "
+"change the features and site templates available to groups, as well as "
+"create and assign categories for groups that can be used to filter items on "
+"the group directory pages."
 msgstr ""
 
-#: admin/changelog.php:46
+#: admin/templates/openlab/getting-started.php:24
+msgid "Academic Units"
+msgstr ""
+
+#: admin/templates/openlab/getting-started.php:25
 msgid ""
-"Fix bug that caused post trackbacks and pingbacks not to appear in some "
-"cases."
+"Create unit-types that best describe how your institution is organized "
+"&ndash; for example, Departments that are located within Divisions &ndash; "
+"and define the units within each type. These units can be utilized as "
+"filters across your site's groups and for members to associate themselves in "
+"their profiles."
 msgstr ""
 
-#: admin/changelog.php:47
-msgid "Fix some PHP deprecation and error notices."
+#: admin/templates/openlab/getting-started.php:28
+msgid "Brand Settings"
 msgstr ""
 
-#: admin/changelog.php:48
+#: admin/templates/openlab/getting-started.php:29
 msgid ""
-"Fix bug that caused images and other elements not to render properly in "
-"theme documentation."
+"Customize your site including color scheme, logo, homepage layout, footer "
+"content, and widgets."
 msgstr ""
 
-#: admin/changelog.php:70 admin/credits.php:107
-msgid "<a href=\"%s\">Return to the CBOX dashboard &rarr;</a>"
+#: admin/templates/openlab/getting-started.php:32
+msgid "Communication Settings"
 msgstr ""
 
-#: admin/credits.php:5
+#: admin/templates/openlab/getting-started.php:33
 msgid ""
-"Commons In A Box is a project of the <a href=\"%s\">City University of New "
-"York</a> and the <a href=\"%s\">Graduate Center, CUNY</a> and is made "
-"possible by a generous grant from the <a href=\"%s\">Alfred P. Sloan "
-"Foundation</a>."
+"Manage email and other communication settings, including email template "
+"content and appearance and group email subscription settings."
 msgstr ""
 
-#: admin/credits.php:18
-msgid "Commons In A Box is created by these individuals."
-msgstr ""
-
-#: admin/credits.php:20
-msgid "Project Leaders"
-msgstr ""
-
-#: admin/credits.php:26
-msgid "Project Lead"
-msgstr ""
-
-#: admin/credits.php:31
-msgid "Lead Developer"
-msgstr ""
-
-#: admin/credits.php:35
-msgid "Core Developers"
-msgstr ""
-
-#: admin/credits.php:41 admin/credits.php:46
-msgid "Core Developer"
-msgstr ""
-
-#: admin/credits.php:50
-msgid "Theme Developers"
-msgstr ""
-
-#: admin/credits.php:56 admin/credits.php:61
-msgid "Theme Developer"
-msgstr ""
-
-#: admin/credits.php:65
-msgid "Support Team"
-msgstr ""
-
-#: admin/credits.php:93
-msgid "Core Contributors to Commons In A Box 1.0.8"
-msgstr ""
-
-#: admin/credits.php:100
-msgid "External Libraries"
-msgstr ""
-
-#: admin/credits.php:103
+#: admin/templates/openlab/package-details.php:5
 msgid ""
-"For adding plugin dependencies for WordPress.  Portions rewritten and "
-"modified by CBOX."
+"The CBOX OpenLab theme will change how your site looks, and will alter its "
+"architecture."
 msgstr ""
 
-#: admin/plugin-install.php:276
-msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr ""
-
-#: admin/plugin-install.php:278
+#: admin/templates/openlab/package-details.php:8
 msgid ""
-"The installation process is starting. This process may take a while on some "
-"hosts, so please be patient."
+"The CBOX OpenLab package includes several required plugins that provide "
+"important features such as groups, user profiles, discussion forums, "
+"collaborative document editing, and other functionality. These plugins may "
+"interact with any existing plugins you have installed."
 msgstr ""
 
-#: admin/plugin-install.php:279
-msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+#: admin/templates/openlab/plugins-optional-header.php:2
+msgid ""
+"The following plugins influence the community aspects of your site, but they "
+"require a bit of additional setup, so we do not install them by default."
 msgstr ""
 
-#: admin/plugin-install.php:280
-msgid "The installation of %1$s failed."
+#: admin/templates/openlab/welcome-description.php:1
+msgid ""
+"Commons In A Box OpenLab is designed for teaching, learning, and "
+"collaboration. It allows faculty members, departments, and entire "
+"institutions to create commons spaces for open learning."
 msgstr ""
 
-#: admin/plugin-install.php:281
-msgid "%1$s installed successfully."
+#: admin/templates/openlab/welcome-description.php:3
+msgid ""
+"Commons In A Box OpenLab is a collaboration between <a href=\"%1$s\" target="
+"\"_blank\">The Graduate Center, CUNY</a> and <a href=\"%2$s\" target=\"_blank"
+"\">New York City College of Technology</a>. It is being created with funding "
+"from the National Endowment for the Humanities' <a href=\"%3$s\" target="
+"\"_blank\">Office of Digital Humanities</a>."
 msgstr ""
 
-#: admin/plugin-install.php:281
-msgid "Show Details"
+#: admin/theme-install.php:203
+msgid "Continue to CBOX Dashboard &rarr;"
 msgstr ""
 
-#: admin/plugin-install.php:281
-msgid "Hide Details"
-msgstr ""
-
-#: admin/plugin-install.php:282
-msgid "Plugins finished installing."
-msgstr ""
-
-#: admin/plugin-install.php:309
-msgid "Plugins updated."
-msgstr ""
-
-#: admin/plugin-install.php:313
-msgid "Now Installing Plugins..."
-msgstr ""
-
-#: admin/plugin-install.php:328
-msgid "Now Activating Plugins..."
-msgstr ""
-
-#: admin/plugin-install.php:335 admin/plugin-install.php:620
-msgid "Plugins activated."
-msgstr ""
-
-#: admin/plugin-install.php:426
-msgid "Return to the CBOX Plugins page"
-msgstr ""
-
-#: admin/plugin-install.php:579
-msgid "Upgrading Existing Plugins..."
-msgstr ""
-
-#: admin/plugin-install.php:601
-msgid "Installing Plugins..."
-msgstr ""
-
-#: admin/plugin-install.php:615
-msgid "Activating Plugins..."
-msgstr ""
-
-#: admin/plugin-install.php:740 admin/plugin-install.php:748
+#: includes/classic/defaults/bbpress.php:48
+#: includes/classic/defaults/bbpress.php:56
+#: includes/openlab/defaults/bbpress.php:48
+#: includes/openlab/defaults/bbpress.php:56
 msgid "Group Forums"
 msgstr ""
 
-#: admin/plugin-install.php:749
+#: includes/classic/defaults/bbpress.php:57
+#: includes/openlab/defaults/bbpress.php:57
 msgid "All forums created in groups can be found here."
 msgstr ""
 
-#: admin/plugins-loader.php:121
+#: includes/classic/plugins.php:42 includes/openlab/plugins.php:44
 msgid "BuddyPress"
 msgstr ""
 
-#: admin/plugins-loader.php:122
+#: includes/classic/plugins.php:43 includes/openlab/plugins.php:45
 msgid ""
 "BuddyPress provides the core functionality of Commons In A Box, including "
 "groups and user profiles."
 msgstr ""
 
-#: admin/plugins-loader.php:143
+#: includes/classic/plugins.php:81 includes/frontend-adminbar-bpdocs.php:7
+#: includes/openlab/plugins.php:79
 msgid "Docs"
 msgstr ""
 
-#: admin/plugins-loader.php:144
+#: includes/classic/plugins.php:82 includes/openlab/plugins.php:80
 msgid "Allows your members to collaborate on wiki-style Docs."
 msgstr ""
 
-#: admin/plugins-loader.php:157
+#: includes/classic/plugins.php:96
 msgid "Wiki"
 msgstr ""
 
-#: admin/plugins-loader.php:158
+#: includes/classic/plugins.php:97
 msgid "A sitewide wiki, powered by BuddyPress Docs"
 msgstr ""
 
-#: admin/plugins-loader.php:170
+#: includes/classic/plugins.php:110 includes/openlab/plugins.php:119
 msgid "Group Email Subscription"
 msgstr ""
 
-#: admin/plugins-loader.php:171
+#: includes/classic/plugins.php:111 includes/openlab/plugins.php:120
 msgid ""
 "Allows your community members to receive email notifications of activity "
 "within their groups."
 msgstr ""
 
-#: admin/plugins-loader.php:184
+#: includes/classic/plugins.php:124 includes/openlab/plugins.php:147
 msgid "Invite Anyone"
 msgstr ""
 
-#: admin/plugins-loader.php:185
+#: includes/classic/plugins.php:125 includes/openlab/plugins.php:148
 msgid ""
 "An enhanced interface for inviting existing community members to groups, as "
 "well as a powerful tool for sending invitations, via email, to potential "
 "members."
 msgstr ""
 
-#: admin/plugins-loader.php:198
+#: includes/classic/plugins.php:139
 msgid "Custom Profile Filters"
 msgstr ""
 
-#: admin/plugins-loader.php:199
+#: includes/classic/plugins.php:140
 msgid ""
 "Let your members specify what profile content they'd like to become search "
 "links, by wrapping the content in brackets."
 msgstr ""
 
-#: admin/plugins-loader.php:211
+#: includes/classic/plugins.php:152 includes/openlab/plugins.php:65
 msgid "bbPress Forums"
 msgstr ""
 
-#: admin/plugins-loader.php:212
+#: includes/classic/plugins.php:153 includes/openlab/plugins.php:66
 msgid "Sitewide and group-specific discussion forums."
 msgstr ""
 
-#: admin/plugins-loader.php:224
+#: includes/classic/plugins.php:167 includes/openlab/plugins.php:161
 msgid "Featured Content Widget"
 msgstr ""
 
-#: admin/plugins-loader.php:225
+#: includes/classic/plugins.php:168 includes/openlab/plugins.php:162
 msgid ""
 "Provides a widget that allows you to select among five different content "
 "types to feature in a widget area."
 msgstr ""
 
-#: admin/plugins-loader.php:235
+#: includes/classic/plugins.php:178
 msgid "Group Announcements"
 msgstr ""
 
-#: admin/plugins-loader.php:236
+#: includes/classic/plugins.php:179
 msgid ""
 "Repurposes group activity updates, using an Announcements tab to groups."
 msgstr ""
 
-#: admin/plugins-loader.php:249
+#: includes/classic/plugins.php:193 includes/openlab/plugins.php:171
 msgid "More Privacy Options"
 msgstr ""
 
-#: admin/plugins-loader.php:250
+#: includes/classic/plugins.php:194 includes/openlab/plugins.php:172
 msgid "Adds more blog privacy options for your users."
 msgstr ""
 
-#: admin/plugins-loader.php:261
+#: includes/classic/plugins.php:205
 msgid "Activity Privacy"
 msgstr ""
 
-#: admin/plugins-loader.php:262
+#: includes/classic/plugins.php:206
 msgid ""
 "Works with More Privacy Options to keep private blog content out of public "
 "activity feeds."
 msgstr ""
 
-#: admin/plugins-loader.php:272
+#: includes/classic/plugins.php:216
 msgid "Group Blogs"
 msgstr ""
 
-#: admin/plugins-loader.php:305
+#: includes/classic/plugins.php:240
 msgid "External RSS Feeds for Groups"
 msgstr ""
 
-#: admin/plugins-loader.php:306
+#: includes/classic/plugins.php:241
 msgid ""
 "Gives group creators and administrators the ability to attach external RSS "
 "feeds to groups."
 msgstr ""
 
-#: admin/plugins-loader.php:318
+#: includes/classic/plugins.php:254 includes/openlab/plugins.php:258
 msgid "Reply By Email"
 msgstr ""
 
-#: admin/plugins-loader.php:319
+#: includes/classic/plugins.php:255 includes/openlab/plugins.php:259
 msgid ""
 "Reply to content from all over the community from the comfort of your email "
 "inbox"
 msgstr ""
 
-#: admin/plugins-loader.php:679 admin/plugins-loader.php:827
-msgid "Commons In A Box Plugins"
-msgstr ""
-
-#: admin/plugins-loader.php:680
-msgid "Plugins"
-msgstr ""
-
-#: admin/plugins-loader.php:723
-msgid ""
-"You do not have sufficient permissions to deactivate plugins for this site."
-msgstr ""
-
-#: admin/plugins-loader.php:776
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:496
-msgid "The following plugins have also been deactivated:"
-msgstr ""
-
-#: admin/plugins-loader.php:831
-msgid "Required Plugins"
-msgstr ""
-
-#: admin/plugins-loader.php:833
-msgid "Commons In A Box requires the following plugins."
-msgstr ""
-
-#: admin/plugins-loader.php:839
-msgid "Recommended Plugins"
-msgstr ""
-
-#: admin/plugins-loader.php:841
-msgid ""
-"The following plugins are installed automatically during initial Commons In "
-"A Box setup.  We like them, but feel free to deactivate them if you don't "
-"need certain functionality."
-msgstr ""
-
-#: admin/plugins-loader.php:847
-msgid "&Agrave; la carte"
-msgstr ""
-
-#: admin/plugins-loader.php:849
-msgid ""
-"The following plugins work well with Commons In A Box, but they require a "
-"bit of additional setup, so we do not install them by default."
-msgstr ""
-
-#: admin/plugins-loader.php:850
-msgid "To install, check the plugins you want to install and click 'Update'."
-msgstr ""
-
-#: admin/plugins-loader.php:882
-msgid "Update CBOX"
-msgstr ""
-
-#: admin/plugins-loader.php:1011 admin/plugins-loader.php:1019
-msgid "Plugin"
-msgstr ""
-
-#: admin/plugins-loader.php:1012 admin/plugins-loader.php:1020
-msgid "Description"
-msgstr ""
-
-#: admin/plugins-loader.php:1041
-msgid "Check this box to install the plugin."
-msgstr ""
-
-#: admin/plugins-loader.php:1043
-msgid "Plugin is already active!"
-msgstr ""
-
-#: admin/plugins-loader.php:1076
-msgid "Click here for documentation on this plugin, from commonsinabox.org"
-msgstr ""
-
-#: admin/plugins-loader.php:1078
-msgid "Info"
-msgstr ""
-
-#: admin/plugins-loader.php:1090
-msgid "Deactivate this plugin."
-msgstr ""
-
-#: admin/plugins-loader.php:1092
-msgid "Deactivate"
-msgstr ""
-
-#: admin/plugins-loader.php:1103
-msgid "Select the checkbox and click on 'Update' to upgrade this plugin."
-msgstr ""
-
-#: admin/plugins-loader.php:1103
-msgid "Update available."
-msgstr ""
-
-#: admin/plugins-loader.php:1120
-msgid "Requires: "
-msgstr ""
-
-#: admin/plugins-loader.php:1130
-msgid "(enabled)"
-msgstr ""
-
-#: admin/plugins-loader.php:1132
-msgid "(disabled)"
-msgstr ""
-
-#: admin/plugins-loader.php:1134
-msgid "(not installed)"
-msgstr ""
-
-#: admin/plugins-loader.php:1151
-msgid "Update"
-msgstr ""
-
-#: admin/settings-loader.php:70
+#: includes/classic/settings.php:90
 msgid "Member Profile Default Tab"
 msgstr ""
 
-#: admin/settings-loader.php:71
+#: includes/classic/settings.php:91
 msgid ""
 "On a member page, set the default tab to \"Profile\" instead of \"Activity\"."
 msgstr ""
 
-#: admin/settings-loader.php:79
+#: includes/classic/settings.php:99
 msgid "Group Forum Default Tab"
 msgstr ""
 
-#: admin/settings-loader.php:80
+#: includes/classic/settings.php:100
 msgid ""
 "On a group page, set the default tab to \"Forum\" instead of \"Activity\"."
 msgstr ""
 
-#: admin/settings-loader.php:98
+#: includes/classic/settings.php:118
 msgid "Forum Full Text"
 msgstr ""
 
-#: admin/settings-loader.php:99
+#: includes/classic/settings.php:119
 msgid ""
 "Check this box if you would like the full text of bbPress forum posts to "
 "appear in email notifications."
 msgstr ""
 
-#: admin/settings-loader.php:144 admin/settings-loader.php:191
+#: includes/classic/settings.php:164 includes/classic/settings.php:210
 msgid "Commons In A Box Settings"
 msgstr ""
 
-#: admin/settings-loader.php:193
+#: includes/classic/settings.php:200
+msgid "Settings saved."
+msgstr ""
+
+#: includes/classic/settings.php:212
 msgid "CBOX can configure some important options for certain plugins."
 msgstr ""
 
-#: admin/settings-loader.php:200
+#: includes/classic/settings.php:219
 msgid "Save Changes"
 msgstr ""
 
-#: admin/theme-install.php:312
-msgid "Return to CBOX Dashboard &rarr;"
+#: includes/frontend-adminbar-bbpress.php:42
+msgid "Forums"
 msgstr ""
 
-#: includes/frontend-bp.php:94 includes/frontend-bp.php:99
+#: includes/frontend-adminbar-bbpress.php:50
+msgid "Topics Started"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:58
+msgid "Replies Created"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:67
+msgid "Engagements"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:77
+msgid "Favorite Topics"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:87
+msgid "Subscribed Topics"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:127
+msgid "Topic Replies"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:145
+msgid "You have %d new replies"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:148
+msgid "You have %d new reply to %2$s from %3$s"
+msgstr ""
+
+#: includes/frontend-adminbar-bbpress.php:150
+msgid "You have %d new reply to %s"
+msgstr ""
+
+#: includes/frontend-adminbar-bpdocs.php:35
+msgid "Started By Me"
+msgstr ""
+
+#: includes/frontend-adminbar-bpdocs.php:42
+msgid "Edited By Me"
+msgstr ""
+
+#: includes/frontend-adminbar-bpdocs.php:49
+msgid "Create New Doc"
+msgstr ""
+
+#: includes/frontend-adminbar-bpeo.php:15 includes/openlab/plugins.php:236
+msgid "Events"
+msgstr ""
+
+#: includes/frontend-adminbar-bpeo.php:22
+msgid "Calendar"
+msgstr ""
+
+#: includes/frontend-adminbar-bpeo.php:29
+msgid "New Event"
+msgstr ""
+
+#: includes/frontend-bp.php:103 includes/frontend-bp.php:109
 msgid "Activity"
 msgstr ""
 
-#: includes/frontend-wp.php:61
+#: includes/frontend-wp.php:86
 msgid "Updates available."
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:497
+#: includes/openlab/openlab.php:54
+msgid "Community Features"
+msgstr ""
+
+#: includes/openlab/plugins.php:55
+msgid "OpenLab Core"
+msgstr ""
+
+#: includes/openlab/plugins.php:56
+msgid "Core functionality for CBOX-OpenLab."
+msgstr ""
+
+#: includes/openlab/plugins.php:93
+msgid "Docs in Group"
+msgstr ""
+
+#: includes/openlab/plugins.php:94
+msgid "Put BuddyPress Docs into the Group context."
+msgstr ""
+
+#: includes/openlab/plugins.php:106
+msgid "Group Documents"
+msgstr ""
+
+#: includes/openlab/plugins.php:107
+msgid "Allow your members to attach documents to groups."
+msgstr ""
+
+#: includes/openlab/plugins.php:237
+msgid ""
+"Allows your members to create a calendar for themselves and to attach "
+"specific events to groups."
+msgstr ""
+
+#: includes/openlab/plugins.php:272
+msgid "Braille Support"
+msgstr ""
+
+#: includes/openlab/plugins.php:273
+msgid ""
+"An addon for the Braille plugin providing support for BuddyPress Group "
+"Forums and Private Messaging"
+msgstr ""
+
+#: includes/openlab/plugins.php:293
+msgid "Anthologize"
+msgstr ""
+
+#: includes/openlab/plugins.php:294
+msgid "Create ebooks from your blog posts or other external content."
+msgstr ""
+
+#: includes/openlab/plugins.php:303
+msgid "Braille"
+msgstr ""
+
+#: includes/openlab/plugins.php:304
+msgid "Provides a number of Braille-related services to WordPress."
+msgstr ""
+
+#: includes/openlab/plugins.php:311
+msgid "PressForward"
+msgstr ""
+
+#: includes/openlab/plugins.php:312
+msgid ""
+"A plugin providing an editorial workflow for content aggregation and "
+"curation within the WordPress dashboard. Designed for bloggers and editorial "
+"teams wishing to collect, discuss, and share content from a variety of "
+"sources on the open web."
+msgstr ""
+
+#: includes/openlab/plugins.php:321
+msgid "WP Grade Comments"
+msgstr ""
+
+#: includes/openlab/plugins.php:322
+msgid ""
+"A plugin for instructors using their WordPress site in a course setting. "
+"Provides ability to give private feedback and/or grades to post authors, all "
+"without leaving the familiar commenting interface."
+msgstr ""
+
+#: includes/package.php:268
+msgid "Core Plugins"
+msgstr ""
+
+#: includes/package.php:269
+msgid "Optional Plugins"
+msgstr ""
+
+#: includes/package.php:270
+msgid "Member Site Plugins"
+msgstr ""
+
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:508
 msgid ""
 "The following plugins have been deactivated due to dependency conflicts:"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:545
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:556
 msgid "Pre-activation warnings"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:548
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:559
 msgid ""
 "%s requires the following issues to be addressed before it can be activated: "
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:557
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:568
 msgid "Unactivated plugin"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:561
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:572
 msgid "(Activate it now!)"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:569
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:580
 msgid "Missing plugin"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:571
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:582
 msgid "(<a href=\"%s\">Try to find the plugin and install it here</a>)"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:581
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:592
 msgid "Incorrect plugin version installed"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:584
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:595
 msgid "%s (Version %s required)"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:595
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:606
 msgid "WordPress version %s required"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:596
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:607
 msgid "(Upgrade now!)"
 msgstr ""
 
-#: lib/wp-plugin-dependencies/plugin-dependencies.php:653
+#: lib/wp-plugin-dependencies/plugin-dependencies.php:664
 msgid ""
 "\"%s\" cannot be activated. Before you can activate this plugin, please <a "
 "href=\"%s\">address the issues listed here</a>."
