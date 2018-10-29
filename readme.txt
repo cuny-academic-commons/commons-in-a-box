@@ -30,7 +30,7 @@ Visit [commonsinabox.org](https://commonsinabox.org/) for support and documentat
 
 == Installation ==
 
-Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide], which explains the technical requirements for Commons In A Box (CBOX).
+Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide), which explains the technical requirements for Commons In A Box (CBOX).
 
 When you’re ready, there are two ways to download CBOX :
 1. Search for it in the plugins section of your WordPress Dashboard and install it as you would any other WordPress plugin.
