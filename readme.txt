@@ -59,6 +59,9 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
+= 1.1.1 =
+* Updated plugins: Braille 0.0.6
+
 = 1.1.0 =
 * Added "package" functionality
 * Introducing the OpenLab package. See http://commonsinabox.org/cbox-openlab-overview/ for more details.

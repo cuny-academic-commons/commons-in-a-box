@@ -214,8 +214,8 @@ class CBox_Plugins_OpenLab {
 		$instance( array(
 			'plugin_name'  => 'Braille',
 			'type'         => 'dependency',
-			'version'      => '0.0.3',
-			'download_url' => 'http://downloads.wordpress.org/plugin/braille.0.0.5.zip',
+			'version'      => '0.0.6',
+			'download_url' => 'http://downloads.wordpress.org/plugin/braille.0.0.6.zip',
 			'network'      => false,
 			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
 		) );

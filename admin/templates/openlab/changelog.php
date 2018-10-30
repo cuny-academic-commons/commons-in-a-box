@@ -17,6 +17,7 @@
 				</a>
 			</h2>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -28,6 +29,17 @@
 						<p><?php esc_html_e( 'Added OpenLab package.', 'cbox' ); ?></p>
 
 					</div>
+				</div>
+			</div>
+			*/ ?>
+
+			<div class="changelog">
+				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>
+
+				<div class="feature-section">
+					<ul>
+						<li>Braille 0.0.6</li>
+					</ul>
 				</div>
 			</div>
 
