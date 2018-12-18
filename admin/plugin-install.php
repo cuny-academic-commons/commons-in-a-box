@@ -489,8 +489,10 @@ class CBox_Bulk_Plugin_Upgrader_Skin extends Bulk_Plugin_Upgrader_Skin {
 
 		// if a redirect link is passed during the class constructor, use it
 		} elseif ( ! self::_is_static() && ! empty( $this->options['redirect_link'] ) && ! empty( $this->options['redirect_text'] ) ) {
+			// phpcs:disable
 			$redirect_link = $this->options['redirect_link'];
 			$redirect_text = $this->options['redirect_text'];
+			// phpcs:enable
 		}
 
 		// CBOX hasn't been installed ever.
