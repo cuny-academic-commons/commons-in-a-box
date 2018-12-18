@@ -276,7 +276,8 @@ class CBox_Admin {
 		}
 
 		// Remove admin notice during setup mode.
-		if ( ! empty( cbox()->setup ) ) {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+		if ( $is_setup ) {
 			remove_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
 		}
 	}
@@ -394,7 +395,8 @@ class CBox_Admin {
 
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
-				if ( ! empty( cbox()->theme_upgrades ) ) {
+				$theme_upgrades = isset( cbox()->theme_upgrades ) ? cbox()->theme_upgrades : false;
+				if ( $theme_upgrades ) {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
 					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
@@ -599,12 +601,14 @@ class CBox_Admin {
 	 * The main dashboard page.
 	 */
 	public function admin_page() {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+
 		// what's new page
 		if ( $this->is_changelog() ) {
 			cbox_get_template_part( 'changelog' );
 
 		// setup screen
-		} elseif( ! empty( cbox()->setup ) ) {
+		} elseif ( $is_setup ) {
 			$this->setup_screen();
 
 		// regular screen should go here
@@ -964,7 +968,8 @@ class CBox_Admin {
 	 */
 	public function notice_css() {
 		// if our notice marker isn't set, stop now!
-		if ( empty( cbox()->show_notice ) )
+		$show_notice = isset( cbox()->show_notice ) ? cbox()->show_notice : false;
+		if ( ! $show_notice )
 			return;
 
 		$icon_url    = cbox()->plugin_url( 'admin/images/logo-cbox_icon.png?ver='    . cbox()->version );
@@ -1046,7 +1051,8 @@ class CBox_Admin {
 	 */
 	public function display_notice() {
 		// If our notice marker isn't set or if we're on the CBOX page, stop now!
-		if ( empty( cbox()->show_notice ) || 'cbox' === get_current_screen()->parent_base ) {
+		$show_notice = isset( cbox()->show_notice ) ? cbox()->show_notice : false;
+		if ( ! $show_notice || 'cbox' === get_current_screen()->parent_base ) {
 			return;
 		}
 
@@ -1080,7 +1086,8 @@ class CBox_Admin {
 		}
 
 		// change variables if we're still in setup phase
-		if ( ! empty( cbox()->setup ) ) {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+		if ( $is_setup ) {
 			if ( 'upgrade-theme' == cbox()->setup ) {
 				$notice_text = __( 'Upgrading theme...', 'cbox' );
 			} else {
