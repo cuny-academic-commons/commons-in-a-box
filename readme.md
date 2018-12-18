@@ -1,5 +1,7 @@
 # Commons In A Box
 
+[![Build Status](https://travis-ci.org/cuny-academic-commons/commons-in-a-box.svg?branch=1.1.x)](https://travis-ci.org/cuny-academic-commons/commons-in-a-box)
+
 ## About The Project
 
 [Commons In A Box](https://commonsinabox.org/) (CBOX) takes the complexity out of creating an online space, or digital commons, for community and collaboration. Built using the [WordPress](https://wordpress.org) publishing platform, with [BuddyPress](https://buddypress.org) for social networking, CBOX comes in two customizable packages:
