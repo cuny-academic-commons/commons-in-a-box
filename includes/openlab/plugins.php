@@ -39,7 +39,7 @@ class CBox_Plugins_OpenLab {
 	 */
 	protected static function register_required_plugins( $instance ) {
 		// BuddyPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
@@ -50,7 +50,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// CBOX-OpenLab Core
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'cbox' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'cbox' ),
@@ -60,7 +60,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// bbPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'bbPress',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'cbox' ),
@@ -74,7 +74,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// BuddyPress Docs
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Docs',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
@@ -88,7 +88,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// BuddyPress Docs In Group
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Docs In Group',
 			'cbox_name'         => __( 'Docs in Group', 'cbox' ),
 			'cbox_description'  => __( 'Put BuddyPress Docs into the Group context.', 'cbox' ),
@@ -101,7 +101,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// BP Group Documents
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BP Group Documents',
 			'cbox_name'         => __( 'Group Documents', 'cbox' ),
 			'cbox_description'  => __( 'Allow your members to attach documents to groups.', 'cbox' ),
@@ -114,7 +114,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// BuddyPress Group Email Subscription
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Group Email Subscription',
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'cbox' ),
@@ -130,7 +130,7 @@ class CBox_Plugins_OpenLab {
 		// This is custom-developed and is only included in the main openlab repo
 		// We'll break it out into its own.
 		// BP Customizable Group Categories
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BP Customizable Group Categories',
 			'cbox_name'         => __( 'BP Customizable Group Categories', 'cbox' ),
 			'cbox_description'  => __( 'Categories for BuddyPress Groups', 'cbox' ),
@@ -142,7 +142,7 @@ class CBox_Plugins_OpenLab {
 		*/
 
 		// Invite Anyone
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'Invite Anyone',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
@@ -156,7 +156,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// CAC Featured Content
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'CAC Featured Content',
 			'cbox_name'         => __( 'Featured Content Widget', 'cbox' ),
 			'cbox_description'  => __( 'Provides a widget that allows you to select among five different content types to feature in a widget area.', 'cbox' ),
@@ -166,7 +166,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// More Privacy Options
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'More Privacy Options',
 			'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
 			'cbox_description'  => __( 'Adds more blog privacy options for your users.', 'cbox' ),
@@ -194,14 +194,14 @@ class CBox_Plugins_OpenLab {
 	 */
 	protected static function register_dependency_plugins( $instance ) {
 		// BuddyPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
 			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.2.0.zip'
 		) );
 
 		// Event Organiser
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
 			'version'      => '3.6.5',
@@ -211,7 +211,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// Braille
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'  => 'Braille',
 			'type'         => 'dependency',
 			'version'      => '0.0.6',
@@ -252,7 +252,7 @@ class CBox_Plugins_OpenLab {
 	protected static function register_optional_plugins( $instance ) {
 		// BuddyPress Reply By Email
 		// @todo Still need to add it in the wp.org plugin repo! Using Github for now.
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Reply By Email',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'cbox' ),
@@ -266,7 +266,7 @@ class CBox_Plugins_OpenLab {
 		) );
 
 		// BP Braille
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BP Braille',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Braille Support', 'cbox' ),
@@ -287,7 +287,7 @@ class CBox_Plugins_OpenLab {
 	 * @param callable $instance {@see CBox_Plugins::register_plugin()}.
 	 */
 	protected static function register_installonly_plugins( $instance ) {
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'Anthologize',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Anthologize', 'cbox' ),
@@ -297,7 +297,7 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
 		) );
 
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'Braille',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Braille', 'cbox' ),
@@ -305,7 +305,7 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/braille',
 		) );
 
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'PressForward',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'PressForward', 'cbox' ),
@@ -315,7 +315,7 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'WP Grade Comments',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'WP Grade Comments', 'cbox' ),
