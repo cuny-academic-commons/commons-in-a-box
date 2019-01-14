@@ -77,15 +77,23 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 * @since 1.1.0
 	 */
 	protected function custom_init() {
-		/**
-	         * Always enable the "Plugins" page on sub-sites.
-	         */
-		add_filter( 'site_option_menu_items', function( $retval ) {
-			if ( empty( $retval['plugins'] ) ) {
-				$retval['plugins'] = 1;
-			}
-			return $retval;
-		} );
+		add_filter( 'site_option_menu_items', [ __CLASS__, 'menu_items_cb' ] );
+		add_filter( 'default_option_menu_items', [ __CLASS__, 'menu_items_cb' ] );
+	}
+
+	/**
+	 * Callback for forcing the Plugins page to be available to non-super-admins.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @param array
+	 * @return array
+	 */
+	public static function menu_items_cb( $retval ) {
+		if ( empty( $retval['plugins'] ) ) {
+			$retval['plugins'] = 1;
+		}
+		return $retval;
 	}
 
 	/**
