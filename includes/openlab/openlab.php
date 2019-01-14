@@ -77,8 +77,8 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 * @since 1.1.0
 	 */
 	protected function custom_init() {
-		add_filter( 'site_option_menu_items', [ __CLASS__, 'menu_items_cb' ] );
-		add_filter( 'default_option_menu_items', [ __CLASS__, 'menu_items_cb' ] );
+		add_filter( 'site_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
+		add_filter( 'default_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
 	}
 
 	/**
