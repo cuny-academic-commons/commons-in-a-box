@@ -120,8 +120,15 @@ class Update extends \WP_CLI_Command {
 				'Old Version' => \Plugin_Dependencies::$all_plugins[$loader]['Version'],
 				'New Version' => isset( $cbox_plugins[$plugin]['version'] ) ? $cbox_plugins[$plugin]['version'] : $dependencies[$plugin]['version']
 			);
-			$urls[] = $cbox_plugins[$plugin]['download_url'];
+
+			if ( ! empty( $dependencies[$plugin]['download_url'] ) ) {
+				$urls[] = $dependencies[$plugin]['download_url'];
+			} else {
+				$urls[] = $cbox_plugins[$plugin]['download_url'];
+			}
 		}
+
+		$urls = array_unique( $urls );
 
 		// Output plugin table.
 		WP_CLI\Utils\format_items( 'table', $items, array( 'Plugin', 'Old Version', 'New Version' ) );
