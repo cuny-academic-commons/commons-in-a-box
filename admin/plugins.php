@@ -183,7 +183,7 @@ class CBox_Admin_Plugins {
 
 		// BuddyPress complicates things due to a different root blog ID.
 		if ( 1 !== cbox_get_main_site_id() ) {
-			$cbox_plugins = self::get_plugins();
+			$cbox_plugins = CBox_Plugins::get_plugins();
 			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
 
 			// 'network' flag is false, so switch to root blog.
