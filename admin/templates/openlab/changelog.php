@@ -38,6 +38,7 @@
 
 				<div class="feature-section">
 					<ul>
+						<li>Anthologize 0.8.0</li>
 						<li>Braille 0.0.6</li>
 						<li>BuddyPress 4.1.0</li>
 						<li>BuddyPress Docs 2.1.2</li>

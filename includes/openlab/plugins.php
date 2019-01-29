@@ -292,8 +292,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Anthologize', 'cbox' ),
 			'cbox_description'  => __( 'Create ebooks from your blog posts or other external content.', 'cbox' ),
-			'version'           => '0.7.8',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.7.8.zip',
+			'version'           => '0.8.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.8.0.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
 		) );
 
