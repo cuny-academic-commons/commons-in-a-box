@@ -178,8 +178,8 @@ class CBox_Plugins_Classic {
 			'cbox_name'         => __( 'Group Announcements', 'cbox' ),
 			'cbox_description'  => __( 'Repurposes group activity updates, using an Announcements tab to groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '1.0.5',
-			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.5.zip',
+			'version'           => '1.0.6',
+			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
 			'network'           => false
 		) );
