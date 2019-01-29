@@ -38,6 +38,7 @@
 					<ul>
 						<li>BuddyPress 4.1.0</li>
 						<li>BuddyPress Docs 2.1.2</li>
+						<li>Invite Anyone 1.4.0</li>
 					</ul>
 				</div>
 			</div>
