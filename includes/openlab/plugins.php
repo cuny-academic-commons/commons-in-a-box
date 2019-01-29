@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '3.2.0',
+			'version'           => '4.1.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -197,7 +197,7 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.2.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.4.1.0.zip'
 		) );
 
 		// Event Organiser

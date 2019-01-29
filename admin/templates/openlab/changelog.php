@@ -39,6 +39,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>Braille 0.0.6</li>
+						<li>BuddyPress 4.1.0</li>
 					</ul>
 				</div>
 			</div>
