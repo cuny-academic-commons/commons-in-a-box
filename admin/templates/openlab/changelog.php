@@ -40,6 +40,7 @@
 					<ul>
 						<li>Braille 0.0.6</li>
 						<li>BuddyPress 4.1.0</li>
+						<li>BuddyPress Docs 2.1.2</li>
 					</ul>
 				</div>
 			</div>
