@@ -26,7 +26,7 @@
 
 						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
 						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with PHP 5.3.x.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
