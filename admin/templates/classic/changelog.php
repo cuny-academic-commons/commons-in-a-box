@@ -51,10 +51,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Accessibility improvements</li>
-						<li>Improved compatibility with BuddyPress 3.0+ registration</li>
-						<li>Improved PHP 7.2 compatibility</li>
-						<li>Improved WP 4.9+ compatibility</li>
+						<li>Improved compatibility with BuddyPress 4.0 privacy tools</li>
 					</ul>
 				</div>
 			</div>
