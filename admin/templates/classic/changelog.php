@@ -17,7 +17,6 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -25,13 +24,13 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Added "package" infrastructure.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Added OpenLab package.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with PHP 5.3.x.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>

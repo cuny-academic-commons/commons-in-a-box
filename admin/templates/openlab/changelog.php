@@ -27,7 +27,9 @@
 						<p><?php esc_html_e( 'Fixed problem with image and other upload paths after site cloning.', 'cbox' ); ?></p>
 						<p><?php esc_html_e( 'Fixed Google Maps API key integration in Event Organiser.', 'cbox' ); ?></p>
 						<p><?php esc_html_e( 'Fixed problems with category fetching when creating new events in BP Event Organiser.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improve compatibility with PHP 5.3.x.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
