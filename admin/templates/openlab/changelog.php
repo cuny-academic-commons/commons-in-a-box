@@ -30,6 +30,8 @@
 						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
 						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
 						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with WordPress 5.0+.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Localization improvements.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
