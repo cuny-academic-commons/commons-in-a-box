@@ -54,8 +54,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'cbox' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'cbox' ),
-			'version'           => '1.1.1-beta',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.1.1-beta.zip',
+			'version'           => '1.1.1-beta2',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.1.1-beta2.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
