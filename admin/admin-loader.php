@@ -263,6 +263,13 @@ class CBox_Admin {
 					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 					break;
 
+				case 'theme-update' :
+					$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) );
+					$url = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade_theme' ), $url );
+					wp_redirect( $url );
+					die();
+					break;
+
 				case '' :
 					cbox_bump_revision_date();
 					$redirect = self_admin_url( 'admin.php?page=cbox' );
