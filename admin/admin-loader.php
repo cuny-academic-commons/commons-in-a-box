@@ -843,6 +843,11 @@ class CBox_Admin {
 
 		/** check if CBOX modules have updates **********************************/
 
+		// Don't show the rest of the upgrades block if we're still setting up.
+		if ( cbox_get_setup_step() ) {
+			return;
+		}
+
 		// include the CBOX Theme Installer
 		if ( ! class_exists( 'CBox_Theme_Installer' ) )
 			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
