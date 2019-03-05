@@ -139,7 +139,7 @@ class CBox_Admin {
 
 			// Redirect to a specific installation step, if necessary.
 			if ( '' === cbox_get_setup_step() ) {
-				if ( cbox_get_theme_prop( 'download_url' ) ) {
+				if ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$url = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 				}
 			}
@@ -165,7 +165,7 @@ class CBox_Admin {
 			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
-				if ( ! cbox_get_installed_revision_date() ) {
+				if ( ! cbox_get_installed_revision_date() && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					cbox()->setup = 'theme-prompt';
 
 				// Bump the revision date in the DB after updating
@@ -319,7 +319,7 @@ class CBox_Admin {
 					);
 
 				// Add theme step if recommended plugins are already active.
-				} elseif ( cbox_get_theme_prop( 'download_url' ) ) {
+				} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$options = array(
 						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
 						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
@@ -370,7 +370,7 @@ class CBox_Admin {
 				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
 
 				// Prompt for theme install afterwards, if available.
-				if ( cbox_get_theme_prop( 'download_url' ) ) {
+				if ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$url  = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 					$text = __( 'Continue to theme installation', 'cbox' );
 				} else {
