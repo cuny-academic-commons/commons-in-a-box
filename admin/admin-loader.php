@@ -139,7 +139,7 @@ class CBox_Admin {
 
 			// Redirect to a specific installation step, if necessary.
 			if ( '' === cbox_get_setup_step() ) {
-				if ( cbox_get_theme_prop( 'download_url' ) ) {
+				if ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$url = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 				}
 			}
@@ -165,7 +165,7 @@ class CBox_Admin {
 			// If no plugins to install, redirect back to CBOX dashboard
 			if ( empty( $_REQUEST['cbox_plugins'] ) ) {
 				// CBOX and CBOX theme hasn't been installed ever, so prompt for install.
-				if ( ! cbox_get_installed_revision_date() ) {
+				if ( ! cbox_get_installed_revision_date() && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					cbox()->setup = 'theme-prompt';
 
 				// Bump the revision date in the DB after updating
@@ -263,6 +263,13 @@ class CBox_Admin {
 					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 					break;
 
+				case 'theme-update' :
+					$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) );
+					$url = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade_theme' ), $url );
+					wp_redirect( $url );
+					die();
+					break;
+
 				case '' :
 					cbox_bump_revision_date();
 					$redirect = self_admin_url( 'admin.php?page=cbox' );
@@ -276,7 +283,8 @@ class CBox_Admin {
 		}
 
 		// Remove admin notice during setup mode.
-		if ( ! empty( cbox()->setup ) ) {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+		if ( $is_setup ) {
 			remove_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
 		}
 	}
@@ -318,7 +326,7 @@ class CBox_Admin {
 					);
 
 				// Add theme step if recommended plugins are already active.
-				} elseif ( cbox_get_theme_prop( 'download_url' ) ) {
+				} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$options = array(
 						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
 						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
@@ -369,7 +377,7 @@ class CBox_Admin {
 				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
 
 				// Prompt for theme install afterwards, if available.
-				if ( cbox_get_theme_prop( 'download_url' ) ) {
+				if ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$url  = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
 					$text = __( 'Continue to theme installation', 'cbox' );
 				} else {
@@ -394,7 +402,8 @@ class CBox_Admin {
 
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
-				if ( ! empty( cbox()->theme_upgrades ) ) {
+				$theme_upgrades = isset( cbox()->theme_upgrades ) ? cbox()->theme_upgrades : false;
+				if ( $theme_upgrades ) {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
 
 					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
@@ -599,12 +608,14 @@ class CBox_Admin {
 	 * The main dashboard page.
 	 */
 	public function admin_page() {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+
 		// what's new page
 		if ( $this->is_changelog() ) {
 			cbox_get_template_part( 'changelog' );
 
 		// setup screen
-		} elseif( ! empty( cbox()->setup ) ) {
+		} elseif ( $is_setup ) {
 			$this->setup_screen();
 
 		// regular screen should go here
@@ -832,6 +843,11 @@ class CBox_Admin {
 
 		/** check if CBOX modules have updates **********************************/
 
+		// Don't show the rest of the upgrades block if we're still setting up.
+		if ( cbox_get_setup_step() ) {
+			return;
+		}
+
 		// include the CBOX Theme Installer
 		if ( ! class_exists( 'CBox_Theme_Installer' ) )
 			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
@@ -964,7 +980,8 @@ class CBox_Admin {
 	 */
 	public function notice_css() {
 		// if our notice marker isn't set, stop now!
-		if ( empty( cbox()->show_notice ) )
+		$show_notice = isset( cbox()->show_notice ) ? cbox()->show_notice : false;
+		if ( ! $show_notice )
 			return;
 
 		$icon_url    = cbox()->plugin_url( 'admin/images/logo-cbox_icon.png?ver='    . cbox()->version );
@@ -1046,7 +1063,8 @@ class CBox_Admin {
 	 */
 	public function display_notice() {
 		// If our notice marker isn't set or if we're on the CBOX page, stop now!
-		if ( empty( cbox()->show_notice ) || 'cbox' === get_current_screen()->parent_base ) {
+		$show_notice = isset( cbox()->show_notice ) ? cbox()->show_notice : false;
+		if ( ! $show_notice || 'cbox' === get_current_screen()->parent_base ) {
 			return;
 		}
 
@@ -1080,7 +1098,8 @@ class CBox_Admin {
 		}
 
 		// change variables if we're still in setup phase
-		if ( ! empty( cbox()->setup ) ) {
+		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
+		if ( $is_setup ) {
 			if ( 'upgrade-theme' == cbox()->setup ) {
 				$notice_text = __( 'Upgrading theme...', 'cbox' );
 			} else {

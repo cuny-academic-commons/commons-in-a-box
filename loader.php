@@ -3,7 +3,7 @@
 Plugin Name: Commons In A Box
 Plugin URI: http://commonsinabox.org
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
-Version: 1.1.0
+Version: 1.1.1
 Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
@@ -84,10 +84,10 @@ class Commons_In_A_Box {
 		/** VERSION ***********************************************************/
 
 		// CBOX version
-		$this->version       = '1.1.0';
+		$this->version       = '1.1.1';
 
 		// UTC date of CBOX version release
-		$this->revision_date = '2018-10-29 15:00 UTC';
+		$this->revision_date = '2019-03-05 15:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
@@ -230,15 +230,22 @@ class Commons_In_A_Box {
 			 *
 			 * Need to run this on 'init' due to user login check.
 			 */
-			add_action( 'init', function() {
-				$plugins = get_site_option( 'active_sitewide_plugins' );
-				$loader  = plugin_basename( __FILE__ );
-				$is_network_active = isset( $plugins[$loader] );
+			add_action( 'init', array( $this, 'init_package' ), 0 );
+		}
+	}
 
-				if ( $is_network_active && is_user_logged_in() ) {
-					self::$instance->package_plugins = new CBox_Plugins;
-				}
-			}, 0 );
+	/**
+	 * Initialize package.
+	 *
+	 * @since 1.1.1
+	 */
+	public function init_package() {
+		$plugins = get_site_option( 'active_sitewide_plugins' );
+		$loader  = plugin_basename( __FILE__ );
+		$is_network_active = isset( $plugins[$loader] );
+
+		if ( $is_network_active && is_user_logged_in() ) {
+			self::$instance->package_plugins = new CBox_Plugins;
 		}
 	}
 
@@ -313,40 +320,49 @@ class Commons_In_A_Box {
 	 * @since 1.1.0
 	 */
 	public function package_autoloader() {
-		spl_autoload_register( function( $class ) {
-			$subdir = $relative_class = '';
+		spl_autoload_register( array( $this, 'package_handle_autoload' ) );
+	}
 
-			// Package prefix.
-			$prefix = 'CBox_Package';
-			if ( $class === $prefix ) {
-				$relative_class = 'package';
-			} elseif ( false !== strpos( $class, $prefix ) ) {
-				$subdir = '/';
-				$subdir .= $relative_class = strtolower( substr( $class, 13 ) );
-			}
+	/**
+	 * Autoload handler.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @param string $class Class name.
+	 */
+	public function package_handle_autoload( $class ) {
+		$subdir = $relative_class = '';
 
-			// Plugins prefix.
-			if ( false !== strpos( $class, 'CBox_Plugins_' ) ) {
-				$subdir = '/' . strtolower( substr( $class, 13 ) );
-				$relative_class = 'plugins';
-			}
+		// Package prefix.
+		$prefix = 'CBox_Package';
+		if ( $class === $prefix ) {
+			$relative_class = 'package';
+		} elseif ( false !== strpos( $class, $prefix ) ) {
+			$subdir = '/';
+			$subdir .= $relative_class = strtolower( substr( $class, 13 ) );
+		}
 
-			// Settings prefix.
-			if ( false !== strpos( $class, 'CBox_Settings_' ) ) {
-				$subdir = '/' . strtolower( substr( $class, 14 ) );
-				$relative_class = 'settings';
-			}
+		// Plugins prefix.
+		if ( false !== strpos( $class, 'CBox_Plugins_' ) ) {
+			$subdir = '/' . strtolower( substr( $class, 13 ) );
+			$relative_class = 'plugins';
+		}
 
-			if ( '' === $relative_class ) {
-				return;
-			}
+		// Settings prefix.
+		if ( false !== strpos( $class, 'CBox_Settings_' ) ) {
+			$subdir = '/' . strtolower( substr( $class, 14 ) );
+			$relative_class = 'settings';
+		}
 
-			$file = "{$this->plugin_dir}includes{$subdir}/{$relative_class}.php";
+		if ( '' === $relative_class ) {
+			return;
+		}
 
-			if ( file_exists( $file ) ) {
-				require $file;
-			}
-		} );
+		$file = "{$this->plugin_dir}includes{$subdir}/{$relative_class}.php";
+
+		if ( file_exists( $file ) ) {
+			require $file;
+		}
 	}
 
 	/**

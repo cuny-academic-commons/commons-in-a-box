@@ -130,7 +130,9 @@ class CBox_Frontend {
 
 		foreach( $this->settings as $plugin => $classes ) {
 			// if our plugin is not setup, stop loading hooks now!
-			if ( empty( cbox()->plugins->$plugin->is_setup ) )
+			$is_setup = isset( cbox()->plugins->$plugin->is_setup ) ? cbox()->plugins->$plugin->is_setup : false;
+
+			if ( ! $is_setup )
 				continue;
 
 			// sanity check

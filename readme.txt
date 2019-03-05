@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 5.0
-Stable tag: 1.1.0
+Tested up to: 5.1
+Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,7 +30,7 @@ Visit [commonsinabox.org](https://commonsinabox.org/) for support and documentat
 
 == Installation ==
 
-Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide], which explains the technical requirements for Commons In A Box (CBOX).
+Before you start, make sure to check out the [Technical Guide](http://commonsinabox.org/cbox-technical-guide), which explains the technical requirements for Commons In A Box (CBOX).
 
 When you’re ready, there are two ways to download CBOX :
 1. Search for it in the plugins section of your WordPress Dashboard and install it as you would any other WordPress plugin.
@@ -58,6 +58,19 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.1.1 =
+* OpenLab: Fixed problem with image and other upload paths after site cloning.
+* OpenLab: Fixed Google Maps API key integration in Event Organiser.
+* OpenLab: Fixed problems with category fetching when creating new events.
+* Improved compatibility with older version of PHP.
+* Improved compatibility with WordPress 5.0+.
+* Improved compatibility with non-standard multisite and multinetwork configuration.
+* Improvements to CLI update tools.
+* Improved compatibility with BuddyPress 4.0+ privacy and data export tools.
+* Localization improvements.
+* Updated plugins (Classic): BP Group Announcements 1.0.6, BP MPO Activity Filter 1.3.1, BP Groupblog 1.9.1, BuddyPress 4.2.0, BuddyPress Docs 2.1.2, Invite Anyone 1.4.0
+* Updated plugins (OpenLab): Anthologize 0.8.0, Braille 0.0.6, BuddyPress 4.2.0, BuddyPress Docs 2.1.2, Event Organiser 3.7.4, Invite Anyone 1.4.0
 
 = 1.1.0 =
 * Added "package" functionality

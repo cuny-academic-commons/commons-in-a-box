@@ -24,8 +24,9 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Added "package" infrastructure.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Added OpenLab package.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
@@ -36,9 +37,12 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 3.2.0</li>
-						<li>BuddyPress Docs 2.1.1</li>
-						<li>BuddyPress Reply By Email 1.0-RC7</li>
+						<li>BP Group Announcements 1.0.6</li>
+						<li>BP MPO Activity Filter 1.3.1</li>
+						<li>BP Groupblog 1.9.1</li>
+						<li>BuddyPress 4.2.0</li>
+						<li>BuddyPress Docs 2.1.2</li>
+						<li>Invite Anyone 1.4.0</li>
 					</ul>
 				</div>
 			</div>
@@ -48,10 +52,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Accessibility improvements</li>
-						<li>Improved compatibility with BuddyPress 3.0+ registration</li>
-						<li>Improved PHP 7.2 compatibility</li>
-						<li>Improved WP 4.9+ compatibility</li>
+						<li>Improved compatibility with BuddyPress 4.0 privacy tools</li>
 					</ul>
 				</div>
 			</div>

@@ -223,7 +223,7 @@ function cbox_admin_prop( $prop = '', $arg = '' ) {
  */
 function cbox_get_theme( $stylesheet = '' ) {
 	if ( 1 !== cbox_get_main_site_id() ) {
-		switch_to_blog( cbox_get_main_site_id );
+		switch_to_blog( cbox_get_main_site_id() );
 	}
 
 	$theme = wp_get_theme( $stylesheet );

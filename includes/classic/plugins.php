@@ -37,11 +37,11 @@ class CBox_Plugins_Classic {
 	 */
 	protected static function register_required_plugins( $instance ) {
 		// BuddyPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'cbox' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'cbox' ),
-			'version'           => '3.2.0',
+			'version'           => '4.2.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -59,10 +59,10 @@ class CBox_Plugins_Classic {
 		 *
 		 * @see CBox_Plugins::register_plugin()
 		 */
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.3.2.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.4.2.0.zip'
 		) );
 	}
 
@@ -75,14 +75,14 @@ class CBox_Plugins_Classic {
 	 */
 	protected static function register_recommended_plugins( $instance ) {
 		// BuddyPress Docs
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Docs',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'cbox' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'cbox' ),
-			'version'           => '2.1.1',
+			'version'           => '2.1.2',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.1.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -90,7 +90,7 @@ class CBox_Plugins_Classic {
 		) );
 
 		// BuddyPress Docs Wiki
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Docs Wiki add-on',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'cbox' ),
@@ -104,7 +104,7 @@ class CBox_Plugins_Classic {
 		) );
 
 		// BuddyPress Group Email Subscription
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Group Email Subscription',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Group Email Subscription', 'cbox' ),
@@ -118,14 +118,14 @@ class CBox_Plugins_Classic {
 		) );
 
 		// Invite Anyone
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'Invite Anyone',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'cbox' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'cbox' ),
-			'version'           => '1.3.20',
+			'version'           => '1.4.0',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.3.20.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone',
@@ -133,7 +133,7 @@ class CBox_Plugins_Classic {
 		) );
 
 		// Custom Profile Filters for BuddyPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'Custom Profile Filters for BuddyPress',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Custom Profile Filters', 'cbox' ),
@@ -146,7 +146,7 @@ class CBox_Plugins_Classic {
 		) );
 
 		// bbPress
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'bbPress',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'cbox' ),
@@ -161,7 +161,7 @@ class CBox_Plugins_Classic {
 		) );
 
 		// CAC Featured Content
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'CAC Featured Content',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Featured Content Widget', 'cbox' ),
@@ -172,14 +172,14 @@ class CBox_Plugins_Classic {
 		) );
 
 		// BuddyPress Group Email Subscription
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BP Group Announcements',
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Group Announcements', 'cbox' ),
 			'cbox_description'  => __( 'Repurposes group activity updates, using an Announcements tab to groups.', 'cbox' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '1.0.5',
-			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.5.zip',
+			'version'           => '1.0.6',
+			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
 			'network'           => false
 		) );
@@ -187,7 +187,7 @@ class CBox_Plugins_Classic {
 		// Only show the following plugins if multisite is enabled.
 		if ( is_multisite() ) :
 			// More Privacy Options
-			$instance( array(
+			call_user_func( $instance, array(
 				'plugin_name'       => 'More Privacy Options',
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'More Privacy Options', 'cbox' ),
@@ -199,25 +199,25 @@ class CBox_Plugins_Classic {
 			) );
 
 			// BP MPO Activity Filter
-			$instance( array(
+			call_user_func( $instance, array(
 				'plugin_name'       => 'BP MPO Activity Filter',
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'Activity Privacy', 'cbox' ),
 				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'cbox' ),
-				'version'           => '1.2.2',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.2.2.zip',
+				'version'           => '1.3.1',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.3.1.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
 			// BuddyPress GroupBlog
-			$instance( array(
+			call_user_func( $instance, array(
 				'plugin_name'       => 'BP Groupblog',
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'Group Blogs', 'cbox' ),
 				'cbox_description'  => 'Enables a BuddyPress group to be associated with a blog, by placing a Blog link in the group navigation and, optionally, syncing group membership with blog roles.',
 				'depends'           => 'BuddyPress (>=1.6)',
-				'version'           => '1.9.0',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.0.zip',
+				'version'           => '1.9.1',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.1.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
@@ -234,7 +234,7 @@ class CBox_Plugins_Classic {
 	 */
 	protected static function register_optional_plugins( $instance ) {
 		// BuddyPress External Group Blogs
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'External Group Blogs',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'External RSS Feeds for Groups', 'cbox' ),
@@ -248,7 +248,7 @@ class CBox_Plugins_Classic {
 
 		// BuddyPress Reply By Email
 		// @todo Still need to add it in the wp.org plugin repo! Using Github for now.
-		$instance( array(
+		call_user_func( $instance, array(
 			'plugin_name'       => 'BuddyPress Reply By Email',
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'cbox' ),

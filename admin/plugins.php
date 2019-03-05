@@ -183,7 +183,7 @@ class CBox_Admin_Plugins {
 
 		// BuddyPress complicates things due to a different root blog ID.
 		if ( 1 !== cbox_get_main_site_id() ) {
-			$cbox_plugins = self::get_plugins();
+			$cbox_plugins = CBox_Plugins::get_plugins();
 			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
 
 			// 'network' flag is false, so switch to root blog.
@@ -592,7 +592,8 @@ class CBox_Admin_Plugins {
 	 */
 	public function admin_page() {
 		// show this page during update
-		if ( ! empty( cbox()->update ) ) {
+		$is_update = isset( cbox()->update ) ? cbox()->update : false;
+		if ( $is_update ) {
 			$this->update_screen();
 		}
 
@@ -715,7 +716,8 @@ jQuery('a[data-uninstall="1"]').confirm({
 	private function update_screen() {
 
 		// if we're not in the middle of an update, stop now!
-		if ( empty( cbox()->update ) )
+		$is_update = isset( cbox()->update ) ? cbox()->update : false;
+		if ( ! $is_update )
 			return;
 
 		$plugins = $_REQUEST['cbox_plugins'];

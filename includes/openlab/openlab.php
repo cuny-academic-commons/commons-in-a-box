@@ -63,9 +63,9 @@ class CBox_Package_OpenLab extends CBox_Package {
 	protected static function theme() {
 		return array(
 			'name'           => 'CBOX OpenLab',
-			'version'        => '1.1.0',
+			'version'        => '1.1.1',
 			'directory_name' => 'openlab-theme',
-			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.1.0.zip',
+			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.1.1.zip',
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_openlab_theme.png' ),
 			'force_install'  => true
 		);
@@ -77,15 +77,23 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 * @since 1.1.0
 	 */
 	protected function custom_init() {
-		/**
-	         * Always enable the "Plugins" page on sub-sites.
-	         */
-		add_filter( 'site_option_menu_items', function( $retval ) {
-			if ( empty( $retval['plugins'] ) ) {
-				$retval['plugins'] = 1;
-			}
-			return $retval;
-		} );
+		add_filter( 'site_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
+		add_filter( 'default_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
+	}
+
+	/**
+	 * Callback for forcing the Plugins page to be available to non-super-admins.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @param array
+	 * @return array
+	 */
+	public static function menu_items_cb( $retval ) {
+		if ( empty( $retval['plugins'] ) ) {
+			$retval['plugins'] = 1;
+		}
+		return $retval;
 	}
 
 	/**

@@ -1,0 +1,10 @@
+{
+    "name": "cuny-academic-commons/commons-in-a-box",
+    "type": "metapackage",
+    "license": "GPLv2",
+    "require": {},
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+        "phpcompatibility/phpcompatibility-wp": "*"
+    }
+}

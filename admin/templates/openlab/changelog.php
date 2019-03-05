@@ -24,10 +24,41 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Added "package" infrastructure.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Added OpenLab package.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed problem with image and other upload paths after site cloning.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed Google Maps API key integration in Event Organiser.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed problems with category fetching when creating new events in BP Event Organiser.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with WordPress 5.0+.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Localization improvements.', 'cbox' ); ?></p>
 
 					</div>
+				</div>
+			</div>
+
+			<div class="changelog">
+				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>
+
+				<div class="feature-section">
+					<ul>
+						<li>Anthologize 0.8.0</li>
+						<li>Braille 0.0.6</li>
+						<li>BuddyPress 4.2.0</li>
+						<li>BuddyPress Docs 2.1.2</li>
+						<li>Event Organiser 3.7.4</li>
+						<li>Invite Anyone 1.4.0</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="changelog">
+				<h3><?php esc_html_e( 'Theme Updates', 'cbox' ); ?></h3>
+
+				<div class="feature-section">
+					<ul>
+						<li>Improved compatibility with BuddyPress 4.0 privacy tools</li>
+					</ul>
 				</div>
 			</div>
 
