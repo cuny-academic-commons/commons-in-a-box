@@ -441,95 +441,93 @@ add_filter( 'upgrader_package_options', 'cbox_upgrader_add_meta_for_zip' );
  * Renames downloaded Github folder to a cleaner directory name.
  *
  * Why? Because Github names their directories with the Github repo name and
- * branch name. So we want to rename the theme directory so WP can pick up the
- * parent theme and so it's more palatable.
+ * branch name and we need it to match just the repo name.
  *
  * Hooked to the 'upgrader_source_selection' filter.
  * We use this function during plugin / theme installation.
  *
  * @since 0.3
  *
- * @param str $source The temporary folder where the ZIP file was extracted.
- * @param str $remote_source The filepath to the temporary ZIP file.
- * @param obj $obj The object initiating the download.
- * @uses get_class() To find out what object is initiating the download.
- * @uses rename() To rename a file or directory.
+ * @param str   $source        The temporary folder where the ZIP file was extracted.
+ * @param str   $remote_source The filepath to the temporary ZIP file.
+ * @param obj   $obj           The object initiating the download.
+ * @param array $hook_extra    Extra information from the upgrader.
  * @return str Filepath to temporary folder.
  */
-function cbox_rename_github_folder( $source, $remote_source, $obj ) {
+function cbox_rename_github_folder( $source, $remote_source, $obj, $hook_extra ) {
+	// OUr utility renamer function.
+	$renamer = function( $temp ) {
+		global $wp_filesystem;
+
+		$source = $temp;
+
+		// get position of last hyphen in github directory
+		$pos = strrpos( $source, '-' );
+
+		// Sanity check!
+		if ( false === $pos ) {
+			return $source;
+		}
+
+		// get the previous character to the hyphen
+		$previous = substr( $source, $pos - 1, 1 );
+
+		// see if previous character is numeric.
+		// if so, we need to strip further back
+		if ( is_numeric( $previous ) ) {
+			$from_back = strlen( $source ) - $pos + 1;
+			$pos = strrpos( $source, '-', -$from_back );
+		}
+
+		// get rid of branch name in github directory
+		$new_location = trailingslashit( substr( $source, 0, $pos ) );
+
+		// now rename the folder
+		$rename = $wp_filesystem->move( $source, $new_location );
+
+		// return our directory
+		// being extra cautious here
+		if ( $rename === false ) {
+			return $source;
+
+		// if rename was successful, return the new location
+		} else {
+			return $new_location;
+		}	
+	};
+
 	$class_name = get_class( $obj );
 
 	switch ( $class_name ) {
 		case 'CBox_Theme_Installer' :
-			// if download url is not from github or a local install, stop now!
-			if ( ( ! empty( $obj->options['url'] ) && false === strpos( $obj->options['url'], 'github.com' ) ) && ( ! empty( $obj->options['url'] ) && false === strpos( $obj->options['url'], 'commons-in-a-box/includes/zip' ) ) ) {
+			// If download url is not from GitHub, stop now!
+			if ( ! empty( $obj->options['url'] ) && false === strpos( $obj->options['url'], 'github.com' ) ) {
 				return $source;
 			}
 
-			global $wp_filesystem;
-
-			// rename the theme folder to get rid of github's funky naming
-			$new_location = $remote_source . '/' . cbox_get_theme_prop( 'directory_name' ) . '/';
-
-			// now rename the folder
-			$rename = $wp_filesystem->move( $source, $new_location );
-
-			// return our directory
-			// being extra cautious here
-			if ( $rename === false ) {
-				return $source;
-
-			// if rename was successful, return the new location
-			} else {
-				return $new_location;
-			}
+			return $renamer( $source );
 
 			break;
 
 		case 'CBox_Plugin_Upgrader' :
-			// if download url is not from github or a local install, stop now!
-			if ( strpos( $obj->skin->options['url'], 'github.com' ) === false && strpos( $obj->skin->options['url'], 'commons-in-a-box/includes/zip' ) === false ) {
+			// If download url is not from GitHub, stop now!
+			if ( false === strpos( $obj->skin->options['url'], 'github.com' ) ) {
 				return $source;
 			}
 
-			global $wp_filesystem;
-
-			// get position of last hyphen in github directory
-			$pos = strrpos( $source, '-' );
-
-			// get the previous character to the hyphen
-			$previous = substr( $source, $pos - 1, 1 );
-
-			// see if previous character is numeric.
-			// if so, we need to strip further back
-			if ( is_numeric( $previous ) ) {
-				$from_back = strlen( $source ) - $pos + 1;
-				$pos = strrpos( $source, '-', -$from_back );
-			}
-
-			// get rid of branch name in github directory
-			$new_location = trailingslashit( substr( $source, 0, $pos ) );
-
-			// now rename the folder
-			$rename = $wp_filesystem->move( $source, $new_location );
-
-			// return our directory
-			// being extra cautious here
-			if ( $rename === false ) {
-				return $source;
-
-			// if rename was successful, return the new location
-			} else {
-				return $new_location;
-			}
+			return $renamer( $source );
 
 			break;
 
-		// not a CBOX install? return the regular $source now!
 		default :
+			// Handle bundled ZIP files.
+			if ( ! empty( $hook_extra['cbox-zip'] ) ) {
+				return $renamer( $source );
+			}
+
+			// Not a CBOX install? return the regular $source now!
 			return $source;
 
 			break;
 	}
-
 }

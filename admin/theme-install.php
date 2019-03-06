@@ -38,7 +38,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->init();
 		$this->install_strings();
 
-		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
+		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  4 );
 		add_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
 		add_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
@@ -92,7 +92,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
+		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  4 );
 		add_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
 		add_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
