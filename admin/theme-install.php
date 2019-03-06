@@ -58,10 +58,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 			'clear_working'     => true
 		) );
 
-		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
+		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',              1 );
 		remove_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
-		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
+		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),  99 );
+		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',          10 );
 		remove_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
 		if ( ! $this->result || is_wp_error($this->result) )
@@ -151,11 +151,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
-		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
-		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
-		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
+		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1 );
+		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10 );
+		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10 );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10 );
+		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10 );
 
 		return $results;
 	}
