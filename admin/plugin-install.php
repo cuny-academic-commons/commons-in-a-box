@@ -151,9 +151,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',     1,  3 );
+		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',     1 );
 		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ) );
-		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification', 10, 2 );
+		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification', 10 );
 
 		// Force refresh of plugin update information.
 		wp_clean_plugins_cache( $parsed_args['clear_update_cache'] );
@@ -232,9 +232,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1,  3 );
+		remove_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1 );
 		remove_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
-		remove_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
+		remove_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10 );
 
 		// Force refresh of plugin update information.
 		wp_clean_plugins_cache();
