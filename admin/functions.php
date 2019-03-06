@@ -412,6 +412,32 @@ function cbox_disable_ssl_verification( $args, $url ) {
 }
 
 /**
+ * Add custom meta to the WordPress upgrader for CBOX ZIP files.
+ *
+ * We need to add a marker to let us know whether we're parsing a CBOX bundled
+ * ZIP file or not.  This will be used later when renaming the source folder.
+ *
+ * Note: The directory in CBOX bundled ZIP files must resemble the format of
+ * 'slug-VERSION'. eg. 'cbox-theme-1.1.0'.
+ *
+ * @since 1.1.2.
+ *
+ * @param array $retval Current upgrader meta.
+ * @return array
+ */
+function cbox_upgrader_add_meta_for_zip( $retval ) {
+	if ( false === strpos( $retval['package'], 'commons-in-a-box/includes/zip' ) ) {
+		return $retval;
+	}
+
+	// Add our meta.
+	$retval['hook_extra']['cbox-zip'] = true;
+
+	return $retval;
+}
+add_filter( 'upgrader_package_options', 'cbox_upgrader_add_meta_for_zip' );
+
+/**
  * Renames downloaded Github folder to a cleaner directory name.
  *
  * Why? Because Github names their directories with the Github repo name and
