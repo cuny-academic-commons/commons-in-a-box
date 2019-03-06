@@ -48,7 +48,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 		$current    = CBox_Plugins::get_plugins();
 
-		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',         1,  3 );
+		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',         1,  4 );
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_plugin' ), 10, 4 );
 		add_filter( 'http_request_args',          'cbox_disable_ssl_verification',     10, 2 );
 
@@ -178,7 +178,7 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 		$dependency = CBox_Plugins::get_plugins( 'dependency' );
 		$required = CBox_Plugins::get_plugins();
 
-		add_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1,  3 );
+		add_filter( 'upgrader_source_selection', 'cbox_rename_github_folder',     1,  4 );
 		add_filter( 'upgrader_source_selection', array( $this, 'check_package' ) );
 		add_filter( 'http_request_args',         'cbox_disable_ssl_verification', 10, 2 );
 
