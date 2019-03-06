@@ -148,6 +148,7 @@ class Commons_In_A_Box {
 		 * This could be improved...
 		 */
 		if ( defined( 'WP_CLI') ) {
+			add_filter( 'upgrader_source_selection', 'cbox_rename_github_folder', 1, 4 );
 			add_action( 'cbox_plugins_loaded', function() {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}, 91 );
