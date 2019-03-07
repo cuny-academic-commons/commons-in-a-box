@@ -496,6 +496,11 @@ function cbox_rename_github_folder( $source, $remote_source, $obj, $hook_extra )
 		}	
 	};
 
+	// Handle bundled ZIP files before checking CBOX admin installer.
+	if ( ! empty( $hook_extra['cbox-zip'] ) ) {
+		return $renamer( $source );
+	}
+
 	$class_name = get_class( $obj );
 
 	switch ( $class_name ) {
@@ -520,11 +525,6 @@ function cbox_rename_github_folder( $source, $remote_source, $obj, $hook_extra )
 			break;
 
 		default :
-			// Handle bundled ZIP files.
-			if ( ! empty( $hook_extra['cbox-zip'] ) ) {
-				return $renamer( $source );
-			}
-
 			// Not a CBOX install? return the regular $source now!
 			return $source;
 
