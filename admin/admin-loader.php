@@ -214,16 +214,18 @@ class CBox_Admin {
 			// CBOX Theme options page!
 			if ( $theme->exists() ) {
 				// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-				if ( 1 !== cbox_get_main_site_id() ) {
+				if ( ! cbox_is_main_site() ) {
 					switch_to_blog( cbox_get_main_site_id() );
+					$switched = true;
 				}
 
 				// switch the theme
 				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
 				// restore blog after switching
-				if ( 1 !== cbox_get_main_site_id() ) {
+				if ( ! empty( $switched ) ) {
 					restore_current_blog();
+					unset( $switched );
 				}
 
 				// Mark the theme as having just been activated

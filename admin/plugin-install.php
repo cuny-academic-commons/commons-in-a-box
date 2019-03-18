@@ -74,14 +74,16 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
 			 * we need to switch to that blog to get the correct active plugins list.
 			 */
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $current[ $plugin ]['network'] && ! cbox_is_main_site() ) {
 				switch_to_blog( cbox_get_main_site_id() );
+				$switched = true;
 			}
 
 			$is_active = is_plugin_active( $plugin_loader );
 
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $current[ $plugin ]['network'] && ! empty( $switched ) ) {
 				restore_current_blog();
+				unset( $switched );
 			}
 
 			// Only activate Maintenance mode if a plugin is active.
@@ -118,14 +120,16 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
 			 * we need to switch to that blog to get the correct active plugins list.
 			 */
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $current[ $plugin ]['network'] && ! cbox_is_main_site() ) {
 				switch_to_blog( cbox_get_main_site_id() );
+				$switched = true;
 			}
 
 			$this->skin->plugin_active = is_plugin_active( $plugin_loader );
 
-			if ( false === $current[ $plugin ]['network'] && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $current[ $plugin ]['network'] && ! empty( $switched ) ) {
 				restore_current_blog();
+				unset( $switched );
 			}
 
 			$result = $this->run( array(
@@ -277,8 +281,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
 			 * we need to switch to that blog to get the correct active plugins list.
 			 */
-			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && ! cbox_is_main_site() ) {
 				switch_to_blog( cbox_get_main_site_id() );
+				$switched = true;
 			}
 
 			$is_active = is_plugin_active( $plugin_loader );
@@ -288,8 +293,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 				unset( $plugins[ $i ] );
 
 				// Remember to restore blog, if we're skipping!
-				if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+				if ( false === $network_activate && ! empty( $switched ) ) {
 					restore_current_blog();
+					unset( $switched );
 				}
 
 				continue;
@@ -298,8 +304,9 @@ class CBox_Plugin_Upgrader extends Plugin_Upgrader {
 			// activate the plugin
 			activate_plugin( $plugin_loader, '', $network_activate );
 
-			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && ! empty( $switched ) ) {
 				restore_current_blog();
+				unset( $switched );
 			}
 		}
 
@@ -831,15 +838,17 @@ class CBox_Updater {
 			 * BuddyPress supports a different root blog ID, so if BuddyPress is activated
 			 * we need to switch to that blog to get the correct active plugins list.
 			 */
-			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && ! cbox_is_main_site() ) {
 				switch_to_blog( cbox_get_main_site_id() );
+				$switched = true;
 			}
 
 			// activate the plugin
 			activate_plugin( $plugin, '', $network_activate );
 
-			if ( false === $network_activate && 1 !== cbox_get_main_site_id() ) {
+			if ( false === $network_activate && ! empty( $switched ) ) {
 				restore_current_blog();
+				unset( $switched );
 			}
 		}
 
