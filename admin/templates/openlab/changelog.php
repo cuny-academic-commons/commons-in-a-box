@@ -24,14 +24,7 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Fixed problem with image and other upload paths after site cloning.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Fixed Google Maps API key integration in Event Organiser.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Fixed problems with category fetching when creating new events in BP Event Organiser.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with WordPress 5.0+.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Localization improvements.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Hide "Group Home" link from site navs when the group is inaccessible to current user.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
@@ -52,7 +45,8 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Improved compatibility with BuddyPress 4.0 privacy tools</li>
+						<li><?php esc_html_e( 'Fixed bug with BuddyPress Docs edit mode.', 'cbox' ); ?></li>
+						<li><?php esc_html_e( 'Improved appearance of single page/post content.', 'cbox' ); ?></li>
 					</ul>
 				</div>
 			</div>
