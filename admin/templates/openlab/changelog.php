@@ -42,12 +42,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Anthologize 0.8.0</li>
-						<li>Braille 0.0.6</li>
-						<li>BuddyPress 4.2.0</li>
-						<li>BuddyPress Docs 2.1.2</li>
-						<li>Event Organiser 3.7.4</li>
-						<li>Invite Anyone 1.4.0</li>
+						<li>BuddyPress 4.4.0</li>
 					</ul>
 				</div>
 			</div>
