@@ -38,6 +38,7 @@
 						<li>BuddyPress 4.4.0</li>
 						<li>BuddyPress Docs 2.1.3</li>
 						<li>BuddyPress Docs In Group 1.0.2</li>
+						<li>BP Group Documents 1.12.3</li>
 					</ul>
 				</div>
 			</div>
