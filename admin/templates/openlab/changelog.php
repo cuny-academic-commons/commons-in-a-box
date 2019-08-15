@@ -42,6 +42,7 @@
 						<li>BP Group Documents 1.12.3</li>
 						<li>BP Reply By Email 1.0-RC8</li>
 						<li>PressForward 5.2.2</li>
+						<li>WP Grade Comments 1.3.1</li>
 					</ul>
 				</div>
 			</div>

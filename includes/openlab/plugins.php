@@ -320,8 +320,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'WP Grade Comments', 'cbox' ),
 			'cbox_description'  => __( 'A plugin for instructors using their WordPress site in a course setting. Provides ability to give private feedback and/or grades to post authors, all without leaving the familiar commenting interface.', 'cbox' ),
-			'version'           => '1.3.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.3.0.zip',
+			'version'           => '1.3.1',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/wp-grade-comments.1.3.1.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/wp-grade-comments',
 		) );
 	}
