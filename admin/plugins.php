@@ -182,7 +182,7 @@ class CBox_Admin_Plugins {
 		$is_active = null;
 
 		// BuddyPress complicates things due to a different root blog ID.
-		if ( 1 !== cbox_get_main_site_id() ) {
+		if ( ! cbox_is_main_site() ) {
 			$cbox_plugins = CBox_Plugins::get_plugins();
 			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
 
@@ -457,8 +457,9 @@ class CBox_Admin_Plugins {
 						// Multisite
 						if ( is_multisite() ) {
 							// Darn BuddyPress...
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! cbox_is_main_site() ) {
 								switch_to_blog( cbox_get_main_site_id() );
+								$switched = true;
 							}
 
 							// Deactivate dependent plugins on main site as well.
@@ -472,8 +473,9 @@ class CBox_Admin_Plugins {
 							deactivate_plugins( $plugin, false, is_plugin_active_for_network( $plugin ) );
 
 							// Switch back.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! empty( $switched ) ) {
 								restore_current_blog();
+								unset( $switched );
 							}
 
 						// Single site.
@@ -507,16 +509,18 @@ class CBox_Admin_Plugins {
 						// If plugin was activated on the CBOX site, refresh active plugins list.
 						} elseif ( ! is_wp_error( $result ) && self::is_plugin_active( $loader ) ) {
 							// Switch to CBOX main site ID, if necessary.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! cbox_is_main_site() ) {
 								switch_to_blog( cbox_get_main_site_id() );
+								$switched = true;
 							}
 
 							// Validate existing plugins.
 							validate_active_plugins();
 
 							// Switch back.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! empty( $switched ) ) {
 								restore_current_blog();
+								unset( $switched );
 							}
 						}
 					}

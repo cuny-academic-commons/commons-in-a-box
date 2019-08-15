@@ -59,17 +59,43 @@ function cbox_get_main_site_id() {
 	}
 
 	/*
-	 * Multisite; see ms_load_current_site_and_network().
+	 * Multisite & Multi-network; see ms_load_current_site_and_network().
 	 *
 	 * This might not be necessary for 99% of installs out there, but better safe
 	 * than sorry!
+	 *
+	 * WP 4.9.8 introduced get_main_site_id() which is network-aware and returns
+	 * the correct ID for the main site of the current network.
 	 */
 	if ( is_multisite() ) {
-		return (int) get_current_site()->blog_id;
+		return (int) get_main_site_id();
 	}
 
 	// Fallback to 1 if we've reached this part.
 	return 1;
+}
+
+/**
+ * Convenience function to test if we are on the main site of a network.
+ *
+ * @since 1.1.1
+ *
+ * @return bool True if main site, false otherwise.
+ */
+function cbox_is_main_site() {
+	// Always true on single site instances.
+	if ( ! is_multisite() ) {
+		return true;
+	}
+
+	// Check against current site.
+	$site_id = (int) get_current_blog_id();
+	if ( $site_id === cbox_get_main_site_id() ) {
+		return true;
+	}
+
+	// Can't be the main site.
+	return false;
 }
 
 /**
