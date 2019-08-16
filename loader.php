@@ -219,7 +219,7 @@ class Commons_In_A_Box {
 	 */
 	public function load_package_frontend() {
 		// Minimal package code needed for main site.
-		if ( get_current_blog_id() === cbox_get_main_site_id() ) {
+		if ( cbox_is_main_site() ) {
 			$this->package_autoloader();
 
 		// Multisite: Load up all package code on sub-sites and if user is logged in.

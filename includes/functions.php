@@ -78,7 +78,7 @@ function cbox_get_main_site_id() {
 /**
  * Convenience function to test if we are on the main site of a network.
  *
- * @since 1.1.1
+ * @since 1.1.2
  *
  * @return bool True if main site, false otherwise.
  */

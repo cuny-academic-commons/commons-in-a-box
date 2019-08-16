@@ -50,7 +50,7 @@ class CBox_Admin {
 	 */
 	private function setup_hooks() {
 		// Only register menu on the main site (this also accounts for Network Admin)
-		if ( cbox_get_main_site_id() === get_current_blog_id() ) {
+		if ( cbox_is_main_site() ) {
 			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
 		}
 

@@ -206,7 +206,7 @@ function cbox_admin_prop( $prop = '', $arg = '' ) {
 		$retval = is_network_admin() ? 'network_admin_menu' : 'admin_menu';
 	} elseif ( 'url' === $prop ) {
 		$retval = self_admin_url( $arg );
-		if ( cbox_get_main_site_id() !== get_current_blog_id() ) {
+		if ( ! cbox_is_main_site() ) {
 			$retval = network_admin_url( $arg );
 		}
 	}
@@ -222,13 +222,14 @@ function cbox_admin_prop( $prop = '', $arg = '' ) {
  * @param string|null $stylesheet Directory name for the theme. Optional. Defaults to current theme.
  */
 function cbox_get_theme( $stylesheet = '' ) {
-	if ( 1 !== cbox_get_main_site_id() ) {
+	if ( ! cbox_is_main_site() ) {
 		switch_to_blog( cbox_get_main_site_id() );
+		$switched = true;
 	}
 
 	$theme = wp_get_theme( $stylesheet );
 
-	if ( 1 !== cbox_get_main_site_id() ) {
+	if ( ! empty( $switched ) ) {
 		restore_current_blog();
 	}
 

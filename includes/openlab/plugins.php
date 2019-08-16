@@ -70,7 +70,7 @@ class CBox_Plugins_OpenLab {
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false,
-			'hide'              => get_current_blog_id() === cbox_get_main_site_id()
+			'hide'              => cbox_is_main_site()
 		) );
 
 		// BuddyPress Docs
@@ -207,7 +207,7 @@ class CBox_Plugins_OpenLab {
 			'version'      => '3.8.2',
 			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.8.2.zip',
 			'network'      => false,
-			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
+			'hide'         => cbox_is_main_site()
 		) );
 
 		// Braille
@@ -217,7 +217,7 @@ class CBox_Plugins_OpenLab {
 			'version'      => '0.0.6',
 			'download_url' => 'http://downloads.wordpress.org/plugin/braille.0.0.6.zip',
 			'network'      => false,
-			'hide'         => get_current_blog_id() === cbox_get_main_site_id()
+			'hide'         => cbox_is_main_site()
 		) );
 	}
 
