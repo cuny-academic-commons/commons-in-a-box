@@ -41,13 +41,14 @@ class Core extends \WP_CLI_Command {
 		if ( ! empty( $theme ) ) {
 			WP_CLI::line( 'The theme has an update. Run "wp cbox update theme" to update the theme.' );
 		} else {
-			$cbox_theme_name    = cbox_get_theme_prop( 'name' );
-			$current_theme_name = cbox_get_theme()->get( 'Name' );
-			if ( $cbox_theme_name && $cbox_theme_name === $current_theme_name ) {
-				WP_CLI::line( 'Current theme: ' . $current_theme_name . '. No update available.' );
-			} elseif ( $cbox_theme_name ) {
-				WP_CLI::line( 'Current theme: ' . $current_theme_name . '. The CBOX bundled theme, ' . $cbox_theme_name . ', is available, but not activated.' );
-				WP_CLI::line( 'You can activate the theme by running "wp theme activate ' .  cbox_get_theme_prop( 'directory_name' ) . '"' );
+			$cbox_theme    = cbox_get_package_prop( 'theme' );
+			$current_theme = cbox_get_theme();
+
+			if ( $cbox_theme['name'] && $cbox_theme['directory_name'] === $current_theme->get_template() ) {
+				WP_CLI::line( 'Current theme: ' . $cbox_theme['name'] . '. No update available.' );
+			} elseif ( $cbox_theme['name'] ) {
+				WP_CLI::line( 'Current theme: ' . $current_theme->get( 'Name' ) . '. The CBOX bundled theme, ' . $cbox_theme['name'] . ', is available, but not activated.' );
+				WP_CLI::line( 'You can activate the theme by running "wp theme activate ' .  $cbox_theme['directory_name'] . '"' );
 			}
 		}
 
