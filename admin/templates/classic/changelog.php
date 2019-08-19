@@ -17,6 +17,7 @@
 				</a>
 			</h2>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -31,22 +32,19 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Group Announcements 1.0.6</li>
-						<li>BP MPO Activity Filter 1.3.1</li>
-						<li>BP Groupblog 1.9.1</li>
-						<li>BuddyPress 4.2.0</li>
-						<li>BuddyPress Docs 2.1.2</li>
-						<li>Invite Anyone 1.4.0</li>
+						<li>BuddyPress 4.4.0</li>
 					</ul>
 				</div>
 			</div>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'cbox' ); ?></h3>
 
@@ -56,6 +54,7 @@
 					</ul>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
