@@ -29,8 +29,31 @@ class CBox_BP_Profile_Tab {
 	}
 
 	public function __construct() {
-		if ( ! defined( 'BP_DEFAULT_COMPONENT' ) )
-			define( 'BP_DEFAULT_COMPONENT', 'profile' );
+		// Set 'Profile' as the default tab.
+		add_action( 'bp_setup_canonical_stack', function() {
+			// Bail if using Nouveau's user front page.
+			if ( function_exists( 'bp_nouveau_get_appearance_settings' ) && bp_nouveau_get_appearance_settings( 'user_front_page' ) ) {
+				return;
+			}
+
+			if ( ! defined( 'BP_DEFAULT_COMPONENT' ) ) {
+				define( 'BP_DEFAULT_COMPONENT', 'profile' );
+			}
+		}, 0 );
+
+		// Move "Profile" tab to first position.
+		add_action( 'bp_actions', function() {
+			if ( ! function_exists( 'bp_rest_api_init' ) ) {
+				return;
+			}
+
+			// Bail if using Nouveau's user front page.
+			if ( function_exists( 'bp_nouveau_get_appearance_settings' ) && bp_nouveau_get_appearance_settings( 'user_front_page' ) ) {
+				return;
+			}
+
+			buddypress()->members->nav->edit_nav( array( 'position' => 0 ), 'profile' );
+		} );
 	}
 }
 
