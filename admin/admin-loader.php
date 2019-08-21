@@ -1334,6 +1334,7 @@ class CBox_Admin {
 		.cbox-plugins-section table {margin:1.6em 0;}
 		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:rgb(249, 255, 240);}
 		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
+		tr.cbox-plugin-network-active p {color:#333;}
 
 		.column-cbox-plugin-name {width:220px;}
 
