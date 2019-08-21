@@ -38,7 +38,7 @@
 						<li>BuddyPress 4.4.0</li>
 						<li>BuddyPress Docs 2.1.3</li>
 						<li>BuddyPress Docs In Group 1.0.2</li>
-						<li>BuddyPress Group Email Subscription 3.9.3</li>
+						<li>BuddyPress Group Email Subscription 3.9.4</li>
 						<li>BP Group Documents 1.12.3</li>
 						<li>BP Reply By Email 1.0-RC8</li>
 						<li>PressForward 5.2.2</li>
