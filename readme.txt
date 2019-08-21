@@ -60,6 +60,20 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 == Changelog ==
 
 = 1.1.1 =
+* Classic: Improved compatibility with BP Customizer settings when using the Nouveau template pack.
+* OpenLab: Hide "Group Home" link from site navs when the group is inaccessible to current user.
+* OpenLab: Fixed bug with BuddyPress Docs edit mode.
+* OpenLab: Improved appearance of single page/post content.
+* OpenLab: Fixed incorrect "Recent Docs" and "Recent Discussions" subheaders when WordPress is installed in a subdirectory.
+* OpenLab: Improved language regarding "Professor(s)" in group headers.
+* OpenLab: Fix bug that could prevent site admins from accessing Dashboard > Plugins in some cases.
+* Improvements to the behavior of network-activated CBOX plugins.
+* Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.
+* Improved compatibility with Multi-Network setups.
+* Updated plugins (Classic): BuddyPress 4.4.0, BuddyPress Docs 2.1.3, BuddyPress Group Email Subscription 3.9.4, BP Reply By Email 1.0-RC8
+* Updated plugins (OpenLab): BuddyPress 4.4.0, BuddyPress Docs 2.1.3, BuddyPress Docs In Group 1.0.2, BuddyPress Group Email Subscription 3.9.4, BP Group Documents 1.12.3, BP Reply By Email 1.0-RC8, PressForward 5.2.2, WP Grade Comments 1.3.1
+
+= 1.1.1 =
 * OpenLab: Fixed problem with image and other upload paths after site cloning.
 * OpenLab: Fixed Google Maps API key integration in Event Organiser.
 * OpenLab: Fixed problems with category fetching when creating new events.

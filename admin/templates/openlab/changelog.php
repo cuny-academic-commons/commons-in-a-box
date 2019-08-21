@@ -25,6 +25,10 @@
 					<div class="last-feature">
 
 						<p><?php esc_html_e( 'Hide "Group Home" link from site navs when the group is inaccessible to current user.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that could prevent site admins from accessing Dashboard > Plugins in some cases.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improvements to the behavior of network-activated CBOX plugins.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with Multi-Network setups.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
@@ -54,6 +58,8 @@
 					<ul>
 						<li><?php esc_html_e( 'Fixed bug with BuddyPress Docs edit mode.', 'cbox' ); ?></li>
 						<li><?php esc_html_e( 'Improved appearance of single page/post content.', 'cbox' ); ?></li>
+						<li><?php esc_html_e( 'Fixed incorrect "Recent Docs" and "Recent Discussions" subheaders when WordPress is installed in a subdirectory.', 'cbox' ); ?></li>
+						<li><?php esc_html_e( 'Improved language regarding "Professor(s)" in group headers.', 'cbox' ); ?></li>
 					</ul>
 				</div>
 			</div>

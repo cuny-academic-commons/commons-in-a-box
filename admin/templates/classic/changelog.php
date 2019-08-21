@@ -17,7 +17,6 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -25,14 +24,14 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with BP Customizer settings when using the Nouveau template pack.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improvements to the behavior of network-activated CBOX plugins.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with Multi-Network setups.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'cbox' ); ?></h3>
