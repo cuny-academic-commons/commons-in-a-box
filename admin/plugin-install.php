@@ -825,7 +825,9 @@ class CBox_Updater {
 				$cbox_plugins = CBox_Plugins::get_plugins();
 			}
 
-			if ( isset( $cbox_plugins[ $plugin_name ] ) ) {
+			if ( ! is_multisite() ) {
+				$network_activate = false;
+			} elseif ( isset( $cbox_plugins[ $plugin_name ] ) ) {
 				$network_activate = $cbox_plugins[ $plugin_name ]['network'];
 			} else {
 				$dependency = CBox_Plugins::get_plugins( 'dependency' );
