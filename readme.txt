@@ -61,6 +61,8 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 = 1.1.2 =
 * Classic: Improved compatibility with BP Customizer settings when using the Nouveau template pack.
+* Classic: Fixed a bug with tab navigation in CBOX THeme options.
+* Classic: Fixed an issues with making searches on BuddyPress directory pages.
 * OpenLab: Hide "Group Home" link from site navs when the group is inaccessible to current user.
 * OpenLab: Fixed bug with BuddyPress Docs edit mode.
 * OpenLab: Improved appearance of single page/post content.

@@ -46,17 +46,16 @@
 				</div>
 			</div>
 
-			<?php
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
 						<li><?php esc_html_e( 'Fixed an issue with making searches on BuddyPress directory pages.', 'cbox' ); ?></li>
+						<li><?php esc_html_e( 'Fixed a bug with tab navigation in CBOX Theme options.', 'cbox' ); ?></li>
 					</ul>
 				</div>
 			</div>
-			?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
