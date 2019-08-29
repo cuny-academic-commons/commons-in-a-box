@@ -50,7 +50,7 @@ class CBox_Admin {
 	 */
 	private function setup_hooks() {
 		// Only register menu on the main site (this also accounts for Network Admin)
-		if ( cbox_get_main_site_id() === get_current_blog_id() ) {
+		if ( cbox_is_main_site() ) {
 			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
 		}
 
@@ -214,16 +214,18 @@ class CBox_Admin {
 			// CBOX Theme options page!
 			if ( $theme->exists() ) {
 				// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-				if ( 1 !== cbox_get_main_site_id() ) {
+				if ( ! cbox_is_main_site() ) {
 					switch_to_blog( cbox_get_main_site_id() );
+					$switched = true;
 				}
 
 				// switch the theme
 				switch_theme( cbox_get_theme_prop( 'directory_name' ), cbox_get_theme_prop( 'directory_name' ) );
 
 				// restore blog after switching
-				if ( 1 !== cbox_get_main_site_id() ) {
+				if ( ! empty( $switched ) ) {
 					restore_current_blog();
+					unset( $switched );
 				}
 
 				// Mark the theme as having just been activated
@@ -1332,6 +1334,7 @@ class CBox_Admin {
 		.cbox-plugins-section table {margin:1.6em 0;}
 		tr.cbox-plugin-row-active th, tr.cbox-plugin-row-active td {background-color:rgb(249, 255, 240);}
 		tr.cbox-plugin-row-action-required th, tr.cbox-plugin-row-action-required td {background-color:#F4F4F4;}
+		tr.cbox-plugin-network-active p {color:#333;}
 
 		.column-cbox-plugin-name {width:220px;}
 

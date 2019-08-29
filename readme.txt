@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 5.1
-Stable tag: 1.1.1
+Tested up to: 5.2
+Stable tag: 1.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,22 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.1.2 =
+* Classic: Improved compatibility with BP Customizer settings when using the Nouveau template pack.
+* Classic: Fixed a bug with tab navigation in CBOX THeme options.
+* Classic: Fixed an issues with making searches on BuddyPress directory pages.
+* OpenLab: Hide "Group Home" link from site navs when the group is inaccessible to current user.
+* OpenLab: Fixed bug with BuddyPress Docs edit mode.
+* OpenLab: Improved appearance of single page/post content.
+* OpenLab: Fixed incorrect "Recent Docs" and "Recent Discussions" subheaders when WordPress is installed in a subdirectory.
+* OpenLab: Improved language regarding "Professor(s)" in group headers.
+* OpenLab: Fix bug that could prevent site admins from accessing Dashboard > Plugins in some cases.
+* Improvements to the behavior of network-activated CBOX plugins.
+* Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.
+* Improved compatibility with Multi-Network setups.
+* Updated plugins (Classic): BuddyPress 4.4.0, BuddyPress Docs 2.1.3, BuddyPress Group Email Subscription 3.9.4, BP Reply By Email 1.0-RC8
+* Updated plugins (OpenLab): BuddyPress 4.4.0, BuddyPress Docs 2.1.3, BuddyPress Docs In Group 1.0.2, BuddyPress Group Email Subscription 3.9.4, BP Group Documents 1.12.3, BP Reply By Email 1.0-RC8, PressForward 5.2.2, WP Grade Comments 1.3.1
 
 = 1.1.1 =
 * OpenLab: Fixed problem with image and other upload paths after site cloning.

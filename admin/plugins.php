@@ -182,7 +182,7 @@ class CBox_Admin_Plugins {
 		$is_active = null;
 
 		// BuddyPress complicates things due to a different root blog ID.
-		if ( 1 !== cbox_get_main_site_id() ) {
+		if ( ! cbox_is_main_site() ) {
 			$cbox_plugins = CBox_Plugins::get_plugins();
 			$plugin_data  = get_plugin_data( WP_PLUGIN_DIR . '/' . $loader );
 
@@ -457,8 +457,9 @@ class CBox_Admin_Plugins {
 						// Multisite
 						if ( is_multisite() ) {
 							// Darn BuddyPress...
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! cbox_is_main_site() ) {
 								switch_to_blog( cbox_get_main_site_id() );
+								$switched = true;
 							}
 
 							// Deactivate dependent plugins on main site as well.
@@ -472,8 +473,9 @@ class CBox_Admin_Plugins {
 							deactivate_plugins( $plugin, false, is_plugin_active_for_network( $plugin ) );
 
 							// Switch back.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! empty( $switched ) ) {
 								restore_current_blog();
+								unset( $switched );
 							}
 
 						// Single site.
@@ -492,6 +494,37 @@ class CBox_Admin_Plugins {
 
 					break;
 
+				case 'network-deactivate' :
+					check_admin_referer('network-deactivate-plugin_' . $plugin);
+
+					if ( ! is_multisite() ) {
+						wp_safe_redirect( $url );
+						exit;
+					}
+
+					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
+
+					// Network deactivate the plugin.
+					deactivate_plugins( $loader, true, true );
+
+					// Darn BuddyPress...
+					if ( ! cbox_is_main_site() ) {
+						switch_to_blog( cbox_get_main_site_id() );
+						$switched = true;
+					}
+
+					// Make sure the plugin is active on the main site.
+					activate_plugin( $loader, '', false, true );
+
+					// Switch back.
+					if ( ! empty( $switched ) ) {
+						restore_current_blog();
+						unset( $switched );
+					}
+
+					wp_safe_redirect( add_query_arg( 'network-deactivate', 'true', $url ) );
+
+					break;
 
 				case 'uninstall' :
 					check_admin_referer( 'bulk-plugins' );
@@ -507,16 +540,18 @@ class CBox_Admin_Plugins {
 						// If plugin was activated on the CBOX site, refresh active plugins list.
 						} elseif ( ! is_wp_error( $result ) && self::is_plugin_active( $loader ) ) {
 							// Switch to CBOX main site ID, if necessary.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! cbox_is_main_site() ) {
 								switch_to_blog( cbox_get_main_site_id() );
+								$switched = true;
 							}
 
 							// Validate existing plugins.
 							validate_active_plugins();
 
 							// Switch back.
-							if ( 1 !== cbox_get_main_site_id() ) {
+							if ( ! empty( $switched ) ) {
 								restore_current_blog();
+								unset( $switched );
 							}
 						}
 					}
@@ -581,6 +616,14 @@ class CBox_Admin_Plugins {
 			$prefix = is_network_admin() ? 'network_' : '';
 			add_action( $prefix . 'admin_notices', function() {
 				echo '<div class="updated"><p>' . __( 'Plugin uninstalled.', 'cbox' ) . '</p></div>';
+			} );
+		}
+
+		// Network-deactivate notice.
+		if ( ! empty( $_REQUEST['network-deactivate'] ) ) {
+			$prefix = is_network_admin() ? 'network_' : '';
+			add_action( $prefix . 'admin_notices', function() {
+				echo '<div class="updated"><p>' . __( 'Plugin network-deactivated.', 'cbox' ) . '</p></div>';
 			} );
 		}
 	}
@@ -935,6 +978,23 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 					</td>
 				</tr>
+
+				<?php
+				// Notice for plugins that are activated network-wide, but shouldn't be.
+				if ( false === $data['network'] && is_multisite() && is_plugin_active_for_network( $loader ) ) : ?>
+
+					<tr class="cbox-plugin-network-active">
+						<td colspan="3"><div class="notice inline notice-error notice-alt"><p>
+							<?php printf( esc_html__( '%1$s is network-activated, but we recommend only activating this plugin on the main site.', 'cbox' ), $plugin ); ?>
+							<?php printf(
+								'<a href="%1$s">%2$s</a>',
+								self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=network-deactivate&amp;plugin=' . urlencode( $plugin ) . '&amp;_wpnonce=' . wp_create_nonce( 'network-deactivate-plugin_' . $plugin ) ),
+								esc_html__( '(Change)', 'cbox' )
+							); ?>
+						</p></div></td>
+					</tr>
+
+				<?php endif; ?>
 
 			<?php endforeach; ?>
 

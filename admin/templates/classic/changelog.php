@@ -24,9 +24,10 @@
 
 					<div class="last-feature">
 
-						<p><?php esc_html_e( 'Improved compatibility non-standard multisite and multinetwork configurations.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved coverage of CLI update tools.', 'cbox' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with older versions of PHP.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with BP Customizer settings when using the Nouveau template pack.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improvements to the behavior of network-activated CBOX plugins.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Improved compatibility with Multi-Network setups.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
@@ -37,12 +38,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Group Announcements 1.0.6</li>
-						<li>BP MPO Activity Filter 1.3.1</li>
-						<li>BP Groupblog 1.9.1</li>
-						<li>BuddyPress 4.2.0</li>
-						<li>BuddyPress Docs 2.1.2</li>
-						<li>Invite Anyone 1.4.0</li>
+						<li>BuddyPress 4.4.0</li>
+						<li>BuddyPress Docs 2.1.3</li>
+						<li>BuddyPress Group Email Subscription 3.9.4</li>
+						<li>BP Reply By Email 1.0-RC8</li>
 					</ul>
 				</div>
 			</div>
@@ -52,7 +51,8 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Improved compatibility with BuddyPress 4.0 privacy tools</li>
+						<li><?php esc_html_e( 'Fixed an issue with making searches on BuddyPress directory pages.', 'cbox' ); ?></li>
+						<li><?php esc_html_e( 'Fixed a bug with tab navigation in CBOX Theme options.', 'cbox' ); ?></li>
 					</ul>
 				</div>
 			</div>

@@ -38,7 +38,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->init();
 		$this->install_strings();
 
-		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
+		add_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  4 );
 		add_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
 		add_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
 		add_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
@@ -58,10 +58,10 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 			'clear_working'     => true
 		) );
 
-		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',                 1,  3 );
+		remove_filter( 'upgrader_source_selection',      'cbox_rename_github_folder',              1 );
 		remove_filter( 'upgrader_source_selection',      array( $this, 'check_package' ) );
-		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),     99, 3 );
-		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',             10, 2 );
+		remove_filter( 'upgrader_post_install',          array( $this, 'activate_post_install' ),  99 );
+		remove_filter( 'http_request_args',              'cbox_disable_ssl_verification',          10 );
 		remove_filter( 'install_theme_complete_actions', array( $this, 'remove_theme_actions' ) );
 
 		if ( ! $this->result || is_wp_error($this->result) )
@@ -92,7 +92,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->bulk = true;
 		$this->upgrade_strings();
 
-		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
+		add_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  4 );
 		add_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
 		add_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
 		add_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
@@ -151,11 +151,11 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1,  3 );
-		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10, 2 );
-		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10, 2 );
-		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10, 4 );
-		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10, 2 );
+		remove_filter( 'upgrader_source_selection',  'cbox_rename_github_folder',        1 );
+		remove_filter( 'upgrader_pre_install',       array( $this, 'current_before' ),   10 );
+		remove_filter( 'upgrader_post_install',      array( $this, 'current_after' ),    10 );
+		remove_filter( 'upgrader_clear_destination', array( $this, 'delete_old_theme' ), 10 );
+		remove_filter( 'http_request_args',          'cbox_disable_ssl_verification',    10 );
 
 		return $results;
 	}
@@ -173,16 +173,18 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 
 		if ( ! empty( $result['destination_name'] ) && $result['destination_name'] == $directory_name ) {
 			// if BP_ROOT_BLOG is defined and we're not on the root blog, switch to it
-			if ( 1 !== cbox_get_main_site_id() ) {
+			if ( ! cbox_is_main_site() ) {
 				switch_to_blog( cbox_get_main_site_id() );
+				$switched = true;
 			}
 
 			// switch the theme
 			switch_theme( $directory_name, $directory_name );
 
 			// restore blog after switching
-			if ( 1 !== cbox_get_main_site_id() ) {
+			if ( ! empty( $switched ) ) {
 				restore_current_blog();
+				unset( $switched );
 			}
 
 			// Mark the theme as having just been activated
