@@ -75,6 +75,8 @@ class CBox_BBP_Autoload {
 		}
 	}
 
+	/** VISUAL EDITOR **************************************************/
+
 	/**
 	 * Re-enable TinyMCE in the forum textarea.
 	 *
@@ -142,6 +144,8 @@ class CBox_BBP_Autoload {
 		// wipe out the second row of TinyMCE buttons
 		add_filter( 'mce_buttons_2', '__return_empty_array' );
 	}
+
+	/** FORM ACTIONS ***********************************************/
 
 	/**
 	 * Workaround for bbPress group form actions being wrong on BP 2.1 for bp-default derivatives.
