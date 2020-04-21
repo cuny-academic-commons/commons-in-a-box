@@ -49,6 +49,8 @@ class CBox_BBP_Autoload {
 		$this->allow_revisions_during_edit();
 
 		$this->bypass_link_limit();
+
+		$this->show_notice_for_moderated_posts();
 	}
 
 	/**
@@ -299,5 +301,32 @@ class CBox_BBP_Autoload {
 
 			return $bool;
 		}, 10, 6 );
+	}
+
+	/**
+	 * Add error messaging for moderated forum posts.
+	 *
+	 * We have to use BP's template notice routine because the template
+	 * notices by bbPress aren't shown due to the redirection code in
+	 * bbPress's BuddyPress group module.
+	 *
+	 * @since 1.1.3
+	 */
+	public function show_notice_for_moderated_posts() {
+		// Notice callback anonymous function.
+		$notice = function( $retval ) {
+			if ( ! bp_is_group() || bbp_get_pending_status_id() !== $retval['post_status'] ) {
+				return $retval;
+			}
+
+			// Todo: Should we let the user know why their post was auto-moderated?
+			$msg = esc_html__( 'Your forum post is pending moderation', 'cbox' );
+			bp_core_add_message( $msg, 'error' );
+
+			return $retval;
+		};
+
+		add_filter( 'bbp_new_topic_pre_insert', $notice );
+		add_filter( 'bbp_new_reply_pre_insert', $notice );
 	}
 }
