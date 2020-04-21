@@ -56,6 +56,8 @@ class CBox_BBP_Autoload {
 		$this->save_notification_meta();
 
 		$this->allow_revisions_during_edit();
+
+		$this->bypass_link_limit();
 	}
 
 	/**
@@ -291,5 +293,38 @@ class CBox_BBP_Autoload {
 		$this->post_type = '';
 
 		return $retval;
+	}
+
+	/** BYPASS LINK LIMIT **********************************************/
+
+	/**
+	 * Bypass link limit for logged-in users for bbPress 2.6.
+	 *
+	 * Hotfix for {@link https://bbpress.trac.wordpress.org/ticket/3352}.
+	 *
+	 * @since 1.1.3
+	 */
+	public function bypass_link_limit() {
+		add_filter( 'bbp_bypass_check_for_moderation', function( $bool, $anon_data, $user_id, $title, $content, $strict ) {
+			// If not checking for links or anonymous user, bail.
+			if ( true === $strict || ! empty( $anon_data ) || empty( $user_id ) ) {
+				return $bool;
+			}
+
+			$max = function() {
+				return PHP_INT_MAX;
+			};
+
+			// Allow a lot of links :)
+			add_filter( 'option_comment_max_links', $max );
+
+			// Remove our link bypasser during the next filter check.
+			add_filter( 'bbp_moderation_keys', function( $retval ) use ( $max ) {
+				remove_filter( 'option_comment_max_links', $max );
+				return $retval;
+			} );
+
+			return $bool;
+		}, 10, 6 );
 	}
 }
