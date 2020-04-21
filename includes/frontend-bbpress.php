@@ -26,15 +26,6 @@ cbox()->plugins->bbpress->is_setup = function_exists( 'bbp_activation' );
  */
 class CBox_BBP_Autoload {
 	/**
-	 * Current post type.
-	 *
-	 * @since 1.1.3
-	 *
-	 * @var string
-	 */
-	protected $post_type = '';
-
-	/**
 	 * Init method.
 	 */
 	public static function init() {
@@ -248,51 +239,33 @@ class CBox_BBP_Autoload {
 	 * @since 1.1.3
 	 */
 	public function allow_revisions_during_edit() {
-		add_action( 'edit_post', array( $this, 'allow_revisions' ), 9, 2 );
-	}
+		add_action( 'edit_post', function( $post_id, $post ) {
+			$post_type = '';
 
-	/**
-	 * Callback to enable revisions during the 'edit_post' hook.
-	 *
-	 * @since 1.1.3
-	 *
-	 * @param int     $post_id Post ID
-	 * @param WP_Post $post    WP Post
-	 */
-	public function allow_revisions( $post_id, $post ) {
-		if ( get_post_type( $post ) === bbp_get_topic_post_type() ) {
-			$this->post_type = 'topic';
-		} elseif ( get_post_type( $post ) === bbp_get_reply_post_type() ) {
-			$this->post_type = 'reply';
-		}
+			if ( get_post_type( $post ) === bbp_get_topic_post_type() ) {
+				$post_type = 'topic';
+			} elseif ( get_post_type( $post ) === bbp_get_reply_post_type() ) {
+				$post_type = 'reply';
+			}
 
-		if ( '' === $this->post_type ) {
-			return;
-		}
+			if ( '' === $post_type ) {
+				return;
+			}
 
-		// See https://bbpress.trac.wordpress.org/ticket/3328.
-		$GLOBALS[ '_wp_post_type_features' ][ $this->post_type ][ 'revisions' ] = true;
+			// See https://bbpress.trac.wordpress.org/ticket/3328.
+			$GLOBALS[ '_wp_post_type_features' ][ $post_type ][ 'revisions' ] = true;
 
-		// Pass the first revision check.
-		add_filter( 'bbp_allow_revisions', '__return_true' );
+			// Pass the first revision check.
+			add_filter( 'bbp_allow_revisions', '__return_true' );
 
-		// Remove hack.
-		add_filter( "bp_is_{$this->post_type}_anonymous", array( $this, 'remove_revisions' ) );
-	}
+			// Remove hack.
+			add_filter( "bp_is_{$post_type}_anonymous", function( $retval ) use ( $post_type ) {
+				remove_filter( 'bbp_allow_revisions', '__return_true' );
+				unset( $GLOBALS[ '_wp_post_type_features' ][ $post_type ][ 'revisions' ] );
 
-	/**
-	 * Reset revision workarounds during anonymous post type check.
-	 *
-	 * @since 1.1.3
-	 *
-	 * @param bool $retval
-	 */
-	public function remove_revisions( $retval ) {
-		remove_filter( 'bbp_allow_revisions', '__return_true' );
-		unset( $GLOBALS[ '_wp_post_type_features' ][ $this->post_type ][ 'revisions' ] );
-		$this->post_type = '';
-
-		return $retval;
+				return $retval;
+			} );
+		}, 9, 2 );
 	}
 
 	/** BYPASS LINK LIMIT **********************************************/
