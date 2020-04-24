@@ -137,7 +137,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', function( $retval, $i
 
 	// No topic meta, so add generic title and link.
 	} else {
-		$topic_title = esc_html_( 'a forum topic', 'cbox' );
+		$topic_title = esc_html__( 'a forum topic', 'cbox' );
 		$topic_link  = add_query_arg( 'type', 'bbp_new_reply', bp_get_notifications_permalink() );
 	}
 

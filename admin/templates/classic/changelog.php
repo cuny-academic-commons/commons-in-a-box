@@ -38,10 +38,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 4.4.0</li>
-						<li>BuddyPress Docs 2.1.3</li>
-						<li>BuddyPress Group Email Subscription 3.9.4</li>
-						<li>BP Reply By Email 1.0-RC8</li>
+						<li>bbPress 2.6.4</li>
 					</ul>
 				</div>
 			</div>
