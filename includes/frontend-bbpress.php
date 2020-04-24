@@ -238,7 +238,7 @@ class CBox_BBP_Autoload {
 	 *
 	 * Hotfix for {@link https://bbpress.trac.wordpress.org/ticket/3328}.
 	 *
-	 * @since 1.1.3
+	 * @since 1.2.0
 	 */
 	public function allow_revisions_during_edit() {
 		add_action( 'edit_post', function( $post_id, $post ) {
@@ -277,7 +277,7 @@ class CBox_BBP_Autoload {
 	 *
 	 * Hotfix for {@link https://bbpress.trac.wordpress.org/ticket/3352}.
 	 *
-	 * @since 1.1.3
+	 * @since 1.2.0
 	 */
 	public function bypass_link_limit() {
 		add_filter( 'bbp_bypass_check_for_moderation', function( $bool, $anon_data, $user_id, $title, $content, $strict ) {
@@ -310,7 +310,7 @@ class CBox_BBP_Autoload {
 	 * notices by bbPress aren't shown due to the redirection code in
 	 * bbPress's BuddyPress group module.
 	 *
-	 * @since 1.1.3
+	 * @since 1.2.0
 	 */
 	public function show_notice_for_moderated_posts() {
 		// Notice callback anonymous function.
