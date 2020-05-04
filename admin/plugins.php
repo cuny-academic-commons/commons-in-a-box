@@ -23,11 +23,11 @@ class CBox_Admin_Plugins {
 	 * @since 1.1.0
 	 */
 	protected function __construct() {
+		// load PD on admin menu hook.
+		add_action( 'cbox_admin_menu',                       array( 'Plugin_Dependencies', 'init' ), 0 );
+
 		// setup the CBOX plugin menu
 		add_action( 'cbox_admin_menu',                       array( $this, 'setup_plugins_page' ) );
-
-		// load PD on the "Dashboard > Updates" page so we can filter out our CBOX plugins
-		add_action( 'load-update-core.php',                  array( 'Plugin_Dependencies', 'init' ) );
 
 		// filter PD's dependency list
 		add_filter( 'scr_plugin_dependency_before_parse',    array( $this, 'filter_pd_dependencies' ) );

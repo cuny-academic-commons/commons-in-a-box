@@ -168,9 +168,6 @@ class CBox_Settings_Classic {
 			array( $this, 'admin_page' )
 		);
 
-		// load Plugin Dependencies plugin on the CBOX plugins page
-		add_action( "load-{$page}", array( 'Plugin_Dependencies', 'init' ) );
-
 		// validate any settings changes submitted from the CBOX settings page
 		add_action( "load-{$page}", array( $this, 'validate_settings' ) );
 

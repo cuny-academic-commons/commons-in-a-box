@@ -607,9 +607,6 @@ class CBox_Admin {
 		// enqueue JS
 		add_action( "admin_print_scripts-{$subpage}", array( $this, 'enqueue_js' ) );
 
-		// load PD
-		add_action( "load-{$subpage}",                array( 'Plugin_Dependencies', 'init' ) );
-
 		// catch form submission
 		add_action( "load-{$subpage}",                array( $this, 'catch_form_submission' ) );
 	}
