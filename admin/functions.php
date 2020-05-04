@@ -31,6 +31,10 @@ function cbox_is_setup() {
 	if ( cbox_is_upgraded() )
 		return false;
 
+	if ( cbox_get_setup_step() ) {
+		return false;
+	}
+
 	// theme needs an update
 	if ( cbox_get_theme_to_update() ) {
 		return false;
@@ -159,7 +163,7 @@ function cbox_get_setup_step() {
 		$step = 'no-package';
 
 	// Haven't installed before.
-	} elseif ( ! cbox_get_installed_revision_date() ) {
+	} else {
 		// Get required plugins.
 		$required = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'required' ) );
 		unset( $required['deactivate'] );
@@ -169,7 +173,7 @@ function cbox_get_setup_step() {
 			$step = 'required-plugins';
 
 		// Recommended plugins.
-		} else {
+		} elseif ( ! cbox_get_installed_revision_date() ) {
 			$recommended = CBox_Admin_Plugins::organize_plugins_by_state( CBox_Plugins::get_plugins( 'recommended' ) );
 			unset( $recommended['deactivate'] );
 
@@ -182,8 +186,9 @@ function cbox_get_setup_step() {
 			}
 		}
 
-	// Theme needs an update.
-	} elseif ( cbox_get_theme_to_update() ) {
+	}
+
+	if ( empty( $step ) && cbox_get_theme_to_update() ) {
 		$step = 'theme-update';
 	}
 

@@ -321,18 +321,26 @@ class CBox_Admin {
 
 				// Start the installer.
 				$options = array();
-				if ( ! empty( $recommended ) ) {
-					$options = array(
-						'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
-						'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
-					);
+				if ( ! cbox_get_installed_revision_date() ) {
+					if ( ! empty( $recommended ) ) {
+						$options = array(
+							'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
+							'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
+						);
+	
+					// Add theme step if recommended plugins are already active.
+					} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
+						$options = array(
+							'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
+							'redirect_text' => __( 'Continue to theme installation', 'cbox' )
+						);
+					}
+				} else {
+						$options = array(
+							'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
+							'redirect_text' => __( 'Continue to dashboard', 'cbox' )
+						);
 
-				// Add theme step if recommended plugins are already active.
-				} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
-					$options = array(
-						'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
-						'redirect_text' => __( 'Continue to theme installation', 'cbox' )
-					);
 				}
 
 				$installer = new CBox_Updater( $plugins, $options );
