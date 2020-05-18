@@ -830,7 +830,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 		<table class="widefat fixed plugins">
 			<thead>
 				<tr>
-					<th scope="col" class="manage-column check-column"><input type="checkbox" id="plugins-select-all" /></th>
+					<th scope="col" class="manage-column check-column"><label for="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" class="screen-reader-text"><?php esc_html_e( 'Select all', 'cbox' ); ?></label><input type="checkbox" id="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" /></th>
 					<th scope="col" id="<?php _e( $r['type'] ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
 					<th scope="col" id="<?php _e( $r['type'] ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
 				</tr>
@@ -838,7 +838,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 			<tfoot>
 				<tr>
-					<th scope="col" class="manage-column check-column"><input type="checkbox" id="plugins-select-all-2" /></th>
+					<th scope="col" class="manage-column check-column"><label for="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" class="screen-reader-text"><?php esc_html_e( 'Select all', 'cbox' ); ?></label><input type="checkbox" id="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" /></th>
 					<th scope="col" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
 					<th scope="col" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
 				</tr>
