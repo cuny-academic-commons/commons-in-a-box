@@ -864,13 +864,13 @@ jQuery('a[data-uninstall="1"]').confirm({
 				<tr id="<?php echo sanitize_title( $plugin ); ?>" class="cbox-plugin-row-<?php echo $css_class; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( 'activate' == $state && CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) : ?>
-							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already installed', 'cbox' ); ?>" style="margin-left:7px;" />
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already installed', 'cbox' ); ?></span>
 
 						<?php elseif ( 'deactivate' !== $state ) : ?>
-							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/>
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/><span class="screen-reader-text"><?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?></span>
 
 						<?php else : ?>
-							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" />
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?></span>
 
 						<?php endif; ?>
 					</th>
