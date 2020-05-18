@@ -327,7 +327,7 @@ class CBox_Admin {
 							'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
 							'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
 						);
-	
+
 					// Add theme step if recommended plugins are already active.
 					} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 						$options = array(
@@ -1286,7 +1286,7 @@ class CBox_Admin {
 
 		#cbox-upgrades, #cbox-links {border-bottom: 1px solid #dfdfdf;}
 
-		#cbox-about p, .cbox-plugins-section p {color:#777;}
+		#cbox-about p, .cbox-plugins-section p {color:rgb(68, 68, 68);}
 
 		.secondary-panel h2 {line-height:1;}
 
@@ -1343,7 +1343,7 @@ class CBox_Admin {
 
 		.column-cbox-plugin-name {width:220px;}
 
-		span.enabled       {color:#008800;}
+		span.enabled       {color:#006100;}
 		span.disabled      {color:#880000;}
 		span.not-installed {color:#9f9f9f;}
 
