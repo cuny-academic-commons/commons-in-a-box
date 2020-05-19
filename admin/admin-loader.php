@@ -261,6 +261,11 @@ class CBox_Admin {
 		if ( ! cbox_is_setup() && empty( $_GET['cbox-action'] ) ) {
 			$redirect = '';
 			switch ( cbox_get_setup_step() ) {
+				case 'required-plugins' :
+					// Set setup flag for required plugins page.
+					cbox()->setup = 'virgin-setup';
+					break;
+
 				case 'theme-prompt' :
 					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 					break;
@@ -299,7 +304,11 @@ class CBox_Admin {
 	private function setup_screen() {
 		// do something different for each CBOX setup condition
 		switch( cbox()->setup ) {
-			// virgin setup - no CBOX or BP installed
+			/*
+			 * Required plugins installation.
+			 *
+			 * 'virgin-setup' is a misnomer when times were simpler :)
+			 */
 			case 'virgin-setup' :
 				// get required CBOX plugins.
 				$plugins = CBox_Plugins::get_plugins( 'required' );
