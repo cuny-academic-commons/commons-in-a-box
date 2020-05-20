@@ -93,4 +93,51 @@ class Core extends \WP_CLI_Command {
 	public function version( $args, $assoc_args ) {
 		WP_CLI::line( cbox()->version );
 	}
+
+	/**
+	 * @subcommand make-pot
+	 */
+	public function make_pot( $args, $assoc_args ) {
+		/*
+		 * We start with commons-in-a-box to get the right headers, and then
+		 * reprocess it at the end so we can get it in the correct directory.
+		 */
+		$plugins = [
+			'commons-in-a-box',
+			'cbox-openlab-core',
+		];
+
+		$themes = [
+			'openlab-theme',
+		];
+
+		$dirs = [];
+
+		foreach ( $plugins as $plugin ) {
+			$dirs[] = WP_CONTENT_DIR . '/plugins/' . $plugin . '/';
+		}
+
+		foreach ( $themes as $theme ) {
+			$dirs[] = WP_CONTENT_DIR . '/themes/' . $theme . '/';
+		}
+
+		$pots = [];
+		foreach ( $dirs as $dir ) {
+			$pot    = ABSPATH . '/' . substr( md5( $dir ), 0, 20 ) . '.pot';
+			$domain = basename( $dir );
+
+			WP_CLI::runcommand( "i18n --domain=$basename make-pot $dir $pot" );
+
+			$pots[ $dir ] = $pot;
+		}
+
+		// Make the main commons-in-a-box .pot, merging the rest.
+		$merge    = implode( ',', $pots );
+		$cbox_dir = WP_CONTENT_DIR . '/plugins/commons-in-a-box';
+		WP_CLI::runcommand( "i18n make-pot --domain=cbox --merge=$merge $cbox_dir $cbox_dir/languages/cbox.pot" );
+
+		foreach ( $pots as $pot ) {
+			unlink( $pot );
+		}
+	}
 }
