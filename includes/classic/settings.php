@@ -87,8 +87,8 @@ class CBox_Settings_Classic {
 		$bp_settings = array();
 
 		$bp_settings[] = array(
-			'label'       => __( 'Member Profile Default Tab', 'cbox' ),
-			'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'cbox' ),
+			'label'       => __( 'Member Profile Default Tab', 'commons-in-a-box' ),
+			'description' => __( 'On a member page, set the default tab to "Profile" instead of "Activity".', 'commons-in-a-box' ),
 			'class_name'  => 'CBox_BP_Profile_Tab', // this will load up the corresponding class; class must be created
 		);
 
@@ -96,8 +96,8 @@ class CBox_Settings_Classic {
 			( function_exists( 'bbp_is_group_forums_active' ) && bbp_is_group_forums_active() ) ||
 			( function_exists( 'bp_forums_is_installed_correctly' ) && bp_forums_is_installed_correctly() ) ) {
 			$bp_settings[] = array(
-				'label'       => __( 'Group Forum Default Tab', 'cbox' ),
-				'description' => __( 'On a group page, set the default tab to "Forum" instead of "Activity".', 'cbox' ),
+				'label'       => __( 'Group Forum Default Tab', 'commons-in-a-box' ),
+				'description' => __( 'On a group page, set the default tab to "Forum" instead of "Activity".', 'commons-in-a-box' ),
 				'class_name'  => 'CBox_BP_Group_Forum_Tab'
 			);
 		}
@@ -115,8 +115,8 @@ class CBox_Settings_Classic {
 			'key'         => 'ges',
 			'settings'    => array(
 				array(
-					'label'       => __( 'Forum Full Text', 'cbox' ),
-					'description' => __( 'Check this box if you would like the full text of bbPress forum posts to appear in email notifications.', 'cbox' ),
+					'label'       => __( 'Forum Full Text', 'commons-in-a-box' ),
+					'description' => __( 'Check this box if you would like the full text of bbPress forum posts to appear in email notifications.', 'commons-in-a-box' ),
 					'class_name'  => 'CBox_GES_bbPress2_Full_Text'
 				)
 			),
@@ -161,8 +161,8 @@ class CBox_Settings_Classic {
 		// add our settings page
 		$page = add_submenu_page(
 			'cbox',
-			__( 'Commons In A Box Settings', 'cbox' ),
-			__( 'Settings', 'cbox' ),
+			__( 'Commons In A Box Settings', 'commons-in-a-box' ),
+			__( 'Settings', 'commons-in-a-box' ),
 			'install_plugins', // todo - map cap?
 			'cbox-settings',
 			array( $this, 'admin_page' )
@@ -194,7 +194,7 @@ class CBox_Settings_Classic {
 		// add an admin notice
 		$prefix = is_network_admin() ? 'network_' : '';
 		add_action( $prefix . 'admin_notices', function() {
-			echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'cbox' ) . '</strong></p></div>';
+			echo '<div class="updated"><p><strong>' . __( 'Settings saved.', 'commons-in-a-box' ) . '</strong></p></div>';
 		} );
 	}
 
@@ -204,16 +204,16 @@ class CBox_Settings_Classic {
 	public function admin_page() {
 	?>
 		<div class="wrap">
-			<h2><?php _e( 'Commons In A Box Settings', 'cbox' ); ?></h2>
+			<h2><?php _e( 'Commons In A Box Settings', 'commons-in-a-box' ); ?></h2>
 
-			<p><?php _e( 'CBOX can configure some important options for certain plugins.', 'cbox' ); ?>
+			<p><?php _e( 'CBOX can configure some important options for certain plugins.', 'commons-in-a-box' ); ?>
 
 			<form method="post" action="">
 				<?php $this->render_options(); ?>
 
 				<?php wp_nonce_field( 'cbox_settings_options' ); ?>
 
-				<p><input type="submit" value="<?php _e( 'Save Changes', 'cbox' ); ?>" class="button-primary" name="cbox-settings-save" /></p>
+				<p><input type="submit" value="<?php _e( 'Save Changes', 'commons-in-a-box' ); ?>" class="button-primary" name="cbox-settings-save" /></p>
 			</form>
 		</div>
 

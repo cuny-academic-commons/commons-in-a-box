@@ -202,7 +202,7 @@ class CBox_Theme_Installer extends Theme_Upgrader {
 	public function remove_theme_actions( $actions ) {
 		unset( $actions );
 
-		$actions['theme_page'] = '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" class="button-primary">' . __( 'Continue to CBOX Dashboard &rarr;', 'cbox' ) . '</a>';
+		$actions['theme_page'] = '<a href="' . self_admin_url( 'admin.php?page=cbox' ) . '" class="button-primary">' . __( 'Continue to CBOX Dashboard &rarr;', 'commons-in-a-box' ) . '</a>';
 		return $actions;
 	}
 }

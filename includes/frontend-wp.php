@@ -83,7 +83,7 @@ class CBox_WP_Toolbar_Updates {
 			return;
 
 		// @todo Load textdomain on frontend
-		$reader_text = __( 'Updates available.', 'cbox' );
+		$reader_text = __( 'Updates available.', 'commons-in-a-box' );
 
 		$title = '<span class="ab-icon"></span>';
 		$title .= '<span class="screen-reader-text">' . $reader_text . '</span>';

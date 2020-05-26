@@ -326,7 +326,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Required Plugins', 'commons-in-a-box' ) . '</h2>';
 
 				// Start the installer.
 				$options = array();
@@ -334,20 +334,20 @@ class CBox_Admin {
 					if ( ! empty( $recommended ) ) {
 						$options = array(
 							'redirect_link' => self_admin_url( 'admin.php?page=cbox&cbox-virgin-setup=1&cbox-virgin-nonce=' . wp_create_nonce( 'cbox_virgin_setup' ) ),
-							'redirect_text' => __( 'Continue to recommended plugins', 'cbox' )
+							'redirect_text' => __( 'Continue to recommended plugins', 'commons-in-a-box' )
 						);
 
 					// Add theme step if recommended plugins are already active.
 					} elseif ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 						$options = array(
 							'redirect_link' => wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' ),
-							'redirect_text' => __( 'Continue to theme installation', 'cbox' )
+							'redirect_text' => __( 'Continue to theme installation', 'commons-in-a-box' )
 						);
 					}
 				} else {
 						$options = array(
 							'redirect_link' => self_admin_url( 'admin.php?page=cbox' ),
-							'redirect_text' => __( 'Continue to dashboard', 'cbox' )
+							'redirect_text' => __( 'Continue to dashboard', 'commons-in-a-box' )
 						);
 
 				}
@@ -362,7 +362,7 @@ class CBox_Admin {
 				$package = sanitize_title( $_GET['cbox-package-details'] );
 				// some HTML markup!
 				echo '<div class="wrap">';
-				echo '<h2>' . sprintf( esc_html__( 'Confirm CBOX %s Installation', 'cbox' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
+				echo '<h2>' . sprintf( esc_html__( 'Confirm CBOX %s Installation', 'commons-in-a-box' ), cbox_get_package_prop( 'name', $package ) ) . '</h2>';
 
 				cbox_get_template_part( 'package-details-intro', $package );
 				cbox_get_template_part( 'package-details', $package );
@@ -373,9 +373,9 @@ class CBox_Admin {
 
 					<input type="hidden" name="cbox-package" value="<?php echo $package; ?>" />
 
-					<a class="button button-secondary" href="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin:0 15px 0 0;"><?php esc_html_e( 'Return to dashboard', 'cbox' ); ?></a>
+					<a class="button button-secondary" href="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin:0 15px 0 0;"><?php esc_html_e( 'Return to dashboard', 'commons-in-a-box' ); ?></a>
 
-					<input type="submit" value="<?php esc_html_e( 'Install', 'cbox' ); ?>" class="button-primary" name="package-details" />
+					<input type="submit" value="<?php esc_html_e( 'Install', 'commons-in-a-box' ); ?>" class="button-primary" name="package-details" />
 				</form>
 
 			<?php
@@ -393,15 +393,15 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Installing Selected Plugins', 'commons-in-a-box' ) . '</h2>';
 
 				// Prompt for theme install afterwards, if available.
 				if ( cbox_get_theme_prop( 'download_url' ) && cbox_get_theme_prop( 'directory_name' ) !== cbox_get_theme()->template ) {
 					$url  = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=theme-prompt' ), 'cbox_theme_prompt' );
-					$text = __( 'Continue to theme installation', 'cbox' );
+					$text = __( 'Continue to theme installation', 'commons-in-a-box' );
 				} else {
 					$url  = self_admin_url( 'admin.php?page=cbox' );
-					$text = __( 'Continue to the CBOX Dashboard', 'cbox' );
+					$text = __( 'Continue to the CBOX Dashboard', 'commons-in-a-box' );
 				}
 
 				// start the install!
@@ -423,17 +423,17 @@ class CBox_Admin {
 				// the plugin upgrader, so we can proceed with upgrading the theme
 				$theme_upgrades = isset( cbox()->theme_upgrades ) ? cbox()->theme_upgrades : false;
 				if ( $theme_upgrades ) {
-					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'cbox' );
+					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'commons-in-a-box' );
 
 					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
-					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'cbox' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
+					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'commons-in-a-box' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
 
 
 				} else {
-					$title = esc_html__( 'Upgrading CBOX Plugins', 'cbox' );
+					$title = esc_html__( 'Upgrading CBOX Plugins', 'commons-in-a-box' );
 
 					$redirect_link = self_admin_url( 'admin.php?page=cbox' );
-					$redirect_text = __( 'Continue to the CBOX Dashboard', 'cbox' );
+					$redirect_text = __( 'Continue to the CBOX Dashboard', 'commons-in-a-box' );
 				}
 
 				// include the CBOX Plugin Upgrade and Install API
@@ -460,34 +460,34 @@ class CBox_Admin {
 
 				// Button text.
 				if ( ! empty( $directory_name ) && cbox_get_theme( $directory_name )->exists() ) {
-					$btn_text = esc_html__( 'Activate Theme', 'cbox' );
+					$btn_text = esc_html__( 'Activate Theme', 'commons-in-a-box' );
 				} else {
-					$btn_text = esc_html__( 'Install Theme', 'cbox' );
+					$btn_text = esc_html__( 'Install Theme', 'commons-in-a-box' );
 				}
 
 				// Theme needs to be force-installed.
 				if ( cbox_get_theme_prop( 'force_install' ) ) {
-					$bail_text = esc_html__( 'Return to package selection', 'cbox' );
+					$bail_text = esc_html__( 'Return to package selection', 'commons-in-a-box' );
 					$bail_link = esc_url( wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package=0' ), 'cbox_select_package' ) );
-					$warning = sprintf( __( 'Please note: This theme is <strong>required</strong> for use with Commons In A Box %s.', 'cbox' ), cbox_get_package_prop( 'name' ) );
+					$warning = sprintf( __( 'Please note: This theme is <strong>required</strong> for use with Commons In A Box %s.', 'commons-in-a-box' ), cbox_get_package_prop( 'name' ) );
 					$warning = sprintf( '<p>%s</p>', $warning );
 					$warning .= sprintf( '<p>%s</p>',
-						sprintf( __( 'Clicking on "%1$s" will change your current theme. If you do not wish to change the theme, please click "%2$s" and choose a different package.', 'cbox' ), $btn_text, $bail_text )
+						sprintf( __( 'Clicking on "%1$s" will change your current theme. If you do not wish to change the theme, please click "%2$s" and choose a different package.', 'commons-in-a-box' ), $btn_text, $bail_text )
 					);
 
 				// Theme installation is optional.
 				} else {
-					$bail_text = esc_html__( 'Skip', 'cbox' );
+					$bail_text = esc_html__( 'Skip', 'commons-in-a-box' );
 					$bail_link = self_admin_url( 'admin.php?page=cbox&amp;cbox-action=complete' );
 					$warning = sprintf( '<p>%s</p>',
-						sprintf( esc_html__( 'Please note: Clicking on "%1$s" will change your current theme.  If you would rather keep your existing theme, click on the "%2$s" link.', 'cbox' ), $btn_text, $bail_text )
+						sprintf( esc_html__( 'Please note: Clicking on "%1$s" will change your current theme.  If you would rather keep your existing theme, click on the "%2$s" link.', 'commons-in-a-box' ), $btn_text, $bail_text )
 					);
 				}
 
 				// some HTML markup!
 				echo '<div class="wrap">';
 
-				echo '<h2>' . esc_html__( 'Theme Installation', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Theme Installation', 'commons-in-a-box' ) . '</h2>';
 
 				cbox_get_template_part( 'theme-prompt' );
 
@@ -510,7 +510,7 @@ class CBox_Admin {
 					require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
 				}
 
-				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'cbox' ), cbox_get_theme_prop( 'name' ) );
+				$title = sprintf( _x( 'Installing %s theme', 'references the theme that is currently being installed', 'commons-in-a-box' ), cbox_get_theme_prop( 'name' ) );
 
 				$cbox_theme = new CBox_Theme_Installer( new Theme_Installer_Skin( compact( 'title' ) ) );
 				$cbox_theme->install();
@@ -525,7 +525,7 @@ class CBox_Admin {
 
 				// some HTML markup!
 				echo '<div class="wrap">';
-				echo '<h2>' . esc_html__('Upgrading Theme', 'cbox' ) . '</h2>';
+				echo '<h2>' . esc_html__('Upgrading Theme', 'commons-in-a-box' ) . '</h2>';
 
 				// get cbox theme specs
 				$upgrader = new CBox_Theme_Installer( new Bulk_Theme_Upgrader_Skin() );
@@ -573,7 +573,7 @@ class CBox_Admin {
 	 * Setup admin menu and any dependent page hooks.
 	 */
 	public function admin_menu() {
-		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX %s', 'cbox' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'cbox' );
+		$name = cbox_get_package_prop( 'name' ) ? sprintf( __( 'CBOX %s', 'commons-in-a-box' ), cbox_get_package_prop( 'name' ) ) : __( 'Commons In A Box', 'commons-in-a-box' );
 		$page = add_menu_page(
 			$name,
 			$name,
@@ -586,8 +586,8 @@ class CBox_Admin {
 
 		$subpage = add_submenu_page(
 			'cbox',
-			__( 'Commons In A Box Dashboard', 'cbox' ),
-			__( 'Dashboard', 'cbox' ),
+			__( 'Commons In A Box Dashboard', 'commons-in-a-box' ),
+			__( 'Dashboard', 'commons-in-a-box' ),
 			'install_plugins', // todo - map cap?
 			'cbox',
 			array( $this, 'admin_page' )
@@ -638,7 +638,7 @@ class CBox_Admin {
 		} else {
 		?>
 			<div class="wrap">
-				<h2><?php _e( 'Commons In A Box Dashboard', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Commons In A Box Dashboard', 'commons-in-a-box' ); ?></h2>
 
 				<?php $this->steps(); ?>
 				<?php $this->upgrades(); ?>
@@ -688,9 +688,9 @@ class CBox_Admin {
 			?>
 
 				<div style="text-align:center;">
-					<h2><?php _e( 'Select a Package', 'cbox' ); ?></h2>
+					<h2><?php _e( 'Select a Package', 'commons-in-a-box' ); ?></h2>
 
-					<p><?php esc_html_e( 'Commons In A Box includes two packages, each containing selected WordPress plugins and a WordPress theme. The packages are designed to make it easier for you to install and configure your site. Select the package that best suits your needs.', 'cbox' ); ?></p>
+					<p><?php esc_html_e( 'Commons In A Box includes two packages, each containing selected WordPress plugins and a WordPress theme. The packages are designed to make it easier for you to install and configure your site. Select the package that best suits your needs.', 'commons-in-a-box' ); ?></p>
 				</div>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
@@ -712,8 +712,8 @@ class CBox_Admin {
 
 				<div class="action-links">
 					<ul class="plugin-action-buttons">
-						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package-details=' . $package ), 'cbox_package_details' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'cbox' ); ?></a></li>
-						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'cbox' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'cbox' ); ?></a></li>
+						<li><a href="<?php echo $incompatible ? '#' : wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-package-details=' . $package ), 'cbox_package_details' ); ?>" class="button <?php echo $incompatible ? 'disabled' : 'activate-now'; ?>" aria-label="<?php printf( esc_html__( 'Select %s', 'commons-in-a-box' ), cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'Select', 'commons-in-a-box' ); ?></a></li>
+						<li><a href="<?php echo esc_url( cbox_get_package_prop( 'documentation_url', $package ) ); ?>?TB_iframe=true&amp;width=600&amp;height=550" class="thickbox open-plugin-details-modal" aria-label="<?php printf( esc_attr__( 'More information about %s', 'commons-in-a-box' ), cbox_get_package_prop( 'name', $package ) ); ?>" data-title="<?php echo esc_attr( cbox_get_package_prop( 'name', $package ) ); ?>"><?php esc_html_e( 'More Details', 'commons-in-a-box' ); ?></a></li>
 					</ul>
 				</div>
 
@@ -726,18 +726,18 @@ class CBox_Admin {
 			<div class="plugin-card-bottom">
 				<div class="column-updated">
 					<?php if ( cbox_get_theme_prop( 'force_install', $package ) ) : ?>
-						<span class="update-now theme-required"><?php esc_html_e( 'Theme required; existing theme will be replaced during installation.', 'cbox' ); ?></span>
+						<span class="update-now theme-required"><?php esc_html_e( 'Theme required; existing theme will be replaced during installation.', 'commons-in-a-box' ); ?></span>
 					<?php else : ?>
-						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional; theme installation can be skipped.', 'cbox' ); ?></span>
+						<span class="update-now theme-optional"><?php esc_html_e( 'Theme optional; theme installation can be skipped.', 'commons-in-a-box' ); ?></span>
 					<?php endif; ?>
 				</div>
 
 				<div class="column-compatibility">
 					<?php if ( $incompatible ) : ?>
-						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'cbox' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
-						'Find out how to convert to a WordPress Multisite network here.', 'cbox' ) ); ?></span>
+						<span class="compatibility-incompatible"><?php _e( 'Requires WordPress Multisite.', 'commons-in-a-box' ); ?> <?php printf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://codex.wordpress.org/Create_A_Network', esc_html__(
+						'Find out how to convert to a WordPress Multisite network here.', 'commons-in-a-box' ) ); ?></span>
 					<?php else : ?>
-						<span class="compatibility-compatible"><?php _e( '<strong>Compatible</strong> with your version of WordPress', 'cbox' ); ?></span>
+						<span class="compatibility-compatible"><?php _e( '<strong>Compatible</strong> with your version of WordPress', 'commons-in-a-box' ); ?></span>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -758,14 +758,14 @@ class CBox_Admin {
 
 			?>
 
-				<h2><?php _e( 'Required Plugins', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Required Plugins', 'commons-in-a-box' ); ?></h2>
 
 				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php printf( __( "Before you can use Commons In A Box %s, we'll need to install some required plugins. Click 'Continue' to get set up.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?></p>
+					<p class="submitted-on"><?php printf( __( "Before you can use Commons In A Box %s, we'll need to install some required plugins. Click 'Continue' to get set up.", 'commons-in-a-box' ), cbox_get_package_prop( 'name' ) ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_virgin_setup', 'cbox-virgin-nonce' ); ?>
 
-					<p><input type="submit" value="<?php _e( 'Continue &rarr;', 'cbox' ); ?>" class="button-primary" name="cbox-virgin-setup" /></p>
+					<p><input type="submit" value="<?php _e( 'Continue &rarr;', 'commons-in-a-box' ); ?>" class="button-primary" name="cbox-virgin-setup" /></p>
 				</form>
 
 			<?php
@@ -775,14 +775,14 @@ class CBox_Admin {
 			case 'recommended-plugins' :
 			?>
 
-				<h2><?php _e( 'Recommended Plugins', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Recommended Plugins', 'commons-in-a-box' ); ?></h2>
 
 				<form id="cbox-recommended" method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>">
-					<p class="submitted-on"><?php _e( "You're almost finished with the installation process.", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "You're almost finished with the installation process.", 'commons-in-a-box' ); ?></p>
 
-					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'cbox' ), cbox_get_package_prop( 'name' ) ); ?>
+					<p class="submitted-on"><?php printf( __( "Did you know Commons In A Box %s comes prebundled with a few recommended plugins?  These plugins help to add functionality to your existing WordPress site.", 'commons-in-a-box' ), cbox_get_package_prop( 'name' ) ); ?>
 
-					<p class="submitted-on"><?php _e( "We have automatically selected the following plugins to install for you. However, feel free to uncheck some of these plugins based on your site's needs.", 'cbox' ); ?></p>
+					<p class="submitted-on"><?php _e( "We have automatically selected the following plugins to install for you. However, feel free to uncheck some of these plugins based on your site's needs.", 'commons-in-a-box' ); ?></p>
 
 					<?php wp_nonce_field( 'cbox_bp_installed', 'cbox-recommended-nonce' ); ?>
 
@@ -791,7 +791,7 @@ class CBox_Admin {
 							'type'            => 'recommended',
 							'omit_activated'  => true,
 							'check_all'       => true,
-							'submit_btn_text' => __( 'Continue', 'cbox' )
+							'submit_btn_text' => __( 'Continue', 'commons-in-a-box' )
 						) );
 					?>
 				</form>
@@ -805,9 +805,9 @@ class CBox_Admin {
 				})
 				function cboxRecommendedChecked() {
 					if ( jQuery("#cbox-recommended input:checked").length > 0) {
-						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Install', 'cbox' ); ?>");
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Install', 'commons-in-a-box' ); ?>");
 					} else {
-						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Continue', 'cbox' ); ?>");
+						jQuery("#cbox-update-recommended").val("<?php echo esc_html( 'Continue', 'commons-in-a-box' ); ?>");
 					}
 				}
 				</script>
@@ -842,13 +842,13 @@ class CBox_Admin {
 		?>
 
 			<div id="cbox-upgrades" class="secondary-panel">
-				<h2><?php _e( 'Upgrade Available', 'cbox' ); ?></h2>
+				<h2><?php _e( 'Upgrade Available', 'commons-in-a-box' ); ?></h2>
 
 				<div class="login postbox">
 					<div class="message">
-						<p><?php printf( __( 'Commons In A Box %s requires WordPress %s', 'cbox' ), cbox_get_version(), $version ); ?>
+						<p><?php printf( __( 'Commons In A Box %s requires WordPress %s', 'commons-in-a-box' ), cbox_get_version(), $version ); ?>
 						<br />
-						<a class="button-secondary" href="<?php echo network_admin_url( 'update-core.php' ); ?>"><?php _e( 'Upgrade now!', 'cbox' ); ?></a></p>
+						<a class="button-secondary" href="<?php echo network_admin_url( 'update-core.php' ); ?>"><?php _e( 'Upgrade now!', 'commons-in-a-box' ); ?></a></p>
 					</div>
 				</div>
 			</div>
@@ -902,29 +902,29 @@ class CBox_Admin {
 			// theme has update, so add an extra parameter to the querystring
 			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
 
-			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'commons-in-a-box' ), $plugin_count );
 
 		// just plugins
 		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
-			$message = sprintf( _n( '%d installed plugin has an update available. Click on the button below to upgrade.', '%d installed plugins have updates available. Click on the button below to upgrade.', $plugin_count, 'cbox' ), $plugin_count );
+			$message = sprintf( _n( '%d installed plugin has an update available. Click on the button below to upgrade.', '%d installed plugins have updates available. Click on the button below to upgrade.', $plugin_count, 'commons-in-a-box' ), $plugin_count );
 
 		// just themes
 		} else {
 			// theme has update, so switch up the upgrade URL
 			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
 
-			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'cbox' ), cbox_get_theme_prop( 'name' ) );
+			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'commons-in-a-box' ), cbox_get_theme_prop( 'name' ) );
 		}
 
 	?>
 		<div id="cbox-upgrades" class="secondary-panel">
-			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'cbox' ), $total_count ); ?></h2>
+			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'commons-in-a-box' ), $total_count ); ?></h2>
 
 			<div class="login postbox">
 				<div class="message">
 					<p><?php echo $message; ?>
 					<br />
-					<a class="button-secondary" href="<?php echo $url; ?>"><?php _e( 'Upgrade', 'cbox' ); ?></a></p>
+					<a class="button-secondary" href="<?php echo $url; ?>"><?php _e( 'Upgrade', 'commons-in-a-box' ); ?></a></p>
 				</div>
 			</div>
 		</div>
@@ -1088,23 +1088,23 @@ class CBox_Admin {
 		switch ( cbox_get_setup_step() ) {
 			case 'no-package' :
 			case 'required-plugins' :
-				$notice_text = __( "Let's get started!", 'cbox' );
+				$notice_text = __( "Let's get started!", 'commons-in-a-box' );
 				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
-				$button_text = __( 'Click here to get set up', 'cbox' );
+				$button_text = __( 'Click here to get set up', 'commons-in-a-box' );
 				$disable_btn = 'cbox';
 				break;
 
 			case 'theme-update' :
-				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'cbox' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
+				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
 				$button_link = wp_nonce_url( cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
-				$button_text = __( 'Update the theme &rarr;', 'cbox' );
+				$button_text = __( 'Update the theme &rarr;', 'commons-in-a-box' );
 				$disable_btn = 'cbox';
 				break;
 
 			case 'recommended-plugins' :
-				$notice_text = __( 'You only have one last thing to do. We promise!', 'cbox' );
+				$notice_text = __( 'You only have one last thing to do. We promise!', 'commons-in-a-box' );
 				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
-				$button_text = __( 'Click here to finish up!', 'cbox' );
+				$button_text = __( 'Click here to finish up!', 'commons-in-a-box' );
 				$disable_btn = 'cbox';
 				break;
 
@@ -1117,9 +1117,9 @@ class CBox_Admin {
 		$is_setup = isset( cbox()->setup ) ? cbox()->setup : false;
 		if ( $is_setup ) {
 			if ( 'upgrade-theme' == cbox()->setup ) {
-				$notice_text = __( 'Upgrading theme...', 'cbox' );
+				$notice_text = __( 'Upgrading theme...', 'commons-in-a-box' );
 			} else {
-				$notice_text = __( 'Installing plugins...', 'cbox' );
+				$notice_text = __( 'Installing plugins...', 'commons-in-a-box' );
 			}
 
 			$disable_btn = 'cbox';
@@ -1127,7 +1127,7 @@ class CBox_Admin {
 	?>
 
 		<div id="cbox-nag" class="updated">
-			<strong><?php _e( "Commons In A Box is almost ready!", 'cbox' ); ?></strong> <?php echo $notice_text; ?>
+			<strong><?php _e( "Commons In A Box is almost ready!", 'commons-in-a-box' ); ?></strong> <?php echo $notice_text; ?>
 
 			<?php if ( empty( $_REQUEST['page'] ) || ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != $disable_btn ) ) : ?>
 				<p><a class="callout" href="<?php echo $button_link; ?>"><?php echo $button_text; ?></a></p>
@@ -1161,19 +1161,19 @@ class CBox_Admin {
 			$single_site = ( current_user_can( 'manage_network_plugins' ) && ! is_network_admin() ) || ( ! is_multisite() && current_user_can( 'install_plugins' ) );
 
 			if ( $single_site )
-				echo '<h3>' . __( 'CBOX Plugins', 'cbox' ) . '</h3>';
+				echo '<h3>' . __( 'CBOX Plugins', 'commons-in-a-box' ) . '</h3>';
 			else
-				echo '<h3>' . __( 'CBOX Network Plugins', 'cbox' ) . '</h3>';
+				echo '<h3>' . __( 'CBOX Network Plugins', 'commons-in-a-box' ) . '</h3>';
 
 			if ( $single_site )
-				echo '<p>' . __( "Don't forget that CBOX plugins can be managed from the CBOX plugins page!", 'cbox' ) .'</p>';
+				echo '<p>' . __( "Don't forget that CBOX plugins can be managed from the CBOX plugins page!", 'commons-in-a-box' ) .'</p>';
 
-			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'cbox' ), cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ) ) . '</p>';
+			echo '<p style="margin-bottom:2.1em;">' . sprintf( __( 'You can <a href="%s">manage your CBOX plugins here</a>.', 'commons-in-a-box' ), cbox_admin_prop( 'url', 'admin.php?page=cbox-plugins' ) ) . '</p>';
 
 			if ( $single_site )
-				echo '<h3>' . sprintf( __( 'Plugins on %s', 'cbox' ), get_bloginfo( 'name' ) ) . '</h3>';
+				echo '<h3>' . sprintf( __( 'Plugins on %s', 'commons-in-a-box' ), get_bloginfo( 'name' ) ) . '</h3>';
 			else
-				echo '<h3>' . __( 'Other Network Plugins', 'cbox' ) . '</h3>';
+				echo '<h3>' . __( 'Other Network Plugins', 'commons-in-a-box' ) . '</h3>';
 
 		endif;
 	}

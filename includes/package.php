@@ -265,10 +265,10 @@ abstract class CBox_Package {
 	 */
 	protected static function strings() {
 		return array(
-			'tab_plugin_required' => __( 'Core Plugins', 'cbox' ),
-			'tab_plugin_optional' => __( 'Optional Plugins', 'cbox' ),
-			'tab_plugin_install'  => __( 'Member Site Plugins', 'cbox' ),
-			'dashboard_header'    => sprintf( esc_html__( 'Welcome to Commons In A Box %s', 'cbox' ), cbox_get_package_prop( 'name' ) )
+			'tab_plugin_required' => __( 'Core Plugins', 'commons-in-a-box' ),
+			'tab_plugin_optional' => __( 'Optional Plugins', 'commons-in-a-box' ),
+			'tab_plugin_install'  => __( 'Member Site Plugins', 'commons-in-a-box' ),
+			'dashboard_header'    => sprintf( esc_html__( 'Welcome to Commons In A Box %s', 'commons-in-a-box' ), cbox_get_package_prop( 'name' ) )
 		);
 	}
 

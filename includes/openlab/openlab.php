@@ -51,7 +51,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 */
 	protected static function strings() {
 		return array(
-			'tab_plugin_optional' => __( 'Community Features', 'cbox' )
+			'tab_plugin_optional' => __( 'Community Features', 'commons-in-a-box' )
 		);
 	}
 

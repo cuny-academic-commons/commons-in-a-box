@@ -54,7 +54,7 @@ add_action( 'activated_plugin', function( $plugin ) {
 		// create a forum for BP groups
 		$forum_id = bbp_insert_forum( array(
 			'post_title'   => __( 'Group Forums', 'bbpress' ),
-			'post_content' => __( 'All forums created in groups can be found here.', 'cbox' )
+			'post_content' => __( 'All forums created in groups can be found here.', 'commons-in-a-box' )
 		) );
 
 		// update the bbP marker for group forums
