@@ -9,6 +9,7 @@ Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
 Network: true
 Core: >=4.9.8
+Text Domain: commons-in-a-box
 */
 
 // Exit if accessed directly
@@ -264,19 +265,19 @@ class Commons_In_A_Box {
 	 */
 	public function localization() {
 		// Use the WP plugin locale filter from load_plugin_textdomain()
-		$locale        = apply_filters( 'plugin_locale', get_locale(), 'cbox' );
-		$mofile        = sprintf( '%1$s-%2$s.mo', 'cbox', $locale );
+		$locale        = apply_filters( 'plugin_locale', get_locale(), 'commons-in-a-box' );
+		$mofile        = sprintf( '%1$s-%2$s.mo', 'commons-in-a-box', $locale );
 
 		$mofile_global = trailingslashit( constant( 'WP_LANG_DIR' ) ) . $mofile;
 		$mofile_local  = $this->plugin_dir . 'languages/' . $mofile;
 
 		// look in /wp-content/languages/ first
 		if ( is_readable( $mofile_global ) ) {
-			return load_textdomain( 'cbox', $mofile_global );
+			return load_textdomain( 'commons-in-a-box', $mofile_global );
 
 		// if that doesn't exist, check for bundled language file
 		} elseif ( is_readable( $mofile_local ) ) {
-			return load_textdomain( 'cbox', $mofile_local );
+			return load_textdomain( 'commons-in-a-box', $mofile_local );
 
 		// no language file exists
 		} else {
