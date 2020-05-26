@@ -320,7 +320,7 @@ class CBox_BBP_Autoload {
 			}
 
 			// Todo: Should we let the user know why their post was auto-moderated?
-			$msg = esc_html__( 'Your forum post is pending moderation', 'cbox' );
+			$msg = esc_html__( 'Your forum post is pending moderation', 'commons-in-a-box' );
 			bp_core_add_message( $msg, 'error' );
 
 			return $retval;

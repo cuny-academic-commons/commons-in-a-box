@@ -381,8 +381,8 @@ class CBox_Admin_Plugins {
 			// add our plugins page
 			$plugin_page = add_submenu_page(
 				'cbox',
-				__( 'Commons In A Box Plugins', 'cbox' ),
-				__( 'Plugins', 'cbox' ),
+				__( 'Commons In A Box Plugins', 'commons-in-a-box' ),
+				__( 'Plugins', 'commons-in-a-box' ),
 				'install_plugins', // todo - map cap?
 				'cbox-plugins',
 				array( $this, 'admin_page' )
@@ -567,7 +567,7 @@ class CBox_Admin_Plugins {
 			// add an admin notice
 			$prefix = is_network_admin() ? 'network_' : '';
 			add_action( $prefix . 'admin_notices', function() {
-				echo '<div class="updated"><p>' . __( 'Plugin deactivated.', 'cbox' ) . '</p></div>';
+				echo '<div class="updated"><p>' . __( 'Plugin deactivated.', 'commons-in-a-box' ) . '</p></div>';
 			} );
 
 			// if PD deactivated any other dependent plugins, show admin notice here
@@ -579,7 +579,7 @@ class CBox_Admin_Plugins {
 			if ( empty( $deactivated ) )
 				return;
 
-			$text = __( 'The following plugins have also been deactivated:', 'cbox' );
+			$text = __( 'The following plugins have also been deactivated:', 'commons-in-a-box' );
 
 			// render each plugin as a list item
 			// not really a fan of the code below, but it's from Plugin Dependencies
@@ -615,7 +615,7 @@ class CBox_Admin_Plugins {
 		if ( ! empty( $_REQUEST['uninstall'] ) ) {
 			$prefix = is_network_admin() ? 'network_' : '';
 			add_action( $prefix . 'admin_notices', function() {
-				echo '<div class="updated"><p>' . __( 'Plugin uninstalled.', 'cbox' ) . '</p></div>';
+				echo '<div class="updated"><p>' . __( 'Plugin uninstalled.', 'commons-in-a-box' ) . '</p></div>';
 			} );
 		}
 
@@ -623,7 +623,7 @@ class CBox_Admin_Plugins {
 		if ( ! empty( $_REQUEST['network-deactivate'] ) ) {
 			$prefix = is_network_admin() ? 'network_' : '';
 			add_action( $prefix . 'admin_notices', function() {
-				echo '<div class="updated"><p>' . __( 'Plugin network-deactivated.', 'cbox' ) . '</p></div>';
+				echo '<div class="updated"><p>' . __( 'Plugin network-deactivated.', 'commons-in-a-box' ) . '</p></div>';
 			} );
 		}
 	}
@@ -649,24 +649,24 @@ class CBox_Admin_Plugins {
 			$plugin_types = array(
 				'required' => array(
 					'label'      => cbox_get_string( 'tab_plugin_required' ),
-					'submit_btn' => __( 'Update', 'cbox' )
+					'submit_btn' => __( 'Update', 'commons-in-a-box' )
 				)
 			);
 			if ( CBox_Plugins::get_plugins( 'optional' ) ) {
 				$plugin_types['optional'] = array(
 					'label'      => cbox_get_string( 'tab_plugin_optional' ),
-					'submit_btn' => __( 'Activate', 'cbox' )
+					'submit_btn' => __( 'Activate', 'commons-in-a-box' )
 				);
 			}
 			if ( CBox_Plugins::get_plugins( 'install-only' ) ) {
 				$plugin_types['install-only'] = array(
 					'label'      => cbox_get_string( 'tab_plugin_install' ),
-					'submit_btn' => __( 'Update', 'cbox' )
+					'submit_btn' => __( 'Update', 'commons-in-a-box' )
 				);
 			}
 	?>
 			<div class="wrap cbox-admin-wrap">
-				<h2><?php printf( __( '%1$s Plugins: %2$s', 'cbox' ), cbox_get_package_prop( 'name' ), $plugin_types[ '' === $type ? 'required' : $type ]['label'] ); ?></h2>
+				<h2><?php printf( __( '%1$s Plugins: %2$s', 'commons-in-a-box' ), cbox_get_package_prop( 'name' ), $plugin_types[ '' === $type ? 'required' : $type ]['label'] ); ?></h2>
 
 				<h2 class="nav-tab-wrapper wp-clearfix">
 					<?php foreach ( $plugin_types as $plugin_type => $data ) : ?>
@@ -701,8 +701,8 @@ class CBox_Admin_Plugins {
 						<?php if ( 'install-only' === $type ) : ?>
 
 							<div class="prompt" style="display:none">
-								<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'cbox' ); ?></p>
-								<p><?php esc_html_e( 'Are you sure you want to continue uninstalling?', 'cbox' ); ?>
+								<p><?php esc_html_e( 'This plugin might be active on other member sites.  If so, removing the plugin will remove this functionality on those sites.', 'commons-in-a-box' ); ?></p>
+								<p><?php esc_html_e( 'Are you sure you want to continue uninstalling?', 'commons-in-a-box' ); ?>
 							</div>
 
 							<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.1/jquery-confirm.min.css">
@@ -724,11 +724,11 @@ jQuery('a[data-uninstall="1"]').confirm({
 	bgOpacity: 0.7,
 	buttons: {
 	        no: {
-			text: '<?php esc_attr_e( 'No', 'cbox' ); ?>',
+			text: '<?php esc_attr_e( 'No', 'commons-in-a-box' ); ?>',
 			action: function() {}
 		},
 		yes: {
-			text: '<?php esc_attr_e( 'Yes', 'cbox' ); ?>',
+			text: '<?php esc_attr_e( 'Yes', 'commons-in-a-box' ); ?>',
 			btnClass: 'btn-red',
 			action: function () {
 				location.href = this.$target.attr('href');
@@ -771,7 +771,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 		// some HTML markup!
 		echo '<div class="wrap">';
-		echo '<h2>' . esc_html__('Update CBOX', 'cbox' ) . '</h2>';
+		echo '<h2>' . esc_html__('Update CBOX', 'commons-in-a-box' ) . '</h2>';
 
 		// start the upgrade!
 		$installer = new CBox_Updater( $plugins );
@@ -818,7 +818,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 			'type'            => 'required', // 'required' (default), 'recommended', 'optional', 'dependency'
 			'omit_activated'  => false,      // if set to true, this omits activated plugins from showing up in the plugin table
 			'check_all'       => false,      // if set to true, this will mark all the checkboxes in the plugin table as checked
-			'submit_btn_text' => __( 'Update', 'cbox' )
+			'submit_btn_text' => __( 'Update', 'commons-in-a-box' )
 		);
 
 		$r = wp_parse_args( $args, $defaults );
@@ -830,17 +830,17 @@ jQuery('a[data-uninstall="1"]').confirm({
 		<table class="widefat fixed plugins">
 			<thead>
 				<tr>
-					<th scope="col" class="manage-column check-column"><label for="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" class="screen-reader-text"><?php esc_html_e( 'Select all', 'cbox' ); ?></label><input type="checkbox" id="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" /></th>
-					<th scope="col" id="<?php _e( $r['type'] ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
-					<th scope="col" id="<?php _e( $r['type'] ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
+					<th scope="col" class="manage-column check-column"><label for="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" class="screen-reader-text"><?php esc_html_e( 'Select all', 'commons-in-a-box' ); ?></label><input type="checkbox" id="plugins-select-all-<?php echo esc_attr( $r['type'] ); ?>" /></th>
+					<th scope="col" id="<?php _e( $r['type'] ); ?>-name" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'commons-in-a-box' ); ?></th>
+					<th scope="col" id="<?php _e( $r['type'] ); ?>-description" class="manage-column column-description"><?php _e( 'Description', 'commons-in-a-box' ); ?></th>
 				</tr>
 			</thead>
 
 			<tfoot>
 				<tr>
-					<th scope="col" class="manage-column check-column"><label for="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" class="screen-reader-text"><?php esc_html_e( 'Select all', 'cbox' ); ?></label><input type="checkbox" id="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" /></th>
-					<th scope="col" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'cbox' ); ?></th>
-					<th scope="col" class="manage-column column-description"><?php _e( 'Description', 'cbox' ); ?></th>
+					<th scope="col" class="manage-column check-column"><label for="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" class="screen-reader-text"><?php esc_html_e( 'Select all', 'commons-in-a-box' ); ?></label><input type="checkbox" id="plugins-select-all<?php echo esc_attr( $r['type'] ); ?>-2" /></th>
+					<th scope="col" class="manage-column column-name column-cbox-plugin-name"><?php _e( 'Plugin', 'commons-in-a-box' ); ?></th>
+					<th scope="col" class="manage-column column-description"><?php _e( 'Description', 'commons-in-a-box' ); ?></th>
 				</tr>
 			</tfoot>
 
@@ -864,13 +864,13 @@ jQuery('a[data-uninstall="1"]').confirm({
 				<tr id="<?php echo sanitize_title( $plugin ); ?>" class="cbox-plugin-row-<?php echo $css_class; ?>">
 					<th scope='row' class='check-column'>
 						<?php if ( 'activate' == $state && CBox_Plugins::is_plugin_type( $plugin, 'install-only' ) ) : ?>
-							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already installed', 'cbox' ); ?></span>
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already installed', 'commons-in-a-box' ); ?></span>
 
 						<?php elseif ( 'deactivate' !== $state ) : ?>
-							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/><span class="screen-reader-text"><?php esc_attr_e( 'Check this box to install the plugin.', 'cbox' ); ?></span>
+							<input title="<?php esc_attr_e( 'Check this box to install the plugin.', 'commons-in-a-box' ); ?>" type="checkbox" id="cbox_plugins_<?php echo sanitize_title( $plugin ); ?>" name="cbox_plugins[<?php echo $state; ?>][]" value="<?php echo esc_attr( $plugin ); ?>" <?php checked( $r['check_all'] ); ?>/><span class="screen-reader-text"><?php esc_attr_e( 'Check this box to install the plugin.', 'commons-in-a-box' ); ?></span>
 
 						<?php else : ?>
-							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?>" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already active!', 'cbox' ); ?></span>
+							<img src="<?php echo admin_url( 'images/yes.png' ); ?>" alt="" title="<?php esc_attr_e( 'Plugin is already active!', 'commons-in-a-box' ); ?>" style="margin-left:7px;" /><span class="screen-reader-text"><?php esc_attr_e( 'Plugin is already active!', 'commons-in-a-box' ); ?></span>
 
 						<?php endif; ?>
 					</th>
@@ -894,9 +894,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 							if ( ! empty( $settings[ $plugin ] ) ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s">%s</a>',
-									__( "Click here to view this plugin's settings page", 'cbox' ),
+									__( "Click here to view this plugin's settings page", 'commons-in-a-box' ),
 									$settings[ $plugin ],
-									__( "Settings", 'cbox' )
+									__( "Settings", 'commons-in-a-box' )
 								);
 							}
 
@@ -904,9 +904,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 							if ( ! empty( $data['documentation_url'] ) && $state != 'upgrade' ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s" target="_blank">%s</a>',
-									__( "Click here for documentation on this plugin, from commonsinabox.org", 'cbox' ),
+									__( "Click here for documentation on this plugin, from commonsinabox.org", 'commons-in-a-box' ),
 									esc_url( $data['documentation_url'] ),
-									__( "Info", 'cbox' )
+									__( "Info", 'commons-in-a-box' )
 								);
 							}
 
@@ -914,9 +914,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 							if ( 'deactivate' === $state && 'required' !== $r['type'] && 'install-only' !== $r['type'] ) {
 								$plugin_row_links[] = sprintf(
 									'<a title="%s" href="%s">%s</a>',
-									__( "Deactivate this plugin.", 'cbox' ),
+									__( "Deactivate this plugin.", 'commons-in-a-box' ),
 									self::deactivate_link( $loader ),
-									__( "Deactivate", 'cbox' )
+									__( "Deactivate", 'commons-in-a-box' )
 								);
 							}
 
@@ -924,9 +924,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 							if ( 'install-only' == $r['type'] && 'install' !== $state ) {
 								$plugin_row_links[] = sprintf(
 									'<a data-uninstall="1" title="%s" href="%s">%s</a>',
-									sprintf( __( "Uninstall %s", 'cbox' ), $plugin ),
+									sprintf( __( "Uninstall %s", 'commons-in-a-box' ), $plugin ),
 									self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=uninstall&amp;plugin=' . urlencode( $plugin ) . '&amp;_wpnonce=' . wp_create_nonce( 'bulk-plugins' ) ),
-									__( "Uninstall", 'cbox' )
+									__( "Uninstall", 'commons-in-a-box' )
 								);
 							}
 						?>
@@ -936,7 +936,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 							<?php /* upgrade notice */ ?>
 							<?php if ( $state == 'upgrade' ) : ?>
-								<div class="plugin-card"><p class="update-now" title="<?php _e( "Select the checkbox and click on 'Update' to upgrade this plugin.", 'cbox' ); ?>"><?php _e( 'Update available.', 'cbox' ); ?></p></div>
+								<div class="plugin-card"><p class="update-now" title="<?php _e( "Select the checkbox and click on 'Update' to upgrade this plugin.", 'commons-in-a-box' ); ?>"><?php _e( 'Update available.', 'commons-in-a-box' ); ?></p></div>
 							<?php endif; ?>
 						</div>
 						<!-- end - plugin row links -->
@@ -953,7 +953,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 									$deps = array();
 
 									echo '<p>';
-									_e( 'Requires: ', 'cbox' );
+									_e( 'Requires: ', 'commons-in-a-box' );
 
 									foreach( Plugin_Dependencies::parse_field( $data['depends'] ) as $dependency ) :
 										// a dependent name can contain a version number, so let's get just the name
@@ -963,11 +963,11 @@ jQuery('a[data-uninstall="1"]').confirm({
 										$dep_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin_name );
 
 										if ( $dep_loader && self::is_plugin_active( $dep_loader ) )
-											$dep_str .= ' <span class="enabled">' . __( '(enabled)', 'cbox' ) . '</span>';
+											$dep_str .= ' <span class="enabled">' . __( '(enabled)', 'commons-in-a-box' ) . '</span>';
 										elseif( $dep_loader )
-											$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'cbox' ) . '</span>';
+											$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'commons-in-a-box' ) . '</span>';
 										else
-											$dep_str .= ' <span class="not-installed">' . sprintf( __( '(automatically installed with %s)', 'cbox' ), $data['cbox_name'] ) . '</span>';
+											$dep_str .= ' <span class="not-installed">' . sprintf( __( '(automatically installed with %s)', 'commons-in-a-box' ), $data['cbox_name'] ) . '</span>';
 										$deps[] = $dep_str;
 									endforeach;
 
@@ -985,11 +985,11 @@ jQuery('a[data-uninstall="1"]').confirm({
 
 					<tr class="cbox-plugin-network-active">
 						<td colspan="3"><div class="notice inline notice-error notice-alt"><p>
-							<?php printf( esc_html__( '%1$s is network-activated, but we recommend only activating this plugin on the main site.', 'cbox' ), $plugin ); ?>
+							<?php printf( esc_html__( '%1$s is network-activated, but we recommend only activating this plugin on the main site.', 'commons-in-a-box' ), $plugin ); ?>
 							<?php printf(
 								'<a href="%1$s">%2$s</a>',
 								self_admin_url( 'admin.php?page=cbox-plugins&amp;cbox-action=network-deactivate&amp;plugin=' . urlencode( $plugin ) . '&amp;_wpnonce=' . wp_create_nonce( 'network-deactivate-plugin_' . $plugin ) ),
-								esc_html__( '(Change)', 'cbox' )
+								esc_html__( '(Change)', 'commons-in-a-box' )
 							); ?>
 						</p></div></td>
 					</tr>
@@ -1002,7 +1002,7 @@ jQuery('a[data-uninstall="1"]').confirm({
 		</table>
 
 		<?php if ( 'required' !== $r['type'] ) : ?>
-			<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'cbox' ) : $r['submit_btn_text']; ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
+			<p><input type="submit" value="<?php echo 'install-only' === $r['type'] ? esc_html( 'Install', 'commons-in-a-box' ) : $r['submit_btn_text']; ?>" class="button-primary" id="cbox-update-<?php echo esc_attr( $r['type'] ); ?>" name="cbox-update" /></p>
 		<?php endif; ?>
 
 	<?php
