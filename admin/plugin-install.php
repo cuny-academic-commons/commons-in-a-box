@@ -561,7 +561,19 @@ class CBox_Updater {
 	/**
 	 * Constructor.
 	 *
-	 * @param array $plugins Associative array of plugin names
+	 * @param array $plugins {
+	 *     Multi-dimensional array of plugin names keyed by the following states.
+	 *
+	 *     @type array $install  Array of plugin names to install.
+	 *     @type array $activate Array of plugin names to activate.
+	 *     @type array $upgrade  Array of plugin names to upgrade.
+	 * }
+	 * @param array $settings {
+	 *    Array of settings. Includes:
+	 *
+	 *    @type string $redirect_link Link to use in button after updater has finished.
+	 *    @type string $redirect_text Button text used for redirect link.
+	 * }
 	 */
 	function __construct( $plugins = false, $settings = array() ) {
 		$skin_args = array();
