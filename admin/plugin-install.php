@@ -604,6 +604,95 @@ class CBox_Updater {
 			return false;
 		}
 
+		$plugins = self::parse_plugins( $plugins );
+
+		/**
+		 * Hook to do something before the CBOX updater fires.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'cbox_before_updater' );
+
+		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
+		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
+
+		// start the whole damn thing!
+		// We always try to upgrade plugins first.  Next, we install plugins that are not available.
+		// Lastly, we activate any plugins needed.
+
+		// let's see if upgrades are available; if so, start with that
+		if ( self::$is_upgrade ) {
+			// if installs are available as well, this tells CBox_Plugin_Upgrader
+			// to install plugins after the upgrader is done
+			if ( self::$is_install ) {
+				$skin_args['install_plugins'] = $plugins['install'];
+				$skin_args['install_strings'] = true;
+			}
+
+			// if activations are available as well, this tells CBox_Plugin_Upgrader
+			// to activate plugins after the upgrader is done
+			if ( self::$is_activate ) {
+				$skin_args['activate_plugins'] = $plugins['activate'];
+			}
+
+			// tell the installer that this is the first step
+			$skin_args['step_one'] = 'upgrade';
+
+			echo '<h3>' . __( 'Upgrading Existing Plugins...', 'cbox' ) . '</h3>';
+
+			// instantiate the upgrader
+			// we add our custom arguments to the skin
+			$installer = new CBox_Plugin_Upgrader(
+				new CBox_Bulk_Plugin_Upgrader_Skin( $skin_args )
+			);
+
+			// now start the upgrade!
+			$installer->bulk_upgrade( $plugins['upgrade'] );
+
+		// if no upgrades are available, move on to installs
+		} elseif( self::$is_install ) {
+			// if activations are available as well, this tells CBox_Plugin_Upgrader
+			// to activate plugins after the upgrader is done
+			if ( self::$is_activate ) {
+				$skin_args['activate_plugins'] = $plugins['activate'];
+			}
+
+			$skin_args['install_strings'] = true;
+
+			echo '<h3>' . __( 'Installing Plugins...', 'cbox' ) . '</h3>';
+
+			// instantiate the upgrader
+			// we add our custom arguments to the skin
+			$installer = new CBox_Plugin_Upgrader(
+				new CBox_Bulk_Plugin_Upgrader_Skin( $skin_args )
+			);
+
+			// now start the install!
+			$installer->bulk_install( $plugins['install'] );
+
+		// if no upgrades or installs are available, move on to activations
+		} elseif( self::$is_activate ) {
+			echo '<h3>' . __( 'Activating Plugins...', 'cbox' ) . '</h3>';
+
+			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
+		?>
+
+			<p><?php _e( 'Plugins activated.', 'cbox' ); ?></p>
+
+			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $settings ); ?></p>
+		<?php
+		}
+	}
+
+	/**
+	 * Parse plugins list to add dependencies if required.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param  array $plugins Same as $plugins in CBox_Updater::__construct().
+	 * @return array
+	 */
+	public static function parse_plugins( $plugins = [] ) {
 		// dependency-time!
 		// flatten the associative array to make dependency checks easier
 		$plugin_list = call_user_func_array( 'array_merge', $plugins );
@@ -706,82 +795,7 @@ class CBox_Updater {
 			$plugins[$state] = array_unique( $p );
 		}
 
-		/**
-		 * Hook to do something before the CBOX updater fires.
-		 *
-		 * @since 1.1.0
-		 */
-		do_action( 'cbox_before_updater' );
-
-		// this tells WP_Upgrader to activate the plugin after any upgrade or successful install
-		add_filter( 'upgrader_post_install', array( &$this, 'activate_post_install' ), 10, 3 );
-
- 		// start the whole damn thing!
- 		// We always try to upgrade plugins first.  Next, we install plugins that are not available.
- 		// Lastly, we activate any plugins needed.
-
- 		// let's see if upgrades are available; if so, start with that
- 		if ( self::$is_upgrade ) {
-			// if installs are available as well, this tells CBox_Plugin_Upgrader
-			// to install plugins after the upgrader is done
-			if ( self::$is_install ) {
-				$skin_args['install_plugins'] = $plugins['install'];
-				$skin_args['install_strings'] = true;
-			}
-
-			// if activations are available as well, this tells CBox_Plugin_Upgrader
-			// to activate plugins after the upgrader is done
-			if ( self::$is_activate ) {
-				$skin_args['activate_plugins'] = $plugins['activate'];
-			}
-
-			// tell the installer that this is the first step
-			$skin_args['step_one'] = 'upgrade';
-
-			echo '<h3>' . __( 'Upgrading Existing Plugins...', 'commons-in-a-box' ) . '</h3>';
-
- 			// instantiate the upgrader
- 			// we add our custom arguments to the skin
- 			$installer = new CBox_Plugin_Upgrader(
- 				new CBox_Bulk_Plugin_Upgrader_Skin( $skin_args )
- 			);
-
- 			// now start the upgrade!
- 			$installer->bulk_upgrade( $plugins['upgrade'] );
-
-		// if no upgrades are available, move on to installs
-		} elseif( self::$is_install ) {
-			// if activations are available as well, this tells CBox_Plugin_Upgrader
-			// to activate plugins after the upgrader is done
-			if ( self::$is_activate ) {
-				$skin_args['activate_plugins'] = $plugins['activate'];
-			}
-
-			$skin_args['install_strings'] = true;
-
-			echo '<h3>' . __( 'Installing Plugins...', 'commons-in-a-box' ) . '</h3>';
-
- 			// instantiate the upgrader
- 			// we add our custom arguments to the skin
- 			$installer = new CBox_Plugin_Upgrader(
- 				new CBox_Bulk_Plugin_Upgrader_Skin( $skin_args )
- 			);
-
- 			// now start the install!
- 			$installer->bulk_install( $plugins['install'] );
-
-		// if no upgrades or installs are available, move on to activations
-		} elseif( self::$is_activate ) {
-			echo '<h3>' . __( 'Activating Plugins...', 'commons-in-a-box' ) . '</h3>';
-
- 			$activate = CBox_Plugin_Upgrader::bulk_activate( $plugins['activate'] );
- 		?>
-
-			<p><?php _e( 'Plugins activated.', 'commons-in-a-box' ); ?></p>
-
-			<p><?php CBox_Bulk_Plugin_Upgrader_Skin::after_updater( $settings ); ?></p>
- 		<?php
- 		}
+		return $plugins;
 	}
 
 	/**
