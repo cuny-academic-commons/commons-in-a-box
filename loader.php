@@ -109,6 +109,16 @@ class Commons_In_A_Box {
 		require( $this->plugin_dir . 'includes/functions.php' );
 		require( $this->plugin_dir . 'includes/plugins.php' );
 
+		// Upgrades API.
+		// @todo maybe use autoloader.
+		require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
+		require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
+		require( $this->plugin_dir . 'includes/upgrades/upgrade-registry.php' );
+
+		if ( wp_doing_ajax() ) {
+			require( $this->plugin_dir . 'includes/upgrades/ajax-handler.php' );
+		}
+
 		// admin area
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );

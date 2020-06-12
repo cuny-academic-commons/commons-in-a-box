@@ -34,6 +34,8 @@ class CBox_Admin {
 	 */
 	private function includes() {
 		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
+		require( CBOX_PLUGIN_DIR . 'admin/upgrades/list-table.php' );
+		require( CBOX_PLUGIN_DIR . 'admin/upgrades/pages.php' );
 
 		/**
 		 * Hook to declare when the CBOX admin area is loaded at its earliest.
@@ -368,7 +370,7 @@ class CBox_Admin {
 				cbox_get_template_part( 'package-details', $package );
 			?>
 
-				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin-top:2em; text-align:right;, ">
+				<form method="post" action="<?php echo self_admin_url( 'admin.php?page=cbox' ); ?>" style="margin-top:2em; text-align:right;">
 					<?php wp_nonce_field( 'cbox_select_package' ); ?>
 
 					<input type="hidden" name="cbox-package" value="<?php echo $package; ?>" />
