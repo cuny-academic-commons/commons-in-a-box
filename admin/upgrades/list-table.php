@@ -28,7 +28,7 @@ class List_Table extends \WP_List_Table {
 	 * @return void
 	 */
 	public function no_items() {
-		_e( 'No upgrades found.', 'commons-in-a-box' );
+		esc_html_e( 'No upgrades found.', 'commons-in-a-box' );
 	}
 
 	/**
@@ -38,9 +38,9 @@ class List_Table extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = [
-			'name'            => __( 'Name', 'commons-in-a-box' ),
-			'total_items'     => __( 'Total Items', 'commons-in-a-box' ),
-			'total_processed' => __( 'Total Processed', 'commons-in-a-box' ),
+			'name'            => esc_html__( 'Name', 'commons-in-a-box' ),
+			'total_items'     => esc_html__( 'Total Items', 'commons-in-a-box' ),
+			'total_processed' => esc_html__( 'Total Processed', 'commons-in-a-box' ),
 		];
 
 		return $columns;
@@ -99,8 +99,8 @@ class List_Table extends \WP_List_Table {
 			'<a href="%1$s" data-id="%2$d" title="%3$s">%4$s</a>',
 			esc_url( $url ),
 			esc_attr( $item->id ),
-			__( 'View Upgrade', 'commons-in-a-box' ),
-			__( 'View', 'commons-in-a-box' )
+			esc_html__( 'View Upgrade', 'commons-in-a-box' ),
+			esc_html__( 'View', 'commons-in-a-box' )
 		);
 
 		return sprintf(

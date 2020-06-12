@@ -11,7 +11,7 @@ use CBOX\Upgrades\Upgrade_Registry;
 function handle_upgrade() {
 	if ( ! check_ajax_referer( 'cbox-upgrades', '_ajax_nonce', false ) ) {
 		wp_send_json_error( [
-			'message' => __( 'Permission denied.', 'commons-in-a-box' ),
+			'message' => esc_html__( 'Permission denied.', 'commons-in-a-box' ),
 		] );
 	}
 
@@ -19,7 +19,7 @@ function handle_upgrade() {
 	$upgrade_id = isset( $_POST['upgrade'] ) ? sanitize_key( $_POST['upgrade'] ) : false;
 	if ( ! $upgrade_id ) {
 		wp_send_json_error( [
-			'message' => __( 'Invalid upgrade ID.', 'commons-in-a-box' ),
+			'message' => esc_html__( 'Invalid upgrade ID.', 'commons-in-a-box' ),
 		] );
 	}
 
@@ -34,7 +34,7 @@ function handle_upgrade() {
 		$upgrade->finish();
 
 		wp_send_json_success( [
-			'message'         => __( 'Processing finished.', 'commons-in-a-box' ),
+			'message'         => esc_html__( 'Processing finished.', 'commons-in-a-box' ),
 			'is_finished'     => 1,
 			'total_processed' => $upgrade->get_processed_count(),
 			'total_items'     => $upgrade->get_items_count(),
@@ -61,11 +61,14 @@ function handle_upgrade() {
 	}
 
 	wp_send_json_success( [
-		'message'         => sprintf( __( 'Processed item with ID: %d.', 'commons-in-a-box' ), $next_item->id ),
 		'is_finished'     => 0,
 		'total_processed' => $total_processed,
 		'total_items'     => $total_items,
 		'percentage'      => $percentage,
+		'message'         => sprintf(
+			esc_html__( 'Processed item with ID: %d.', 'commons-in-a-box' ),
+			$next_item->id
+		),
 	] );
 }
 add_action( 'wp_ajax_cbox_handle_upgrade', __NAMESPACE__ . '\\handle_upgrade' );
@@ -78,7 +81,7 @@ add_action( 'wp_ajax_cbox_handle_upgrade', __NAMESPACE__ . '\\handle_upgrade' );
 function restart_upgrade() {
 	if ( ! check_ajax_referer( 'cbox-upgrades', '_ajax_nonce', false ) ) {
 		wp_send_json_error( [
-			'message' => __( 'Permission denied.', 'commons-in-a-box' ),
+			'message' => esc_html__( 'Permission denied.', 'commons-in-a-box' ),
 		] );
 	}
 
@@ -86,7 +89,7 @@ function restart_upgrade() {
 	$upgrade_id = isset( $_POST['upgrade'] ) ? sanitize_key( $_POST['upgrade'] ) : false;
 	if ( ! $upgrade_id ) {
 		wp_send_json_error( [
-			'message' => __( 'Invalid upgrade ID.', 'commons-in-a-box' ),
+			'message' => esc_html__( 'Invalid upgrade ID.', 'commons-in-a-box' ),
 		] );
 	}
 

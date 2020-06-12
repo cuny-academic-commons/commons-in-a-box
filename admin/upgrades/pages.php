@@ -12,8 +12,8 @@ use CBOX\Admin\Upgrades\List_Table;
 function setup_upgrades_page() {
 	$subpage = add_submenu_page(
 		'cbox',
-		__( 'Upgrades', 'commons-in-a-box' ),
-		__( 'Upgrades', 'commons-in-a-box' ),
+		esc_html__( 'Upgrades', 'commons-in-a-box' ),
+		esc_html__( 'Upgrades', 'commons-in-a-box' ),
 		'install_plugins',
 		'cbox-upgrades',
 		__NAMESPACE__ . '\\upgrades_page'
@@ -50,8 +50,8 @@ function enqueue_assets() {
 		'upgrade'  => isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null,
 		'delay'    => 0,
 		'text'     => [
-			'processing' => __( 'Processing...', 'commons-in-a-box' ),
-			'start'      => __( 'Start', 'commons-in-a-box' ),
+			'processing' => esc_html__( 'Processing...', 'commons-in-a-box' ),
+			'start'      => esc_html__( 'Start', 'commons-in-a-box' ),
 		]
 	] );
 }
@@ -103,7 +103,7 @@ function upgrades_view() {
 	$upgrade = Upgrade_Registry::get_instance()->get_registered( $id );
 
 	if ( ! $upgrade ) {
-		_e( 'Upgrade doesn\'t exists!' );
+		esc_html_e( 'Upgrade doesn\'t exists!' );
 		return;
 	}
 
