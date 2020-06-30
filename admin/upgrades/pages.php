@@ -82,6 +82,8 @@ function upgrades_page() {
  * @return void
  */
 function upgrades_list_table() {
+	require CBOX_PLUGIN_DIR . 'admin/upgrades/list-table.php';
+
 	$list_table = new List_Table();
 	?>
 	<form method="get">

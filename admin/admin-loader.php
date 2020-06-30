@@ -34,8 +34,6 @@ class CBox_Admin {
 	 */
 	private function includes() {
 		require( CBOX_PLUGIN_DIR . 'admin/functions.php' );
-		require( CBOX_PLUGIN_DIR . 'admin/upgrades/list-table.php' );
-		require( CBOX_PLUGIN_DIR . 'admin/upgrades/pages.php' );
 
 		/**
 		 * Hook to declare when the CBOX admin area is loaded at its earliest.
@@ -73,6 +71,29 @@ class CBox_Admin {
 
 		// after installing a theme, do something
 		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
+
+		// Upgrader page.
+		add_action( 'cbox_admin_menu',                                              array( $this, 'upgrader' ), 0 );
+	}
+
+	/**
+	 * Set up upgrader page only if there are items to upgrade.
+	 *
+	 * @since 1.2.0
+	 */
+	public function upgrader() {
+		// Ensure we're on a CBOX page.
+		if ( empty( $_GET['page'] ) || false === strpos( $_GET['page'], 'cbox' ) ) {
+			return;
+		}
+
+		// See if we have items to upgrade.
+		$items = CBOX\Upgrades\Upgrade_Registry::get_instance()->get_all_registered();
+		if ( empty( $items ) ) {
+			return;
+		}
+
+		require CBOX_PLUGIN_DIR . 'admin/upgrades/pages.php';
 	}
 
 	/** ACTIONS / SCREENS *********************************************/

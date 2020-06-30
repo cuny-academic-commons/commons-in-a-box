@@ -109,23 +109,21 @@ class Commons_In_A_Box {
 		require( $this->plugin_dir . 'includes/functions.php' );
 		require( $this->plugin_dir . 'includes/plugins.php' );
 
-		// Upgrades API.
-		// @todo maybe use autoloader.
-		require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
-		require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
-		require( $this->plugin_dir . 'includes/upgrades/upgrade-registry.php' );
-
-		if ( wp_doing_ajax() ) {
-			require( $this->plugin_dir . 'includes/upgrades/ajax-handler.php' );
-		}
-
-		// admin area
+		// Admin.
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 
 		// frontend
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
+		}
+
+		// Upgrades API - runs in admin area and on AJAX.
+		if ( is_admin() ) {
+			// @todo maybe use autoloader.
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-registry.php' );
 		}
 
 		// WP-CLI integration
@@ -165,6 +163,29 @@ class Commons_In_A_Box {
 			}, 91 );
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
 		}
+
+		// AJAX Upgrader routine.
+		add_action( 'cbox_load_components', function() {
+			// Bail if not doing AJAX.
+			if ( ! wp_doing_ajax() ) {
+				return;
+			}
+
+			// Bail if not on our special AJAX hooks.
+			if ( empty( $_POST['action'] ) ||  ( 0 !== strpos( $_POST['action'], 'cbox_' ) && false === strpos( $_POST['action'], '_upgrade' ) ) ) {
+				return;
+			}
+
+			// Ensure upgrader items are registered on AJAX.
+			$packages = cbox_get_packages();
+			$current  = cbox_get_current_package_id();
+			if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
+				call_user_func( array( $packages[$current], 'upgrader' ) );
+			}
+
+			// Register AJAX routine.
+			require $this->plugin_dir . 'includes/upgrades/ajax-handler.php';
+		} );
 	}
 
 	/**

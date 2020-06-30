@@ -109,6 +109,9 @@ abstract class CBox_Package {
 				}
 			} );
 		} );
+
+		// Register upgrade steps in admin area.
+		add_action( 'cbox_admin_loaded', array( get_called_class(), 'upgrader' ), 15 );
 	}
 
 	/**
@@ -280,6 +283,13 @@ abstract class CBox_Package {
 	 * @since 1.1.0
 	 */
 	protected function custom_init() {}
+
+	/**
+	 * Register upgrade steps here.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function upgrader() {}
 
 	/**
 	 * Deactivation method, extend if necessary.
