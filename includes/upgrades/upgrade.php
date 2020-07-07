@@ -14,6 +14,13 @@ namespace CBOX\Upgrades;
 abstract class Upgrade {
 
 	/**
+	 * Upgrade task flag. Marks if upgrade is finished.
+	 *
+	 * @var string
+	 */
+	const FLAG = 'abstract_upgrade_flag';
+
+	/**
 	 * Unique identifier for upgrade.
 	 *
 	 * @var string
@@ -111,7 +118,7 @@ abstract class Upgrade {
 	 * @return bool
 	 */
 	public function is_finished() {
-		return ! $this->get_next_item();
+		return (bool) get_option( static::FLAG, false );
 	}
 
 
@@ -190,9 +197,10 @@ abstract class Upgrade {
 	}
 
 	/**
-	 * Restarts the processed items store.
+	 * Restarts the upgrade process.
 	 */
 	public function restart() {
+		delete_option( static::FLAG );
 		delete_option( $this->get_db_identifier() );
 	}
 }
