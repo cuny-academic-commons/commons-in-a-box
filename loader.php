@@ -164,27 +164,26 @@ class Commons_In_A_Box {
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
 		}
 
-		// AJAX Upgrader routine.
-		add_action( 'cbox_load_components', function() {
-			// Bail if not doing AJAX.
-			if ( ! wp_doing_ajax() ) {
+		// Upgrader routine.
+		add_action( 'wp_loaded', function() {
+			// Ensure we're in the admin area.
+			if ( ! is_admin() ) {
 				return;
 			}
 
-			// Bail if not on our special AJAX hooks.
-			if ( empty( $_POST['action'] ) ||  ( 0 !== strpos( $_POST['action'], 'cbox_' ) && false === strpos( $_POST['action'], '_upgrade' ) ) ) {
-				return;
-			}
-
-			// Ensure upgrader items are registered on AJAX.
+			// Ensure upgrader items are registered.
 			$packages = cbox_get_packages();
 			$current  = cbox_get_current_package_id();
 			if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
 				call_user_func( array( $packages[$current], 'upgrader' ) );
 			}
 
-			// Register AJAX routine.
-			require $this->plugin_dir . 'includes/upgrades/ajax-handler.php';
+			// AJAX handler.
+			if ( wp_doing_ajax() && ! empty( $_POST['action'] ) &&
+				( 0 === strpos( $_POST['action'], 'cbox_' ) && false !== strpos( $_POST['action'], '_upgrade' ) )
+			) {
+				require CBOX_PLUGIN_DIR . 'includes/upgrades/ajax-handler.php';
+			}
 		} );
 	}
 
