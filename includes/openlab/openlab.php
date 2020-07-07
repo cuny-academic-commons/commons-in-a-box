@@ -82,6 +82,15 @@ class CBox_Package_OpenLab extends CBox_Package {
 	}
 
 	/**
+	 * Register upgrader.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function upgrader() {
+		do_action( 'cboxol_register_upgrader' );
+	}
+
+	/**
 	 * Callback for forcing the Plugins page to be available to non-super-admins.
 	 *
 	 * @since 1.1.1
