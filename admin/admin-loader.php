@@ -300,6 +300,11 @@ class CBox_Admin {
 					die();
 					break;
 
+				case 'upgrades-available' :
+					wp_redirect( cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' ) );
+					die();
+					break;
+
 				case '' :
 					cbox_bump_revision_date();
 					$redirect = self_admin_url( 'admin.php?page=cbox' );
@@ -1131,7 +1136,13 @@ class CBox_Admin {
 				$disable_btn = 'cbox';
 				break;
 
-			case '' :
+			case 'upgrades-available' :
+				$notice_text = esc_html__( 'There are some upgrades available.', 'commons-in-a-box' );
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
+				$button_text = esc_html__( 'Click here to update', 'commons-in-a-box' );
+				break;
+
+			default :
 				return;
 				break;
 		}
