@@ -843,17 +843,13 @@ class CBox_Admin {
 	/**
 	 * Upgrade notice.
 	 *
-	 * This shows up when CBOX is upgraded through the WP updates panel and
-	 * when installed CBOX plugins have updates.
+	 * Displays a notice if WordPress needs to be updated to the CBOX
+	 * recommended version.
 	 *
 	 * @since 0.3
-	 *
-	 * @uses cbox_is_upgraded() To tell if CBOX has just upgraded.
-	 * @uses cbox_bump_revision_date() To bump the CBOX revision date in the DB.
+	 * @since 1.2.0 Now only shows if WordPress should be updated or not.
 	 */
 	private function upgrades() {
-		/** check if WordPress needs upgrading **********************************/
-
 		// get plugin dependency requirements
 		$requirements = Plugin_Dependencies::get_requirements();
 
@@ -878,79 +874,6 @@ class CBox_Admin {
 		<?php
 			return;
 		}
-
-		/** check if CBOX modules have updates **********************************/
-
-		// Don't show the rest of the upgrades block if we're still setting up.
-		if ( cbox_get_setup_step() ) {
-			return;
-		}
-
-		// include the CBOX Theme Installer
-		if ( ! class_exists( 'CBox_Theme_Installer' ) )
-			require( CBOX_PLUGIN_DIR . 'admin/theme-install.php' );
-
-		// get activated CBOX plugins that need updating
-		$active_cbox_plugins_need_update = CBox_Admin_Plugins::get_upgrades( 'active' );
-
-		// check for theme upgrades
-		$is_theme_upgrade = cbox_get_theme_to_update();
-
-		// no available upgrades, so stop!
-		if ( ! $active_cbox_plugins_need_update && ! $is_theme_upgrade ) {
-
-			// if CBOX just upgraded and has no plugin updates, bump CBOX revision date and reload using JS
-			// yeah, the JS redirect is a little ugly... should probably do this higher up the stack...
-			if ( cbox_is_upgraded() ) {
-				cbox_bump_revision_date();
-				echo '<script type="text/javascript">window.location = document.URL;</script>';
-			}
-
-			return;
-		}
-
-		/* we have upgrades available! */
-
-		// plugin count
-		$plugin_count = $total_count = count( $active_cbox_plugins_need_update );
-
-		// setup default upgrade URL
-		$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade' ), 'cbox_upgrade' );
-
-		// theme is available for upgrade
-		if ( ! empty( $active_cbox_plugins_need_update ) && ! empty( $is_theme_upgrade ) ) {
-			++$total_count;
-
-			// theme has update, so add an extra parameter to the querystring
-			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade' );
-
-			$message = sprintf( _n( '%d installed plugin and the theme have an update available. Click on the button below to upgrade.', '%d installed plugins and the theme have updates available. Click on the button below to upgrade.', $plugin_count, 'commons-in-a-box' ), $plugin_count );
-
-		// just plugins
-		} elseif ( ! empty( $active_cbox_plugins_need_update ) ) {
-			$message = sprintf( _n( '%d installed plugin has an update available. Click on the button below to upgrade.', '%d installed plugins have updates available. Click on the button below to upgrade.', $plugin_count, 'commons-in-a-box' ), $plugin_count );
-
-		// just themes
-		} else {
-			// theme has update, so switch up the upgrade URL
-			$url = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . $is_theme_upgrade ), 'cbox_upgrade_theme' );
-
-			$message = sprintf( __( 'The %s theme has an update available. Click on the button below to upgrade.', 'commons-in-a-box' ), cbox_get_theme_prop( 'name' ) );
-		}
-
-	?>
-		<div id="cbox-upgrades" class="secondary-panel">
-			<h2><?php printf( _n( 'Upgrade Available', 'Upgrades Available', $total_count, 'commons-in-a-box' ), $total_count ); ?></h2>
-
-			<div class="login postbox">
-				<div class="message">
-					<p><?php echo $message; ?>
-					<br />
-					<a class="button-secondary" href="<?php echo $url; ?>"><?php _e( 'Upgrade', 'commons-in-a-box' ); ?></a></p>
-				</div>
-			</div>
-		</div>
-	<?php
 	}
 
 	/**
