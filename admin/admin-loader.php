@@ -87,12 +87,6 @@ class CBox_Admin {
 			return;
 		}
 
-		// See if we have items to upgrade.
-		$items = CBOX\Upgrades\Upgrade_Registry::get_instance()->get_all_registered();
-		if ( empty( $items ) ) {
-			return;
-		}
-
 		require CBOX_PLUGIN_DIR . 'admin/upgrades/pages.php';
 	}
 
