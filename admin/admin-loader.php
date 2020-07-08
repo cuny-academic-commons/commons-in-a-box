@@ -1119,21 +1119,18 @@ class CBox_Admin {
 				$notice_text = __( "Let's get started!", 'commons-in-a-box' );
 				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to get set up', 'commons-in-a-box' );
-				$disable_btn = 'cbox';
 				break;
 
 			case 'theme-update' :
 				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
 				$button_link = wp_nonce_url( cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'commons-in-a-box' );
-				$disable_btn = 'cbox';
 				break;
 
 			case 'recommended-plugins' :
 				$notice_text = __( 'You only have one last thing to do. We promise!', 'commons-in-a-box' );
 				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 				$button_text = __( 'Click here to finish up!', 'commons-in-a-box' );
-				$disable_btn = 'cbox';
 				break;
 
 			case 'upgrades-available' :
@@ -1155,15 +1152,13 @@ class CBox_Admin {
 			} else {
 				$notice_text = __( 'Installing plugins...', 'commons-in-a-box' );
 			}
-
-			$disable_btn = 'cbox';
 		}
 	?>
 
 		<div id="cbox-nag" class="updated">
 			<strong><?php _e( "Commons In A Box is almost ready!", 'commons-in-a-box' ); ?></strong> <?php echo $notice_text; ?>
 
-			<?php if ( empty( $_REQUEST['page'] ) || ( ! empty( $_REQUEST['page'] ) && $_REQUEST['page'] != $disable_btn ) ) : ?>
+			<?php if ( empty( $_REQUEST['page'] ) || ( ! empty( $_REQUEST['page'] ) && 'cbox' !== $_REQUEST['page'] ) ) : ?>
 				<p><a class="callout" href="<?php echo $button_link; ?>"><?php echo $button_text; ?></a></p>
 			<?php endif; ?>
 
