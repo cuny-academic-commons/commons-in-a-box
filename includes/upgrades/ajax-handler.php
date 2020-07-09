@@ -23,9 +23,10 @@ function handle_upgrade() {
 		] );
 	}
 
+	$is_bulk  = $id === 'all';
 	$registry = Upgrade_Registry::get_instance();
 
-	if ( $id === 'all' ) {
+	if ( $is_bulk ) {
 		$upgrades = $registry->get_all_registered();
 
 		/** @var \CBOX\Upgrades\Upgrade */
@@ -46,11 +47,11 @@ function handle_upgrade() {
 
 		wp_send_json_success( [
 			'message'         => esc_html__( 'Processing finished.', 'commons-in-a-box' ),
-			'is_finished'     => ( $id === 'all' && $total > 1 ) ? 0 : 1,
+			'is_finished'     => ( $is_bulk && $total > 1 ) ? 0 : 1,
 			'total_processed' => $upgrade->get_processed_count(),
 			'total_items'     => $upgrade->get_items_count(),
 			'percentage'      => $upgrade->get_percentage(),
-			'name'            => $upgrade->name,
+			'name'            => $is_bulk ? $upgrade->name : null,
 		] );
 	}
 
@@ -70,12 +71,12 @@ function handle_upgrade() {
 			'total_processed' => $total_processed,
 			'total_items'     => $total_items,
 			'percentage'      => $percentage,
-			'name'            => $name,
+			'name'            => $is_bulk ? $name : null,
 		] );
 	}
 
 	wp_send_json_success( [
-		'name'            => $name,
+		'name'            => $is_bulk ? $name : null,
 		'is_finished'     => 0,
 		'total_processed' => $total_processed,
 		'total_items'     => $total_items,

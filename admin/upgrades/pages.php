@@ -101,8 +101,9 @@ function upgrades_list_table() {
 function upgrades_view() {
 	$id       = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
 	$registry = Upgrade_Registry::get_instance();
+	$is_bulk  = $id === 'all';
 
-	if ( $id === 'all' ) {
+	if ( $is_bulk ) {
 		$upgrades = $registry->get_all_registered();
 
 		/** @var \CBOX\Upgrades\Upgrade */
@@ -117,18 +118,24 @@ function upgrades_view() {
 		return;
 	}
 
+	$name       = $is_bulk ? __( 'Bulk upgrade', 'commons-in-a-box' ) : $upgrade->name;
 	$percentage = $upgrade->get_percentage();
 	$style      = $percentage > 0 ? 'style="width: '.$percentage.'%"' : '';
 	?>
 	<div class="cbox-upgrade">
-		<h3><?php echo esc_html( $upgrade->name ); ?></h3>
+		<h3><?php echo esc_html( $name ); ?></h3>
 		<div class="cbox-upgrade-main">
 			<ul class="cbox-upgrade-stats">
+				<?php if ( $is_bulk ) : ?>
+					<li>
+					<strong><?php esc_html_e( 'Name:', 'commons-in-a-box' ); ?></strong> <span id="cbox-upgrade-name"><?php echo esc_html( $upgrade->name ); ?></span>
+				</li>
+				<?php endif; ?>
 				<li>
-					<strong><?php esc_html_e( 'Total', 'commons-in-a-box' ); ?></strong> <span id="cbox-upgrade-total"><?php echo $upgrade->get_items_count(); ?></span>
+					<strong><?php esc_html_e( 'Total:', 'commons-in-a-box' ); ?></strong> <span id="cbox-upgrade-total"><?php echo $upgrade->get_items_count(); ?></span>
 				</li>
 				<li>
-					<strong><?php esc_html_e( 'Processed', 'commons-in-a-box' ); ?></strong> <span id="cbox-upgrade-processed"><?php echo $upgrade->get_processed_count(); ?></span> <span id="cbox-upgrade-percentage">(<?php echo $percentage; ?>%)</span>
+					<strong><?php esc_html_e( 'Processed:', 'commons-in-a-box' ); ?></strong> <span id="cbox-upgrade-processed"><?php echo $upgrade->get_processed_count(); ?></span> <span id="cbox-upgrade-percentage">(<?php echo $percentage; ?>%)</span>
 				</li>
 			</ul>
 			<div class="cbox-upgrade-progress-bar">
