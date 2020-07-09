@@ -121,6 +121,7 @@ function upgrades_view() {
 	$name       = $is_bulk ? __( 'Bulk upgrade', 'commons-in-a-box' ) : $upgrade->name;
 	$percentage = $upgrade->get_percentage();
 	$style      = $percentage > 0 ? 'style="width: '.$percentage.'%"' : '';
+	$go_back    = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
 	?>
 	<div class="cbox-upgrade">
 		<h3><?php echo esc_html( $name ); ?></h3>
@@ -148,5 +149,8 @@ function upgrades_view() {
 			<button class="button" id="cbox-upgrade-pause"><?php esc_html_e( 'Pause', 'commons-in-a-box' ); ?></button>
 		</div>
 	</div>
+	<p>
+		<a href="<?php echo esc_url( $go_back ); ?>" class="button button-primary"><?php esc_html_e( 'Go back', 'commons-in-a-box' ); ?></a>
+	</p>
 	<?php
 }
