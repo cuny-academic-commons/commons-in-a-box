@@ -87,31 +87,3 @@ function handle_upgrade() {
 	] );
 }
 add_action( 'wp_ajax_cbox_handle_upgrade', __NAMESPACE__ . '\\handle_upgrade' );
-
-/**
- * AJAX callback for upgrade reset.
- *
- * @return void
- */
-function restart_upgrade() {
-	if ( ! check_ajax_referer( 'cbox-upgrades', '_ajax_nonce', false ) ) {
-		wp_send_json_error( [
-			'message' => esc_html__( 'Permission denied.', 'commons-in-a-box' ),
-		] );
-	}
-
-	// Check the upgrade id.
-	$upgrade_id = isset( $_POST['upgrade'] ) ? sanitize_key( $_POST['upgrade'] ) : false;
-	if ( ! $upgrade_id ) {
-		wp_send_json_error( [
-			'message' => esc_html__( 'Invalid upgrade ID.', 'commons-in-a-box' ),
-		] );
-	}
-
-	/** @var \CBOX\Upgrades\Upgrade */
-	$upgrade = Upgrade_Registry::get_instance()->get_registered( $upgrade_id );
-	$upgrade->restart();
-
-	wp_send_json_success();
-}
-add_action( 'wp_ajax_cbox_restart_upgrade', __NAMESPACE__ . '\\restart_upgrade' );

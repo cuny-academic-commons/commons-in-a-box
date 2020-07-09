@@ -4,24 +4,8 @@
 		window.location.href = window.location.href;
 	};
 
-	// @todo maybe actually cancel next 'itemprocessed' event.
 	function pauseUpgrade() {
 		reloadPage();
-	};
-
-	function restartUpgrade() {
-		$.ajax({
-			url: ajaxurl,
-			type: 'POST',
-			data: {
-				_ajax_nonce: CBOXUpgrades.nonce,
-				action: 'cbox_restart_upgrade',
-				upgrade: CBOXUpgrades.upgrade
-			},
-			success: function() {
-				reloadPage();
-			}
-		});
 	};
 
 	function processNextItem() {
@@ -73,5 +57,4 @@
 
 	$(document).on( 'click', '#cbox-upgrade-start', processNextItem );
 	$(document).on( 'click', '#cbox-upgrade-pause', pauseUpgrade );
-	$(document).on( 'click', '#cbox-upgrade-restart', restartUpgrade );
 } )( jQuery );

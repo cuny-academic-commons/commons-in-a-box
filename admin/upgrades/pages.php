@@ -137,12 +137,8 @@ function upgrades_view() {
 			<div class="cbox-upgrade-current-item"></div>
 		</div>
 		<div class="cbox-upgrade-actions">
-			<?php if ( ! $upgrade->is_finished() ) : ?>
-				<button class="button-primary" id="cbox-upgrade-start"><?php esc_html_e( 'Start', 'commons-in-a-box' ); ?></button>
-				<button class="button" id="cbox-upgrade-pause"><?php esc_html_e( 'Pause', 'commons-in-a-box' ); ?></button>
-			<?php else: ?>
-				<button class="button-primary" id="cbox-upgrade-restart"><?php esc_html_e( 'Restart', 'commons-in-a-box' ); ?></button>
-			<?php endif; ?>
+			<button class="button-primary" id="cbox-upgrade-start"><?php esc_html_e( 'Start', 'commons-in-a-box' ); ?></button>
+			<button class="button" id="cbox-upgrade-pause"><?php esc_html_e( 'Pause', 'commons-in-a-box' ); ?></button>
 		</div>
 	</div>
 	<?php
