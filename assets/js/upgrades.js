@@ -58,6 +58,7 @@
 		var data = response.data;
 		var percentage = data.percentage;
 
+		$('.cbox-upgrade').find('h3').text( data.name );
 		$('.cbox-upgrade-progress-bar-inner').css( 'width', percentage +'%' );
 		$('#cbox-upgrade-total').text( data.total_items );
 		$('#cbox-upgrade-processed').text( data.total_processed );

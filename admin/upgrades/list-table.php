@@ -112,6 +112,34 @@ class List_Table extends \WP_List_Table {
 	}
 
 	/**
+	 * Extra controls to be displayed between bulk actions and pagination.
+	 *
+	 * @param string $which
+	 * @return void
+	 */
+	protected function extra_tablenav( $which ) {
+		if ( 'bottom' !== $which ) {
+			return;
+		}
+
+		if ( empty( $this->items ) ) {
+			return;
+		}
+
+		$url = add_query_arg( [
+			'page'   => 'cbox-upgrades',
+			'action' => 'view',
+			'id'     => 'all',
+		], self_admin_url( 'admin.php' ) );
+
+		printf(
+			'<a href="%1$s" class="button button-primary button-large">%2$s</a>',
+			esc_url( $url ),
+			__( 'Start upgrade process', 'commons-in-a-box' )
+		);
+	}
+
+	/**
 	 * Prepare the class items.
 	 *
 	 * @return void

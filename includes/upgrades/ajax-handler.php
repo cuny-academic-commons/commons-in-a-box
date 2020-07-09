@@ -16,15 +16,26 @@ function handle_upgrade() {
 	}
 
 	// Check the upgrade id.
-	$upgrade_id = isset( $_POST['upgrade'] ) ? sanitize_key( $_POST['upgrade'] ) : false;
-	if ( ! $upgrade_id ) {
+	$id = isset( $_POST['upgrade'] ) ? sanitize_key( $_POST['upgrade'] ) : false;
+	if ( ! $id ) {
 		wp_send_json_error( [
 			'message' => esc_html__( 'Invalid upgrade ID.', 'commons-in-a-box' ),
 		] );
 	}
 
-	/** @var \CBOX\Upgrades\Upgrade */
-	$upgrade = Upgrade_Registry::get_instance()->get_registered( $upgrade_id );
+	$registry = Upgrade_Registry::get_instance();
+
+	if ( $id === 'all' ) {
+		$upgrades = $registry->get_all_registered();
+
+		/** @var \CBOX\Upgrades\Upgrade */
+		$upgrade = ! empty( $upgrades ) ? reset( $upgrades ) : null;
+		$total   = count( $upgrades );
+	} else {
+		/** @var \CBOX\Upgrades\Upgrade */
+		$upgrade = $registry->get_registered( $id );
+		$total   = 1;
+	}
 
 	// Process the next item.
 	$next_item = $upgrade->get_next_item();
@@ -35,10 +46,11 @@ function handle_upgrade() {
 
 		wp_send_json_success( [
 			'message'         => esc_html__( 'Processing finished.', 'commons-in-a-box' ),
-			'is_finished'     => 1,
+			'is_finished'     => ( $id === 'all' && $total > 1 ) ? 0 : 1,
 			'total_processed' => $upgrade->get_processed_count(),
 			'total_items'     => $upgrade->get_items_count(),
 			'percentage'      => $upgrade->get_percentage(),
+			'name'            => $upgrade->name,
 		] );
 	}
 
@@ -49,6 +61,7 @@ function handle_upgrade() {
 	$total_processed = $upgrade->get_processed_count();
 	$total_items     = $upgrade->get_items_count();
 	$percentage      = $upgrade->get_percentage();
+	$name            = $upgrade->name;
 
 	if ( is_wp_error( $response ) ) {
 		wp_send_json_error( [
@@ -57,10 +70,12 @@ function handle_upgrade() {
 			'total_processed' => $total_processed,
 			'total_items'     => $total_items,
 			'percentage'      => $percentage,
+			'name'            => $name,
 		] );
 	}
 
 	wp_send_json_success( [
+		'name'            => $name,
 		'is_finished'     => 0,
 		'total_processed' => $total_processed,
 		'total_items'     => $total_items,

@@ -99,13 +99,21 @@ function upgrades_list_table() {
  * @return void
  */
 function upgrades_view() {
-	$id  = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
+	$id       = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
+	$registry = Upgrade_Registry::get_instance();
 
-	/** @var \CBOX\Upgrades\Upgrade */
-	$upgrade = Upgrade_Registry::get_instance()->get_registered( $id );
+	if ( $id === 'all' ) {
+		$upgrades = $registry->get_all_registered();
+
+		/** @var \CBOX\Upgrades\Upgrade */
+		$upgrade = ! empty( $upgrades ) ? reset( $upgrades ) : null;
+	} else {
+		/** @var \CBOX\Upgrades\Upgrade */
+		$upgrade = $registry->get_registered( $id );
+	}
 
 	if ( ! $upgrade ) {
-		esc_html_e( 'Upgrade doesn\'t exists!' );
+		esc_html_e( 'Upgrade doesn\'t exists!', 'commons-in-a-box' );
 		return;
 	}
 
