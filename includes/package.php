@@ -282,6 +282,13 @@ abstract class CBox_Package {
 	protected function custom_init() {}
 
 	/**
+	 * Register upgrade steps here.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function upgrader() {}
+
+	/**
 	 * Deactivation method, extend if necessary.
 	 *
 	 * Do something when the current package is being reset.

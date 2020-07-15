@@ -109,13 +109,21 @@ class Commons_In_A_Box {
 		require( $this->plugin_dir . 'includes/functions.php' );
 		require( $this->plugin_dir . 'includes/plugins.php' );
 
-		// admin area
+		// Admin.
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 
 		// frontend
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
+		}
+
+		// Upgrades API - runs in admin area and on AJAX.
+		if ( is_admin() ) {
+			// @todo maybe use autoloader.
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-registry.php' );
 		}
 
 		// WP-CLI integration
@@ -155,6 +163,28 @@ class Commons_In_A_Box {
 			}, 91 );
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
 		}
+
+		// Upgrader routine.
+		add_action( 'wp_loaded', function() {
+			// Ensure we're in the admin area.
+			if ( ! is_admin() ) {
+				return;
+			}
+
+			// Ensure upgrader items are registered.
+			$packages = cbox_get_packages();
+			$current  = cbox_get_current_package_id();
+			if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
+				call_user_func( array( $packages[$current], 'upgrader' ) );
+			}
+
+			// AJAX handler.
+			if ( wp_doing_ajax() && ! empty( $_POST['action'] ) &&
+				( 0 === strpos( $_POST['action'], 'cbox_' ) && false !== strpos( $_POST['action'], '_upgrade' ) )
+			) {
+				require CBOX_PLUGIN_DIR . 'includes/upgrades/ajax-handler.php';
+			}
+		} );
 	}
 
 	/**

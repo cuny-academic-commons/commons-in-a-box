@@ -185,11 +185,18 @@ function cbox_get_setup_step() {
 				$step = 'theme-prompt';
 			}
 		}
-
 	}
 
 	if ( empty( $step ) && cbox_get_theme_to_update() ) {
 		$step = 'theme-update';
+	}
+
+	// Upgrades.
+	if ( empty( $step ) ) {
+		$items = CBOX\Upgrades\Upgrade_Registry::get_instance()->get_all_registered();
+		if ( ! empty( $items ) ) {
+			$step = 'upgrades-available';
+		}
 	}
 
 	return $step;
