@@ -49,6 +49,7 @@
 						<li>Event Organiser 3.9.1</li>
 						<li>Invite Anyone 1.4.1</li>
 						<li>PressForward 5.2.3</li>
+						<li>WP Grade Comments 1.3.2</li>
 					</ul>
 				</div>
 			</div>
