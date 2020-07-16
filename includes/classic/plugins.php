@@ -216,8 +216,8 @@ class CBox_Plugins_Classic {
 				'cbox_name'         => __( 'Group Blogs', 'commons-in-a-box' ),
 				'cbox_description'  => 'Enables a BuddyPress group to be associated with a blog, by placing a Blog link in the group navigation and, optionally, syncing group membership with blog roles.',
 				'depends'           => 'BuddyPress (>=1.6)',
-				'version'           => '1.9.1',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.1.zip',
+				'version'           => '1.9.2',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.2.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
