@@ -41,6 +41,7 @@
 
 				<div class="feature-section">
 					<ul>
+						<li>bbPress 2.6.5</li>
 						<li>BuddyPress 6.1.0</li>
 					</ul>
 				</div>
