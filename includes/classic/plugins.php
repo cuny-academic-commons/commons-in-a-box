@@ -171,7 +171,7 @@ class CBox_Plugins_Classic {
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/cac-featured-content',
 		) );
 
-		// BuddyPress Group Email Subscription
+		// BuddyPress Group Announcements
 		call_user_func( $instance, array(
 			'plugin_name'       => 'BP Group Announcements',
 			'type'              => 'recommended',
@@ -204,8 +204,8 @@ class CBox_Plugins_Classic {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'Activity Privacy', 'commons-in-a-box' ),
 				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'commons-in-a-box' ),
-				'version'           => '1.3.1',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.3.1.zip',
+				'version'           => '1.3.2',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.3.2.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
