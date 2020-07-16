@@ -48,6 +48,7 @@
 						<li>BuddyPress Group Email Subscription 4.0.0</li>
 						<li>Event Organiser 3.9.1</li>
 						<li>Invite Anyone 1.4.1</li>
+						<li>PressForward 5.2.3</li>
 					</ul>
 				</div>
 			</div>
