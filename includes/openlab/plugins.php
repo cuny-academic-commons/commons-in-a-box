@@ -244,9 +244,9 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Events', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to create a calendar for themselves and to attach specific events to groups.', 'commons-in-a-box' ),
-			'version'           => '1.1.0',
+			'version'           => '1.2.0',
 			'depends'           => 'BuddyPress (>=1.5), Event Organiser (>=3.1)',
-			'download_url'      => 'https://github.com/cuny-academic-commons/bp-event-organiser/archive/1.1.0.zip',
+			'download_url'      => 'https://github.com/cuny-academic-commons/bp-event-organiser/archive/1.2.0.zip',
 			'network'           => false
 		) );
 	}

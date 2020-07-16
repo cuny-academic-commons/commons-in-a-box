@@ -44,6 +44,7 @@
 						<li>bbPress 2.6.5</li>
 						<li>BuddyPress 6.1.0</li>
 						<li>BuddyPress Docs 2.1.4</li>
+						<li>BuddyPress Event Organiser 1.2.0</li>
 						<li>BuddyPress Group Email Subscription 4.0.0</li>
 						<li>Event Organiser 3.9.1</li>
 						<li>Invite Anyone 1.4.1</li>
