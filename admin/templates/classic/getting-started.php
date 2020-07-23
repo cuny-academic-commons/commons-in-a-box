@@ -67,7 +67,10 @@
 
 								<div class="login postbox">
 									<div class="message" style="text-align:center;">
-										<strong><?php printf( __( '<a href="%1$s">Like the %2$s theme? Install it!</a>', 'commons-in-a-box' ), wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ); ?></strong>
+										<strong><?php printf( '<a href="%1$s" data-confirm="%2$s" onclick="return confirm( this.getAttribute( \'data-confirm\' ) );">%3$s</a>',
+											wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=install-theme' ), 'cbox_install_theme' ),
+											sprintf( esc_html__( "This will activate the %s theme on your site.\n\nAre you sure you want to continue?", 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ),
+											sprintf( esc_html__( 'Like the %s theme? Install it!', 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) ) ); ?></strong>
 									</div>
 								</div>
 
