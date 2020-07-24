@@ -184,6 +184,15 @@ class CBox_Plugins_OpenLab {
 			'version'           => '1.0.0',
 			'download_url'      => 'https://github.com/livinglab/openlab-portfolio/archive/1.0.0.zip',
 		) );
+
+		// OpenLab Badges
+		call_user_func( $instance, array(
+			'plugin_name'       => 'OpenLab Badges',
+			'cbox_name'         => __( 'Badges', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'Customizable badges for your OpenLab groups.', 'commons-in-a-box' ),
+			'version'           => '1.0.0-beta1',
+			'download_url'      => 'https://github.com/livinglab/openlab-badges/archive/1.0.0-beta1.zip',
+		) );
 	}
 
 	/**
