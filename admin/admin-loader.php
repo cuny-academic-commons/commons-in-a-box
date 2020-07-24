@@ -49,31 +49,31 @@ class CBox_Admin {
 	 * Setup hooks.
 	 */
 	private function setup_hooks() {
-		// Only register menu on the main site (this also accounts for Network Admin)
+		// Do certain things on the main site (also accounts for Network Admin)
 		if ( cbox_is_main_site() ) {
 			add_action( cbox_admin_prop( 'menu' ), array( $this, 'admin_menu' ) );
+
+			// see if an admin notice should be shown
+			add_action( 'admin_init', array( $this, 'setup_notice' ) );
+
+			// notice inline CSS
+			add_action( 'admin_head', array( $this, 'notice_css' ) );
+
+			// add an admin notice if CBOX isn't setup
+			add_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
+
+			// after installing a theme, do something
+			add_action( 'admin_init', array( $this, 'theme_activation_hook' ) );
+
+			// Upgrader page.
+			add_action( 'cbox_admin_menu', array( $this, 'upgrader' ), 0 );
 		}
 
-		// see if an admin notice should be shown
-		add_action( 'admin_init',                                                   array( $this, 'setup_notice' ) );
-
 		// persistent CSS
-		add_action( 'admin_head',                                                   array( $this, 'inline_css' ) );
-
-		// notice inline CSS
-		add_action( 'admin_head',                                                   array( $this, 'notice_css' ) );
-
-		// add an admin notice if CBOX isn't setup
-		add_action( is_network_admin() ? 'network_admin_notices' : 'admin_notices', array( $this, 'display_notice' ) );
+		add_action( 'admin_head',  array( $this, 'inline_css' ) );
 
 		// add a special header on the admin plugins page
-		add_action( 'pre_current_active_plugins', 	                            array( $this, 'plugins_page_header' ) );
-
-		// after installing a theme, do something
-		add_action( 'admin_init',                                                   array( $this, 'theme_activation_hook' ) );
-
-		// Upgrader page.
-		add_action( 'cbox_admin_menu',                                              array( $this, 'upgrader' ), 0 );
+		add_action( 'pre_current_active_plugins', array( $this, 'plugins_page_header' ) );
 	}
 
 	/**
