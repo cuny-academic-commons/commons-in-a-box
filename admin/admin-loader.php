@@ -565,10 +565,10 @@ class CBox_Admin {
 	}
 
 	/**
-         * Do something just after a theme is activated on the next page load.
-         *
-         * @since 1.0-beta1
-         */
+	 * Do something just after a theme is activated on the next page load.
+	 *
+	 * @since 1.0-beta1
+	 */
 	public function theme_activation_hook() {
 		if ( get_site_option( '_cbox_theme_activated' ) ) {
 			delete_site_option( '_cbox_theme_activated' );
