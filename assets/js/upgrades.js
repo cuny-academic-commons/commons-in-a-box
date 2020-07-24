@@ -50,7 +50,6 @@
 		$('#cbox-upgrade-total').text( data.total_items );
 		$('#cbox-upgrade-processed').text( data.total_processed );
 		$('#cbox-upgrade-percentage').text( '(' +percentage+ '%)' );
-		$('.cbox-upgrade-current-item').html(data.message);
 
 		if ( data.is_finished ) {
 			$('#cbox-upgrade-start, #cbox-upgrade-pause').prop( 'disabled', true );

@@ -40,13 +40,3 @@
 .cbox-upgrade-actions {
 	padding: 10px 20px;
 }
-
-.cbox-upgrade-current-item {
-	text-align: center;
-}
-
-.cbox-upgrade-current-item {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	min-height: 12px;
-}

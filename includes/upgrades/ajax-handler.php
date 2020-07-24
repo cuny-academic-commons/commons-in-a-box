@@ -46,7 +46,6 @@ function handle_upgrade() {
 		$upgrade->finish();
 
 		wp_send_json_success( [
-			'message'         => esc_html__( 'Processing finished.', 'commons-in-a-box' ),
 			'is_finished'     => ( $is_bulk && $total > 1 ) ? 0 : 1,
 			'total_processed' => $upgrade->get_processed_count(),
 			'total_items'     => $upgrade->get_items_count(),
@@ -66,7 +65,6 @@ function handle_upgrade() {
 
 	if ( is_wp_error( $response ) ) {
 		wp_send_json_error( [
-			'message'         => $response->get_error_message(),
 			'is_finished'     => 0,
 			'total_processed' => $total_processed,
 			'total_items'     => $total_items,
@@ -81,10 +79,6 @@ function handle_upgrade() {
 		'total_processed' => $total_processed,
 		'total_items'     => $total_items,
 		'percentage'      => $percentage,
-		'message'         => sprintf(
-			esc_html__( 'Processed item with ID: %d.', 'commons-in-a-box' ),
-			$next_item->id
-		),
 	] );
 }
 add_action( 'wp_ajax_cbox_handle_upgrade', __NAMESPACE__ . '\\handle_upgrade' );

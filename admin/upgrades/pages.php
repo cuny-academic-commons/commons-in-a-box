@@ -142,7 +142,6 @@ function upgrades_view() {
 			<div class="cbox-upgrade-progress-bar">
 				<div class="cbox-upgrade-progress-bar-inner" <?php echo $style; ?>></div>
 			</div>
-			<div class="cbox-upgrade-current-item"></div>
 		</div>
 		<div class="cbox-upgrade-actions">
 			<button class="button-primary" id="cbox-upgrade-start"><?php esc_html_e( 'Start', 'commons-in-a-box' ); ?></button>
