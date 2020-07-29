@@ -31,12 +31,6 @@ add_action(
             include_once CBOXOL_PLUGIN_DIR . 'autoload.php';
         }
 
-        /**
-         * Need to finalize where the CBOXOL code would go.
-         *
-         * Use sample patch for CBOXOL here:
-         * https://github.com/cuny-academic-commons/commons-in-a-box/files/4899666/upgrades-api.txt
-         */
         require_once CBOXOL_PLUGIN_DIR . 'includes/upgrades.php';
 
         $items = CBOX\Upgrades\Upgrade_Registry::get_instance()->get_all_registered();
