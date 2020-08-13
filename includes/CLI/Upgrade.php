@@ -114,5 +114,11 @@ class Upgrade extends \WP_CLI_Command {
 		// Mark process as finished.
 		$upgrade->finish();
 		$progress->finish();
+
+		WP_CLI::success( sprintf(
+			'Processed %1$d items from total %2$d.',
+			$upgrade->get_processed_count(),
+			$upgrade->get_items_count()
+		) );
 	}
 }
