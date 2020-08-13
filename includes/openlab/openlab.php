@@ -65,7 +65,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 			'name'           => 'CBOX OpenLab',
 			'version'        => '1.2.0-beta1',
 			'directory_name' => 'openlab-theme',
-			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.2.0-beta1.zip',
+			'download_url'   => CBOX_PLUGIN_DIR . 'includes/zip/openlab-theme-1.2.0-beta1.zip',
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_openlab_theme.png' ),
 			'force_install'  => true
 		);
