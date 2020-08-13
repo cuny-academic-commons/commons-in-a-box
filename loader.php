@@ -119,7 +119,7 @@ class Commons_In_A_Box {
 		}
 
 		// Upgrades API - runs in admin area and on AJAX.
-		if ( is_admin() ) {
+		if ( is_admin() || defined( 'WP_CLI' ) ) {
 			// @todo maybe use autoloader.
 			require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
 			require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
@@ -166,16 +166,14 @@ class Commons_In_A_Box {
 
 		// Upgrader routine.
 		add_action( 'wp_loaded', function() {
-			// Ensure we're in the admin area.
-			if ( ! is_admin() ) {
-				return;
-			}
-
-			// Ensure upgrader items are registered.
-			$packages = cbox_get_packages();
-			$current  = cbox_get_current_package_id();
-			if ( isset( $packages[$current] ) && class_exists( $packages[$current] ) ) {
-				call_user_func( array( $packages[$current], 'upgrader' ) );
+			// Ensure we're in the admin area or WP CLI.
+			if ( is_admin() || defined( 'WP_CLI') ) {
+				// Ensure upgrader items are registered.
+				$packages = cbox_get_packages();
+				$current  = cbox_get_current_package_id();
+				if ( isset( $packages[ $current ] ) && class_exists( $packages[ $current ] ) ) {
+					call_user_func( array( $packages[ $current ], 'upgrader' ) );
+				}
 			}
 
 			// AJAX handler.
@@ -208,6 +206,7 @@ class Commons_In_A_Box {
 			\WP_CLI::add_command( 'cbox',         '\CBOX\CLI\Core' );
 			\WP_CLI::add_command( 'cbox package', '\CBOX\CLI\Package' );
 			\WP_CLI::add_command( 'cbox update',  '\CBOX\CLI\Update' );
+			\WP_CLI::add_command( 'cbox upgrade', '\CBOX\CLI\Upgrade' );
 		}
 
 		/**
