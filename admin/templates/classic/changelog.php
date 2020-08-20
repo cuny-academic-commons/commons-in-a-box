@@ -46,18 +46,15 @@
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed an issue with making searches on BuddyPress directory pages.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed a bug with tab navigation in CBOX Theme options.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Password strength meters for settings and registration pages.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'commons-in-a-box' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
