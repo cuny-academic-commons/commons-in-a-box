@@ -592,7 +592,7 @@ class Plugin_Dependencies_UI {
 								echo '<li>' . __( 'Incorrect plugin version installed', 'plugin-dependencies' ) . ' - ';
 
 								if ( ! empty( $plugin['compatible_version'] ) )
-									printf( __( '%s (Version %s required)', 'cbox' ), $plugin['name'], $plugin['compatible_version'] );
+									printf( __( '%s (Version %s required)', 'commons-in-a-box' ), $plugin['name'], $plugin['compatible_version'] );
 								else
 									echo $plugin['name'];
 

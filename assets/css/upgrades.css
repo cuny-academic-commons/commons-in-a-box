@@ -1,0 +1,42 @@
+.cbox-upgrade {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	padding: 1px;
+	margin-top: 10px;
+}
+
+.cbox-upgrade h3 {
+	border-bottom: 1px solid #eee;
+	font-size: 1em;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 8px 20px;
+}
+
+.cbox-upgrade-main {
+	padding: 10px 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.cbox-upgrade-stats {
+	list-style: none;
+	margin-top: 0;
+}
+
+.cbox-upgrade-progress-bar-inner {
+	position: absolute;
+	background: #0073aa;
+	width: 0;
+	height: 100%;
+	left: 0;
+}
+
+.cbox-upgrade-progress-bar {
+	background: #f0f0f0;
+	min-height: 20px;
+	position: relative;
+}
+
+.cbox-upgrade-actions {
+	padding: 10px 20px;
+}

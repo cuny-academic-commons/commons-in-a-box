@@ -67,10 +67,13 @@ class Update extends \WP_CLI_Command {
 	}
 
 	/**
-	 * Updates all active CBOX plugins.
+	 * Updates plugins.
+	 *
+	 * Will install or activate missing required plugins and will offer to
+	 * update remaining active plugins.
 	 *
 	 * [--yes]
-	 * : Answer yes to the confirmation message.
+	 * : Answer yes to the confirmation message. Only applicable for plugins requiring upgrades.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -100,18 +103,75 @@ class Update extends \WP_CLI_Command {
 	 *     $ wp cbox update plugins --yes
 	 */
 	public function plugins( $args, $assoc_args ) {
+		if ( ! class_exists( '\CBox_Plugin_Upgrader' ) ) {
+			require_once CBOX_PLUGIN_DIR . 'admin/plugin-install.php';
+		}
+
+		$cbox_plugins = \CBox_Plugins::get_plugins();
+		$dependencies = \CBox_Plugins::get_plugins( 'dependency' );
+
+		// (1) Do required plugins first.
+		$required = \CBox_Plugins::get_plugins( 'required' );
+		$required = \CBox_Admin_Plugins::organize_plugins_by_state( $required );
+		unset( $required['deactivate'] );
+
+		$required = \CBox_Updater::parse_plugins( $required );
+
+		$activate = $urls = [];
+
+		if ( ! empty( $required['install'] ) ) {
+			$activate = $required['install'];
+
+			WP_CLI::line( 'Installing missing required plugins:' );
+
+			foreach ( $required['install'] as $plugin ) {
+				if ( ! empty( $dependencies[$plugin]['download_url'] ) ) {
+					$urls[] = $dependencies[$plugin]['download_url'];
+				} else {
+					$urls[] = $cbox_plugins[$plugin]['download_url'];
+				}
+			}
+
+			$urls = array_unique( $urls );
+
+			// Install missing plugins.
+			WP_CLI::runcommand( 'plugin install ' . implode( ' ', $urls ) . ' --force' );
+			WP_CLI::line( '' );
+
+			// Due to CLI, clear plugin dir cache after installation and re-init PD.
+			wp_cache_delete( 'plugins', 'plugins' );
+			\Plugin_Dependencies::init();
+		}
+
+		// If other plugins need to be activated, add it to our list.
+		if ( ! empty( $required['activate'] ) ) {
+			$activate = array_merge( $required['activate'], $activate );
+			$activate = array_unique( $activate );
+		}
+
+		// (2) Activate missing plugins.
+		if ( ! empty( $activate ) ) {
+			\CBox_Plugin_Upgrader::bulk_activate( $activate );
+
+			WP_CLI::line( 'Activated missing required plugins: ' . wp_sprintf_l( '%l', $activate ) . '.' );
+			WP_CLI::line( '' );
+		}
+
+		// (3) Do upgrades here.
 		$plugins = \CBox_Admin_Plugins::get_upgrades( 'active' );
 
 		if ( empty( $plugins ) ) {
-			WP_CLI::line( 'All active plugins are already up-to-date.' );
+			if ( ! empty( $required ) ) {
+				WP_CLI::line( 'All other active plugins are already up-to-date.' );
+			} else {
+				WP_CLI::line( 'All active plugins are already up-to-date.' );
+			}
 			return;
 		}
 
 		WP_CLI::line( 'Attempting to update the following plugins:' );
 
-		$cbox_plugins = \CBox_Plugins::get_plugins();
-		$dependencies = \CBox_Plugins::get_plugins( 'dependency' );
-		$urls = array();
+		$urls = [];
 
 		foreach ( $plugins as $plugin ) {
 			$loader = \Plugin_Dependencies::get_pluginloader_by_name( $plugin );

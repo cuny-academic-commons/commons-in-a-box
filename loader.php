@@ -3,12 +3,13 @@
 Plugin Name: Commons In A Box
 Plugin URI: http://commonsinabox.org
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
-Version: 1.1.2
+Version: 1.2.0
 Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
 Network: true
 Core: >=4.9.8
+Text Domain: commons-in-a-box
 */
 
 // Exit if accessed directly
@@ -84,10 +85,10 @@ class Commons_In_A_Box {
 		/** VERSION ***********************************************************/
 
 		// CBOX version
-		$this->version       = '1.1.2';
+		$this->version       = '1.2.0';
 
 		// UTC date of CBOX version release
-		$this->revision_date = '2019-08-29 15:00 UTC';
+		$this->revision_date = '2020-08-20 14:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
@@ -108,13 +109,21 @@ class Commons_In_A_Box {
 		require( $this->plugin_dir . 'includes/functions.php' );
 		require( $this->plugin_dir . 'includes/plugins.php' );
 
-		// admin area
+		// Admin.
 		if ( cbox_is_admin() ) {
 			require( $this->plugin_dir . 'admin/admin-loader.php' );
 
 		// frontend
 		} else {
 			require( $this->plugin_dir . 'includes/frontend.php' );
+		}
+
+		// Upgrades API - runs in admin area and on AJAX.
+		if ( is_admin() || defined( 'WP_CLI' ) ) {
+			// @todo maybe use autoloader.
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-item.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade.php' );
+			require( $this->plugin_dir . 'includes/upgrades/upgrade-registry.php' );
 		}
 
 		// WP-CLI integration
@@ -154,6 +163,26 @@ class Commons_In_A_Box {
 			}, 91 );
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
 		}
+
+		// Upgrader routine.
+		add_action( 'wp_loaded', function() {
+			// Ensure we're in the admin area or WP CLI.
+			if ( is_admin() || defined( 'WP_CLI') ) {
+				// Ensure upgrader items are registered.
+				$packages = cbox_get_packages();
+				$current  = cbox_get_current_package_id();
+				if ( isset( $packages[ $current ] ) && class_exists( $packages[ $current ] ) ) {
+					call_user_func( array( $packages[ $current ], 'upgrader' ) );
+				}
+			}
+
+			// AJAX handler.
+			if ( wp_doing_ajax() && ! empty( $_POST['action'] ) &&
+				( 0 === strpos( $_POST['action'], 'cbox_' ) && false !== strpos( $_POST['action'], '_upgrade' ) )
+			) {
+				require CBOX_PLUGIN_DIR . 'includes/upgrades/ajax-handler.php';
+			}
+		} );
 	}
 
 	/**
@@ -177,6 +206,7 @@ class Commons_In_A_Box {
 			\WP_CLI::add_command( 'cbox',         '\CBOX\CLI\Core' );
 			\WP_CLI::add_command( 'cbox package', '\CBOX\CLI\Package' );
 			\WP_CLI::add_command( 'cbox update',  '\CBOX\CLI\Update' );
+			\WP_CLI::add_command( 'cbox upgrade', '\CBOX\CLI\Upgrade' );
 		}
 
 		/**
@@ -264,19 +294,19 @@ class Commons_In_A_Box {
 	 */
 	public function localization() {
 		// Use the WP plugin locale filter from load_plugin_textdomain()
-		$locale        = apply_filters( 'plugin_locale', get_locale(), 'cbox' );
-		$mofile        = sprintf( '%1$s-%2$s.mo', 'cbox', $locale );
+		$locale        = apply_filters( 'plugin_locale', get_locale(), 'commons-in-a-box' );
+		$mofile        = sprintf( '%1$s-%2$s.mo', 'commons-in-a-box', $locale );
 
 		$mofile_global = trailingslashit( constant( 'WP_LANG_DIR' ) ) . $mofile;
 		$mofile_local  = $this->plugin_dir . 'languages/' . $mofile;
 
 		// look in /wp-content/languages/ first
 		if ( is_readable( $mofile_global ) ) {
-			return load_textdomain( 'cbox', $mofile_global );
+			return load_textdomain( 'commons-in-a-box', $mofile_global );
 
 		// if that doesn't exist, check for bundled language file
 		} elseif ( is_readable( $mofile_local ) ) {
-			return load_textdomain( 'cbox', $mofile_local );
+			return load_textdomain( 'commons-in-a-box', $mofile_local );
 
 		// no language file exists
 		} else {

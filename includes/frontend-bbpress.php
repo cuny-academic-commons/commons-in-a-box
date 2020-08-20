@@ -42,11 +42,15 @@ class CBox_BBP_Autoload {
 
 		$this->enable_visual_editor();
 
-		$this->get_activity_id_hotfix();
-
 		$this->fix_form_actions();
 
 		$this->save_notification_meta();
+
+		$this->allow_revisions_during_edit();
+
+		$this->bypass_link_limit();
+
+		$this->show_notice_for_moderated_posts();
 	}
 
 	/**
@@ -76,6 +80,8 @@ class CBox_BBP_Autoload {
 			remove_action( 'switch_blog', 'bbp_set_current_user_default_role' );
 		}
 	}
+
+	/** VISUAL EDITOR **************************************************/
 
 	/**
 	 * Re-enable TinyMCE in the forum textarea.
@@ -145,84 +151,7 @@ class CBox_BBP_Autoload {
 		add_filter( 'mce_buttons_2', '__return_empty_array' );
 	}
 
-	/**
-	 * Hotfix for bbPress activity ID fetching.
-	 *
-	 * Changes to BuddyPress in v2.1 to remove the activity count from activity
-	 * queries broke how bbPress determines what the existing activity ID is.
-	 *
-	 * This is a hotfix to add the new 'count_total' parameter added in BP 2.1, so
-	 * bbPress can accurately fetch the correct activity ID.  This prevents
-	 * duplicate activity entries when editing a bbPress forum post.
-	 *
-	 * This should hopefully be addressed in bbPress 2.6. Remove this in CBOX 1.1.
-	 *
-	 * @since 1.0.9
-	 *
-	 * @see BBP_BuddyPress_Activity::get_activity_id()
-	 * @see https://bbpress.trac.wordpress.org/ticket/2690
-	 */
-	public function get_activity_id_hotfix() {
-		// stop if BP is lower than 2.1
-		if ( version_compare( BP_VERSION, '2.1.0' ) < 0 ) {
-		        return;
-		}
-
-		// we're hoping a fix is going to be ready by bbP 2.6
-		if ( version_compare( bbp_get_version(), '2.6' ) >= 0 ) {
-		        return;
-		}
-
-		add_filter( 'get_post_metadata', array( $this, 'add_activity_get_specific_hotfix' ), 10, 3 );
-		add_filter( 'bp_activity_total_activities_sql', array( $this, 'remove_activity_get_specific_hotfix' ) );
-	}
-
-	/**
-	 * Add filter to bp_activity_get_specific() to add 'count_total' parameter.
-	 *
-	 * Before bbPress determines what the activity ID is, it tries to fetch the
-	 * activity ID from its post meta.  This is a good place to add in our
-	 * bp_activity_get_specific() filter before the function is called.
-	 *
-	 * Remove this in CBOX 1.1.
-	 *
-	 * @see BBP_BuddyPress_Activity::get_activity_id()
-	 */
-	public function add_activity_get_specific_hotfix( $retval, $object_id, $meta_key ) {
-		if ( '_bbp_activity_id' === $meta_key ) {
-			add_filter( 'bp_activity_get_specific', array( $this, 'add_count_total_to_get_specific' ), 10, 3 );
-		}
-
-		return $retval;
-	}
-
-	/**
-	 * Add back the 'count_total' parameter when using bp_activity_get_specific().
-	 *
-	 * Because activity counts were removed by default in BuddyPress 2.1, this
-	 * broke how bbPress determines what an existing activity ID is.  This method
-	 * adds back activity counts when using bp_activity_get_specific() so bbPress
-	 * will function like before.
-	 *
-	 * Remove this in CBOX 1.1.
-	 */
-	public function add_count_total_to_get_specific( $retval, $orig_args, $r ) {
-		$r['count_total'] = true;
-		return BP_Activity_Activity::get( $r );
-	}
-
-	/**
-	 * Remove filter to bp_activity_get_specific() to add 'count_total' parameter.
-	 *
-	 * Remove this in CBOX 1.1.
-	 *
-	 * @see CBox_BBP_Autoload::add_activity_get_specific_hotfix()
-	 */
-	public function remove_activity_get_specific_hotfix( $retval ) {
-		remove_filter( 'bp_activity_get_specific', array( $this, 'add_count_total_to_get_specific' ), 10, 3 );
-
-		return $retval;
-	}
+	/** FORM ACTIONS ***********************************************/
 
 	/**
 	 * Workaround for bbPress group form actions being wrong on BP 2.1 for bp-default derivatives.
@@ -295,8 +224,109 @@ class CBox_BBP_Autoload {
 
 			// Save some meta.
 			bp_notifications_update_meta( $n->id, 'cbox_bbp_reply_permalink', bbp_get_reply_url( $n->item_id ) );
-			bp_notifications_update_meta( $n->id, 'cbox_bbp_topic_title',     bbp_get_topic_title( $n->item_id ) );			
+			bp_notifications_update_meta( $n->id, 'cbox_bbp_topic_title',     bbp_get_topic_title( $n->item_id ) );
 			bp_notifications_update_meta( $n->id, 'cbox_bbp_reply_topic_id',  bbp_get_reply_topic_id( $n->item_id ) );
 		} );
+	}
+
+	/** ALLOW REVISIONS ************************************************/
+
+	/**
+	 * Bring back forum post edits to BP activity publishing.
+	 *
+	 * Requires temporarily enabling revisions for the current post type.
+	 *
+	 * Hotfix for {@link https://bbpress.trac.wordpress.org/ticket/3328}.
+	 *
+	 * @since 1.2.0
+	 */
+	public function allow_revisions_during_edit() {
+		add_action( 'edit_post', function( $post_id, $post ) {
+			$post_type = '';
+
+			if ( get_post_type( $post ) === bbp_get_topic_post_type() ) {
+				$post_type = 'topic';
+			} elseif ( get_post_type( $post ) === bbp_get_reply_post_type() ) {
+				$post_type = 'reply';
+			}
+
+			if ( '' === $post_type ) {
+				return;
+			}
+
+			// See https://bbpress.trac.wordpress.org/ticket/3328.
+			$GLOBALS[ '_wp_post_type_features' ][ $post_type ][ 'revisions' ] = true;
+
+			// Pass the first revision check.
+			add_filter( 'bbp_allow_revisions', '__return_true' );
+
+			// Remove hack.
+			add_filter( "bp_is_{$post_type}_anonymous", function( $retval ) use ( $post_type ) {
+				remove_filter( 'bbp_allow_revisions', '__return_true' );
+				unset( $GLOBALS[ '_wp_post_type_features' ][ $post_type ][ 'revisions' ] );
+
+				return $retval;
+			} );
+		}, 9, 2 );
+	}
+
+	/** BYPASS LINK LIMIT **********************************************/
+
+	/**
+	 * Bypass link limit for logged-in users for bbPress 2.6.
+	 *
+	 * Hotfix for {@link https://bbpress.trac.wordpress.org/ticket/3352}.
+	 *
+	 * @since 1.2.0
+	 */
+	public function bypass_link_limit() {
+		add_filter( 'bbp_bypass_check_for_moderation', function( $bool, $anon_data, $user_id, $title, $content, $strict ) {
+			// If not checking for links or anonymous user, bail.
+			if ( true === $strict || ! empty( $anon_data ) || empty( $user_id ) ) {
+				return $bool;
+			}
+
+			$max = function() {
+				return PHP_INT_MAX;
+			};
+
+			// Allow a lot of links :)
+			add_filter( 'option_comment_max_links', $max );
+
+			// Remove our link bypasser during the next filter check.
+			add_filter( 'bbp_moderation_keys', function( $retval ) use ( $max ) {
+				remove_filter( 'option_comment_max_links', $max );
+				return $retval;
+			} );
+
+			return $bool;
+		}, 10, 6 );
+	}
+
+	/**
+	 * Add error messaging for moderated forum posts.
+	 *
+	 * We have to use BP's template notice routine because the template
+	 * notices by bbPress aren't shown due to the redirection code in
+	 * bbPress's BuddyPress group module.
+	 *
+	 * @since 1.2.0
+	 */
+	public function show_notice_for_moderated_posts() {
+		// Notice callback anonymous function.
+		$notice = function( $retval ) {
+			if ( ! bp_is_group() || bbp_get_pending_status_id() !== $retval['post_status'] ) {
+				return $retval;
+			}
+
+			// Todo: Should we let the user know why their post was auto-moderated?
+			$msg = esc_html__( 'Your forum post is pending moderation', 'commons-in-a-box' );
+			bp_core_add_message( $msg, 'error' );
+
+			return $retval;
+		};
+
+		add_filter( 'bbp_new_topic_pre_insert', $notice );
+		add_filter( 'bbp_new_reply_pre_insert', $notice );
 	}
 }

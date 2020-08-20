@@ -51,7 +51,7 @@ class CBox_Package_OpenLab extends CBox_Package {
 	 */
 	protected static function strings() {
 		return array(
-			'tab_plugin_optional' => __( 'Community Features', 'cbox' )
+			'tab_plugin_optional' => __( 'Community Features', 'commons-in-a-box' )
 		);
 	}
 
@@ -63,9 +63,9 @@ class CBox_Package_OpenLab extends CBox_Package {
 	protected static function theme() {
 		return array(
 			'name'           => 'CBOX OpenLab',
-			'version'        => '1.1.2',
+			'version'        => '1.2.0',
 			'directory_name' => 'openlab-theme',
-			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.1.2.zip',
+			'download_url'   => 'http://github.com/cuny-academic-commons/openlab-theme/archive/1.2.0.zip',
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_openlab_theme.png' ),
 			'force_install'  => true
 		);
@@ -79,6 +79,15 @@ class CBox_Package_OpenLab extends CBox_Package {
 	protected function custom_init() {
 		add_filter( 'site_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
 		add_filter( 'default_site_option_menu_items', array( __CLASS__, 'menu_items_cb' ) );
+	}
+
+	/**
+	 * Register upgrader.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function upgrader() {
+		do_action( 'cboxol_register_upgrader' );
 	}
 
 	/**
