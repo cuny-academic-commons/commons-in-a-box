@@ -17,24 +17,33 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section col two-col">
+					<ul>
+						<li><?php esc_html_e( 'New Badges tool for groups.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New import and export tools for Portfolios.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New search results landing page for groups, with improved sidebar filters.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added directory filters for "Open" and "Cloneable" groups.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New group cloning features, including "shared cloning", a Credits section for groups and sites, and cloning for all group types.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added fine-grained control over how group roles map to site roles.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to "Additional Faculty" and "Group Contact" tools.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Group-level toggles for Docs, Files, Discussions, and Files features.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved validation of URLs during the group creation process.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Allow users without a member type to select their own member type on their Settings panel, for better compatibility with auto-provisioned user accounts.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that could cause an invalid default theme to be installed on group-type template sites.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug in the way that network toolbar loads on subdomain installations.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Accessibility improvements for Dashboard admin panels.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added CLI tools for performing data migrations after CBOX upgrade.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed text visibility bug when editing a group event.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Performance improvements related to user-defined strings.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility between network toolbar and latest versions of Block Editor.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Localization improvements.', 'commons-in-a-box' ); ?></li>
 
-					<div class="last-feature">
-
-						<p><?php esc_html_e( 'Hide "Group Home" link from site navs when the group is inaccessible to current user.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Fix bug that could prevent site admins from accessing Dashboard > Plugins in some cases.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Improvements to the behavior of network-activated CBOX plugins.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with Multi-Network setups.', 'commons-in-a-box' ); ?></p>
-
-					</div>
+					</ul>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>
@@ -54,20 +63,19 @@
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed bug with BuddyPress Docs edit mode.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved appearance of single page/post content.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed incorrect "Recent Docs" and "Recent Discussions" subheaders when WordPress is installed in a subdirectory.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved language regarding "Professor(s)" in group headers.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Increased the number of group members shown on the group Settings panels.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Simplification of some template parts.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved filterability of "lost password" length in homepage login box.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved "current page" highlighting on main nav menu.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that prevented group action buttons ("Join Group", etc) from being shown to network administrators.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'commons-in-a-box' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>
