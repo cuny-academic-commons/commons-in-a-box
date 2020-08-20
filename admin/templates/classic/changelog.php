@@ -17,21 +17,18 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<p><?php esc_html_e( 'Improved compatibility with BP Customizer settings when using the Nouveau template pack.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Improvements to the behavior of network-activated CBOX plugins.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Fixed bug in WP-CLI tools that caused theme update to unzip to wrong location in some cases.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Improved compatibility with Multi-Network setups.', 'commons-in-a-box' ); ?></p>
+						<p><?php esc_html_e( 'Compatibility with WordPress 5.5.', 'commons-in-a-box' ); ?></p>
+						<p><?php esc_html_e( 'Improved confirmation before installing or activating cbox-theme.', 'commons-in-a-box' ); ?></p>
+						<p><?php esc_html_e( 'Localization improvements.', 'commons-in-a-box' ); ?></p>
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>

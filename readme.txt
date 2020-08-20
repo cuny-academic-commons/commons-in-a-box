@@ -60,6 +60,9 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 == Changelog ==
 
 = 1.2.0 =
+* Classic: Improved compatibility with WordPress 5.5
+* Classic: Improved confirmation before installing or activating cbox-theme.
+* Classic: Localization improvements.
 * Updated plugins (Classic): bbPress 2.6.5, BP Groupblog 1.9.2, BP MPO Activity Filter 1.3.2, BuddyPress 6.1.0, BuddyPress Docs 2.1.4, BuddyPress Group Email Subscription 4.0.0, Invite Anyone 1.4.1
 * Updated plugins (OpenLab): bbPress 2.6.5, BuddyPress 6.1.0, BuddyPress Docs 2.1.4, BuddyPress Event Organiser 1.2.0, BuddyPress Group Email Subscription 4.0.0, Event Organiser 3.10.0, Invite Anyone 1.4.1, PressForward 5.2.3, WP Grade Comments 1.3.2
 
