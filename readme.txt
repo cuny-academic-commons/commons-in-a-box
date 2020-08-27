@@ -59,6 +59,10 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
+= 1.2.2 =
+* OpenLab: Fixed bug that caused Search Results page not to be installed properly on upgrade from 1.1.x.
+* OpenLab: Fixed bug that caused some footer widget text to be uneditable.
+
 = 1.2.1 =
 * OpenLab: Fixed bug that may cause fatal errors during 1.2.0 plugin upgrade routine.
 
