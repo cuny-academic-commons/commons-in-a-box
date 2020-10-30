@@ -181,8 +181,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'OpenLab Portfolio',
 			'cbox_name'         => __( 'Portfolio', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'WordPress portfolio tools.', 'commons-in-a-box' ),
-			'version'           => '1.0.0',
-			'download_url'      => 'https://github.com/livinglab/openlab-portfolio/archive/1.0.0.zip',
+			'version'           => '1.0.1',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-portfolio/archive/1.0.1.zip',
 		) );
 
 		// OpenLab Badges
@@ -191,7 +191,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Badges', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Customizable badges for your OpenLab groups.', 'commons-in-a-box' ),
 			'version'           => '1.0.0-beta1',
-			'download_url'      => 'https://github.com/livinglab/openlab-badges/archive/1.0.0-beta1.zip',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.0-beta1.zip',
 		) );
 	}
 
