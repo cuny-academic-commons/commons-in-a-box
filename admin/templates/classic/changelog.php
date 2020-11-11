@@ -35,13 +35,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.5</li>
-						<li>BP Groupblog 1.9.2</li>
-						<li>BP MPO Activity Filter 1.3.2</li>
-						<li>BuddyPress 6.1.0</li>
-						<li>BuddyPress Docs 2.1.4</li>
-						<li>BuddyPress Group Email Subscription 2.1.4</li>
-						<li>Invite Anyone 1.4.1</li>
+						<li>BuddyPress 6.3.0</li>
 					</ul>
 				</div>
 			</div>
