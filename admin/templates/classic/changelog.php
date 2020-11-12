@@ -38,6 +38,7 @@
 						<li>bbPress 2.6.6</li>
 						<li>BuddyPress 6.3.0</li>
 						<li>BuddyPress Docs 2.1.5</li>
+						<li>BP Reply By Email 1.0-RC9</li>
 					</ul>
 				</div>
 			</div>
