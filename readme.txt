@@ -3,7 +3,7 @@ Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
 Tested up to: 5.5
-Stable tag: 1.2.0
+Stable tag: 1.2.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,29 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.2.3 =
+* Updated plugins (Classic): bbPress 2.6.6, BuddyPress 6.3.0, BuddyPress Docs 2.1.5, BP Reply By Email 1.0-RC9
+* Updated plugins (OpenLab): bbPress 2.6.6, BuddyPress 6.3.0, BuddyPress Docs 2.1.5, BP Reply By Email 1.0-RC9, Event Organiser 3.10.2
+* Improved markup on Welcome page for better cross-browser appearance.
+* OpenLab: Improvements to Dashboard menu positioning when scrolling.
+* OpenLab: Improved appearance for Help page templates.
+* OpenLab: Provide some configurable labels missing in 1.2.2 release.
+* OpenLab: Fixed bug that may cause certain group types not to appear in admin UI in some cases.
+* OpenLab: Fixed missing icon on 'Clone' button.
+* OpenLab: Removed irrelevant filter dropdowns from certain content directories.
+* OpenLab: Fixed bug that caused 'type' sorting not to work in member directories.
+* OpenLab: Improved data cleanup after a site is manually deleted via the Network Admin.
+* OpenLab: Improvements to 404 template.
+* OpenLab: Improved backward compatibility for the display of group contacts.
+* Classic: Improvements to registration page markup for better plugin compatibility.
+
+= 1.2.2 =
+* OpenLab: Fixed bug that caused Search Results page not to be installed properly on upgrade from 1.1.x.
+* OpenLab: Fixed bug that caused some footer widget text to be uneditable.
+
+= 1.2.1 =
+* OpenLab: Fixed bug that may cause fatal errors during 1.2.0 plugin upgrade routine.
 
 = 1.2.0 =
 * Classic: Improved compatibility with WordPress 5.5
