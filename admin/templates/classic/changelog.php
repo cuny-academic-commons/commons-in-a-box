@@ -23,9 +23,7 @@
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<p><?php esc_html_e( 'Compatibility with WordPress 5.5.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Improved confirmation before installing or activating cbox-theme.', 'commons-in-a-box' ); ?></p>
-						<p><?php esc_html_e( 'Localization improvements.', 'commons-in-a-box' ); ?></p>
+						<p><?php esc_html_e( 'Improved markup on Welcome page for better cross-browser appearance.', 'commons-in-a-box' ); ?></p>
 					</div>
 				</div>
 			</div>
@@ -36,6 +34,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>bbPress 2.6.6</li>
+						<li>BP Reply By Email 1.0-RC9</li>
 						<li>BuddyPress 6.3.0</li>
 						<li>BuddyPress Docs 2.1.5</li>
 						<li>BP Reply By Email 1.0-RC9</li>
@@ -48,7 +47,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Password strength meters for settings and registration pages.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to registration page markup for better plugin compatibility.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
