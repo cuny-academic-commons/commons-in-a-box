@@ -22,12 +22,11 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Improved markup on Welcome page for better cross-browser appearance.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to Dashboard menu positioning when scrolling.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Provide some configurable labels missing in 1.2.2 release.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that may cause certain group types not to appear in admin UI in some cases.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved data cleanup after a site is manually deleted via the Network Admin.', 'commons-in-a-box' ); ?></li>
-
+						<li><?php esc_html_e( 'Compatibility with WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed the logic of the default "Term" value when creating a Course.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that made it impossible to save an empty value for "Term" in a Course.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior when populating the "Clone Existing" dropdown during group creation.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Better flushing of permalinks on newly created sites.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -37,11 +36,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.6</li>
-						<li>BP Reply By Email 1.0-RC9</li>
-						<li>BuddyPress 6.3.0</li>
-						<li>BuddyPress Docs 2.1.5</li>
-						<li>Event Organiser 3.10.2</li>
+						<li>BuddyPress 6.4.0</li>
 					</ul>
 				</div>
 			</div>
@@ -51,12 +46,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Improved appearance for Help page templates.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed missing icon on "Clone" button.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Removed irrelevant filter dropdowns from certain content directories.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that caused "type" sorting not to work in member directories.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to 404 template.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved backward compatibility for the display of group contacts.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Compatibility with latest versions of jQuery included in WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the behavior of nav menus on medium-width screens.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed "Sent between" text that appears on private message threads.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Better consistency when generating group navigation for group Moderators.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
