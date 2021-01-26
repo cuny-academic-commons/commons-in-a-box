@@ -23,7 +23,7 @@
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<p><?php esc_html_e( 'Improved markup on Welcome page for better cross-browser appearance.', 'commons-in-a-box' ); ?></p>
+						<li><?php esc_html_e( 'Compatibility with WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Improvements to registration page markup for better plugin compatibility.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Compatibility with WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

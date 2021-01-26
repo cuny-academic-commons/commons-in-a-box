@@ -62,6 +62,15 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 = 1.2.4 =
 * Updated plugins (Classic): BuddyPress 6.4.0
 * Updated plugins (OpenLab): BuddyPress 6.4.0
+* Compatibility with WordPress 5.6+.
+* Compatibility with latest versions of jQuery, as included in WordPress 5.6+.
+* OpenLab: Fixed the logic of the default 'Term' value when creating a Course.
+* OpenLab: Improvements to the behavior of nav menus on medium-width screens.
+* OpenLab: Improved behavior when populating the "Clone Existing" dropdown during group creation.
+* OpenLab: Better flushing of permalinks on newly created sites.
+* OpenLab: Fixed "Sent between" text that appears on private message threads.
+* OpenLab: Better consistency when generating group navigation for group Moderators.
+* OpenLab: Fixed bug that made it impossible to save an empty value for "Term" in a Course
 
 = 1.2.3 =
 * Updated plugins (Classic): bbPress 2.6.6, BuddyPress 6.3.0, BuddyPress Docs 2.1.5, BP Reply By Email 1.0-RC9
