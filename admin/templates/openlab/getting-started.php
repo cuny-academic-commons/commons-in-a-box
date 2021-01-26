@@ -35,22 +35,3 @@
 	</ol>
 	</div>
 </div>
-
-<script>
-jQuery(function($){
-	var max = 0;
-	resizeLi();
-
-	function resizeLi() {
-		if( $('#welcome-panel .wp-badge').css('display') !== 'none' ) {
-			max = Math.max.apply(Math, $("#getting-started li").map(function() { return $(this).height(); }));
-			$("#getting-started li").height(max + 20);
-		}
-	}
-
-	$(window).on('resize', function(){
-		$("#getting-started li").map(function() { return $(this).removeAttr('style'); } );
-		resizeLi();
-	});
-});
-</script>

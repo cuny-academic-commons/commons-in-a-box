@@ -22,25 +22,11 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'New Badges tool for groups.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New import and export tools for Portfolios.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New search results landing page for groups, with improved sidebar filters.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Added directory filters for "Open" and "Cloneable" groups.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New group cloning features, including "shared cloning", a Credits section for groups and sites, and cloning for all group types.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Added fine-grained control over how group roles map to site roles.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to "Additional Faculty" and "Group Contact" tools.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Group-level toggles for Docs, Files, Discussions, and Files features.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved validation of URLs during the group creation process.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Allow users without a member type to select their own member type on their Settings panel, for better compatibility with auto-provisioned user accounts.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that could cause an invalid default theme to be installed on group-type template sites.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug in the way that network toolbar loads on subdomain installations.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Accessibility improvements for Dashboard admin panels.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Added CLI tools for performing data migrations after CBOX upgrade.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed text visibility bug when editing a group event.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Performance improvements related to user-defined strings.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved compatibility between network toolbar and latest versions of Block Editor.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Localization improvements.', 'commons-in-a-box' ); ?></li>
-
+						<li><?php esc_html_e( 'Compatibility with WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed the logic of the default "Term" value when creating a Course.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that made it impossible to save an empty value for "Term" in a Course.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior when populating the "Clone Existing" dropdown during group creation.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Better flushing of permalinks on newly created sites.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -50,15 +36,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.5</li>
-						<li>BuddyPress 6.1.0</li>
-						<li>BuddyPress Docs 2.1.4</li>
-						<li>BuddyPress Event Organiser 1.2.0</li>
-						<li>BuddyPress Group Email Subscription 4.0.0</li>
-						<li>Event Organiser 3.10.0</li>
-						<li>Invite Anyone 1.4.1</li>
-						<li>PressForward 5.2.3</li>
-						<li>WP Grade Comments 1.3.2</li>
+						<li>BuddyPress 6.4.0</li>
 					</ul>
 				</div>
 			</div>
@@ -68,11 +46,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Increased the number of group members shown on the group Settings panels.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Simplification of some template parts.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved filterability of "lost password" length in homepage login box.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved "current page" highlighting on main nav menu.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented group action buttons ("Join Group", etc) from being shown to network administrators.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Compatibility with latest versions of jQuery included in WordPress 5.6+.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the behavior of nav menus on medium-width screens.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed "Sent between" text that appears on private message threads.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Better consistency when generating group navigation for group Moderators.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

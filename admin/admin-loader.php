@@ -1218,9 +1218,10 @@ class CBox_Admin {
 
 		#wpbody-content .metabox-holder {padding-top:0;}
 		.metabox-holder .stuffbox {border-width:0 0 1px 0;}
-		#getting-started .inside ol {columns:2; -webkit-columns: 2; -moz-columns:2; list-style:none; counter-reset:counter; margin:1.5em 1em 0;}
-		#getting-started .inside li {width:calc(100% - 20px); position:relative; padding-left:20px;}
-		#getting-started .inside li:before {content:counter(counter) "."; counter-increment:counter; position:absolute; top:0; left:-5px; font-size:1.5em; font-weight:bold; color:gray;}
+		#getting-started ol {display:table; list-style:none; counter-reset:counter;}
+		#getting-started li {display:inline-table; position:relative; width:calc(50% - 26.5px);}
+		#getting-started li:nth-child(even) {left:40px;}
+		#getting-started li:before {content:counter(counter) "."; counter-increment:counter; position:absolute; top:0; left:-25px; font-size:1.5em; font-weight:bold; color:gray;}
 
 		#getting-started .inside h4 {margin:0;}
 		#getting-started .inside h4 a {text-decoration:none; font-size:1.3em;}
@@ -1315,8 +1316,8 @@ class CBox_Admin {
 			.cbox-badge {display:none;}
 			.about-wrap h1, .about-wrap .about-text {margin-right:0;}
 			.welcome-panel-content {margin-left:0;}
-			#getting-started .inside ol {columns:1; -webkit-columns:1; -moz-columns:1;}
-			#getting-started .inside li {height:auto;}
+			#getting-started li {width:100%;}
+			#getting-started li:nth-child(even) {left:0}
 			.metabox-holder .welcome-panel-column {width:auto;}
 		}
 		</style>

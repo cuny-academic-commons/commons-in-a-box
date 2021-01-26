@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '6.1.0',
+			'version'           => '6.4.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -54,8 +54,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.2.0',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.2.0.zip',
+			'version'           => '1.2.4',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.2.4.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -64,8 +64,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'bbPress',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.5',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.5.zip',
+			'version'           => '2.6.6',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
@@ -78,9 +78,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress Docs',
 			'cbox_name'         => __( 'Docs', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'commons-in-a-box' ),
-			'version'           => '2.1.4',
+			'version'           => '2.1.5',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.4.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.5.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -181,8 +181,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'OpenLab Portfolio',
 			'cbox_name'         => __( 'Portfolio', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'WordPress portfolio tools.', 'commons-in-a-box' ),
-			'version'           => '1.0.0',
-			'download_url'      => 'https://github.com/livinglab/openlab-portfolio/archive/1.0.0.zip',
+			'version'           => '1.0.2',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-portfolio/archive/1.0.2.zip',
 		) );
 
 		// OpenLab Badges
@@ -191,7 +191,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Badges', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Customizable badges for your OpenLab groups.', 'commons-in-a-box' ),
 			'version'           => '1.0.0-beta1',
-			'download_url'      => 'https://github.com/livinglab/openlab-badges/archive/1.0.0-beta1.zip',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.0-beta1.zip',
 		) );
 	}
 
@@ -215,15 +215,15 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.6.1.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.6.4.0.zip'
 		) );
 
 		// Event Organiser
 		call_user_func( $instance, array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
-			'version'      => '3.10.0',
-			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.10.0.zip',
+			'version'      => '3.10.2',
+			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.10.2.zip',
 			'network'      => false,
 			'hide'         => cbox_is_main_site()
 		) );
@@ -275,9 +275,9 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'commons-in-a-box' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
-			'version'           => '1.0-RC8',
+			'version'           => '1.0-RC9',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC8.zip',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC9.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'
