@@ -8,7 +8,8 @@ Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
 Network: true
-Core: >=4.9.8
+Requires at least: 5.1.0
+Core: >=5.1.0
 Text Domain: commons-in-a-box
 */
 

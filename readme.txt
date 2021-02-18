@@ -1,7 +1,7 @@
 === Commons In A Box ===
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
-Requires at least: 4.9.8
+Requires at least: 5.1.0
 Tested up to: 5.6
 Stable tag: 1.2.4
 License: GPLv3
