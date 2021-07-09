@@ -35,6 +35,11 @@ add_action(
 
         $items = CBOX\Upgrades\Upgrade_Registry::get_instance()->get_all_registered();
         foreach ( $items as $item ) {
+			// Don't mark the initial setup routine as complete.
+			if ( 'init_config' === $item->id ) {
+				continue;
+			}
+
             if ( ! get_option( $item::FLAG, false ) ) {
                 $item->finish();
             }

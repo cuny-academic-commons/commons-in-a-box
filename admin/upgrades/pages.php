@@ -114,14 +114,14 @@ function upgrades_view() {
 	}
 
 	if ( ! $upgrade ) {
-		esc_html_e( 'Upgrade doesn\'t exists!', 'commons-in-a-box' );
+		esc_html_e( 'Upgrade doesn\'t exist!', 'commons-in-a-box' );
 		return;
 	}
 
 	$name       = $is_bulk ? __( 'Bulk upgrade', 'commons-in-a-box' ) : $upgrade->name;
 	$percentage = $upgrade->get_percentage();
 	$style      = $percentage > 0 ? 'style="width: '.$percentage.'%"' : '';
-	$go_back    = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
+	$go_back    = cbox_admin_prop( 'url', 'admin.php?page=cbox' );
 	?>
 	<div class="cbox-upgrade">
 		<h3><?php echo esc_html( $name ); ?></h3>
@@ -149,7 +149,7 @@ function upgrades_view() {
 		</div>
 	</div>
 	<p>
-		<a href="<?php echo esc_url( $go_back ); ?>" class="button button-primary"><?php esc_html_e( 'Go back', 'commons-in-a-box' ); ?></a>
+		<a href="<?php echo esc_url( $go_back ); ?>" class="button button-primary"><?php esc_html_e( 'Back to the Commons In A Box Dashboard', 'commons-in-a-box' ); ?></a>
 	</p>
 	<?php
 }
