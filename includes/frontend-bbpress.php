@@ -38,8 +38,6 @@ class CBox_BBP_Autoload {
 	public function __construct() {
 		$this->is_site_public();
 
-		$this->remove_dynamic_role_setter();
-
 		$this->enable_visual_editor();
 
 		$this->fix_form_actions();
@@ -65,20 +63,6 @@ class CBox_BBP_Autoload {
 	 */
 	public function is_site_public() {
 		add_filter( 'bbp_is_site_public', '__return_true' );
-	}
-
-	/**
-	 * bbPress 2.2.x forces blog creators from the Administrator role to
-	 * Participant, or to have no role at all.
-	 *
-	 * This is a hotfix to address bbPress 2.2.x; bbPress 2.3 fixes this.
-	 *
-	 * @see https://bbpress.trac.wordpress.org/ticket/2103
-	 */
-	public function remove_dynamic_role_setter() {
-		if ( version_compare( bbp_get_version(), '2.3' ) < 0 ) {
-			remove_action( 'switch_blog', 'bbp_set_current_user_default_role' );
-		}
 	}
 
 	/** VISUAL EDITOR **************************************************/
