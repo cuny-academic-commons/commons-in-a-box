@@ -51,6 +51,8 @@ class CBox_BBP_Autoload {
 		$this->show_notice_for_moderated_posts();
 
 		$this->fix_duplicate_forum_creation();
+
+		$this->fix_pending_group_topics();
 	}
 
 	/**
@@ -312,7 +314,6 @@ class CBox_BBP_Autoload {
 			return $retval;
 		};
 
-		add_filter( 'bbp_new_topic_pre_insert', $notice );
 		add_filter( 'bbp_new_reply_pre_insert', $notice );
 	}
 
@@ -380,5 +381,131 @@ class CBox_BBP_Autoload {
 				bbp_update_group_forum_ids( $group_id, [ $previous_forum ] );
 			}
 		}, 7 );
+	}
+
+	/**
+	 * Allow pending group topics to be viewed.
+	 *
+	 * Hotfix for https://bbpress.trac.wordpress.org/ticket/3430
+	 *
+	 * @since 1.3.0
+	 */
+	public function fix_pending_group_topics() {
+		$pending_slug_prefix = 'pending--';
+
+		// Utility function to parse pending post name to post ID.
+		$parse_post_name = function( $post_name ) use ( $pending_slug_prefix ) {
+			// Bail if post name does not match our pending prefix.
+			if ( 0 !== strpos( $post_name, $pending_slug_prefix ) ) {
+				return false;
+			}
+
+			// Sanity check! Ensure we have a post ID.
+			$id = substr( $post_name, 9 );
+			if ( ! is_numeric( $id ) ) {
+				return false;
+			}
+
+			// Sanity check 2: Ensure post is pending and user can edit post.
+			$topic = get_post( $id );
+			if ( 'pending' !== get_post_status( $topic ) && ! current_user_can( 'edit_posts' ) ) {
+				return false;
+			}
+
+			return $topic->ID;
+		};
+
+		// Fix <title> filter.
+		add_filter( 'bp_modify_page_title', function( $retval ) use ( $parse_post_name ) {
+			if ( ! bbp_is_group_forums_active() ) {
+				return $retval;
+			}
+
+			// Bail if not on a group forum topic page.
+			if ( ! bp_is_group_forum_topic() && ! bp_is_group_forum_topic_edit() ) {
+				return $retval;
+			}
+
+			// Bail if we're not on a pending topic.
+			$post_id = $parse_post_name( bp_action_variable( 1 ) );
+			if ( false === $post_id ) {
+				return $retval;
+			}
+
+			// Filter WP_Query lookup to use pending post ID.
+			$pre_get_posts = function( $q ) use ( $post_id ) {
+				if ( false !== $post_id ) {
+					$q->set( 'p', $post_id );
+					$q->set( 'name', '' );
+				}
+			};
+
+			add_action( 'pre_get_posts', $pre_get_posts );
+
+			// Remove our filter after we're done.
+			add_action( 'posts_selection', function() use ( $pre_get_posts ) {
+				remove_action( 'pre_get_posts', $pre_get_posts );
+			} );
+		}, 9 );
+
+		// Allow pending group topics to be viewed.
+		add_action( 'bbp_before_group_forum_display', function() use ( $parse_post_name ) {
+			if ( 'topic' !== bp_action_variable() ) {
+				return;
+			}
+
+			// Filter bbPress topic lookup to use pending post ID.
+			add_filter( 'bbp_after_has_topics_parse_args', function( $retval ) use ( $parse_post_name ) {
+				$post_id = $parse_post_name( $retval['name'] );
+
+				if ( false !== $post_id ) {
+					unset( $retval['name'] );
+					$retval['p'] = $post_id;
+				}
+
+				return $retval;
+			} );
+		} );
+
+		// Fix pending (and spam) group topic permalinks.
+		add_filter( 'bbp_get_topic_permalink', function( $retval, $topic_id ) use ( $pending_slug_prefix ) {
+			$topic = get_post( $topic_id );
+			if ( 'topic' !== $topic->post_type ) {
+				return $retval;
+			}
+
+			if ( 'pending' !== get_post_status( $topic ) && 'spam' !== get_post_status( $topic ) ) {
+				return $retval;
+			}
+
+			if ( ! bp_is_group() ) {
+				return $retval;
+			}
+
+			// Add 'pending--{$topic_id}' as slug for pending topics.
+			if ( 'pending' === get_post_status( $topic ) ) {
+				$retval .= sprintf( '%s%d', $pending_slug_prefix, $topic_id );
+			}
+
+			return bbp_add_view_all( trailingslashit( $retval ), true );
+		}, 20, 2 );
+
+		// Fix redirect when posting a new pending group topic.
+		add_filter( 'bbp_new_topic_redirect_to', function( $retval, $redirect, $topic_id ) use ( $pending_slug_prefix ) {
+			if ( ! bp_is_group() ) {
+				return $retval;
+			}
+
+			$topic      = bbp_get_topic( $topic_id );
+			$slug       = trailingslashit( $topic->post_name );
+			$topic_hash = '#post-' . $topic_id;
+
+			// Pending status
+			if ( bbp_get_pending_status_id() === get_post_status( $topic_id ) ) {
+				$slug = bbp_add_view_all( sprintf( '%s%d', $pending_slug_prefix, $topic_id ), true );
+			}
+
+			return trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . 'forum/topic/' . $slug . $topic_hash;
+		}, 20, 3 );
 	}
 }
