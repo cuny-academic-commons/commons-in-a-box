@@ -46,5 +46,14 @@ add_action( 'activated_plugin', function( $plugin ) {
 
 	require_once buddypress()->plugin_dir . '/bp-members/bp-members-template.php';
 	require_once buddypress()->plugin_dir . '/bp-core/bp-core-update.php';
+
+	// BuddyPress 8.0 upgrade routine introduces wp_bp_outputs DB table.
+	if ( file_exists( buddypress()->plugin_dir . '/bp-core/classes/class-bp-optout.php' ) ) {
+		buddypress()->members = new stdClass;
+		buddypress()->members->table_name_optouts = bp_core_get_table_prefix() . 'bp_optouts';
+
+		require_once buddypress()->plugin_dir . '/bp-core/classes/class-bp-optout.php';
+	}
+
 	bp_version_updater();
 } );
