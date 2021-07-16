@@ -49,6 +49,8 @@ class CBox_BBP_Autoload {
 		$this->bypass_link_limit();
 
 		$this->show_notice_for_moderated_posts();
+
+		$this->fix_duplicate_forum_creation();
 	}
 
 	/**
@@ -312,5 +314,71 @@ class CBox_BBP_Autoload {
 
 		add_filter( 'bbp_new_topic_pre_insert', $notice );
 		add_filter( 'bbp_new_reply_pre_insert', $notice );
+	}
+
+	/** DUPLICATE FORUM CREATION ***************************************/
+
+	/**
+	 * Stops duplicate forum creation on a group's "Manage > Forum" page.
+	 *
+	 * Runs at 'bp_actions' on priority 7, so logic is run before BP's group
+	 * extension on priority 8.
+	 *
+	 * Hotfix for https://bbpress.trac.wordpress.org/ticket/3399
+	 *
+	 * @since 1.3.0
+	 */
+	public function fix_duplicate_forum_creation() {
+		add_action( 'bp_actions', function() {
+			// Not on a group's "Manage > Forum" page? Bail.
+			if ( false === ( bp_is_groups_component() && bp_is_current_action( 'admin' ) && bp_is_action_variable( 'forum', 0 ) ) ) {
+				return;
+			}
+
+			// Check POST and AJAX.
+			if ( empty( $_POST ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+				return;
+			}
+
+			// Verify nonce
+			if ( ! wp_verify_nonce( $_POST['_bp_group_edit_nonce_forum'], 'bp_group_extension_forum_edit' ) ) {
+				return;
+			}
+
+			$meta_key = 'bbp_previous_forum_id';
+			$group_id = bp_get_current_group_id();
+
+			$forum_id = groups_get_groupmeta( $group_id, 'forum_id' );
+			if ( ! empty( $forum_id[0] ) ) {
+				$forum_id = $forum_id[0];
+			}
+
+			// Disabling forum. Save old forum ID for later.
+			if ( empty( $_POST['bbp-edit-group-forum'] ) && ! empty( $forum_id ) ) {
+				groups_update_groupmeta( $group_id, $meta_key, $forum_id );
+			}
+
+			// Check for previous forum and validate existence.
+			$previous_forum = groups_get_groupmeta( $group_id, $meta_key );
+			$previous_forum = ! empty( $previous_forum )     ? bbp_get_forum( $previous_forum ) : 0;
+			$previous_forum = ! empty( $previous_forum->ID ) ? $previous_forum->ID : 0;
+
+			// Use old forum; keymaster logic.
+			if ( bbp_is_user_keymaster() ) {
+				if ( empty( $_POST['bbp_group_forum_id'] ) ) {
+					if ( empty( $forum_id ) ) {
+						$forum_id = $previous_forum;
+					}
+
+					if ( ! empty( $forum_id ) ) {
+						$_POST['bbp_group_forum_id'] = $forum_id;
+					}
+				}
+
+			// Use old forum; group admin logic.
+			} elseif ( empty( $forum_id ) && ! empty( $previous_forum ) ) {
+				bbp_update_group_forum_ids( $group_id, [ $previous_forum ] );
+			}
+		}, 7 );
 	}
 }
