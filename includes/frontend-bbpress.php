@@ -509,5 +509,18 @@ class CBox_BBP_Autoload {
 
 			return trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . 'forum/topic/' . $slug . $topic_hash;
 		}, 20, 3 );
+
+		// Fix redirect link after pending topic is approved.
+		add_filter( 'bbp_toggle_topic', function( $retval, $r ) {
+			if ( ! bp_is_group() ) {
+				return $retval;
+			}
+
+			if ( ! empty( get_post( $r['id'] )->post_name ) && bbp_get_pending_status_id() !== get_post_status( $r['id'] ) ) {
+				$retval['redirect_to'] = bbp_get_topic_permalink( $r['id'] );
+			}
+
+			return $retval;
+		}, 10, 2 );
 	}
 }
