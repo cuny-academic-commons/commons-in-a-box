@@ -57,6 +57,8 @@ class CBox_BBP_Autoload {
 		$this->fix_topic_description_for_spam_and_trash_status();
 
 		$this->fix_untrashed_posts();
+
+		$this->send_pending_posts_notification();
 	}
 
 	/**
@@ -576,5 +578,241 @@ class CBox_BBP_Autoload {
 				return $retval;
 			}
 		}, 10, 3 );
+	}
+
+	/**
+	 * Send emails of pending forum posts to moderators.
+	 *
+	 * For BuddyPress, also sends pending posts to group admins and mods.
+	 * Hotfix for https://bbpress.trac.wordpress.org/ticket/3349
+	 *
+	 * @since 1.3.0
+	 */
+	public function send_pending_posts_notification() {
+		// Hopefully if this function is included, this hotfix is no longer needed.
+		if ( function_exists( 'bbp_notify_forum_moderators' ) ) {
+			return;
+		}
+
+		/*
+		 * Sends emails for pending forum posts to moderators.
+		 *
+		 * @param  int  $post_id bbPress topic or reply ID
+		 * @return bool True on success, false on failure
+		 */
+		$notify_mods = function( $post_id = 0 ) {
+			// Bail if importing
+			if ( defined( 'WP_IMPORTING' ) && WP_IMPORTING ) {
+				return false;
+			}
+
+			// If post isn't pending, bail
+			if ( bbp_get_pending_status_id() !== get_post_status( $post_id ) ) {
+				return false;
+			}
+
+			// Check if this is a bbPress topic or reply
+			if ( ! bbp_is_topic( $post_id ) && ! bbp_is_reply( $post_id ) ) {
+				return false;
+			}
+
+			// Determine bbPress type
+			if ( bbp_is_reply( $post_id ) ) {
+				$type        = 'reply';
+				$forum_id    = bbp_get_reply_forum_id( $post_id );
+				$author_name = bbp_get_reply_author_display_name( $post_id );
+				$content     = bbp_get_reply_content( $post_id );
+				$title       = bbp_get_reply_topic_title( $post_id );
+				$url         = bbp_get_reply_url( $post_id );
+			} else {
+				$type        = 'topic';
+				$forum_id    = bbp_get_topic_forum_id( $post_id );
+				$author_name = bbp_get_topic_author_display_name( $post_id );
+				$content     = bbp_get_topic_content( $post_id );
+				$title       = bbp_get_topic_title( $post_id );
+				$url         = bbp_get_topic_permalink( $post_id );
+			}
+
+			// Get moderator user IDs
+			$user_ids = bbp_get_moderator_ids( $forum_id );
+
+			// Remove author from the list
+			$author_key = array_search( (int) get_post( $post_id )->post_author, $user_ids, true );
+			if ( false !== $author_key ) {
+				unset( $user_ids[ $author_key ] );
+			}
+
+			/**
+			 * User IDs filter to send moderation emails to.
+			 *
+			 * @param array $user_ids Array of user IDs
+			 * @param int   $forum_id Forum ID
+			 */
+			$user_ids = (array) apply_filters( 'bbp_forum_moderation_user_ids', $user_ids, $forum_id );
+
+			// Bail if no one to notify
+			if ( empty( $user_ids ) ) {
+				return false;
+			}
+
+			// Get email addresses, bail if empty
+			$email_addresses = bbp_get_email_addresses_from_user_ids( $user_ids );
+			if ( empty( $email_addresses ) ) {
+				return false;
+			}
+
+			/** Mail ******************************************************************/
+
+			// Remove content filters for email display usage
+			bbp_remove_all_filters( "bbp_get_{$type}_content" );
+			bbp_remove_all_filters( "bbp_get_{$type}_title" );
+			bbp_remove_all_filters( 'the_title' );
+
+			// Email variables
+			$blog_name   = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+			$title       = wp_specialchars_decode( strip_tags( $title ), ENT_QUOTES );
+			$author_name = wp_specialchars_decode( strip_tags( $author_name ), ENT_QUOTES );
+			$forum_name  = wp_specialchars_decode( strip_tags( bbp_get_forum_title( $forum_id ) ), ENT_QUOTES );
+			$content     = wp_specialchars_decode( strip_tags( $content ), ENT_QUOTES );
+			$url         = bbp_add_view_all( $url, true );
+
+			$message = sprintf( esc_html__( '%1$s wrote:
+
+%2$s
+
+-----------
+
+To approve, trash or mark this post as spam, click here:
+%3$s
+
+You are receiving this email because you are a moderator for the %4$s forum.', 'bbpress' ),
+
+				$author_name,
+				$content,
+				$url,
+				$forum_name
+			);
+
+			/**
+			 * Filters email message for moderation email.
+			 *
+			 * @param string $message  Email content
+			 * @param int    $post_id  Moderated post ID
+			 * @param int    $forum_id Forum ID containing the moderated post.
+			 */
+			$message = apply_filters( 'bbp_forum_moderation_mail_message', $message, $post_id, $forum_id );
+			if ( empty( $message ) ) {
+				return;
+			}
+
+			/* translators: bbPress moderation email subject. 1: Site title, 2: Topic title, 3: Forum title */
+			$subject = sprintf( __( '[%1$s] Please moderate: "%2$s" from the forum "%3$s"', 'bbpress' ), $blog_name, $title, $forum_name );
+
+			/**
+			 * Filters email subject for moderation email.
+			 *
+			 * @param string $title    Email subject
+			 * @param int    $post_id  Moderated post ID
+			 * @param int    $forum_id Forum ID containing the moderated post
+			 */
+			$subject = apply_filters( 'bbp_forum_moderation_mail_subject', $subject, $post_id, $forum_id );
+			if ( empty( $subject ) ) {
+				return;
+			}
+
+			/** Headers ***************************************************************/
+
+			// Default bbPress X-header
+			$headers = array( bbp_get_email_header() );
+
+			// Get the noreply@ address
+			$no_reply = bbp_get_do_not_reply_address();
+
+			// Setup "From" email address
+			$from_email = apply_filters( 'bbp_moderation_from_email', $no_reply );
+
+			// Setup the From header
+			$headers[] = 'From: ' . get_bloginfo( 'name' ) . ' <' . $from_email . '>';
+
+			// Loop through addresses
+			foreach ( (array) $email_addresses as $address ) {
+				$headers[] = 'Bcc: ' . $address;
+			}
+
+			/** Send it ***************************************************************/
+
+			/**
+			 * Filters mail headers for the email sent to moderators.
+			 *
+			 * @param array $headers Email headers
+			 */
+			$headers = apply_filters( 'bbp_moderation_mail_headers', $headers  );
+
+			/**
+			 * Filters "To" email address for the email sent to moderators.
+			 *
+			 * @param string $email Email address. Defaults to no-reply email address.
+			 */
+			$to_email = apply_filters( 'bbp_moderation_to_email', $no_reply );
+
+
+			/**
+			 * Hook to do something before email is sent to moderators.
+			 *
+			 * @param int   $post_id  Moderated post ID
+			 * @param int   $forum_id Forum ID containing moderated post
+			 * @param array $user_ids User IDs to send email to.
+			 */
+			do_action( 'bbp_pre_notify_forum_moderators', $post_id, $forum_id, $user_ids );
+
+			// Send notification email
+			wp_mail( $to_email, $subject, $message, $headers );
+
+			/**
+			 * Hook to do something after email is sent to moderators.
+			 *
+			 * @param int   $post_id  Moderated post ID
+			 * @param int   $forum_id Forum ID containing moderated post
+			 * @param array $user_ids User IDs to send email to.
+			 */
+			do_action( 'bbp_post_notify_forum_moderators', $post_id, $forum_id, $user_ids );
+
+			// Restore previously removed filters
+			bbp_restore_all_filters( "bbp_get_{$type}_content" );
+			bbp_restore_all_filters( "bbp_get_{$type}_title" );
+			bbp_restore_all_filters( 'the_title' );
+
+			return true;
+		};
+
+		// Notify moderators of pending forum replies.
+		add_action( 'bbp_new_reply', $notify_mods );
+
+		// Notify moderators of pending forum topics.
+		add_action( 'bbp_new_topic', $notify_mods );
+
+		// Add group admins and mods to moderation email list.
+		add_filter( 'bbp_forum_moderation_user_ids', function( $user_ids, $forum_id ) {
+			// Bail if not a BP group forum or groups component is inactive
+			if ( ! bbp_is_forum_group_forum( $forum_id ) || ! bp_is_active( 'groups' ) ) {
+				return $user_ids;
+			}
+
+			// bbPress doesn't support multiple forums per group yet
+			$group_id = current( bbp_get_forum_group_ids( $forum_id ) );
+			if ( empty( $group_id ) ) {
+				return $user_ids;
+			}
+
+			// Fetch group admins
+			$admin_ids = wp_list_pluck( groups_get_group_admins( $group_id ), 'user_id' );
+
+			// Fetch group moderators
+			$mod_ids = wp_list_pluck( groups_get_group_mods( $group_id ), 'user_id' );
+
+			// Merge user ids and return
+			$user_ids = array_merge( $user_ids, $admin_ids, $mod_ids );
+			return array_unique( $user_ids );
+		}, 10, 2 );
 	}
 }
