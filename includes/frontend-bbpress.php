@@ -467,14 +467,14 @@ class CBox_BBP_Autoload {
 			} );
 		} );
 
-		// Fix pending (and spam) group topic permalinks.
+		// Fix pending, trash and spam group topic permalinks.
 		add_filter( 'bbp_get_topic_permalink', function( $retval, $topic_id ) use ( $pending_slug_prefix ) {
 			$topic = get_post( $topic_id );
 			if ( 'topic' !== $topic->post_type ) {
 				return $retval;
 			}
 
-			if ( 'pending' !== get_post_status( $topic ) && 'spam' !== get_post_status( $topic ) ) {
+			if ( 'pending' !== get_post_status( $topic ) && 'spam' !== get_post_status( $topic ) && 'trash' !== get_post_status( $topic ) ) {
 				return $retval;
 			}
 
@@ -482,11 +482,13 @@ class CBox_BBP_Autoload {
 				return $retval;
 			}
 
-			// Add 'pending--{$topic_id}' as slug for pending topics.
-			if ( 'pending' === get_post_status( $topic ) ) {
+			// Use 'pending--{$topic_id}' as slug for pending topics with no slug.
+			if ( 'pending' === get_post_status( $topic ) && empty( $topic->post_name ) ) {
+				$retval = substr( $retval, 0, strpos( $retval, 'forum/topic/' ) + 12 );
 				$retval .= sprintf( '%s%d', $pending_slug_prefix, $topic_id );
 			}
 
+			// Add special "?view=all" query param so our post statuses are viewable.
 			return bbp_add_view_all( trailingslashit( $retval ), true );
 		}, 20, 2 );
 
