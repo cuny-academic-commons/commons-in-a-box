@@ -53,6 +53,8 @@ class CBox_BBP_Autoload {
 		$this->fix_duplicate_forum_creation();
 
 		$this->fix_pending_group_topics();
+
+		$this->fix_topic_description_for_spam_and_trash_status();
 	}
 
 	/**
@@ -518,6 +520,35 @@ class CBox_BBP_Autoload {
 
 			if ( ! empty( get_post( $r['id'] )->post_name ) && bbp_get_pending_status_id() !== get_post_status( $r['id'] ) ) {
 				$retval['redirect_to'] = bbp_get_topic_permalink( $r['id'] );
+			}
+
+			return $retval;
+		}, 10, 2 );
+	}
+
+	/**
+	 * Fix description when a topic's status is 'spam' or 'trash'.
+	 *
+	 * Hotfix for https://bbpress.trac.wordpress.org/ticket/3432
+	 *
+	 * @since 1.3.0
+	 */
+	public function fix_topic_description_for_spam_and_trash_status() {
+		add_filter( 'bbp_get_single_topic_description', function( $retval, $r ) {
+			$topic_id = bbp_get_topic_id( $r['topic_id'] );
+			$message  = '';
+
+			// Trash.
+			if ( bbp_get_topic_status( $topic_id ) === bbp_get_trash_status_id() ) {
+				$message = esc_html__( 'This topic is in the trash.', 'bbpress' );
+
+			// Spam.
+			} elseif ( bbp_get_topic_status( $topic_id ) === bbp_get_spam_status_id() ) {
+				$message = esc_html__( 'This topic is marked as spam.', 'bbpress' );
+			}
+
+			if ( '' !== $message ) {
+				$retval = $r['before'] . $message . $r['after'];
 			}
 
 			return $retval;
