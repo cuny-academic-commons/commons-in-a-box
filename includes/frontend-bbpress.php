@@ -309,7 +309,13 @@ class CBox_BBP_Autoload {
 	public function show_notice_for_moderated_posts() {
 		// Notice callback anonymous function.
 		$notice = function( $retval ) {
-			if ( ! bp_is_group() || bbp_get_pending_status_id() !== $retval['post_status'] ) {
+			// Ensure BuddyPress is active.
+			if ( ! function_exists( 'buddypress' ) || ! bp_is_active( 'groups' ) || ! bp_is_group() ) {
+				return $retval;
+			}
+
+			// Ensure new reply is pending.
+			if ( bbp_get_pending_status_id() !== $retval['post_status'] ) {
 				return $retval;
 			}
 
@@ -500,7 +506,7 @@ class CBox_BBP_Autoload {
 
 		// Fix redirect when posting a new pending group topic.
 		add_filter( 'bbp_new_topic_redirect_to', function( $retval, $redirect, $topic_id ) use ( $pending_slug_prefix ) {
-			if ( ! bp_is_group() ) {
+			if ( ! function_exists( 'buddypress' ) || ! bp_is_group() ) {
 				return $retval;
 			}
 
@@ -518,7 +524,7 @@ class CBox_BBP_Autoload {
 
 		// Fix redirect link after pending topic is approved.
 		add_filter( 'bbp_toggle_topic', function( $retval, $r ) {
-			if ( ! bp_is_group() ) {
+			if ( ! function_exists( 'buddypress' ) || ! bp_is_group() ) {
 				return $retval;
 			}
 
