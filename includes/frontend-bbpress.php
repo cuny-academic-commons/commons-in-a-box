@@ -55,6 +55,8 @@ class CBox_BBP_Autoload {
 		$this->fix_pending_group_topics();
 
 		$this->fix_topic_description_for_spam_and_trash_status();
+
+		$this->fix_untrashed_posts();
 	}
 
 	/**
@@ -553,5 +555,26 @@ class CBox_BBP_Autoload {
 
 			return $retval;
 		}, 10, 2 );
+	}
+
+	/**
+	 * Fix untrashed topics or replies to use their previous post status.
+	 *
+	 * Hotfix for https://bbpress.trac.wordpress.org/ticket/3433
+	 *
+	 * @since 1.3.0
+	 */
+	public function fix_untrashed_posts() {
+		add_filter( 'wp_untrash_post_status', function( $retval, $post_id, $previous_status ) {
+			if ( ! bbp_is_topic( $post_id ) && ! bbp_is_reply( $post_id ) ) {
+				return $retval;
+			}
+
+			if ( ! empty( $previous_status ) ) {
+				return $previous_status;
+			} else {
+				return $retval;
+			}
+		}, 10, 3 );
 	}
 }
