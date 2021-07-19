@@ -255,7 +255,7 @@ class CBox_BBP_Autoload {
 			add_filter( 'bbp_allow_revisions', '__return_true' );
 
 			// Remove hack.
-			add_filter( "bp_is_{$post_type}_anonymous", function( $retval ) use ( $post_type ) {
+			add_filter( "bbp_is_{$post_type}_anonymous", function( $retval ) use ( $post_type ) {
 				remove_filter( 'bbp_allow_revisions', '__return_true' );
 				unset( $GLOBALS[ '_wp_post_type_features' ][ $post_type ][ 'revisions' ] );
 
