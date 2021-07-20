@@ -95,9 +95,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'commons-in-a-box' ),
-			'version'           => '1.0.10',
+			'version'           => '1.0.11',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.10.zip',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false
