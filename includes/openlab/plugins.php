@@ -333,6 +333,16 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
+		// OpenLab Attributions
+		call_user_func( $instance, array(
+			'plugin_name'       => 'OpenLab Attributions',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'Attributions', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'A plugin for creating inline attributions for site content.', 'commons-in-a-box' ),
+			'version'           => '2.0.0-beta1',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-attributions/archive/2.0.0-beta1.zip',
+		) );
+
 		// OpenLab Private Comments
 		call_user_func( $instance, array(
 			'plugin_name'       => 'OpenLab Private Comments',
