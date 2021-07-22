@@ -333,6 +333,16 @@ class CBox_Plugins_OpenLab {
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
+		// OpenLab Private Comments
+		call_user_func( $instance, array(
+			'plugin_name'       => 'OpenLab Private Comments',
+			'type'              => 'install-only',
+			'cbox_name'         => __( 'Private Comments', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'Private comments for sites in your network.', 'commons-in-a-box' ),
+			'version'           => '1.1',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-private-comments/archive/1.1.zip',
+		) );
+
 		call_user_func( $instance, array(
 			'plugin_name'       => 'WP Grade Comments',
 			'type'              => 'install-only',
