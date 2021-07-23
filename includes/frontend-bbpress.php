@@ -59,6 +59,8 @@ class CBox_BBP_Autoload {
 		$this->fix_untrashed_posts();
 
 		$this->send_pending_posts_notification();
+
+		$this->highlight_unread_posts();
 	}
 
 	/**
@@ -820,5 +822,239 @@ You are receiving this email because you are a moderator for the %4$s forum.', '
 			$user_ids = array_merge( $user_ids, $admin_ids, $mod_ids );
 			return array_unique( $user_ids );
 		}, 10, 2 );
+	}
+
+	/**
+	 * Highlights unread forum posts when clicked from BP notification.
+	 *
+	 * @since 1.3.0
+	 */
+	public function highlight_unread_posts() {
+		/**
+		 * Add query arg to unread replies notification permalink.
+		 */
+		add_action( 'bbp_get_request_bbp_mark_read', function() {
+			// Bail if no topic ID is passed or not logged in.
+			if ( empty( $_GET['topic_id'] ) || ! is_user_logged_in() ) {
+				return;
+			}
+
+			// Make sure BuddyPress is active.
+			if ( ! function_exists( 'buddypress' ) || ! bp_is_active( 'notifications' ) ) {
+				return;
+			}
+
+			/*
+			 * Get all reply IDs for the topic. This kinda sucks, but is necessary.
+			 *
+			 * bbPress should utilize notification meta to add the topic ID...
+			 */
+			$replies = bbp_get_all_child_ids( absint( $_GET['topic_id'] ), bbp_get_reply_post_type() );
+			if ( empty( $replies ) ) {
+				return;
+			}
+
+			// Fetch the first unread notification from the topic for the user.
+			$n = BP_Notifications_Notification::get( [
+				'user_id'           => get_current_user_id(),
+				'component_name'    => bbp_get_component_name(),
+				'component_action'  => 'bbp_new_reply',
+				'item_id'           => $replies,
+				'is_new'            => true,
+				'order_by'          => 'id',
+				'sort_order'        => 'ASC',
+				'per_page'          => 1,
+				'page'              => 1,
+				'update_meta_cache' => false,
+			] );
+
+			// Bail if no notifications.
+			if ( empty( $n ) ) {
+				return;
+			}
+
+			$first_unread_id = end( $n )->item_id;
+
+			// Add our 'bbp-unread' marker to the URL to highlight the unread posts.
+			add_filter( 'bbp_get_reply_url', function( $retval ) use ( $first_unread_id ) {
+				return add_query_arg( 'bbp-unread', $first_unread_id, $retval );
+			}, 50 );
+		} );
+
+		/**
+		 * Add our 'bbp-unread-reply' CSS class so we can highlight unread posts.
+		 */
+		add_filter( 'bbp_get_reply_class', function( $retval, $reply_id ) {
+			if ( empty( $_GET['bbp-unread'] ) ) {
+				return $retval;
+			}
+
+			if ( $reply_id >= (int) $_GET['bbp-unread'] ) {
+				$retval[] = 'bbp-unread-reply';
+			}
+
+			return $retval;
+		}, 10, 2 );
+
+		/**
+		 * Add unread "New" badge to reply admin link section.
+		 */
+		add_filter( 'bbp_reply_admin_links', function( $retval ) {
+			if ( ! is_user_logged_in() || empty( $_GET['bbp-unread'] ) ) {
+				return $retval;
+			}
+
+			if ( bbp_get_reply_id() >= (int) $_GET['bbp-unread'] ) {
+				$retval['unread'] = sprintf( '<span class="bbp-unread-new">%s</span>', esc_html__( 'New', 'commons-in-a-box' ) );
+			}
+
+			return $retval;
+		}, 999 );
+
+		/**
+		 * Use the filtered unread notifications page for multiple forum replies.
+		 */
+		add_filter( 'bbp_multiple_new_subscription_notification', function( $retval, $link, $count, $text ) {
+			/*
+			 * Ugh, this array check is necessary because this filter is used twice with
+			 * different filter arguments:
+			 * https://github.com/bbpress/bbPress/blob/494eea6d866d9193027382c89e88d7e18e1e97a6/src/includes/extend/buddypress/notifications.php#L99-L109
+			 */
+			if ( is_array( $retval ) ) {
+				return [
+					// Swap out the link.
+					'link' => add_query_arg( 'type', 'bbp_new_reply', bp_get_notifications_unread_permalink() ),
+					'text' => $text
+				];
+			}
+
+			return $retval;
+		}, 20, 4 );
+
+		/**
+		 * Inline CSS for unread posts and custom notifications header.
+		 */
+		add_action( 'bbp_head', function() {
+			$is_topic         = bbp_is_single_topic() && ! empty( $_GET['bbp-unread'] );
+			$is_notifications = function_exists( 'buddypress' ) && bp_is_active( 'notifications' ) && bp_is_notifications_component() && ! empty( $_GET['type'] );
+
+			if ( ! $is_topic && ! $is_notifications ) {
+				return;
+			}
+
+
+			/**
+			 * Add filter to enable or disable inline CSS for unread posts.
+			 *
+			 * @since 1.3.0
+			 */
+			$enable_css = apply_filters( 'cbox_bbp_unread_inline_css', true );
+
+			if ( false === $enable_css ) {
+				return;
+			}
+
+			echo '<style type="text/css">
+			#bbpress-forums li.bbp-body div.bbp-unread-reply {background-color:#ffffe0}
+			.bbp-unread-new {background:#21759b; border-radius:5px; color:#fff; display:inline-block; font-size:.8em; font-weight:bold;	padding:1px 4px; text-shadow:none; text-transform:uppercase;}
+			body.notifications .notification-filter {display:block;}
+			body.notifications.bp-nouveau .notification-filter {margin-bottom:-2.5em;}
+			body.notifications .notification-filter::after {clear:both;	content:""; display:block;}
+			body.notifications .notification-filter h3, body.notifications .notification-filter span {display:inline-block; margin-bottom:.5em; vertical-align:baseline;}
+			body.notifications .notification-filter span {margin-left:.5em;}
+			body.notifications.bp-nouveau .notification-filter span {margin-top:1em; margin-bottom:1em;}
+			</style>';
+		} );
+
+		// Helper function to output filter header on notifications page.
+		$notifications_header = function() {
+			if ( ! did_action( 'bp_before_member_body' ) || ! function_exists( 'buddypress' ) || ! bp_is_notifications_component() ) {
+				return;
+			}
+
+			if ( empty( $_GET['type'] ) ) {
+				return;
+			}
+
+			switch ( $_GET['type'] ) {
+				case 'bbp_new_reply' :
+					$title = esc_html__( 'Filtered by forum posts', 'commons-in-a-box' );
+
+					break;
+
+				// Could be extended to other types later.
+				default :
+					return;
+					break;
+			}
+
+			$link = bp_get_notifications_unread_permalink();
+			if ( bp_is_current_action( 'read' ) ) {
+				$link = bp_get_notifications_read_permalink();
+			}
+
+			$reset = esc_html__( 'Reset', 'commons-in-a-box' );
+
+			printf( '<div class="notification-filter"><h3>%1$s</h3><span>(<a href="%2$s">%3$s</a>)</span></div>',
+				$title,
+				esc_url( $link ),
+				$reset
+			);
+		};
+
+		// Add header for BP Nouveau template pack.
+		add_action( 'bp_locate_template', function( $template ) use ( $notifications_header ) {
+			if ( ! function_exists( 'bp_nouveau' ) || false === strpos( $template, 'common/search-and-filters-bar' ) ) {
+				return;
+			}
+
+			$notifications_header();
+		} );
+
+		// Fix 'type' notification filter for BP Nouveau. Sigh...
+		add_action( 'bp_locate_template', function( $template ) {
+			if ( ! function_exists( 'bp_nouveau' ) || false === strpos( $template, 'members/single/notifications/notifications-loop' ) ) {
+				return;
+			}
+
+			// Filter the AJAX querystring.
+			add_filter( 'bp_ajax_querystring', function( $retval ) {
+				// Don't do this again.
+				remove_filter( 'bp_ajax_querystring', __FUNCTION__ );
+
+				// Check the referer to see if our 'type' argument is in the URL.
+				$q = parse_url( wp_get_referer(), PHP_URL_QUERY );
+				if ( empty( $q ) ) {
+					return $retval;
+				}
+
+				// Bail if no 'type'.
+				parse_str( $q, $q );
+				if ( empty( $q['type'] ) ) {
+					return $retval;
+				}
+
+				// Switch to an array.
+				if ( is_string( $retval ) ) {
+					parse_str( $retval, $retval );
+				}
+
+				// Add our 'type' filter to the AJAX querystring.
+				$retval['component_action'] = $q['type'];
+
+				return http_build_query( $retval );
+			} );
+		} );
+
+		// Add header for BP Legacy template pack.
+		add_filter( 'bp_has_notifications', function( $retval ) use ( $notifications_header ) {
+			if ( function_exists( 'bp_nouveau' ) ) {
+				return $retval;
+			}
+
+			$notifications_header();
+
+			return $retval;
+		} );
 	}
 }
