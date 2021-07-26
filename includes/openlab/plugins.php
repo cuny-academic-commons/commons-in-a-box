@@ -339,8 +339,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Attributions', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A plugin for creating inline attributions for site content.', 'commons-in-a-box' ),
-			'version'           => '2.0.0-beta1',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-attributions/archive/2.0.0-beta1.zip',
+			'version'           => '2.0.0-beta2',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-attributions/archive/2.0.0-beta2.zip',
 		) );
 
 		// OpenLab Private Comments
