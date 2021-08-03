@@ -18,8 +18,8 @@ add_action( 'activated_plugin', function( $plugin ) {
 		return;
 	}
 
-	// Don't let bbPress redirect to its about page after activating
-	delete_transient( '_bbp_activation_redirect' );
+	// Don't let bbPress redirect to its about page when on the Plugins page
+	delete_user_option( get_current_user_id(), '_bbp_activation_redirect' );
 
 	/** If BP bundled forums exists, stop now! *********************/
 

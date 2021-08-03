@@ -41,7 +41,7 @@ class CBox_Plugins_Classic {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '6.4.0',
+			'version'           => '9.0.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -62,7 +62,7 @@ class CBox_Plugins_Classic {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.6.4.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.9.0.0.zip'
 		) );
 	}
 
@@ -80,9 +80,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'commons-in-a-box' ),
-			'version'           => '2.1.5',
+			'version'           => '2.1.6',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.5.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.1.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -95,9 +95,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Wiki', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'commons-in-a-box' ),
-			'version'           => '1.0.10',
+			'version'           => '1.0.11',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.10.zip',
+			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false
@@ -240,8 +240,8 @@ class CBox_Plugins_Classic {
 			'cbox_name'         => __( 'External RSS Feeds for Groups', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Gives group creators and administrators the ability to attach external RSS feeds to groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '1.6.1',
-			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.6.1.zip',
+			'version'           => '1.6.2',
+			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.6.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
 			'network'           => false
 		) );
@@ -253,9 +253,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'commons-in-a-box' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
-			'version'           => '1.0-RC9',
+			'version'           => '1.0-RC10',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC9.zip',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC10.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'

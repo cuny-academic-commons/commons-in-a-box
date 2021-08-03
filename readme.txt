@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 5.6
-Stable tag: 1.2.4
+Tested up to: 5.8
+Stable tag: 1.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,30 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.3.0 =
+* Updated plugins (Classic): BP Reply By Email 1.0-RC10, BuddyPress 9.0.0, BuddyPress Docs 2.1.6, BuddyPress Docs Wiki 1.0.11, External Group Blogs 1.6.2
+* Updated plugins (OpenLab): BP Reply By Email 1.0-RC10, BuddyPress 9.0.0, BuddyPress Docs 2.1.6, Event Organiser 3.10.7, PressForward 5.2.6, WP Grade Comments 1.4.0
+* Compatibility with WordPress 5.8 and BuddyPress 9.0.0.
+* Compatibility with BuddyPress 8.0.0's selectable signup profile fields.
+* Fixed bug that could cause duplicate bbPress forums to be created for a group.
+* Fixed bug that prevented Pending forum topics from being viewed on the front end.
+* Add an admin email notification when a forum post is marked as Pending.
+* Improved behavior when restoring a forum topic from trash/spam.
+* Classic: Add highlighting to unread group forum threads.
+* Classic: Improve bbPress redirect behavior after CBOX installation.
+* Classic: Improved labels in theme options panel.
+* Classic: Compatibility with BP bulk notifications management.
+* OpenLab: Introduce the 'Creators' feature, allowing greater customization over the way a group's Acknowledgements are displayed and inherited by clones.
+* OpenLab: Introduce the 'OpenLab Private Comments' site plugin, which allows users to post comments that are visible only to the site owner.
+* OpenLab: Introduce the 'OpenLab Attributions' site plugins, a powerful tool for generating and displaying inline attributions into post content.
+* OpenLab: Introduce a clone "counter", which shows a tally of a group's descendants.
+* OpenLab: Introduce the Creative Commons widget.
+* OpenLab: Improvements for group search, including respect for quoted phrases.
+* OpenLab: Introduce a toggle that allows site admins to disable the OpenLab toolbar for logged-out users visiting their sites.
+* OpenLab: Introduce Delete buttons to Message panels.
+* OpenLab: Improvements to the way fields are pre-filled and validated when cloning an existing group.
+* OpenLab: Accessibility and contrast improvements to the Messages panel.
 
 = 1.2.4 =
 * Updated plugins (Classic): BuddyPress 6.4.0
