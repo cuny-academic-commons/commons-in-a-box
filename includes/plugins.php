@@ -152,7 +152,7 @@ class CBox_Plugins {
 				unset( $plugins[$omit_type] );
 
 			// flatten associative array
-			return call_user_func_array( 'array_merge', $plugins );
+			return call_user_func_array( 'array_merge', array_values($plugins) );
 		}
 
 		// Return plugins as-is if $type is empty.
