@@ -45,6 +45,7 @@
 						<li>BuddyPress 9.1.1</li>
 						<li>BuddyPress Group Email Subscription 4.0.1</li>
 						<li>Invite Anyone 1.4.2</li>
+						<li>OpenLab Private Comments 1.1.1</li>
 						<li>PressForward 5.2.8</li>
 						<li>WP Grade Comments 1.4.4</li>
 					</ul>
