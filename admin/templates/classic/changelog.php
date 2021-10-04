@@ -39,11 +39,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Reply By Email 1.0-RC10</li>
-						<li>BuddyPress 9.0.0</li>
-						<li>BuddyPress Docs 2.1.6</li>
-						<li>BuddyPress Docs Wiki 1.0.11</li>
-						<li>External Group Blogs 1.6.2</li>
+						<li>BuddyPress 9.1.1</li>
 					</ul>
 				</div>
 			</div>
