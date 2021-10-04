@@ -44,6 +44,7 @@
 					<ul>
 						<li>BuddyPress 9.1.1</li>
 						<li>BuddyPress Group Email Subscription 4.0.1</li>
+						<li>Invite Anyone 1.4.2</li>
 					</ul>
 				</div>
 			</div>
