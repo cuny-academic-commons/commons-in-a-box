@@ -42,12 +42,8 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Reply By Email 1.0-RC10</li>
-						<li>BuddyPress 9.0.0</li>
-						<li>BuddyPress Docs 2.1.6</li>
-						<li>Event Organiser 3.10.7</li>
-						<li>PressForward 5.2.6</li>
-						<li>WP Grade Comments 1.4.0</li>
+						<li>BuddyPress 9.1.1</li>
+						<li>BuddyPress Group Email Subscription 4.0.1</li>
 					</ul>
 				</div>
 			</div>
