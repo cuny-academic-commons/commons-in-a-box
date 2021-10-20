@@ -283,6 +283,10 @@ class CBox_Admin {
 					cbox()->setup = 'virgin-setup';
 					break;
 
+				case 'plugin-update' :
+					$redirect = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade' ), cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade' ) );
+					break;
+
 				case 'theme-prompt' :
 					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
 					break;
@@ -443,13 +447,11 @@ class CBox_Admin {
 
 				// if theme upgrades are available, let's add an extra button to the end of
 				// the plugin upgrader, so we can proceed with upgrading the theme
-				$theme_upgrades = isset( cbox()->theme_upgrades ) ? cbox()->theme_upgrades : false;
-				if ( $theme_upgrades ) {
+				if ( cbox_get_theme_to_update() ) {
 					$title = esc_html__( 'Upgrading CBOX Plugins and Themes', 'commons-in-a-box' );
 
-					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . cbox()->theme_upgrades ), 'cbox_upgrade_theme' );
-					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'commons-in-a-box' ), cbox_get_theme( cbox()->theme_upgrades )->get( 'Name' ) );
-
+					$redirect_link = wp_nonce_url( self_admin_url( 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . cbox_get_theme_prop( 'directory_name' ) ), 'cbox_upgrade_theme' );
+					$redirect_text = sprintf( __( "Now, let's upgrade the %s theme &rarr;", 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
 
 				} else {
 					$title = esc_html__( 'Upgrading CBOX Plugins', 'commons-in-a-box' );
@@ -1050,10 +1052,15 @@ class CBox_Admin {
 				$button_text = __( 'Click here to finish up!', 'commons-in-a-box' );
 				break;
 
+			case 'plugin-update' :
 			case 'upgrades-available' :
 				$notice_text = esc_html__( 'There are some upgrades available.', 'commons-in-a-box' );
-				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
 				$button_text = esc_html__( 'Click here to update', 'commons-in-a-box' );
+
+				$button_link = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade' ), cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade' ) );
+				if ( 'upgrades-available' === cbox_get_setup_step() ) {
+					$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
+				}
 				break;
 
 			default :
