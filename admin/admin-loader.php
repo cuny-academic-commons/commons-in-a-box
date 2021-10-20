@@ -288,19 +288,16 @@ class CBox_Admin {
 					break;
 
 				case 'theme-prompt' :
-					$redirect = self_admin_url( 'admin.php?page=cbox&cbox-action=theme-prompt&_wpnonce=' . wp_create_nonce( 'cbox_theme_prompt' ) );
+					$redirect = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_theme_prompt' ), cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=theme-prompt' ) );
 					break;
 
 				case 'theme-update' :
-					$url = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) );
-					$url = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade_theme' ), $url );
-					wp_redirect( $url );
-					die();
+					$redirect = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) );
+					$redirect = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade_theme' ), $redirect );
 					break;
 
 				case 'upgrades-available' :
-					wp_redirect( cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' ) );
-					die();
+					$redirect = cbox_admin_prop( 'url', 'admin.php?page=cbox-upgrades' );
 					break;
 
 				case '' :
@@ -1042,8 +1039,10 @@ class CBox_Admin {
 
 			case 'theme-update' :
 				$notice_text = sprintf( __( 'The %1$s theme needs an update.', 'commons-in-a-box' ), esc_attr( cbox_get_theme_prop( 'name' ) ) );
-				$button_link = wp_nonce_url( cbox_admin_prop( 'url', 'admin.php?page=cbox&amp;cbox-action=upgrade-theme&amp;cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) ), 'cbox_upgrade_theme' );
 				$button_text = __( 'Update the theme &rarr;', 'commons-in-a-box' );
+
+				$button_link = cbox_admin_prop( 'url', 'admin.php?page=cbox&cbox-action=upgrade-theme&cbox-themes=' . esc_attr( cbox_get_theme_prop( 'directory_name' ) ) );
+				$button_link = add_query_arg( '_wpnonce', wp_create_nonce( 'cbox_upgrade_theme' ), $button_link );
 				break;
 
 			case 'recommended-plugins' :
