@@ -49,9 +49,9 @@ class CBox_Package_Classic extends CBox_Package {
 	protected static function theme() {
 		return array(
 			'name'           => 'Commons In A Box',
-			'version'        => '1.3.0',
+			'version'        => '1.3.1',
 			'directory_name' => 'cbox-theme',
-			'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.3.0.zip',
+			'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.3.1.zip',
 			'admin_settings' => 'themes.php?page=infinity-theme',
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ),
 		);
