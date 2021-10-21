@@ -23,13 +23,7 @@
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<li><?php esc_html_e( 'Compatibility with WordPress 5.8+ and BuddyPress 9.0+.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that could cause duplicate bbPress forums to be created for a group.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented Pending forum topics from being viewed on the front end.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Add an admin email notification when a forum post is marked as Pending.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved behavior when restoring a forum topic from trash/spam.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improve bbPress redirect behavior after CBOX installation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved labels in theme options panel.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improve compatibility with PHP 8.0+.', 'commons-in-a-box' ); ?></li>
 					</div>
 				</div>
 			</div>
@@ -39,11 +33,9 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Reply By Email 1.0-RC10</li>
-						<li>BuddyPress 9.0.0</li>
-						<li>BuddyPress Docs 2.1.6</li>
-						<li>BuddyPress Docs Wiki 1.0.11</li>
-						<li>External Group Blogs 1.6.2</li>
+						<li>BuddyPress 9.1.1</li>
+						<li>BuddyPress Group Email Subscription 4.0.1</li>
+						<li>Invite Anyone 1.4.2</li>
 					</ul>
 				</div>
 			</div>

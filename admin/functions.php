@@ -160,7 +160,15 @@ function cbox_get_setup_step() {
 
 	// No package.
 	if ( ! cbox_get_current_package_id() ) {
-		$step = 'no-package';
+		return 'no-package';
+
+	// Plugin updates available.
+	} elseif ( CBox_Admin_Plugins::get_upgrades( 'active' ) ) {
+		return 'plugin-update';
+
+	// Theme update available.
+	} elseif ( cbox_get_theme_to_update() ) {
+		return 'theme-update';
 
 	// Haven't installed before.
 	} else {
@@ -185,10 +193,6 @@ function cbox_get_setup_step() {
 				$step = 'theme-prompt';
 			}
 		}
-	}
-
-	if ( empty( $step ) && cbox_get_theme_to_update() ) {
-		$step = 'theme-update';
 	}
 
 	// Upgrades.
