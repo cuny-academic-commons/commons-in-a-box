@@ -23,13 +23,7 @@
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<li><?php esc_html_e( 'Compatibility with WordPress 5.8+ and BuddyPress 9.0+.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that could cause duplicate bbPress forums to be created for a group.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented Pending forum topics from being viewed on the front end.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Add an admin email notification when a forum post is marked as Pending.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved behavior when restoring a forum topic from trash/spam.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improve bbPress redirect behavior after CBOX installation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved labels in theme options panel.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improve compatibility with PHP 8.0+.', 'commons-in-a-box' ); ?></li>
 					</div>
 				</div>
 			</div>

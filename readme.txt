@@ -60,8 +60,14 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 == Changelog ==
 
 = 1.3.1 =
-* Updated plugins (Classic): BuddyPress 9.0.0, BuddyPress Group Email Subscription 4.0.1, Invite Anyone 1.4.2
+* Updated plugins (Classic): BuddyPress 9.1.1, BuddyPress Group Email Subscription 4.0.1, Invite Anyone 1.4.2
 * Updated plugins (OpenLab): BuddyPress 9.1.1, BuddyPress Group Email Subscription 4.0.1, Invite Anyone 1.4.2, OpenLab Private Comments 1.1.1, PressForward 5.2.8, WP Grade Comments 1.4.4
+* Improved compatibility with PHP 8.0+.
+* OpenLab: Improved behavior of oEmbed videos on mobile devices.
+* OpenLab: Improved appearance of badge labels in group directories.
+* OpenLab: Fixed bug that prevented portfolio owner from seeing "Site Dashboard" link in the sidebar of Portfolio home.
+* OpenLab: Improved permissions behavior when a network administrator modifies a user\'s portfolio settings.
+* OpenLab: Fixed inconsistent email subscription settings in various parts of the settings panels.
 
 = 1.3.0 =
 * Updated plugins (Classic): BP Reply By Email 1.0-RC10, BuddyPress 9.0.0, BuddyPress Docs 2.1.6, BuddyPress Docs Wiki 1.0.11, External Group Blogs 1.6.2
