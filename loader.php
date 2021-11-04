@@ -10,6 +10,7 @@ Licence: GPLv3
 Network: true
 Core: >=4.9.8
 Text Domain: commons-in-a-box
+Domain Path: /languages
 */
 
 // Exit if accessed directly
@@ -149,7 +150,7 @@ class Commons_In_A_Box {
 		// localization
 		// we only fire this in the admin area, since we have no strings to localize
 		// on the frontend... yet!
-		add_action( 'admin_init', array( $this, 'localization' ), 0 );
+		add_action( 'init', array( $this, 'localization' ), 0 );
 
 		/*
 		 * CLI-specific actions.
@@ -288,30 +289,27 @@ class Commons_In_A_Box {
 	 *
 	 * @since 1.0-beta4
 	 *
-	 * @uses get_locale() To get the current locale
-	 * @uses load_textdomain() Loads a .mo file into WP
 	 * @return bool True on success, false on failure
 	 */
 	public function localization() {
-		// Use the WP plugin locale filter from load_plugin_textdomain()
-		$locale        = apply_filters( 'plugin_locale', get_locale(), 'commons-in-a-box' );
-		$mofile        = sprintf( '%1$s-%2$s.mo', 'commons-in-a-box', $locale );
-
-		$mofile_global = trailingslashit( constant( 'WP_LANG_DIR' ) ) . $mofile;
-		$mofile_local  = $this->plugin_dir . 'languages/' . $mofile;
-
-		// look in /wp-content/languages/ first
-		if ( is_readable( $mofile_global ) ) {
-			return load_textdomain( 'commons-in-a-box', $mofile_global );
-
-		// if that doesn't exist, check for bundled language file
-		} elseif ( is_readable( $mofile_local ) ) {
-			return load_textdomain( 'commons-in-a-box', $mofile_local );
-
-		// no language file exists
-		} else {
-			return false;
+		// If we're on not on the main site, bail.
+		if ( ! cbox_is_main_site() ) {
+			return;
 		}
+
+		/** This filter is documented in /wp-includes/i10n.php */
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'commons-in-a-box' );
+		$mofile = sprintf( '%1%s%2$s-%3$s.mo', trailingslashit( constant( 'WP_LANG_DIR' ) ) , 'commons-in-a-box', $locale );
+
+		// This is for custom localizations located at /wp-content/languages/.
+		$load = load_textdomain( 'commons-in-a-box', $mofile );
+
+		// No custom file, so use regular textdomain loader.
+		if ( ! $load ) {
+			return load_plugin_textdomain( 'commons-in-box', false, basename( $this->plugin_dir ) . '/languages/' );
+		}
+
+		return $load;
 	}
 
 	/** HELPERS *******************************************************/
