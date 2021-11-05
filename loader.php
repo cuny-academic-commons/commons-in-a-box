@@ -148,8 +148,6 @@ class Commons_In_A_Box {
 		add_action( 'deactivate_' . plugin_basename( __FILE__ ), function() { do_action( 'cbox_deactivation' ); } );
 
 		// localization
-		// we only fire this in the admin area, since we have no strings to localize
-		// on the frontend... yet!
 		add_action( 'init', array( $this, 'localization' ), 0 );
 
 		/*
