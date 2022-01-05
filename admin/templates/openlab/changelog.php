@@ -35,6 +35,7 @@
 					<ul>
 						<li>BuddyPress 9.2.0</li>
 						<li>bbPress 2.6.9</li>
+						<li>Event Organiser 3.10.8</li>
 					</ul>
 				</div>
 			</div>
