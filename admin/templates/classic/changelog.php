@@ -33,9 +33,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 9.1.1</li>
-						<li>BuddyPress Group Email Subscription 4.0.1</li>
-						<li>Invite Anyone 1.4.2</li>
+						<li>BuddyPress 9.2.0</li>
 					</ul>
 				</div>
 			</div>
