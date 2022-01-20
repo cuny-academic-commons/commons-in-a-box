@@ -17,6 +17,7 @@
 				</a>
 			</h2>
 
+			<!--
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
@@ -27,6 +28,7 @@
 					</div>
 				</div>
 			</div>
+			-->
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>
@@ -39,6 +41,7 @@
 				</div>
 			</div>
 
+			<!--
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'commons-in-a-box' ); ?></h3>
 
@@ -50,6 +53,7 @@
 					</ul>
 				</div>
 			</div>
+			-->
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'commons-in-a-box' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>

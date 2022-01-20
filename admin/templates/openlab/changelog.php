@@ -22,8 +22,7 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Improved permissions behavior when a network administrator modifies a user\'s portfolio settings.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed inconsistent email subscription settings in various parts of the settings panels.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed some issues that may have caused localizations not to appear properly in certain cases.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -45,9 +44,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Improved behavior of oEmbed videos on mobile devices.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved appearance of badge labels in group directories.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented portfolio owner from seeing "Site Dashboard" link in the sidebar of Portfolio home.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed incorrect "Contact Us" URL.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
