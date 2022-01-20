@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '9.1.1',
+			'version'           => '9.2.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -54,8 +54,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.3.1',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.3.1.zip',
+			'version'           => '1.3.2',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.3.2.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -64,8 +64,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'bbPress',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.6',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.6.zip',
+			'version'           => '2.6.9',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.9.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
@@ -215,15 +215,15 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.9.1.1.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.9.2.0.zip'
 		) );
 
 		// Event Organiser
 		call_user_func( $instance, array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
-			'version'      => '3.10.7',
-			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.10.7.zip',
+			'version'      => '3.10.8',
+			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.10.8.zip',
 			'network'      => false,
 			'hide'         => cbox_is_main_site()
 		) );

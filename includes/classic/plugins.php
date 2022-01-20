@@ -41,7 +41,7 @@ class CBox_Plugins_Classic {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '9.1.1',
+			'version'           => '9.2.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -62,7 +62,7 @@ class CBox_Plugins_Classic {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.9.1.1.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.9.2.0.zip'
 		) );
 	}
 
@@ -151,8 +151,8 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.6',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.6.zip',
+			'version'           => '2.6.9',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.9.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',

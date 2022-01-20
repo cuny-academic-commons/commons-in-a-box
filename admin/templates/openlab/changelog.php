@@ -22,8 +22,7 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Improved permissions behavior when a network administrator modifies a user\'s portfolio settings.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed inconsistent email subscription settings in various parts of the settings panels.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed some issues that may have caused localizations not to appear properly in certain cases.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -33,12 +32,9 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 9.1.1</li>
-						<li>BuddyPress Group Email Subscription 4.0.1</li>
-						<li>Invite Anyone 1.4.2</li>
-						<li>OpenLab Private Comments 1.1.1</li>
-						<li>PressForward 5.2.8</li>
-						<li>WP Grade Comments 1.4.4</li>
+						<li>BuddyPress 9.2.0</li>
+						<li>bbPress 2.6.9</li>
+						<li>Event Organiser 3.10.8</li>
 					</ul>
 				</div>
 			</div>
@@ -48,9 +44,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Improved behavior of oEmbed videos on mobile devices.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved appearance of badge labels in group directories.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented portfolio owner from seeing "Site Dashboard" link in the sidebar of Portfolio home.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed incorrect "Contact Us" URL.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
