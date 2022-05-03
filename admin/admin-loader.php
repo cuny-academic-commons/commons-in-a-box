@@ -1213,8 +1213,9 @@ class CBox_Admin {
 			background: url( '<?php echo $icon32_url; ?>' ) no-repeat;
 		}
 
-		#welcome-panel {overflow:visible;min-height: 280px; padding:0 1em 1em;}
-		#welcome-panel h2 {margin:.5em 0;}
+		#welcome-panel {overflow:visible; min-height: 280px; padding:0 1em 1em; position:relative; margin:16px 0; border:1px solid #c3c4c7; box-shadow:0 1px 1px rgba(0, 0, 0, 0.04); background:#fff; font-size:13px; line-height:1.7;}
+		#welcome-panel h2 {margin:.5em 0; font-size:21px; font-weight:400; line-height:1.2;}
+		.cbox-welcome-panel-content {margin-left:13px; max-width:1500px;}
 
 		.plugin-icon {height:auto;}
 		.plugin-card-OpenLab .column-description {min-height:140px;}
@@ -1262,7 +1263,7 @@ class CBox_Admin {
 		    position: relative;
 		}
 
-		.metabox-holder .welcome-panel-column {
+		.metabox-holder .cbox-welcome-panel-column {
 		    float: left;
 		    margin: 0 5% 0 -25px;
 		    min-width: 200px;
@@ -1272,11 +1273,11 @@ class CBox_Admin {
 			.metabox-holder .welcome-panel-last {margin-right:0;}
 
 
-		.metabox-holder .welcome-panel-column ul {
+		.metabox-holder .cbox-welcome-panel-column ul {
 			margin: 1.6em 1em 1em 1.3em;
 		}
 
-		.metabox-holder .welcome-panel-column li {
+		.metabox-holder .cbox-welcome-panel-column li {
 			list-style-type: disc;
 			padding-left: 2px;
 		}
@@ -1315,16 +1316,13 @@ class CBox_Admin {
 		.cbox-admin-content .cbox-plugins-section:last-of-type {border:0; padding-bottom:0;}
 
 		/* Responsive */
-		@media screen and (max-width: 960px) {
-			#welcome-panel {overflow:auto;}
-		}
 		@media screen and (max-width: 600px) {
 			.cbox-badge {display:none;}
 			.about-wrap h1, .about-wrap .about-text {margin-right:0;}
-			.welcome-panel-content {margin-left:0;}
+			.cbox-welcome-panel-content {margin-left:0;}
 			#getting-started li {width:100%;}
 			#getting-started li:nth-child(even) {left:0}
-			.metabox-holder .welcome-panel-column {width:auto;}
+			.metabox-holder .cbox-welcome-panel-column {width:auto;}
 		}
 		</style>
 

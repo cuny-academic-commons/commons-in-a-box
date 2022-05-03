@@ -7,7 +7,7 @@
 		<div class="welcome-panel-column-container">
 
 			<!-- SETTINGS -->
-			<div class="welcome-panel-column">
+			<div class="cbox-welcome-panel-column">
 				<h4><span class="icon16 icon-settings"></span> <?php _e( 'Settings', 'commons-in-a-box' ); ?></h4>
 				<p><?php _e( "Commons In A Box works by pulling together a number of independent WordPress and BuddyPress plugins. Customize your site by exploring the settings pages for these plugins below.", 'commons-in-a-box' ); ?></p>
 				<ul>
@@ -33,7 +33,7 @@
 			</div>
 
 			<!-- THEME -->
-			<div class="welcome-panel-column welcome-panel-last">
+			<div class="cbox-welcome-panel-column welcome-panel-last">
 				<h4><span class="icon16 icon-appearance"></span> <?php _e( 'Theme', 'commons-in-a-box' ); ?></h4>
 				<?php
 					$theme = cbox_get_theme();

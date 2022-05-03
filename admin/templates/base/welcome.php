@@ -9,7 +9,7 @@
 				</div>
 			</div>
 
-			<div class="welcome-panel-content">
+			<div class="cbox-welcome-panel-content">
 				<?php cbox_get_template_part( 'welcome-description' ); ?>
 			</div><!-- .welcome-panel-content -->
 
