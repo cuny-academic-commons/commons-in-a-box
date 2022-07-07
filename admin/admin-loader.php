@@ -1253,8 +1253,8 @@ class CBox_Admin {
 
 		.secondary-panel h2 {line-height:1;}
 
-		.getting-started-cbox-classic h4 {font-size:14px; margin-top:.3em;}
-			.getting-started-cbox-classic h4 .icon16 {margin-top:-12px; margin-left: -32px;}
+		.getting-started-cbox-classic h4 {font-size:14px; margin-top:.3em; position:relative;}
+		.getting-started-cbox-classic h4 .dashicons-before {color:#8c8f94; position:absolute; top:0; left:-26px;}
 
 		.metabox-holder .welcome-panel-column-container {
 		    clear: both;
