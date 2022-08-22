@@ -204,8 +204,8 @@ class CBox_Plugins_Classic {
 				'type'              => 'recommended',
 				'cbox_name'         => __( 'Activity Privacy', 'commons-in-a-box' ),
 				'cbox_description'  => __( 'Works with More Privacy Options to keep private blog content out of public activity feeds.', 'commons-in-a-box' ),
-				'version'           => '1.3.2',
-				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.3.2.zip',
+				'version'           => '1.3.3',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-mpo-activity-filter.1.3.3.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-mpo-activity-filter',
 			) );
 
