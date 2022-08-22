@@ -38,6 +38,7 @@
 						<li>Invite Anyone 1.4.3</li>
 						<li>OpenLab Attributions 2.0.1</li>
 						<li>PressForward 5.2.9</li>
+						<li>WP Grade Comments 1.4.5</li>
 					</ul>
 				</div>
 			</div>
