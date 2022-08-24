@@ -22,7 +22,11 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Fixed some issues that may have caused localizations not to appear properly in certain cases.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused some settings to be improperly reset when saving group settings.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Cleaned up Academic Units admin columns.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved the appearance of the toolbar on secondary site themes.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with WordPress core admin styles.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused private site links not to appear on group profiles when WordPress uses a non-standard database prefix.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -32,9 +36,13 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 9.2.0</li>
-						<li>bbPress 2.6.9</li>
-						<li>Event Organiser 3.10.8</li>
+						<li>BuddyPress 10.4.0</li>
+						<li>BuddyPress Docs 2.1.7</li>
+						<li>BuddyPress Group Email Subscription 4.0.2</li>
+						<li>Invite Anyone 1.4.3</li>
+						<li>OpenLab Attributions 2.0.1</li>
+						<li>PressForward 5.2.9</li>
+						<li>WP Grade Comments 1.4.5</li>
 					</ul>
 				</div>
 			</div>
@@ -44,7 +52,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed incorrect "Contact Us" URL.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved appearance of toolbar when many menu items are present.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior of group directories when group have long names.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed broken pagination for Messages inbox.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Updated markup for improved accessibility on homepage.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

@@ -384,8 +384,7 @@ function cbox_get_template_part( $slug, $package_id = '' ) {
  * @since 1.1.0
  */
 function cbox_welcome_panel_classes() {
-	// Default class for our welcome panel container.
-	$classes = 'welcome-panel';
+	$classes = '';
 
 	// Get our user's welcome panel setting.
 	$option = get_user_meta( get_current_user_id(), 'show_cbox_welcome_panel', true );
