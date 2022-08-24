@@ -22,7 +22,11 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Fixed some issues that may have caused localizations not to appear properly in certain cases.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused some settings to be improperly reset when saving group settings.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Cleaned up Academic Units admin columns.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved the appearance of the toolbar on secondary site themes.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with WordPress core admin styles.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused private site links not to appear on group profiles when WordPress uses a non-standard database prefix.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -48,7 +52,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed incorrect "Contact Us" URL.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved appearance of toolbar when many menu items are present.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior of group directories when group have long names.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed broken pagination for Messages inbox.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Updated markup for improved accessibility on homepage.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

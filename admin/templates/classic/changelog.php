@@ -17,18 +17,16 @@
 				</a>
 			</h2>
 
-			<!--
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<li><?php esc_html_e( 'Improve compatibility with PHP 8.0+.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with WordPress core admin styles.', 'commons-in-a-box' ); ?></li>
 					</div>
 				</div>
 			</div>
-			-->
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>

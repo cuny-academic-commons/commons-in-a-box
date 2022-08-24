@@ -60,9 +60,17 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 == Changelog ==
 
 = 1.3.3 =
-
 * Updated plugins (Classic): BP MPO Activity Filter 1.3.3, BuddyPress 10.4.0, BuddyPress Docs 2.1.7, BuddyPress Group Email Subscription 4.0.2, Invite Anyone 1.4.3
 * Updated plugins (OpenLab): BuddyPress 10.4.0, BuddyPress Docs 2.1.7, BuddyPress Group Email Subscription 4.0.2, Invite Anyone 1.4.3, OpenLab Attributions 2.0.1, PressForward 5.2.9, WP Grade Comments 1.4.5
+* Improved compatibility with WordPress core admin styles.
+* OpenLab: Fixed bug that caused some settings to be improperly reset when saving group settings.
+* OpenLab: Cleaned up Academic Units admin columns.
+* OpenLab: Improved the appearance of the toolbar on secondary site themes.
+* OpenLab: Fixed bug that caused private site links not to appear on group profiles when WordPress uses a non-standard database prefix.
+* OpenLab: Improved appearance of toolbar when many menu items are present.
+* OpenLab: Improved behavior of group directories when group have long names.
+* OpenLab: Fixed broken pagination for Messages inbox.
+* OpenLab: Updated markup for improved accessibility on homepage.
 
 = 1.3.2 =
 * Updated plugins (Classic): BuddyPress 9.2.0, bbPress 2.6.9
