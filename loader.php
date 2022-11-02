@@ -38,7 +38,7 @@ class Commons_In_A_Box {
 	 *
 	 * @since 0.1
 	 */
-	public static function &init() {
+	public static function init() {
 		if ( ! self::$instance ) {
 			self::$instance = new self();
 			self::$instance->constants();
