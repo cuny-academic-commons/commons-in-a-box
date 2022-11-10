@@ -695,7 +695,10 @@ class CBox_Updater {
 	public static function parse_plugins( $plugins = [] ) {
 		// dependency-time!
 		// flatten the associative array to make dependency checks easier
-		$plugin_list = call_user_func_array( 'array_merge', $plugins );
+		$plugin_list = [];
+		foreach ( $plugins as $plugin_type => $plugin_type_plugins ) {
+			$plugin_list = array_merge( $plugin_list, $plugin_type_plugins );
+		}
 
 		// get requirements
 		$requirements = (array) Plugin_Dependencies::get_requirements();

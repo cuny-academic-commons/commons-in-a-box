@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 6.0
-Stable tag: 1.3.3
+Tested up to: 6.1
+Stable tag: 1.3.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,14 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.3.4 =
+* Updated plugins (Classic): BuddyPress Group Email Subscription 4.0.3
+* Updated plugins (OpenLab): BuddyPress Group Email Subscription 4.0.3
+* OpenLab: Fixed bug that caused 'Create' link to appear in Portfolio directories for non-authenticated users.
+* OpenLab: Improvements to localization.
+* OpenLab: Improved compatibility with PHP 8+.
+* OpenLab: Fixed issue where error message didn't appear on messages compose page.
 
 = 1.3.3 =
 * Updated plugins (Classic): BP MPO Activity Filter 1.3.3, BuddyPress 10.4.0, BuddyPress Docs 2.1.7, BuddyPress Group Email Subscription 4.0.2, Invite Anyone 1.4.3

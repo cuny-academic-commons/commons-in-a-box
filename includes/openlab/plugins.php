@@ -54,8 +54,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.3.3',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.3.3.zip',
+			'version'           => '1.3.4',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.3.4.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -119,8 +119,8 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Group Email Subscription', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '4.0.2',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.0.2.zip',
+			'version'           => '4.0.3',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.0.3.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'root-blog-only'
