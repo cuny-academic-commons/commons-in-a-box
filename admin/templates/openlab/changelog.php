@@ -36,13 +36,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 10.4.0</li>
-						<li>BuddyPress Docs 2.1.7</li>
-						<li>BuddyPress Group Email Subscription 4.0.2</li>
-						<li>Invite Anyone 1.4.3</li>
-						<li>OpenLab Attributions 2.0.1</li>
-						<li>PressForward 5.2.9</li>
-						<li>WP Grade Comments 1.4.5</li>
+						<li>BuddyPress Group Email Subscription 4.0.3</li>
 					</ul>
 				</div>
 			</div>
