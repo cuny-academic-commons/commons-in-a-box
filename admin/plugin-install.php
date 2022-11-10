@@ -697,7 +697,7 @@ class CBox_Updater {
 		// flatten the associative array to make dependency checks easier
 		$plugin_list = [];
 		foreach ( $plugins as $plugin_type => $plugin_type_plugins ) {
-			$plugin_list = array_merge( $plugin_list, $plugin_type_pligns );
+			$plugin_list = array_merge( $plugin_list, $plugin_type_plugins );
 		}
 
 		// get requirements
