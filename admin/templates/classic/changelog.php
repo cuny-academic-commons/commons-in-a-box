@@ -17,6 +17,7 @@
 				</a>
 			</h2>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
@@ -27,6 +28,7 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>
