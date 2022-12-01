@@ -33,7 +33,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress Group Email Subscription 4.0.3</li>
+						<li>BuddyPress 10.6.0</li>
 					</ul>
 				</div>
 			</div>
