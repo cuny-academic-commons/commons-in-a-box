@@ -34,6 +34,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>Anthologize 0.8.1</li>
+						<li>BP Group Documents 1.14</li>
 						<li>BuddyPress 10.6.0</li>
 						<li>BuddyPress Docs 2.1.8</li>
 						<li>Event Organiser 3.12.2</li>
