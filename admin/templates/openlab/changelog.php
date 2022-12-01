@@ -35,6 +35,7 @@
 					<ul>
 						<li>Anthologize 0.8.1</li>
 						<li>BuddyPress 10.6.0</li>
+						<li>BuddyPress Docs 2.1.8</li>
 						<li>Event Organiser 3.12.2</li>
 						<li>OpenLab Attributions 2.1.0</li>
 						<li>PressForward 5.2.10</li>
