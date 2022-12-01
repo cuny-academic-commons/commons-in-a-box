@@ -36,6 +36,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>BuddyPress 10.6.0</li>
+						<li>BuddyPress Docs 2.1.8</li>
 					</ul>
 				</div>
 			</div>
