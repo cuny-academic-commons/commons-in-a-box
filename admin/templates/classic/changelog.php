@@ -37,6 +37,7 @@
 					<ul>
 						<li>BuddyPress 10.6.0</li>
 						<li>BuddyPress Docs 2.1.8</li>
+						<li>BuddyPress Group Email Subscription 4.0.4</li>
 					</ul>
 				</div>
 			</div>

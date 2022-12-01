@@ -60,7 +60,7 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 == Changelog ==
 
 = 1.4.0 =
-* Updated plugins (Classic): BuddyPress 10.6.0, BuddyPress Docs 2.1.8
+* Updated plugins (Classic): BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4
 * Updated plugins (OpenLab): Anthologize 0.8.1, BP Group Documents 1.14, BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4, Event Organiser 3.12.2, PressForward 5.2.10, OpenLab Attributions 2.1.0
 
 = 1.3.4 =
