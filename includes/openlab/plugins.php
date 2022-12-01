@@ -222,8 +222,8 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
-			'version'      => '3.10.8',
-			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.10.8.zip',
+			'version'      => '3.12.2',
+			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.12.2.zip',
 			'network'      => false,
 			'hide'         => cbox_is_main_site()
 		) );

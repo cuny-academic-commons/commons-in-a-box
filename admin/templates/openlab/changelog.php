@@ -34,6 +34,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>BuddyPress 10.6.0</li>
+						<li>Event Organiser 3.12.2</li>
 					</ul>
 				</div>
 			</div>
