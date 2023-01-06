@@ -167,7 +167,7 @@ class Plugin_Dependencies {
 		// a dependent plugin name can contain a version number, so let's get just the name
 		$plugin_name = rtrim( strtok( $full_plugin_name, '(' ) );
 
-		$requirements = false;
+		$requirements = [];
 
 		// plugin is installed
 		if ( isset( self::$plugins_by_name[ $plugin_name ] ) ) {
@@ -221,6 +221,10 @@ class Plugin_Dependencies {
 			}
 
 			$requirements['not-installed'][] = $plugin_name;
+		}
+
+		if ( empty( $requirements ) ) {
+			$requirements = false;
 		}
 
 		return $requirements;
