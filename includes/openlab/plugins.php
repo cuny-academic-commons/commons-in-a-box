@@ -181,8 +181,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'OpenLab Portfolio',
 			'cbox_name'         => __( 'Portfolio', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'WordPress portfolio tools.', 'commons-in-a-box' ),
-			'version'           => '1.1.0',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-portfolio/archive/1.1.0.zip',
+			'version'           => '1.1.1',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-portfolio/archive/1.1.1.zip',
 		) );
 
 		// OpenLab Badges
