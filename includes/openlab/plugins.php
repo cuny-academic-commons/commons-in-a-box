@@ -190,8 +190,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'OpenLab Badges',
 			'cbox_name'         => __( 'Badges', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Customizable badges for your OpenLab groups.', 'commons-in-a-box' ),
-			'version'           => '1.0.0',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.0.zip',
+			'version'           => '1.0.1',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.1.zip',
 		) );
 	}
 
