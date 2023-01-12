@@ -39,7 +39,7 @@
 						<li>BuddyPress Docs 2.1.8</li>
 						<li>BuddyPress Group Email Subscription 4.0.4</li>
 						<li>Event Organiser 3.12.2</li>
-						<li>OpenLab Attributions 2.1.0</li>
+						<li>OpenLab Attributions 2.1.1</li>
 						<li>OpenLab Portfolio 1.1.1</li>
 						<li>PressForward 5.2.10</li>
 					</ul>
