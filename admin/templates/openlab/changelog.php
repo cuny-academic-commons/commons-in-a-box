@@ -43,6 +43,7 @@
 						<li>OpenLab Badges 1.0.1</li>
 						<li>OpenLab Portfolio 1.1.1</li>
 						<li>PressForward 5.2.10</li>
+						<li>WP Grade Comments 1.4.6</li>
 					</ul>
 				</div>
 			</div>
