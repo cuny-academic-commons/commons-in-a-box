@@ -847,6 +847,9 @@ jQuery('a[data-uninstall="1"]').confirm({
 			<tbody>
 
 			<?php
+				// Fetch install-only plugins to reference later.
+				$install_only = CBox_Plugins::get_plugins( 'install-only' );
+
 				foreach ( CBox_Plugins::get_plugins( $r['type'] ) as $plugin => $data ) :
 					// attempt to get the plugin loader file
 					$loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin );
@@ -962,12 +965,21 @@ jQuery('a[data-uninstall="1"]').confirm({
 										$dep_str    = $dependency;
 										$dep_loader = Plugin_Dependencies::get_pluginloader_by_name( $plugin_name );
 
-										if ( $dep_loader && self::is_plugin_active( $dep_loader ) )
+										// Plugin is active on the main site or network-activated.
+										if ( $dep_loader && self::is_plugin_active( $dep_loader ) ) {
 											$dep_str .= ' <span class="enabled">' . __( '(enabled)', 'commons-in-a-box' ) . '</span>';
-										elseif( $dep_loader )
-											$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'commons-in-a-box' ) . '</span>';
-										else
+
+										// Plugin exists, but isn't activated.
+										} elseif ( $dep_loader ) {
+											// Do not display 'disabled' label if plugin is install-only.
+											if ( ! isset( $install_only[ $plugin_name ] ) ) {
+												$dep_str .= ' <span class="disabled">' . __( '(disabled)', 'commons-in-a-box' ) . '</span>';
+											}
+
+										// Plugin not installed.
+										} else {
 											$dep_str .= ' <span class="not-installed">' . sprintf( __( '(automatically installed with %s)', 'commons-in-a-box' ), $data['cbox_name'] ) . '</span>';
+										}
 										$deps[] = $dep_str;
 									endforeach;
 
