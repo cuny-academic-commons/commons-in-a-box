@@ -25,7 +25,7 @@
 						<li><?php esc_html_e( 'Introduce Template Chooser tool, allowing users creating a new site to select from an admin-curated set of template sites.', 'commons-in-a-box' ); ?></li>
 						<li><?php esc_html_e( 'Improvements to the Attributions tool, including a movable modal and better performance on mobile devices.', 'commons-in-a-box' ); ?></li>
 						<li><?php esc_html_e( 'Improvements to the Import/Export tool, including clearer UI for downloading archives and better tools for selecting authors during export.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Introduce a new tool allowing Academic Terms (eg 'Fall 2023') to be editable and sortable by the admin.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Introduce a new tool allowing Academic Terms (eg "Fall 2023") to be editable and sortable by the admin.', 'commons-in-a-box' ); ?></li>
 						<li><?php esc_html_e( 'Fixed bug in Docs pagination inside groups.', 'commons-in-a-box' ); ?></li>
 						<li><?php esc_html_e( 'Fixed bug that caused some labels not to be properly pre-filled when creating new Member Type.', 'commons-in-a-box' ); ?></li>
 						<li><?php esc_html_e( 'Fixed bug that caused sitewide footer to appear when editing widgets.', 'commons-in-a-box' ); ?></li>
