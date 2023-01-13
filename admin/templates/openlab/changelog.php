@@ -22,8 +22,16 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Localization improvements.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved compatibility with PHP 8+', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Introduce Template Chooser tool, allowing users creating a new site to select from an admin-curated set of template sites.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the Attributions tool, including a movable modal and better performance on mobile devices.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the Import/Export tool, including clearer UI for downloading archives and better tools for selecting authors during export.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Introduce a new tool allowing Academic Terms (eg 'Fall 2023') to be editable and sortable by the admin.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug in Docs pagination inside groups.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused some labels not to be properly pre-filled when creating new Member Type.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused sitewide footer to appear when editing widgets.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Ensure that new blog comments trigger a "last active" change for the corresponding group.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused Academic Term order to be forgotten on certain edit events.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved appearance of Log In toolbar button across themes.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -53,8 +61,10 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed issues where error message didn\'t appear on messages compose page.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that caused "Create" link to appear in Portfolio directories for non-authenticated users.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Support for per-profile-field visibility.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added a "sort" dropdown to My Profile group lists.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added support for @-mentions in group forum posts.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Accessibility improvements.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

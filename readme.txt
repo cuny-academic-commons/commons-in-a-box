@@ -62,6 +62,20 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 = 1.4.0 =
 * Updated plugins (Classic): BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4
 * Updated plugins (OpenLab): Anthologize 0.8.1, BP Group Documents 1.14, BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4, Event Organiser 3.12.2, PressForward 5.2.10, OpenLab Attributions 2.1.1, OpenLab Badges 1.0.1, OpenLab Portfolios 1.1.1, WP Grade Commetns 1.4.6
+* Fixed bug in Docs pagination inside groups.
+* OpenLab: Introduce Template Chooser tool, allowing users creating a new site to select from an admin-curated set of template sites.
+* OpenLab: Introduce a new tool allowing Academic Terms (eg 'Fall 2023') to be editable and sortable by the admin.
+* OpenLab: Improvements to the Attributions tool, including a movable modal and better performance on mobile devices.
+* OpenLab: Improvements to the Import/Export tool, including clearer UI for downloading archives and better tools for selecting authors during export.
+* OpenLab: Fixed bug that caused some labels not to be properly pre-filled when creating new Member Type.
+* OpenLab: Fixed bug that caused sitewide footer to appear when editing widgets.
+* OpenLab: Ensure that new blog comments trigger a "last active" change for the corresponding group.
+* OpenLab: Fixed bug that caused Academic Term order to be forgotten on certain edit events.
+* OpenLab: Support for per-profile-field visibility.
+* OpenLab: Improved appearance of Log In toolbar button across themes.
+* OpenLab: Added a 'sort' dropdown to My Profile group lists.
+* OpenLab: Added support for @-mentions in group forum posts.
+* OpenLab: Accessibility improvements.
 
 = 1.3.4 =
 * Updated plugins (Classic): BuddyPress Group Email Subscription 4.0.3
