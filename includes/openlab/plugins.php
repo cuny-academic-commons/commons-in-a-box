@@ -193,6 +193,15 @@ class CBox_Plugins_OpenLab {
 			'version'           => '1.0.1',
 			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.1.zip',
 		) );
+
+		// OpenLab Email Embedded Media
+		call_user_func( $instance, array(
+			'plugin_name'       => 'OpenLab Email Embedded Media',
+			'cbox_name'         => __( 'Email Embedded Media', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'Where possible, show embedded media in email notifications.', 'commons-in-a-box' ),
+			'version'           => '1.0.0',
+			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-email-embedded-media/archive/1.0.0.zip',
+		) );
 	}
 
 	/**
