@@ -46,6 +46,7 @@
 						<li>BP Group Documents 1.21</li>
 						<li>Event Organiser 3.12.3</li>
 						<li>Invite Anyone 1.4.4</li>
+						<li>OpenLab Portfolio 1.1.2</li>
 					</ul>
 				</div>
 			</div>
