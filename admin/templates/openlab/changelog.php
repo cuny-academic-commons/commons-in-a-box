@@ -42,6 +42,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>BuddyPress 11.2.0</li>
+						<li>BP Group Documents 1.21</li>
 					</ul>
 				</div>
 			</div>
