@@ -47,6 +47,7 @@
 						<li>Event Organiser 3.12.3</li>
 						<li>Invite Anyone 1.4.4</li>
 						<li>OpenLab Portfolio 1.1.2</li>
+						<li>PressForward 5.5.0</li>
 					</ul>
 				</div>
 			</div>
