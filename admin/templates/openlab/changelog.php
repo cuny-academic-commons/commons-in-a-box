@@ -49,6 +49,7 @@
 						<li>OpenLab Attributions 2.1.2</li>
 						<li>OpenLab Portfolio 1.1.2</li>
 						<li>PressForward 5.5.0</li>
+						<li>WP Grade Comments 1.5.0</li>
 					</ul>
 				</div>
 			</div>
