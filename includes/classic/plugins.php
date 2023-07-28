@@ -111,7 +111,7 @@ class CBox_Plugins_Classic {
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
 			'version'           => '4.1.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.0.4.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.1.0.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'options-general.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'settings.php?page=ass_admin_options'
