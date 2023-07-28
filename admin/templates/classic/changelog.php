@@ -34,6 +34,7 @@
 				<div class="feature-section">
 					<ul>
 						<li>BuddyPress 11.2.0</li>
+						<li>BuddyPress Group Email Subscription 4.1.0</li>
 					</ul>
 				</div>
 			</div>
