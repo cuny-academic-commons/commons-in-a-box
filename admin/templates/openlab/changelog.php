@@ -43,7 +43,7 @@
 					<ul>
 						<li>BuddyPress 11.2.0</li>
 						<li>BuddyPress Group Email Subscription 4.1.0</li>
-						<li>BP Group Documents 1.21</li>
+						<li>BP Group Documents 1.22</li>
 						<li>Event Organiser 3.12.3</li>
 						<li>Invite Anyone 1.4.4</li>
 						<li>OpenLab Attributions 2.1.2</li>
