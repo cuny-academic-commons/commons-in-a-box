@@ -34,6 +34,69 @@ class Commons_In_A_Box {
 	private $package;
 
 	/**
+	 * Version string.
+	 *
+	 * @var string
+	 */
+	public $version;
+
+	/**
+	 * Revision date.
+	 *
+	 * @var string
+	 */
+	public $revision_date;
+
+	/**
+	 * Plugin directory path.
+	 *
+	 * @var string
+	 */
+	public $plugin_dir;
+
+	/**
+	 * Plugin directory URL.
+	 *
+	 * @var string
+	 */
+	public $plugin_url;
+
+	/**
+	 * Admin class.
+	 *
+	 * @var CBox_Admin
+	 */
+	public $admin;
+
+	/**
+	 * Plugins class.
+	 *
+	 * @var CBox_Plugins
+	 */
+	public $plugins;
+
+	/**
+	 * Whether to show the main CBOX notice.
+	 *
+	 * @var bool
+	 */
+	public $show_notice;
+
+	/**
+	 * Setup type.
+	 *
+	 * @var string
+	 */
+	public $setup;
+
+	/**
+	 * Slug of theme to update.
+	 *
+	 * @var string
+	 */
+	public $theme_to_update;
+
+	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1
