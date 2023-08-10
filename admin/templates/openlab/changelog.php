@@ -22,16 +22,12 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Introduce Template Chooser tool, allowing users creating a new site to select from an admin-curated set of template sites.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the Attributions tool, including a movable modal and better performance on mobile devices.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the Import/Export tool, including clearer UI for downloading archives and better tools for selecting authors during export.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Introduce a new tool allowing Academic Terms (eg "Fall 2023") to be editable and sortable by the admin.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug in Docs pagination inside groups.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that caused some labels not to be properly pre-filled when creating new Member Type.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that caused sitewide footer to appear when editing widgets.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Ensure that new blog comments trigger a "last active" change for the corresponding group.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that caused Academic Term order to be forgotten on certain edit events.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved appearance of Log In toolbar button across themes.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New "External Files" feature in group File Library.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Support for search within group Discussions.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the formatting of email notifications.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New "Add to Portfolio" toggle during portfolio creation.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to Site Template interface.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improve compatibility with Broken Link Checker plugin during site clone.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -41,17 +37,15 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>Anthologize 0.8.1</li>
-						<li>BP Group Documents 1.14</li>
-						<li>BuddyPress 10.6.0</li>
-						<li>BuddyPress Docs 2.1.8</li>
-						<li>BuddyPress Group Email Subscription 4.0.4</li>
-						<li>Event Organiser 3.12.2</li>
-						<li>OpenLab Attributions 2.1.1</li>
-						<li>OpenLab Badges 1.0.1</li>
-						<li>OpenLab Portfolio 1.1.1</li>
-						<li>PressForward 5.2.10</li>
-						<li>WP Grade Comments 1.4.6</li>
+						<li>BuddyPress 11.2.0</li>
+						<li>BuddyPress Group Email Subscription 4.1.0</li>
+						<li>BP Group Documents 1.22</li>
+						<li>Event Organiser 3.12.3</li>
+						<li>Invite Anyone 1.4.4</li>
+						<li>OpenLab Attributions 2.1.2</li>
+						<li>OpenLab Portfolio 1.1.2</li>
+						<li>PressForward 5.5.0</li>
+						<li>WP Grade Comments 1.5.0</li>
 					</ul>
 				</div>
 			</div>
@@ -61,10 +55,11 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Support for per-profile-field visibility.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Added a "sort" dropdown to My Profile group lists.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Added support for @-mentions in group forum posts.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Accessibility improvements.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New "Default Profile Photo" feature in Customizer allows admin to configure the default avatar for users.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the appearance and behavior of Recent Comments section on group profiles.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'When changing a group type name, the corresponding nav item text is also changed.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improvements to the behavior of the About Sidebar.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Homepage accessibility improvements.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
