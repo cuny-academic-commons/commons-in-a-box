@@ -17,6 +17,7 @@
 				</a>
 			</h2>
 
+			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
@@ -27,6 +28,7 @@
 					</div>
 				</div>
 			</div>
+			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>
@@ -41,19 +43,17 @@
 				</div>
 			</div>
 
-			<!--
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Theme Updates', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Compatibility with BuddyPress 8.0.0 "selectable signu profile fields" feature.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Add highlighting to unread group forum threads.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Compatibility with BP bulk notifications management.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Compatibility between cbox-theme admin panel and versions of jQuery shipped with recent WordPress.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'PHP 8 compatibility improvements.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed some sidebar errors during group creation.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
-			-->
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'commons-in-a-box' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>

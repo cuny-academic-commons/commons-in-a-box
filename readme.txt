@@ -59,6 +59,24 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
+= 1.5.0 =
+* Updated plugins (OpenLab): BuddyPress 11.2.0, BuddyPress Group Email Subscription 4.1.0, BP Group Documents 1.22, Event Organiser 3.12.3, Invite Anyone 1.4.4, OpenLab Attributions 2.1.2, OpenLab Portfolio 1.1.2, PressForward 5.5.0, WP Grade Comments 1.5.0
+* Updated plugins (Classic): BuddyPress 11.2.0,	BuddyPress Group Email Subscription 4.1.0, BP Groupblog 1.9.3, Invite Anyone 1.4.4
+* Compatibility improvements with latest WordPress and PHP.
+* OpenLab: New "External Files" feature in group File Library.
+* OpenLab: Support for search within group Discussions.
+* OpenLab: New "Default Profile Photo" feature in Customizer allows admin to configure the default avatar for users.
+* OpenLab: Improvements to the formatting of email notifications.
+* OpenLab: New "Add to Portfolio" toggle during portfolio creation.
+* OpenLab: Improvements to Site Template interface.
+* OpenLab: When changing a group type name, the corresponding nav item text is also changed.
+* OpenLab: Improvements to the behavior of the About Sidebar.
+* OpenLab: Homepage accessibility improvements.
+* OpenLab: Improve compatibility with Broken Link Checker plugin during site clone.
+* OpenLab: Improvements to the appearance and behavior of Recent Comments section on group profiles.
+* Classic: Compatibility between cbox-theme admin panel and versions of jQuery shipped with recent WordPress.
+* Classic: Fixed some sidebar errors during group creation.
+
 = 1.4.0 =
 * Updated plugins (Classic): BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4
 * Updated plugins (OpenLab): Anthologize 0.8.1, BP Group Documents 1.14, BuddyPress 10.6.0, BuddyPress Docs 2.1.8, BuddyPress Group Email Subscription 4.0.4, Event Organiser 3.12.2, PressForward 5.2.10, OpenLab Attributions 2.1.1, OpenLab Badges 1.0.1, OpenLab Portfolios 1.1.1, WP Grade Commetns 1.4.6
