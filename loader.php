@@ -104,6 +104,13 @@ class Commons_In_A_Box {
 	public $frontend;
 
 	/**
+	 * Package plugins.
+	 *
+	 * @var CBox_Plugins
+	 */
+	public $package_plugins;
+
+	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1
