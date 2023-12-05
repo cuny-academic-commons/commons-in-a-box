@@ -97,6 +97,13 @@ class Commons_In_A_Box {
 	public $theme_to_update;
 
 	/**
+	 * Frontend integration.
+	 *
+	 * @var CBox_Frontend
+	 */
+	public $frontend;
+
+	/**
 	 * Static bootstrapping init method
 	 *
 	 * @since 0.1

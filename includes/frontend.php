@@ -17,6 +17,19 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since 1.0-beta2
  */
 class CBox_Frontend {
+	/**
+	 * Holds our admin settings.
+	 *
+	 * @var array
+	 */
+	private $settings = array();
+
+	/**
+	 * Holds our autoload classes.
+	 *
+	 * @var array
+	 */
+	private $autoload = array();
 
 	/**
 	 * Constructor.
