@@ -40,6 +40,7 @@
 						<li>BP Group Documents 1.24</li>
 						<li>BuddyPress 11.4.0</li>
 						<li>BuddyPress Docs 2.2.1</li>
+						<li>BuddyPress Group Email Subscription 4.2.1</li>
 						<li>Invite Anyone 1.4.6</li>
 					</ul>
 				</div>
