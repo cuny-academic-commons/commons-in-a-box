@@ -41,6 +41,7 @@
 						<li>BuddyPress 11.4.0</li>
 						<li>BuddyPress Docs 2.2.1</li>
 						<li>BuddyPress Group Email Subscription 4.2.1</li>
+						<li>Event Organiser 3.12.4</li>
 						<li>Invite Anyone 1.4.7</li>
 					</ul>
 				</div>
