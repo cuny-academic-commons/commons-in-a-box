@@ -43,6 +43,7 @@
 						<li>BuddyPress Group Email Subscription 4.2.1</li>
 						<li>Event Organiser 3.12.4</li>
 						<li>Invite Anyone 1.4.7</li>
+						<li>Openlab Attributions 2.1.3</li>
 					</ul>
 				</div>
 			</div>
