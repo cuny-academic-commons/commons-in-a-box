@@ -51,7 +51,7 @@ class CBox_Package_Classic extends CBox_Package {
 			'name'           => 'Commons In A Box',
 			'version'        => '1.5.1-beta1',
 			'directory_name' => 'cbox-theme',
-			'download_url'   => 'http://github.com/cuny-academic-commons/cbox-theme/archive/1.5.1-beta1.zip',
+			'download_url'   => CBOX_PLUGIN_DIR . 'includes/zip/cbox-theme-1.5.1-beta1.zip',
 			'admin_settings' => 'themes.php?page=infinity-theme',
 			'screenshot_url' => cbox()->plugin_url( 'admin/images/screenshot_cbox_theme.png' ),
 		);
