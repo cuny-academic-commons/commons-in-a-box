@@ -62,11 +62,11 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 = 1.5.1 =
 * Updated plugins (OpenLab): BP Group Documents 1.24, BuddyPress 11.4.0, BuddyPress Docs 2.2.1, BuddyPress Group Email Subscription 4.2.1, Event Organiser 3.12.4, Invite Anyone 1.4.7, OpenLab Attributions 2.1.4
 * Updated plugins (Classic): BuddyPress 11.4.0, BuddyPress Docs 2.2.1, BuddyPress Group Email Subscription 4.2.1, Invite Anyone 1.4.7
-* Template Chooser improvements, including better fallbacks for group templates when template sites are unpublshed or unassociated.
-* Improved compatibility with the Hamilton theme.
-* Improved behavior of mobile menus.
-* Fixed bug that caused broken menus on new sites in certain cases.
-* Fixed potential fatal error when viewing group membership template on later versions of PHP.
+* OpenLab: Template Chooser improvements, including better fallbacks for group templates when template sites are unpublshed or unassociated.
+* OpenLab: Improved compatibility with the Hamilton theme.
+* OpenLab: Improved behavior of mobile menus.
+* OpenLab: Fixed bug that caused broken menus on new sites in certain cases.
+* OpenLab: Fixed potential fatal error when viewing group membership template on later versions of PHP.
 
 = 1.5.0 =
 * Updated plugins (OpenLab): BuddyPress 11.2.0, BuddyPress Group Email Subscription 4.1.0, BP Group Documents 1.22, Event Organiser 3.12.3, Invite Anyone 1.4.4, OpenLab Attributions 2.1.2, OpenLab Portfolio 1.1.2, PressForward 5.5.0, WP Grade Comments 1.5.0
