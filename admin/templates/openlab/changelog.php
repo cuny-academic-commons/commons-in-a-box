@@ -22,12 +22,10 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'New "External Files" feature in group File Library.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Support for search within group Discussions.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the formatting of email notifications.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New "Add to Portfolio" toggle during portfolio creation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to Site Template interface.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improve compatibility with Broken Link Checker plugin during site clone.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Template Chooser improvements, including better fallbacks for group templates when template sites are unpublshed or unassociated.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with the Hamilton theme.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior of mobile menus.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused broken menus on new sites in certain cases.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -37,15 +35,13 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 11.2.0</li>
-						<li>BuddyPress Group Email Subscription 4.1.0</li>
-						<li>BP Group Documents 1.22</li>
-						<li>Event Organiser 3.12.3</li>
-						<li>Invite Anyone 1.4.4</li>
-						<li>OpenLab Attributions 2.1.2</li>
-						<li>OpenLab Portfolio 1.1.2</li>
-						<li>PressForward 5.5.0</li>
-						<li>WP Grade Comments 1.5.0</li>
+						<li>BP Group Documents 1.24</li>
+						<li>BuddyPress 11.4.0</li>
+						<li>BuddyPress Docs 2.2.1</li>
+						<li>BuddyPress Group Email Subscription 4.2.1</li>
+						<li>Event Organiser 3.12.4</li>
+						<li>Invite Anyone 1.4.7</li>
+						<li>Openlab Attributions 2.1.4</li>
 					</ul>
 				</div>
 			</div>
@@ -55,11 +51,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'New "Default Profile Photo" feature in Customizer allows admin to configure the default avatar for users.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the appearance and behavior of Recent Comments section on group profiles.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'When changing a group type name, the corresponding nav item text is also changed.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the behavior of the About Sidebar.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Homepage accessibility improvements.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed potential fatal error when viewing group membership template on later versions of PHP.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
