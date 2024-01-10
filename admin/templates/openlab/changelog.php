@@ -22,12 +22,10 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'New "External Files" feature in group File Library.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Support for search within group Discussions.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the formatting of email notifications.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New "Add to Portfolio" toggle during portfolio creation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to Site Template interface.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improve compatibility with Broken Link Checker plugin during site clone.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Template Chooser improvements, including better fallbacks for group templates when template sites are unpublshed or unassociated.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with the Hamilton theme.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved behavior of mobile menus.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused broken menus on new sites in certain cases.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -53,11 +51,7 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'New "Default Profile Photo" feature in Customizer allows admin to configure the default avatar for users.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the appearance and behavior of Recent Comments section on group profiles.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'When changing a group type name, the corresponding nav item text is also changed.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to the behavior of the About Sidebar.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Homepage accessibility improvements.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed potential fatal error when viewing group membership template on later versions of PHP.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
