@@ -49,6 +49,16 @@ class CBox_Plugins_OpenLab {
 			'network_settings'  => 'settings.php?page=bp-components'
 		) );
 
+		// BP Classic
+		call_user_func( $instance, array(
+			'plugin_name'       => 'BP Classic',
+			'cbox_name'         => __( 'BP Classic', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'BP Classic provides compatibility with legacy plugins when running version 12.0+ of BuddyPress.', 'commons-in-a-box' ),
+			'version'           => '1.4.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-classic.1.4.0.zip',
+			'network'           => true,
+		) );
+
 		// CBOX-OpenLab Core
 		call_user_func( $instance, array(
 			'plugin_name'       => 'CBOX-OpenLab Core',
