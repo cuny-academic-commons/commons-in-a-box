@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since 1.0-beta2
  */
 class CBox_Frontend {
+	public $settings = array();
+	public $autoload = array();
 
 	/**
 	 * Constructor.

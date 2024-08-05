@@ -76,6 +76,13 @@ class Commons_In_A_Box {
 	public $plugins;
 
 	/**
+	 * Frontend class.
+	 *
+	 * @var CBox_Frontend
+	 */
+	public $frontend;
+
+	/**
 	 * Whether to show the main CBOX notice.
 	 *
 	 * @var bool
@@ -95,6 +102,13 @@ class Commons_In_A_Box {
 	 * @var string
 	 */
 	public $theme_to_update;
+
+	/**
+	 * Package plugins.
+	 *
+	 * @var CBox_Plugins
+	 */
+	public $package_plugins;
 
 	/**
 	 * Static bootstrapping init method
