@@ -347,8 +347,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'PressForward', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A plugin providing an editorial workflow for content aggregation and curation within the WordPress dashboard. Designed for bloggers and editorial teams wishing to collect, discuss, and share content from a variety of sources on the open web.', 'commons-in-a-box' ),
-			'version'           => '5.5.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.5.0.zip',
+			'version'           => '5.6.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.6.2.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
