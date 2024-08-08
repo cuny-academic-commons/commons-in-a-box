@@ -228,8 +228,7 @@ class CBox_Plugins_Classic {
 				'depends'           => 'BuddyPress (>=1.6)',
 				'version'           => '1.9.3',
 				// Temporary - Waiting for wordpress.org to reactivate plugin.
-				//'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.2.zip',
-				'download_url'      => 'http://github.com/boonebgorges/bp-groupblog/archive/1.9.3.zip',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.3.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );
