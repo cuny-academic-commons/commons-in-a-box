@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 6.4
-Stable tag: 1.5.1
+Tested up to: 6.6
+Stable tag: 1.6.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -59,14 +59,26 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
-= 1.5.1 =
-* Updated plugins (OpenLab): BP Group Documents 1.24, BuddyPress 11.4.0, BuddyPress Docs 2.2.1, BuddyPress Group Email Subscription 4.2.1, Event Organiser 3.12.4, Invite Anyone 1.4.7, OpenLab Attributions 2.1.4
-* Updated plugins (Classic): BuddyPress 11.4.0, BuddyPress Docs 2.2.1, BuddyPress Group Email Subscription 4.2.1, Invite Anyone 1.4.7
-* OpenLab: Template Chooser improvements, including better fallbacks for group templates when template sites are unpublshed or unassociated.
-* OpenLab: Improved compatibility with the Hamilton theme.
-* OpenLab: Improved behavior of mobile menus.
-* OpenLab: Fixed bug that caused broken menus on new sites in certain cases.
-* OpenLab: Fixed potential fatal error when viewing group membership template on later versions of PHP.
+= 1.6.0 =
+* Updated plugins (OpenLab): BP Classic 1.4.0, BuddyPress 12.4.0, BuddyPress Group Email Subscription 4.2.3, Event Organiser 3.12.6, Invite Anyone 1.4.8, PressForward 5.6.2
+* Updated plugins (Classic): BuddyPress 12.4.0, BuddyPress Group Email Subscription 4.2.3, Invite Anyone 1.4.8
+* Compatibility with BuddyPress 12.0+.
+* OpenLab: New feature allows users to hide their membership in specific groups from non-group-members.
+* OpenLab: New 'More visibility options' when creating posts on secondary sites.
+* OpenLab: New feature allows network admins to limit site templates to users of specific member types and/or groups associated with specific academic units.
+* OpenLab: New feature allows network admins to determine the order of site templates when appearing on the front end.
+* OpenLab: Introduce privacy settings for user avatars.
+* OpenLab: Privacy improvements to user profiles and portfolios.
+* OpenLab: Include 'Accessibility' page on installation.
+* OpenLab: Improvements to pagination on group membership lists.
+* OpenLab: Internal improvements to allow for better overriding of group submenus in child themes.
+* OpenLab: Fixed bug causing 'Group Home' menu item to be incorrectly generated on new group sites.
+* OpenLab: Fixed bug preventing groups from being completely cloned when the File Library was empty.
+* OpenLab: More consistent styling for subnav items when editing group settings.
+* OpenLab: Improvements to keyboard navigation in toolbar and on homepage.
+* OpenLab: Fixed bug causing an extra set of Creators fields to be shown when editing a group.
+* OpenLab: Ensure that 'Add new file' button does not erroneously appear for non-group-members.
+* OpenLab: Fixed bug that prevented certain new-site options from appearing when editing a cloned group.
 
 = 1.5.0 =
 * Updated plugins (OpenLab): BuddyPress 11.2.0, BuddyPress Group Email Subscription 4.1.0, BP Group Documents 1.22, Event Organiser 3.12.3, Invite Anyone 1.4.4, OpenLab Attributions 2.1.2, OpenLab Portfolio 1.1.2, PressForward 5.5.0, WP Grade Comments 1.5.0

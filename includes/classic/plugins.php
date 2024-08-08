@@ -47,6 +47,16 @@ class CBox_Plugins_Classic {
 			'network_settings'  => 'settings.php?page=bp-components'
 		) );
 
+		// BP Classic
+		call_user_func( $instance, array(
+			'plugin_name'       => 'BP Classic',
+			'cbox_name'         => __( 'BP Classic', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'BP Classic provides compatibility with legacy plugins when running version 12.0+ of BuddyPress.', 'commons-in-a-box' ),
+			'version'           => '1.4.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-classic.1.4.0.zip',
+			'network'           => true,
+		) );
+
 		/**
 		 * Register CBOX's dependency plugins internally.
 		 *
@@ -110,8 +120,8 @@ class CBox_Plugins_Classic {
 			'cbox_name'         => __( 'Group Email Subscription', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '4.2.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.1.zip',
+			'version'           => '4.2.3',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.3.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'options-general.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'settings.php?page=ass_admin_options'
@@ -123,9 +133,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'commons-in-a-box' ),
-			'version'           => '1.4.7',
+			'version'           => '1.4.8',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.7.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.8.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone',
@@ -218,8 +228,7 @@ class CBox_Plugins_Classic {
 				'depends'           => 'BuddyPress (>=1.6)',
 				'version'           => '1.9.3',
 				// Temporary - Waiting for wordpress.org to reactivate plugin.
-				//'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.2.zip',
-				'download_url'      => 'http://github.com/boonebgorges/bp-groupblog/archive/1.9.3.zip',
+				'download_url'      => 'http://downloads.wordpress.org/plugin/bp-groupblog.1.9.3.zip',
 				'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-groupblog',
 				'network_settings'  => 'settings.php?page=bp_groupblog_management_page'
 			) );

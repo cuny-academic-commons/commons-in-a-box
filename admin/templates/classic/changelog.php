@@ -17,28 +17,25 @@
 				</a>
 			</h2>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section col two-col">
 
 					<div class="last-feature">
-						<li><?php esc_html_e( 'Fixed bug in Docs pagination inside groups.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility with BuddyPress 12.0+.', 'commons-in-a-box' ); ?></li>
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php esc_html_e( 'Plugin Updates', 'commons-in-a-box' ); ?></h3>
 
 				<div class="feature-section">
 					<ul>
-						<li>BuddyPress 11.4.0</li>
-						<li>BuddyPress Docs 2.2.1</li>
-						<li>BuddyPress Group Email Subscription 4.2.1</li>
-						<li>Invite Anyone 1.4.7</li>
+						<li>BuddyPress 12.4.0</li>
+						<li>BuddyPress Group Email Subscription 4.2.3</li>
+						<li>Invite Anyone 1.4.8</li>
 					</ul>
 				</div>
 			</div>

@@ -43,10 +43,20 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '11.4.0',
+			'version'           => '12.4.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
+		) );
+
+		// BP Classic
+		call_user_func( $instance, array(
+			'plugin_name'       => 'BP Classic',
+			'cbox_name'         => __( 'BP Classic', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'BP Classic provides compatibility with legacy plugins when running version 12.0+ of BuddyPress.', 'commons-in-a-box' ),
+			'version'           => '1.4.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-classic.1.4.0.zip',
+			'network'           => true,
 		) );
 
 		// CBOX-OpenLab Core
@@ -54,8 +64,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.5.1',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.5.1.zip',
+			'version'           => '1.6.0',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.6.0.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -119,8 +129,8 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Group Email Subscription', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '4.2.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.1.zip',
+			'version'           => '4.2.3',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.3.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'admin.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'root-blog-only'
@@ -146,9 +156,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'Invite Anyone',
 			'cbox_name'         => __( 'Invite Anyone', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'commons-in-a-box' ),
-			'version'           => '1.4.7',
+			'version'           => '1.4.8',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.7.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.8.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone',
@@ -224,15 +234,15 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.11.4.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.12.4.0.zip'
 		) );
 
 		// Event Organiser
 		call_user_func( $instance, array(
 			'plugin_name'  => 'Event Organiser',
 			'type'         => 'dependency',
-			'version'      => '3.12.4',
-			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.12.4.zip',
+			'version'      => '3.12.6',
+			'download_url' => 'http://downloads.wordpress.org/plugin/event-organiser.3.12.6.zip',
 			'network'      => false,
 			'hide'         => cbox_is_main_site()
 		) );
@@ -337,8 +347,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'PressForward', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A plugin providing an editorial workflow for content aggregation and curation within the WordPress dashboard. Designed for bloggers and editorial teams wishing to collect, discuss, and share content from a variety of sources on the open web.', 'commons-in-a-box' ),
-			'version'           => '5.5.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.5.0.zip',
+			'version'           => '5.6.2',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.6.2.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
