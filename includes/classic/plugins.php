@@ -47,6 +47,16 @@ class CBox_Plugins_Classic {
 			'network_settings'  => 'settings.php?page=bp-components'
 		) );
 
+		// BP Classic
+		call_user_func( $instance, array(
+			'plugin_name'       => 'BP Classic',
+			'cbox_name'         => __( 'BP Classic', 'commons-in-a-box' ),
+			'cbox_description'  => __( 'BP Classic provides compatibility with legacy plugins when running version 12.0+ of BuddyPress.', 'commons-in-a-box' ),
+			'version'           => '1.4.0',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bp-classic.1.4.0.zip',
+			'network'           => true,
+		) );
+
 		/**
 		 * Register CBOX's dependency plugins internally.
 		 *
