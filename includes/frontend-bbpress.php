@@ -192,7 +192,14 @@ class CBox_BBP_Autoload {
 	 * @return string
 	 */
 	public function override_the_permalink_with_group_permalink( $retval = '' ) {
-		return bp_get_group_permalink() . 'forum/';
+		if ( function_exists( 'bp_get_group_url' ) ) {
+			return bp_get_group_url(
+				groups_get_current_group(),
+				bp_groups_get_path_chunks( [ 'forum' ] )
+			);
+		} else {
+			return bp_get_group_permalink() . 'forum/';
+		}
 	}
 
 	/**
@@ -521,7 +528,14 @@ class CBox_BBP_Autoload {
 				$slug = bbp_add_view_all( sprintf( '%s%d', $pending_slug_prefix, $topic_id ), true );
 			}
 
-			return trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . 'forum/topic/' . $slug . $topic_hash;
+			if ( function_exists( 'bp_get_group_url' ) ) {
+				return bp_get_group_url(
+					groups_get_current_group(),
+					bp_groups_get_path_chunks( [ 'forum', 'topic', $slug ] )
+				) . $topic_hash;
+			} else {
+				return trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . 'forum/topic/' . $slug . $topic_hash;
+			}
 		}, 20, 3 );
 
 		// Fix redirect link after pending topic is approved.
