@@ -17,8 +17,12 @@ function cbox_frontend_adminbar_bbpress() {
 	$my_engagements_link = $my_favorites_link = $my_subscriptions_link = '';
 
 	// Setup the logged in user variables
-	$user_domain = bp_loggedin_user_domain();
-	$forums_link = trailingslashit( $user_domain . 'forums' );
+	if ( function_exists( 'bp_members_get_user_url' ) ) {
+		$forums_link = bp_members_get_user_url( bp_loggedin_user_id(), bp_members_get_path_chunks( [ 'forums' ] ) );
+	} else {
+		$user_domain = bp_loggedin_user_domain();
+		$forums_link = trailingslashit( $user_domain . 'forums' );
+	}
 
 	// Engagements - only available in v2.6.0.
 	if ( version_compare( $plugin_meta['Version'], '2.6') >= 0 && (bool) apply_filters( 'bbp_is_engagements_active', (bool) get_blog_option( cbox_get_main_site_id(), '_bbp_enable_engagements', 1 ) ) ) {

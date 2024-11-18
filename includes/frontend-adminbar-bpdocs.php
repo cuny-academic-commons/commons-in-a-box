@@ -14,9 +14,15 @@ function cbox_frontend_adminbar_bpdocs() {
 	$edited_slug  = defined( 'BP_DOCS_EDITED_SLUG' )  ? BP_DOCS_EDITED_SLUG  : 'edited';
 	$create_slug  = defined( 'BP_DOCS_CREATE_SLUG' )  ? BP_DOCS_CREATE_SLUG  : 'create';
 
-	$docs_link    = apply_filters( 'bp_docs_get_mydocs_link',         trailingslashit( bp_loggedin_user_domain() . $slug ) );
-	$started_link = apply_filters( 'bp_docs_get_mydocs_started_link', trailingslashit( $docs_link . $started_slug ) );
-	$edited_link  = apply_filters( 'bp_docs_get_mydocs_edited_link',  trailingslashit( $docs_link . $edited_slug ) );
+	$docs_link = bp_members_get_user_url( bp_loggedin_user_id(), bp_members_get_path_chunks( [ $slug ] ) );
+	$docs_link = apply_filters( 'bp_docs_get_mydocs_link', $docs_link );
+
+	$started_link = bp_members_get_user_url( bp_loggedin_user_id(), bp_members_get_path_chunks( [ $slug, $started_slug ] ) );
+	$started_link = apply_filters( 'bp_docs_get_mydocs_started_link', $started_link );
+
+	$edited_link = bp_members_get_user_url( bp_loggedin_user_id(), bp_members_get_path_chunks( [ $slug, $edited_slug ] ) );
+	$edited_link = apply_filters( 'bp_docs_get_mydocs_edited_link', $edited_link );
+
 
 	$archive_link = apply_filters( 'bp_docs_get_archive_link', trailingslashit( get_home_url( bp_get_root_blog_id(), $slug ) ) );
 	$create_link  = apply_filters( 'bp_docs_get_create_link',  trailingslashit( $archive_link . $create_slug ) );
