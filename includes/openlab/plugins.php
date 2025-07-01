@@ -325,16 +325,6 @@ class CBox_Plugins_OpenLab {
 	 */
 	protected static function register_installonly_plugins( $instance ) {
 		call_user_func( $instance, array(
-			'plugin_name'       => 'Anthologize',
-			'type'              => 'install-only',
-			'cbox_name'         => __( 'Anthologize', 'commons-in-a-box' ),
-			'cbox_description'  => __( 'Create ebooks from your blog posts or other external content.', 'commons-in-a-box' ),
-			'version'           => '0.8.1',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/anthologize.0.8.1.zip',
-			'documentation_url' => 'https://wordpress.org/plugins/anthologize',
-		) );
-
-		call_user_func( $instance, array(
 			'plugin_name'       => 'Braille',
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'Braille', 'commons-in-a-box' ),
