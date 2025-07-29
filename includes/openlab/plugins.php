@@ -64,8 +64,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.7.0-beta1',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.7.0-beta1.zip',
+			'version'           => '1.7.0-beta2',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.7.0-beta2.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
