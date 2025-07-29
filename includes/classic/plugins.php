@@ -264,9 +264,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'commons-in-a-box' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
-			'version'           => '1.0-RC10',
+			'version'           => '1.0-RC11',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC10.zip',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'
