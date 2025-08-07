@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 6.6
-Stable tag: 1.6.0
+Tested up to: 6.8
+Stable tag: 1.7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,23 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 4. CBOX-OL homepage
 
 == Changelog ==
+
+= 1.7.0 =
+* Updated plugins (OpenLab): bbPress 2.6.13, BP Group Documents 2.0, BuddyPress 14.3.4, BuddyPress Docs 2.2.5, BuddyPress Group Email Subscription 4.2.4, BuddyPress Reply By Email 1.0-RC11, Event Organiser 3.12.8, Invite Anyone 1.4.10, PressForward 5.8.0, OpenLab Attributions 2.1.4, WP Grade Comments 1.6.0
+* Updated plugins (Classic): bbPress 2.6.13, BuddyPress 14.3.4, BuddyPress Docs 2.2.5, BuddyPress Group Email Subscription 4.2.4, BuddyPress Reply By Email 1.0-RC11, Invite Anyone 1.4.10
+* Compatibility with BuddyPress 14.0+.
+* OpenLab: New feature allows bulk user import for groups.
+* OpenLab: New "Dashboard Panel" feature allows network admins to show a customizable message on all Dashboards in the network.
+* OpenLab: New "Main Site Banner" feature allows network admins to show a customizable banner on the main site of the network.
+* OpenLab: New feature allows group admins to make a specific group "non-joinable", though the content remains publicly available.
+* OpenLab: New feature allows group membership list to be sorted.
+* OpenLab: Improvements to nav menu behavior on group sites, including Block Theme compatibility and better handling during cloning.
+* OpenLab: Improvements to URL replacement during site cloning.
+* OpenLab: Accessibility improvements
+* Classic: Fixed compatibliity with latest BuddyPress and deprecated legacy forums.
+* Classic: Improved styling on Send Invites and Settings pages.
+* Classic: Improved compatitibility with s3-uploads plugin.
+* Classic: Improved PHP 8 compatibility.
 
 = 1.6.0 =
 * Updated plugins (OpenLab): BP Classic 1.4.0, BuddyPress 12.4.0, BuddyPress Group Email Subscription 4.2.3, Event Organiser 3.12.6, Invite Anyone 1.4.8, PressForward 5.6.2

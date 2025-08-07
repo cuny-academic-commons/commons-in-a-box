@@ -109,6 +109,9 @@ abstract class CBox_Package {
 				}
 			} );
 		} );
+
+		// Plugin routine after updating a plugin.
+		self::plugin_post_install();
 	}
 
 	/**
@@ -205,6 +208,25 @@ abstract class CBox_Package {
 		}
 
 		return $plugins;
+	}
+
+	/**
+	 * Plugin post-install routine.
+	 *
+	 * @since 1.7.0
+	 */
+	public static function plugin_post_install() {
+		add_filter( 'upgrader_post_install', function( $retval, $hook_extra, $result ) {
+			$class = new ReflectionClass( get_called_class() );
+			$file  = dirname( $class->getFileName() ) . '/plugin-post-install/' . $result['destination_name'] . '.php';
+
+			// Handle individual plugin post install routine if available.
+			if ( file_exists( $file ) ) {
+				require $file;
+			}
+
+			return $retval;
+		}, 10, 3 );
 	}
 
 	/**

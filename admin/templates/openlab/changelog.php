@@ -22,13 +22,12 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Improved compatibility with BuddyPress 12.0+.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: Users can hide their membership in specific groups from non-group-members.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: Users can control visibility of specific posts on secondary sites using the "More visibility options" settings"', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: Network admins can limit site templates to users of spceific member types and/or groups associated with specific academic units.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: Network admins can control the order of site templates as they appear on the front end.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug causing "Group Home" menu item to be incorrectly generated on new group sites.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug preventing groups from being completely cloned when the File Library was empty.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New feature: Bulk user import for groups.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New feature: "Dashboard Panel" allows network admins to show a customizable message on all Dashboards in the network.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New feature: "Main Site Banner" allows network admins to show a customizable banner on the main site of the network.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New feature: Group admins can make a specific group "non-joinable" while keeping content publicly available.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved nav menu behavior on group sites, including Block Theme compatibility and better handling during cloning.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved URL replacement during site cloning.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -38,12 +37,17 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>BP Classic 1.4.0</li>
-						<li>BuddyPress 12.4.0</li>
-						<li>BuddyPress Group Email Subscription 4.2.3</li>
-						<li>Event Organiser 3.12.6</li>
-						<li>Invite Anyone 1.4.8</li>
-						<li>PressForward 5.6.0</li>
+						<li>bbPress 2.6.13</li>
+						<li>BP Group Documents 2.0</li>
+						<li>BuddyPress 14.3.4</li>
+						<li>BuddyPress Docs 2.2.5</li>
+						<li>BuddyPress Group Email Subscription 4.2.4</li>
+						<li>BuddyPress Reply By Email 1.0-RC11</li>
+						<li>Event Organiser 3.12.8</li>
+						<li>Invite Anyone 1.4.10</li>
+						<li>PressForward 5.8.0</li>
+						<li>OpenLab Attributions 2.1.4</li>
+						<li>WP Grade Comments 1.6.0</li>
 					</ul>
 				</div>
 			</div>
@@ -53,16 +57,8 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'New feature: Privacy settings for user avatars.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Miscellaneous improvements related to the privacy of user profile and portfolio data.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Include "Accessibility" page on installation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to pagination on group member lists.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Internal improvements to allow for better overriding of group submenus in child themes.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'More consistent styling for subnav items when editing group settings.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improvements to keyboard navigation in toolbar and on homepage.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug causing an extra set of Creators fields to be shown when editing a group.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug causing "Add new file" button to erroneously appear for non-group-members.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed bug that prevented certain new-site options from appearing when editing a cloned group.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New feature: Sortable group membership list.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Accessibility improvements.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

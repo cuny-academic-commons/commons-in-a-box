@@ -41,7 +41,7 @@ class CBox_Plugins_Classic {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '11.4.0',
+			'version'           => '14.3.4',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -72,7 +72,7 @@ class CBox_Plugins_Classic {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.11.4.0.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.14.3.4.zip'
 		) );
 	}
 
@@ -90,9 +90,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'commons-in-a-box' ),
-			'version'           => '2.2.1',
+			'version'           => '2.2.5',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.1.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.5.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -120,8 +120,8 @@ class CBox_Plugins_Classic {
 			'cbox_name'         => __( 'Group Email Subscription', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your community members to receive email notifications of activity within their groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
-			'version'           => '4.2.3',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.3.zip',
+			'version'           => '4.2.4',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-group-email-subscription.4.2.4.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-group-email-subscription',
 			'admin_settings'    => 'options-general.php?page=ass_admin_options', // this doesn't work for BP_ENABLE_MULTIBLOG
 			'network_settings'  => 'settings.php?page=ass_admin_options'
@@ -133,9 +133,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Invite Anyone', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'An enhanced interface for inviting existing community members to groups, as well as a powerful tool for sending invitations, via email, to potential members.', 'commons-in-a-box' ),
-			'version'           => '1.4.8',
+			'version'           => '1.4.10',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.8.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/invite-anyone.1.4.10.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/invite-anyone',
 			'admin_settings'    => 'admin.php?page=invite-anyone',
 			'network_settings'  => 'admin.php?page=invite-anyone',
@@ -161,8 +161,8 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.9',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.9.zip',
+			'version'           => '2.6.13',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.13.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
@@ -264,9 +264,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'optional',
 			'cbox_name'         => __( 'Reply By Email', 'commons-in-a-box' ),
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
-			'version'           => '1.0-RC10',
+			'version'           => '1.0-RC11',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC10.zip',
+			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'

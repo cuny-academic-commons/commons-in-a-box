@@ -3,7 +3,7 @@
 Plugin Name: Commons In A Box
 Plugin URI: http://commonsinabox.org
 Description: A suite of community and collaboration tools for WordPress, designed especially for academic communities
-Version: 1.6.0
+Version: 1.7.0
 Author: CUNY Academic Commons
 Author URI: http://commons.gc.cuny.edu
 Licence: GPLv3
@@ -163,10 +163,10 @@ class Commons_In_A_Box {
 		/** VERSION ***********************************************************/
 
 		// CBOX version
-		$this->version       = '1.6.0';
+		$this->version       = '1.7.0';
 
 		// UTC date of CBOX version release
-		$this->revision_date = '2024-08-08 15:00 UTC';
+		$this->revision_date = '2025-08-07 14:00 UTC';
 
 		/** FILESYSTEM ********************************************************/
 
@@ -232,18 +232,25 @@ class Commons_In_A_Box {
 		 *
 		 * This could be improved...
 		 */
-		if ( defined( 'WP_CLI') ) {
+		if ( defined( 'WP_CLI' ) ) {
 			add_filter( 'upgrader_source_selection', 'cbox_rename_github_folder', 1, 4 );
 			add_action( 'cbox_plugins_loaded', function() {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}, 91 );
 			add_action( 'cbox_plugins_loaded', array( 'Plugin_Dependencies', 'init' ), 91 );
+
+			// Call plugin post-install routine.
+			$packages = cbox_get_packages();
+			$current  = cbox_get_current_package_id();
+			if ( isset( $packages[ $current ] ) && class_exists( $packages[ $current ] ) ) {
+				call_user_func( array( $packages[ $current ], 'plugin_post_install' ) );
+			}
 		}
 
 		// Upgrader routine.
 		add_action( 'wp_loaded', function() {
 			// Ensure we're in the admin area or WP CLI.
-			if ( is_admin() || defined( 'WP_CLI') ) {
+			if ( is_admin() || defined( 'WP_CLI' ) ) {
 				// Ensure upgrader items are registered.
 				$packages = cbox_get_packages();
 				$current  = cbox_get_current_package_id();

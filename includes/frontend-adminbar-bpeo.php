@@ -6,7 +6,11 @@ function cbox_frontend_adminbar_bpeo() {
 	$events_slug = defined( 'BPEO_EVENTS_SLUG' )      ? BPEO_EVENTS_SLUG      : 'events';
 	$new_slug    = defined( 'BPEO_EVENTS_NEW_SLUG' )  ? BPEO_EVENTS_NEW_SLUG  : 'new-event';
 
-	$link = trailingslashit( bp_loggedin_user_domain() . sanitize_title( $events_slug ) );
+	if ( function_exists( 'bp_members_get_user_url' ) ) {
+		$link = bp_members_get_user_url( bp_loggedin_user_id(), bp_members_get_path_chunks( [ sanitize_title( $events_slug ) ] ) );
+	} else {
+		$link = trailingslashit( bp_loggedin_user_domain() . sanitize_title( $events_slug ) );
+	}
 
 	// Add the "My Account" sub menus
 	$nav[] = array(
