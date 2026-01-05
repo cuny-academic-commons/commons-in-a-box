@@ -54,10 +54,10 @@ jobs:
           mkdir -p /tmp/sister-packages
           
           # Extract versions from plugins.php files
-          OPENLAB_CORE_VERSION=$(grep -A 5 "CBOX-OpenLab Core" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
-          BP_EVENT_ORG_VERSION=$(grep -A 5 "BP Event Organiser" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
-          BP_GROUP_ANN_VERSION=$(grep -A 5 "BP Group Announcements" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
-          EXT_GROUP_BLOGS_VERSION=$(grep -A 5 "External Group Blogs" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          OPENLAB_CORE_VERSION=$(grep -A 5 "'plugin_name'.*CBOX-OpenLab Core" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          BP_EVENT_ORG_VERSION=$(grep -A 5 "'plugin_name'.*BuddyPress Event Organiser" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          BP_GROUP_ANN_VERSION=$(grep -A 5 "'plugin_name'.*BP Group Announcements" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          EXT_GROUP_BLOGS_VERSION=$(grep -A 5 "'plugin_name'.*External Group Blogs" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
           
           echo "Detected versions:"
           echo "  cbox-openlab-core: $OPENLAB_CORE_VERSION"
@@ -65,24 +65,42 @@ jobs:
           echo "  bp-group-announcements: $BP_GROUP_ANN_VERSION"
           echo "  external-group-blogs: $EXT_GROUP_BLOGS_VERSION"
           
+          # Validate that versions were extracted
+          if [ -z "$OPENLAB_CORE_VERSION" ]; then
+            echo "Warning: Could not extract version for cbox-openlab-core"
+          fi
+          if [ -z "$BP_EVENT_ORG_VERSION" ]; then
+            echo "Warning: Could not extract version for bp-event-organiser"
+          fi
+          if [ -z "$BP_GROUP_ANN_VERSION" ]; then
+            echo "Warning: Could not extract version for bp-group-announcements"
+          fi
+          if [ -z "$EXT_GROUP_BLOGS_VERSION" ]; then
+            echo "Warning: Could not extract version for external-group-blogs"
+          fi
+          
           # Clone cbox-openlab-core
           if [ -n "$OPENLAB_CORE_VERSION" ]; then
-            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git /tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core"
+            echo "Cloning cbox-openlab-core version $OPENLAB_CORE_VERSION..."
+            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git /tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core version $OPENLAB_CORE_VERSION"
           fi
           
           # Clone bp-event-organiser
           if [ -n "$BP_EVENT_ORG_VERSION" ]; then
-            git clone --depth 1 --branch "$BP_EVENT_ORG_VERSION" https://github.com/cuny-academic-commons/bp-event-organiser.git /tmp/sister-packages/bp-event-organiser || echo "Warning: Could not clone bp-event-organiser"
+            echo "Cloning bp-event-organiser version $BP_EVENT_ORG_VERSION..."
+            git clone --depth 1 --branch "$BP_EVENT_ORG_VERSION" https://github.com/cuny-academic-commons/bp-event-organiser.git /tmp/sister-packages/bp-event-organiser || echo "Warning: Could not clone bp-event-organiser version $BP_EVENT_ORG_VERSION"
           fi
           
           # Clone bp-group-announcements
           if [ -n "$BP_GROUP_ANN_VERSION" ]; then
-            git clone --depth 1 --branch "$BP_GROUP_ANN_VERSION" https://github.com/cuny-academic-commons/bp-group-announcements.git /tmp/sister-packages/bp-group-announcements || echo "Warning: Could not clone bp-group-announcements"
+            echo "Cloning bp-group-announcements version $BP_GROUP_ANN_VERSION..."
+            git clone --depth 1 --branch "$BP_GROUP_ANN_VERSION" https://github.com/cuny-academic-commons/bp-group-announcements.git /tmp/sister-packages/bp-group-announcements || echo "Warning: Could not clone bp-group-announcements version $BP_GROUP_ANN_VERSION"
           fi
           
           # Clone external-group-blogs
           if [ -n "$EXT_GROUP_BLOGS_VERSION" ]; then
-            git clone --depth 1 --branch "$EXT_GROUP_BLOGS_VERSION" https://github.com/cuny-academic-commons/external-group-blogs.git /tmp/sister-packages/external-group-blogs || echo "Warning: Could not clone external-group-blogs"
+            echo "Cloning external-group-blogs version $EXT_GROUP_BLOGS_VERSION..."
+            git clone --depth 1 --branch "$EXT_GROUP_BLOGS_VERSION" https://github.com/cuny-academic-commons/external-group-blogs.git /tmp/sister-packages/external-group-blogs || echo "Warning: Could not clone external-group-blogs version $EXT_GROUP_BLOGS_VERSION"
           fi
 
       - name: Extract strings from sister packages
