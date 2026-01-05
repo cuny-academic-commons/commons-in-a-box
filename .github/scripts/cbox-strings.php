@@ -65,7 +65,7 @@ function init($base_dir) {
  */
 ', $textdomain);
 
-        $translations = new Translations();
+        $translations = Translations::create();
 
         // Extract strings from all PHP files in the directory
         extract_from_directory($dir, $translations);
