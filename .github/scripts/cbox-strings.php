@@ -150,9 +150,6 @@ function extract_from_directory($dir, &$translations) {
 function get_dirs($base_dir) {
     $plugins = [
         'cbox-openlab-core',
-        'bp-event-organiser',
-        'bp-group-announcements',
-        'external-group-blogs',
     ];
 
     $themes = [
