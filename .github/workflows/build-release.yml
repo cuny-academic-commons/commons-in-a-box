@@ -46,8 +46,8 @@ jobs:
 
       - name: Checkout sister packages for string extraction
         run: |
-          # Create temp directory for sister packages
-          mkdir -p /tmp/sister-packages
+          # Create temp directory for sister packages in the repo
+          mkdir -p tmp/sister-packages
           
           # Extract versions from plugins.php and openlab.php files
           OPENLAB_CORE_VERSION=$(grep -A 5 "'plugin_name'.*CBOX-OpenLab Core" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
@@ -68,13 +68,13 @@ jobs:
           # Clone cbox-openlab-core
           if [ -n "$OPENLAB_CORE_VERSION" ]; then
             echo "Cloning cbox-openlab-core version $OPENLAB_CORE_VERSION..."
-            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git /tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core version $OPENLAB_CORE_VERSION"
+            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core version $OPENLAB_CORE_VERSION"
           fi
           
           # Clone openlab-theme
           if [ -n "$OPENLAB_THEME_VERSION" ]; then
             echo "Cloning openlab-theme version $OPENLAB_THEME_VERSION..."
-            git clone --depth 1 --branch "$OPENLAB_THEME_VERSION" https://github.com/cuny-academic-commons/openlab-theme.git /tmp/sister-packages/openlab-theme || echo "Warning: Could not clone openlab-theme version $OPENLAB_THEME_VERSION"
+            git clone --depth 1 --branch "$OPENLAB_THEME_VERSION" https://github.com/cuny-academic-commons/openlab-theme.git tmp/sister-packages/openlab-theme || echo "Warning: Could not clone openlab-theme version $OPENLAB_THEME_VERSION"
           fi
 
       - name: Install Gettext library for string extraction
@@ -82,8 +82,8 @@ jobs:
 
       - name: Run cbox-strings utility
         run: |
-          # Create languages and tmp directories if they don't exist
-          mkdir -p languages tmp/sister-packages
+          # Create languages directory if it doesn't exist
+          mkdir -p languages
           
           # Run the cbox-strings script to extract strings from sister packages
           chmod +x .github/scripts/cbox-strings.php
@@ -106,7 +106,7 @@ jobs:
           rm -rf .git .github .gitattributes
           rm -f .gitignore cbox-distro phpcs.xml.dist composer.json composer.lock
           rm -f contributing.md readme.md
-          rm -rf vendor
+          rm -rf vendor tmp
           
           # Create the zip file
           cd /tmp/build
