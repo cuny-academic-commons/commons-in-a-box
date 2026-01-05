@@ -1,0 +1,151 @@
+name: Build WP-Ready Plugin Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-release:
+    name: Build WP-Ready Plugin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get tag name
+        id: get_version
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "Building version: ${GITHUB_REF#refs/tags/}"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          # Install WP-CLI
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+          wp --info
+          
+          # Install gettext tools for msgcat
+          sudo apt-get update
+          sudo apt-get install -y gettext
+
+      - name: Create includes/zip directory
+        run: mkdir -p includes/zip
+
+      - name: Run cbox-distro script
+        run: |
+          chmod +x cbox-distro
+          ./cbox-distro
+
+      - name: Checkout sister packages for string extraction
+        run: |
+          # Create temp directory for sister packages
+          mkdir -p /tmp/sister-packages
+          
+          # Extract versions from plugins.php files
+          OPENLAB_CORE_VERSION=$(grep -A 5 "CBOX-OpenLab Core" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          BP_EVENT_ORG_VERSION=$(grep -A 5 "BP Event Organiser" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          BP_GROUP_ANN_VERSION=$(grep -A 5 "BP Group Announcements" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          EXT_GROUP_BLOGS_VERSION=$(grep -A 5 "External Group Blogs" includes/classic/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          
+          echo "Detected versions:"
+          echo "  cbox-openlab-core: $OPENLAB_CORE_VERSION"
+          echo "  bp-event-organiser: $BP_EVENT_ORG_VERSION"
+          echo "  bp-group-announcements: $BP_GROUP_ANN_VERSION"
+          echo "  external-group-blogs: $EXT_GROUP_BLOGS_VERSION"
+          
+          # Clone cbox-openlab-core
+          if [ -n "$OPENLAB_CORE_VERSION" ]; then
+            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git /tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core"
+          fi
+          
+          # Clone bp-event-organiser
+          if [ -n "$BP_EVENT_ORG_VERSION" ]; then
+            git clone --depth 1 --branch "$BP_EVENT_ORG_VERSION" https://github.com/cuny-academic-commons/bp-event-organiser.git /tmp/sister-packages/bp-event-organiser || echo "Warning: Could not clone bp-event-organiser"
+          fi
+          
+          # Clone bp-group-announcements
+          if [ -n "$BP_GROUP_ANN_VERSION" ]; then
+            git clone --depth 1 --branch "$BP_GROUP_ANN_VERSION" https://github.com/cuny-academic-commons/bp-group-announcements.git /tmp/sister-packages/bp-group-announcements || echo "Warning: Could not clone bp-group-announcements"
+          fi
+          
+          # Clone external-group-blogs
+          if [ -n "$EXT_GROUP_BLOGS_VERSION" ]; then
+            git clone --depth 1 --branch "$EXT_GROUP_BLOGS_VERSION" https://github.com/cuny-academic-commons/external-group-blogs.git /tmp/sister-packages/external-group-blogs || echo "Warning: Could not clone external-group-blogs"
+          fi
+
+      - name: Extract strings from sister packages
+        run: |
+          # Create languages directory if it doesn't exist
+          mkdir -p languages
+          
+          # Extract strings from each sister package
+          # We'll use wp i18n make-pot for each package
+          
+          for package in cbox-openlab-core bp-event-organiser bp-group-announcements external-group-blogs; do
+            if [ -d "/tmp/sister-packages/$package" ]; then
+              echo "Extracting strings from $package..."
+              # Extract strings with commons-in-a-box domain
+              wp i18n make-pot "/tmp/sister-packages/$package" "/tmp/sister-packages/$package.pot" --domain=commons-in-a-box --skip-js --ignore-domain || true
+            fi
+          done
+
+      - name: Generate main .pot file
+        run: |
+          # Generate .pot file for the main plugin
+          wp i18n make-pot . languages/commons-in-a-box.pot --domain=commons-in-a-box --skip-js
+          
+          # Merge sister package strings into main .pot file
+          if command -v msgcat &> /dev/null; then
+            for pot_file in /tmp/sister-packages/*.pot; do
+              if [ -f "$pot_file" ]; then
+                echo "Merging strings from $(basename $pot_file)..."
+                msgcat --use-first languages/commons-in-a-box.pot "$pot_file" -o languages/commons-in-a-box.pot.tmp
+                mv languages/commons-in-a-box.pot.tmp languages/commons-in-a-box.pot
+              fi
+            done
+          else
+            echo "msgcat not available, skipping merge of sister package strings"
+          fi
+
+      - name: Create WP-ready zip
+        run: |
+          # Create a clean copy of the plugin in a directory with the correct name
+          mkdir -p /tmp/build
+          cp -r . /tmp/build/commons-in-a-box
+          
+          # Remove unwanted files from the build
+          cd /tmp/build/commons-in-a-box
+          rm -rf .git .github .gitattributes
+          rm -f .gitignore cbox-distro phpcs.xml.dist composer.json composer.lock
+          rm -f contributing.md readme.md
+          rm -rf vendor
+          
+          # Create the zip file
+          cd /tmp/build
+          zip -r "commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip" commons-in-a-box
+          
+          # Move zip to workspace
+          mv "commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip" $GITHUB_WORKSPACE/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip
+          body: |
+            WP-ready plugin release for version ${{ steps.get_version.outputs.VERSION }}.
+            
+            This zip file can be uploaded directly to a WordPress installation.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
