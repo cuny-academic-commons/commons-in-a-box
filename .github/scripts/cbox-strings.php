@@ -29,7 +29,7 @@ if (!file_exists('vendor/autoload.php')) {
 require_once 'vendor/autoload.php';
 
 use Gettext\Translations;
-use Gettext\Extractors\PhpCode;
+use Gettext\Scanner\PhpScanner;
 
 const TEXTDOMAIN = 'commons-in-a-box';
 
@@ -126,20 +126,8 @@ function init($base_dir) {
  * Extract translations from all PHP files in a directory.
  */
 function extract_from_directory($dir, &$translations) {
-    $iterator = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
-        RecursiveIteratorIterator::SELF_FIRST
-    );
-
-    foreach ($iterator as $file) {
-        if ($file->isFile() && $file->getExtension() === 'php') {
-            try {
-                PhpCode::fromFile($file->getPathname(), $translations);
-            } catch (Exception $e) {
-                echo "Warning: Failed to extract from {$file->getPathname()}: {$e->getMessage()}\n";
-            }
-        }
-    }
+    $scanner = new PhpScanner($translations);
+    $scanner->scanDirectory($dir);
 }
 
 /**
