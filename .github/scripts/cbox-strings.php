@@ -29,7 +29,6 @@ if (!file_exists('vendor/autoload.php')) {
 require_once 'vendor/autoload.php';
 
 use Gettext\Translations;
-use Gettext\Scanner\PhpScanner;
 
 const TEXTDOMAIN = 'commons-in-a-box';
 
@@ -126,8 +125,83 @@ function init($base_dir) {
  * Extract translations from all PHP files in a directory.
  */
 function extract_from_directory($dir, &$translations) {
-    $scanner = new PhpScanner($translations);
-    $scanner->scanDirectory($dir);
+    // Try different gettext APIs based on what's available
+    
+    // Try v5+ Scanner API
+    if (class_exists('Gettext\Scanner\PhpScanner')) {
+        $scanner = new \Gettext\Scanner\PhpScanner($translations);
+        $scanner->scanDirectory($dir);
+        return;
+    }
+    
+    // Try v4 Extractor API
+    if (class_exists('Gettext\Extractors\PhpCode')) {
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        
+        foreach ($iterator as $file) {
+            if ($file->isFile() && $file->getExtension() === 'php') {
+                try {
+                    \Gettext\Extractors\PhpCode::fromFile($file->getPathname(), $translations);
+                } catch (Exception $e) {
+                    echo "Warning: Failed to extract from {$file->getPathname()}: {$e->getMessage()}\n";
+                }
+            }
+        }
+        return;
+    }
+    
+    // Fallback: manual parsing using token_get_all (basic implementation)
+    echo "Warning: Using fallback string extraction method.\n";
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+    
+    foreach ($iterator as $file) {
+        if ($file->isFile() && $file->getExtension() === 'php') {
+            extract_from_file_manually($file->getPathname(), $translations);
+        }
+    }
+}
+
+/**
+ * Manual fallback extraction using token_get_all.
+ */
+function extract_from_file_manually($filepath, &$translations) {
+    $content = file_get_contents($filepath);
+    $tokens = token_get_all($content);
+    
+    $funcs = ['__', '_e', '_x', '_ex', '_n', '_nx', 'esc_html__', 'esc_html_e', 'esc_attr__', 'esc_attr_e'];
+    
+    for ($i = 0; $i < count($tokens); $i++) {
+        if (is_array($tokens[$i]) && $tokens[$i][0] === T_STRING && in_array($tokens[$i][1], $funcs)) {
+            // Found a translation function, try to extract the string
+            $j = $i + 1;
+            while ($j < count($tokens) && (!is_array($tokens[$j]) || $tokens[$j][0] === T_WHITESPACE)) {
+                $j++;
+            }
+            
+            if ($j < count($tokens) && $tokens[$j] === '(') {
+                $j++;
+                while ($j < count($tokens) && (!is_array($tokens[$j]) || $tokens[$j][0] === T_WHITESPACE)) {
+                    $j++;
+                }
+                
+                if ($j < count($tokens) && is_array($tokens[$j]) && $tokens[$j][0] === T_CONSTANT_ENCAPSED_STRING) {
+                    $string = trim($tokens[$j][1], '"\'');
+                    if (!empty($string)) {
+                        $translation = $translations->find(null, $string);
+                        if (!$translation) {
+                            $translation = $translations->insert(null, $string);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
