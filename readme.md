@@ -32,3 +32,25 @@ Pull requests may be submitted to any of these repos. New issue reports can be o
 If you have a plugin that you would like us to consider for inclusion in CBOX Classic or CBOX OpenLab, see our [plugin submission process](http://commonsinabox.org/technical-guide-development).
 
 Questions or suggestions? Contact us via our [developer support forum](http://commonsinabox.org/groups/cbox-developers/forum/).
+
+## Automated Releases
+
+When a new tag is created in this repository, a GitHub Actions workflow automatically builds a WordPress-ready plugin package. The workflow:
+
+1. Runs the `cbox-distro` script to download GitHub-hosted plugins/themes and update references to local zip files
+2. Checks out sister packages (cbox-openlab-core, bp-event-organiser, bp-group-announcements, external-group-blogs) at their pinned versions
+3. Extracts translatable strings from sister packages using WP-CLI
+4. Generates a `.pot` file with all strings from the main plugin and sister packages
+5. Creates a clean zip file named `commons-in-a-box-{version}.zip` with the proper directory structure
+6. Creates a GitHub Release and attaches the zip file
+
+The resulting zip file can be uploaded directly to a WordPress installation, just like you would get from the wordpress.org repository.
+
+To trigger a release, simply create and push a new tag:
+
+```bash
+git tag 1.7.1
+git push origin 1.7.1
+```
+
+The workflow will automatically create a GitHub Release with the WP-ready zip file attached.

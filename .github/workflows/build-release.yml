@@ -95,7 +95,7 @@ jobs:
             if [ -d "/tmp/sister-packages/$package" ]; then
               echo "Extracting strings from $package..."
               # Extract strings with commons-in-a-box domain
-              wp i18n make-pot "/tmp/sister-packages/$package" "/tmp/sister-packages/$package.pot" --domain=commons-in-a-box --skip-js --ignore-domain || true
+              wp i18n make-pot "/tmp/sister-packages/$package" "/tmp/sister-packages/$package.pot" --domain=commons-in-a-box --skip-js || true
             fi
           done
 
