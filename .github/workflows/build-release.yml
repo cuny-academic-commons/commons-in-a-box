@@ -1,0 +1,129 @@
+name: Build WP-Ready Plugin Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-release:
+    name: Build WP-Ready Plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to create releases and upload assets
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get tag name
+        id: get_version
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "Building version: ${GITHUB_REF#refs/tags/}"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          # Install WP-CLI
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+          wp --info
+
+      - name: Create includes/zip directory
+        run: mkdir -p includes/zip
+
+      - name: Run cbox-distro script
+        run: |
+          chmod +x cbox-distro
+          ./cbox-distro
+
+      - name: Checkout sister packages for string extraction
+        run: |
+          # Create temp directory for sister packages in the repo
+          mkdir -p tmp/sister-packages
+          
+          # Extract versions from plugins.php and openlab.php files
+          OPENLAB_CORE_VERSION=$(grep -A 5 "'plugin_name'.*CBOX-OpenLab Core" includes/openlab/plugins.php | grep "'version'" | sed -E "s/.*'version'[[:space:]]*=>[[:space:]]*'([^']*)'.*/\1/")
+          OPENLAB_THEME_VERSION=$(grep -A 3 "openlab-theme" includes/openlab/openlab.php | grep "download_url" | sed -E "s|.*archive/([0-9.]+)\.zip.*|\1|")
+          
+          echo "Detected versions for string extraction:"
+          echo "  cbox-openlab-core: $OPENLAB_CORE_VERSION"
+          echo "  openlab-theme: $OPENLAB_THEME_VERSION"
+          
+          # Validate that versions were extracted
+          if [ -z "$OPENLAB_CORE_VERSION" ]; then
+            echo "Warning: Could not extract version for cbox-openlab-core"
+          fi
+          if [ -z "$OPENLAB_THEME_VERSION" ]; then
+            echo "Warning: Could not extract version for openlab-theme"
+          fi
+          
+          # Clone cbox-openlab-core
+          if [ -n "$OPENLAB_CORE_VERSION" ]; then
+            echo "Cloning cbox-openlab-core version $OPENLAB_CORE_VERSION..."
+            git clone --depth 1 --branch "$OPENLAB_CORE_VERSION" https://github.com/cuny-academic-commons/cbox-openlab-core.git tmp/sister-packages/cbox-openlab-core || echo "Warning: Could not clone cbox-openlab-core version $OPENLAB_CORE_VERSION"
+          fi
+          
+          # Clone openlab-theme
+          if [ -n "$OPENLAB_THEME_VERSION" ]; then
+            echo "Cloning openlab-theme version $OPENLAB_THEME_VERSION..."
+            git clone --depth 1 --branch "$OPENLAB_THEME_VERSION" https://github.com/cuny-academic-commons/openlab-theme.git tmp/sister-packages/openlab-theme || echo "Warning: Could not clone openlab-theme version $OPENLAB_THEME_VERSION"
+          fi
+
+      - name: Install Gettext library for string extraction
+        run: composer require gettext/gettext --no-interaction
+
+      - name: Run cbox-strings utility
+        run: |
+          # Create languages directory if it doesn't exist
+          mkdir -p languages
+          
+          # Run the cbox-strings script to extract strings from sister packages
+          chmod +x .github/scripts/cbox-strings.php
+          php .github/scripts/cbox-strings.php
+
+      - name: Generate main .pot file
+        run: |
+          # Generate .pot file for the main plugin, which will now include
+          # the dummy strings files from sister packages
+          wp i18n make-pot . languages/commons-in-a-box.pot --domain=commons-in-a-box --skip-js
+
+      - name: Create WP-ready zip
+        run: |
+          # Create a clean copy of the plugin in a directory with the correct name
+          mkdir -p /tmp/build
+          cp -r . /tmp/build/commons-in-a-box
+          
+          # Remove unwanted files from the build
+          cd /tmp/build/commons-in-a-box
+          rm -rf .git .github .gitattributes
+          rm -f .gitignore cbox-distro phpcs.xml.dist composer.json composer.lock
+          rm -f contributing.md readme.md
+          rm -rf vendor tmp
+          
+          # Create the zip file
+          cd /tmp/build
+          zip -r "commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip" commons-in-a-box
+          
+          # Move zip to workspace
+          mv "commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip" $GITHUB_WORKSPACE/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: commons-in-a-box-${{ steps.get_version.outputs.VERSION }}.zip
+          body: |
+            WP-ready plugin release for version ${{ steps.get_version.outputs.VERSION }}.
+            
+            This zip file can be uploaded directly to a WordPress installation.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
