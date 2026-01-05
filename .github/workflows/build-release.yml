@@ -9,6 +9,8 @@ jobs:
   build-release:
     name: Build WP-Ready Plugin
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to create releases and upload assets
 
     steps:
       - name: Checkout repository
