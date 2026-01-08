@@ -59,6 +59,17 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
+= 1.7.1 =
+* Updated plugins (OpenLab): bbPress 2.6.14, BuddyPress 14.4.0, BuddyPress Docs 2.2.6, BuddyPress Docs In Group 1.0.5, PressForward 5.9.3
+* Updated plugins (Classic): bbPress 2.6.14, BuddyPress 14.4.0, BuddyPress Docs 2.2.6
+* OpenLab: Fixed behavior of Previous Step button during group creation.
+* OpenLab: Fixed the bulk-user-import acknowledgement checkbox.
+* OpenLab: Fixed behavior of the portfolio site admin link when viewing as the non-owner.
+* OpenLab: Fixed redirect behavior after leaving a comment on a Doc.
+* OpenLab: Improved compatibility between site cloning and the wp-piwik plugin.
+* OpenLab: Better scoping for the display of the Dashboard Panel.
+* OpenLab: Fix bug that caused post-sharing-options error when using the Block widgets panel.
+
 = 1.7.0 =
 * Updated plugins (OpenLab): bbPress 2.6.13, BP Group Documents 2.0, BuddyPress 14.3.4, BuddyPress Docs 2.2.5, BuddyPress Group Email Subscription 4.2.4, BuddyPress Reply By Email 1.0-RC11, Event Organiser 3.12.8, Invite Anyone 1.4.10, PressForward 5.8.0, OpenLab Attributions 2.1.4, WP Grade Comments 1.6.0
 * Updated plugins (Classic): bbPress 2.6.13, BuddyPress 14.3.4, BuddyPress Docs 2.2.5, BuddyPress Group Email Subscription 4.2.4, BuddyPress Reply By Email 1.0-RC11, Invite Anyone 1.4.10
