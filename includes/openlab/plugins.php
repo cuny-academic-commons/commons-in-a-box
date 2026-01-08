@@ -65,7 +65,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
 			'version'           => '1.7.1',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.7.1.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/cbox-openlab-core-1.7.1.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -104,7 +104,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_description'  => __( 'Put BuddyPress Docs into the Group context.', 'commons-in-a-box' ),
 			'version'           => '1.0.5',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/boonebgorges/buddypress-docs-in-group/archive/1.0.5.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/buddypress-docs-in-group-1.0.5.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false,
@@ -192,7 +192,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Portfolio', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'WordPress portfolio tools.', 'commons-in-a-box' ),
 			'version'           => '1.1.2',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-portfolio/archive/1.1.2.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/openlab-portfolio-1.1.2.zip',
 		) );
 
 		// OpenLab Badges
@@ -201,7 +201,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Badges', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Customizable badges for your OpenLab groups.', 'commons-in-a-box' ),
 			'version'           => '1.0.1',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-badges/archive/1.0.1.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/openlab-badges-1.0.1.zip',
 		) );
 
 		// OpenLab Email Embedded Media
@@ -210,7 +210,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Email Embedded Media', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Where possible, show embedded media in email notifications.', 'commons-in-a-box' ),
 			'version'           => '1.0.2',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-email-embedded-media/archive/1.0.2.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/openlab-email-embedded-media-1.0.2.zip',
 		) );
 	}
 
@@ -274,7 +274,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_description'  => __( 'Allows your members to create a calendar for themselves and to attach specific events to groups.', 'commons-in-a-box' ),
 			'version'           => '1.2.0',
 			'depends'           => 'BuddyPress (>=1.5), Event Organiser (>=3.1)',
-			'download_url'      => 'https://github.com/cuny-academic-commons/bp-event-organiser/archive/1.2.0.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/bp-event-organiser-1.2.0.zip',
 			'network'           => false
 		) );
 	}
@@ -296,7 +296,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
 			'version'           => '1.0-RC11',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC11.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/bp-reply-by-email-1.0-RC11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'
@@ -310,7 +310,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_description'  => __( 'An addon for the Braille plugin providing support for BuddyPress Group Forums and Private Messaging', 'commons-in-a-box' ),
 			'version'           => '0.2.0',
 			'depends'           => 'Braille (>=0.0.3)',
-			'download_url'      => 'http://github.com/hard-g/bp-braille/archive/master.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/bp-braille-master.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/braille',
 			'network'           => false
 		) );
@@ -349,7 +349,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Attributions', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A plugin for creating inline attributions for site content.', 'commons-in-a-box' ),
 			'version'           => '2.1.4',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-attributions/archive/2.1.4.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/openlab-attributions-2.1.4.zip',
 		) );
 
 		// OpenLab Private Comments
@@ -359,7 +359,7 @@ class CBox_Plugins_OpenLab {
 			'cbox_name'         => __( 'Private Comments', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Private comments for sites in your network.', 'commons-in-a-box' ),
 			'version'           => '1.1.1',
-			'download_url'      => 'https://github.com/openlab-at-city-tech/openlab-private-comments/archive/1.1.1.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/openlab-private-comments-1.1.1.zip',
 		) );
 
 		call_user_func( $instance, array(
