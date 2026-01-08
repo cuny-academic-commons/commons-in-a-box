@@ -22,12 +22,10 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'New feature: Bulk user import for groups.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: "Dashboard Panel" allows network admins to show a customizable message on all Dashboards in the network.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: "Main Site Banner" allows network admins to show a customizable banner on the main site of the network.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'New feature: Group admins can make a specific group "non-joinable" while keeping content publicly available.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved nav menu behavior on group sites, including Block Theme compatibility and better handling during cloning.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved URL replacement during site cloning.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed redirect behavior after leaving a comment on a Doc.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved compatibility between site cloning and the wp-piwik plugin.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Better scoping for the display of the Dashboard Panel.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fix bug that caused post-sharing-options error when using the Block widgets panel.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -37,17 +35,12 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.13</li>
-						<li>BP Group Documents 2.0</li>
-						<li>BuddyPress 14.3.4</li>
-						<li>BuddyPress Docs 2.2.5</li>
-						<li>BuddyPress Group Email Subscription 4.2.4</li>
-						<li>BuddyPress Reply By Email 1.0-RC11</li>
+						<li>bbPress 2.6.14</li>
+						<li>BuddyPress 14.4.0</li>
+						<li>BuddyPress Docs 2.2.6</li>
+						<li>BuddyPress Docs In Group 1.0.5</li>
 						<li>Event Organiser 3.12.8</li>
-						<li>Invite Anyone 1.4.10</li>
-						<li>PressForward 5.8.0</li>
-						<li>OpenLab Attributions 2.1.4</li>
-						<li>WP Grade Comments 1.6.0</li>
+						<li>PressForward 5.9.3</li>
 					</ul>
 				</div>
 			</div>
@@ -57,8 +50,9 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'New feature: Sortable group membership list.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Accessibility improvements.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed behavior of Previous Step button during group creation.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed the bulk-user-import acknowledgement checkbox.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed behavior of the portfolio site admin link when viewing as the non-owner.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

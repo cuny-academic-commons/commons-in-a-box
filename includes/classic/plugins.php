@@ -41,7 +41,7 @@ class CBox_Plugins_Classic {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '14.3.4',
+			'version'           => '14.4.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -72,7 +72,7 @@ class CBox_Plugins_Classic {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.14.3.4.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.14.4.0.zip'
 		) );
 	}
 
@@ -90,9 +90,9 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'Docs', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'commons-in-a-box' ),
-			'version'           => '2.2.5',
+			'version'           => '2.2.6',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.5.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -161,8 +161,8 @@ class CBox_Plugins_Classic {
 			'type'              => 'recommended',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.13',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.13.zip',
+			'version'           => '2.6.14',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.14.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',

@@ -43,7 +43,7 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress',
 			'cbox_name'         => __( 'BuddyPress', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'BuddyPress provides the core functionality of Commons In A Box, including groups and user profiles.', 'commons-in-a-box' ),
-			'version'           => '14.3.4',
+			'version'           => '14.4.0',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 			'admin_settings'    => 'options-general.php?page=bp-components',
 			'network_settings'  => 'settings.php?page=bp-components'
@@ -64,8 +64,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'CBOX-OpenLab Core',
 			'cbox_name'         => __( 'OpenLab Core', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Core functionality for CBOX-OpenLab.', 'commons-in-a-box' ),
-			'version'           => '1.7.0',
-			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.7.0.zip',
+			'version'           => '1.7.1',
+			'download_url'      => 'https://github.com/cuny-academic-commons/cbox-openlab-core/archive/1.7.1.zip',
 			//'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-plugin',
 		) );
 
@@ -74,8 +74,8 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'bbPress',
 			'cbox_name'         => __( 'bbPress Forums', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Sitewide and group-specific discussion forums.', 'commons-in-a-box' ),
-			'version'           => '2.6.13',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.13.zip',
+			'version'           => '2.6.14',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/bbpress.2.6.14.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bbpress',
 			'admin_settings'    => 'options-general.php?page=bbpress',
 			'network_settings'  => 'root-blog-only',
@@ -88,9 +88,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress Docs',
 			'cbox_name'         => __( 'Docs', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Allows your members to collaborate on wiki-style Docs.', 'commons-in-a-box' ),
-			'version'           => '2.2.5',
+			'version'           => '2.2.6',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.5.zip',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/buddypress-docs.2.2.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'admin_settings'    => 'edit.php?post_type=bp_doc',
 			'network_settings'  => 'root-blog-only',
@@ -102,9 +102,9 @@ class CBox_Plugins_OpenLab {
 			'plugin_name'       => 'BuddyPress Docs In Group',
 			'cbox_name'         => __( 'Docs in Group', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'Put BuddyPress Docs into the Group context.', 'commons-in-a-box' ),
-			'version'           => '1.0.4',
+			'version'           => '1.0.5',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/boonebgorges/buddypress-docs-in-group/archive/1.0.4.zip',
+			'download_url'      => 'https://github.com/boonebgorges/buddypress-docs-in-group/archive/1.0.5.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false,
@@ -234,7 +234,7 @@ class CBox_Plugins_OpenLab {
 		call_user_func( $instance, array(
 			'plugin_name'  => 'BuddyPress',
 			'type'         => 'dependency',
-			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.14.3.4.zip'
+			'download_url' => 'http://downloads.wordpress.org/plugin/buddypress.14.4.0.zip'
 		) );
 
 		// Event Organiser
@@ -337,8 +337,8 @@ class CBox_Plugins_OpenLab {
 			'type'              => 'install-only',
 			'cbox_name'         => __( 'PressForward', 'commons-in-a-box' ),
 			'cbox_description'  => __( 'A plugin providing an editorial workflow for content aggregation and curation within the WordPress dashboard. Designed for bloggers and editorial teams wishing to collect, discuss, and share content from a variety of sources on the open web.', 'commons-in-a-box' ),
-			'version'           => '5.8.0',
-			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.8.0.zip',
+			'version'           => '5.9.3',
+			'download_url'      => 'http://downloads.wordpress.org/plugin/pressforward.5.9.3.zip',
 			'documentation_url' => 'https://wordpress.org/plugins/pressforward',
 		) );
 
