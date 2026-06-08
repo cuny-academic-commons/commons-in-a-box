@@ -107,7 +107,7 @@ class CBox_Plugins_Classic {
 			'cbox_description'  => __( 'A sitewide wiki, powered by BuddyPress Docs', 'commons-in-a-box' ),
 			'version'           => '1.0.11',
 			'depends'           => 'BuddyPress (>=1.5), BuddyPress Docs (>=1.2)',
-			'download_url'      => 'http://github.com/boonebgorges/buddypress-docs-wiki/archive/1.0.11.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/buddypress-docs-wiki-1.0.11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-docs-wiki',
 			'network_settings'  => 'root-blog-only',
 			'network'           => false
@@ -189,7 +189,7 @@ class CBox_Plugins_Classic {
 			'cbox_description'  => __( 'Repurposes group activity updates, using an Announcements tab to groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
 			'version'           => '1.0.6',
-			'download_url'      => 'http://github.com/cuny-academic-commons/bp-group-announcements/archive/1.0.6.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/bp-group-announcements-1.0.6.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/bp-group-announcements',
 			'network'           => false
 		) );
@@ -252,7 +252,7 @@ class CBox_Plugins_Classic {
 			'cbox_description'  => __( 'Gives group creators and administrators the ability to attach external RSS feeds to groups.', 'commons-in-a-box' ),
 			'depends'           => 'BuddyPress (>=1.5)',
 			'version'           => '1.6.2',
-			'download_url'      => 'http://github.com/cuny-academic-commons/external-group-blogs/archive/1.6.2.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/external-group-blogs-1.6.2.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-external-group-rss',
 			'network'           => false
 		) );
@@ -266,7 +266,7 @@ class CBox_Plugins_Classic {
 			'cbox_description'  => __( "Reply to content from all over the community from the comfort of your email inbox", 'commons-in-a-box' ),
 			'version'           => '1.0-RC11',
 			'depends'           => 'BuddyPress (>=1.5)',
-			'download_url'      => 'https://github.com/r-a-y/bp-reply-by-email/archive/1.0-RC11.zip',
+			'download_url'      => CBOX_PLUGIN_DIR . 'includes/zip/bp-reply-by-email-1.0-RC11.zip',
 			'documentation_url' => 'http://commonsinabox.org/documentation/plugins/buddypress-reply-by-email',
 			'admin_settings'    => is_multisite() ? 'options-general.php?page=bp-rbe' : 'admin.php?page=bp-rbe',
 			'network_settings'  => 'root-blog-only'
