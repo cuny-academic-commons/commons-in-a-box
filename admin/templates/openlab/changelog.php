@@ -22,10 +22,20 @@
 
 				<div class="feature-section col two-col">
 					<ul>
-						<li><?php esc_html_e( 'Fixed redirect behavior after leaving a comment on a Doc.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Improved compatibility between site cloning and the wp-piwik plugin.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Better scoping for the display of the Dashboard Panel.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fix bug that caused post-sharing-options error when using the Block widgets panel.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Overhauled the customizations that CBOX applies to the WP toolbar on secondary sites, for better theme compatibility and ease-of-use.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'New Communications widgets on site Dashboards.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improved user-facing error reporting during the site creation flow.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Changed the behavior of the site template picker so that no template is selected by default.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Ensure that super admins can always use the bulk group-member import feature.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'During portfolio creation, "show portfolio link" is now checked by default.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added a feature that allows network admins to disable the core WordPress Welcome banner by default.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that prevented the "WordPress Biography" BuddyPress field type from being properly usable on CBOX profiles.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that prevented Gravity Forms forms from being copied during site clone.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that prevented the site template chooser from appearing when creating a site via the Settings section of an existing group.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused group site link not to appear in sidebar in certain cases.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug arising from legacy group data after BP 14.0.0 update.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed bug that caused "Hi, {user}" link to go to the wrong place in certain instances.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Fixed certain notices appearing in the Site Editor.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>
@@ -35,12 +45,11 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.14</li>
-						<li>BuddyPress 14.4.0</li>
-						<li>BuddyPress Docs 2.2.6</li>
-						<li>BuddyPress Docs In Group 1.0.5</li>
-						<li>Event Organiser 3.12.8</li>
-						<li>PressForward 5.9.3</li>
+						<li>BuddyPress 14.5.0</li>
+						<li>BuddyPress Docs 2.2.7</li>
+						<li>BuddyPress Docs in Group 1.0.5</li>
+						<li>PressForward 5.9.5</li>
+						<li>OpenLab Attributions 2.1.5</li>
 					</ul>
 				</div>
 			</div>
@@ -50,9 +59,11 @@
 
 				<div class="feature-section">
 					<ul>
-						<li><?php esc_html_e( 'Fixed behavior of Previous Step button during group creation.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed the bulk-user-import acknowledgement checkbox.', 'commons-in-a-box' ); ?></li>
-						<li><?php esc_html_e( 'Fixed behavior of the portfolio site admin link when viewing as the non-owner.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Added "attention required" bubble for pending membership requests to group nav menus.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Ensure that "Sign Up" sectiond doesn\'t appear in the homepage login box when registration is disabled.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improve "required" behavior for academic units during group creation/edit.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Improve handling of browser focus during registration AJAX events.', 'commons-in-a-box' ); ?></li>
+						<li><?php esc_html_e( 'Contrast improvements for accessibility.', 'commons-in-a-box' ); ?></li>
 					</ul>
 				</div>
 			</div>

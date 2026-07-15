@@ -37,9 +37,8 @@
 
 				<div class="feature-section">
 					<ul>
-						<li>bbPress 2.6.14</li>
-						<li>BuddyPress 14.4.0</li>
-						<li>BuddyPress Docs 2.2.6</li>
+						<li>BuddyPress 14.5.0</li>
+						<li>BuddyPress Docs 2.2.7</li>
 					</ul>
 				</div>
 			</div>

@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 6.9
-Stable tag: 1.7.1
+Tested up to: 6.8
+Stable tag: 1.8.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -59,16 +59,29 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
-= 1.7.1 =
-* Updated plugins (OpenLab): bbPress 2.6.14, BuddyPress 14.4.0, BuddyPress Docs 2.2.6, BuddyPress Docs In Group 1.0.5, PressForward 5.9.3
-* Updated plugins (Classic): bbPress 2.6.14, BuddyPress 14.4.0, BuddyPress Docs 2.2.6
-* OpenLab: Fixed behavior of Previous Step button during group creation.
-* OpenLab: Fixed the bulk-user-import acknowledgement checkbox.
-* OpenLab: Fixed behavior of the portfolio site admin link when viewing as the non-owner.
-* OpenLab: Fixed redirect behavior after leaving a comment on a Doc.
-* OpenLab: Improved compatibility between site cloning and the wp-piwik plugin.
-* OpenLab: Better scoping for the display of the Dashboard Panel.
-* OpenLab: Fix bug that caused post-sharing-options error when using the Block widgets panel.
+= 1.8.0 =
+
+* Plugin updates (OpenLab): BuddyPress 14.5.0, BuddyPress Docs 2.2.7, BuddyPress Docs in Group 1.0.5, PressForward 5.9.9, OpenLab Attributions 2.1.5
+* Plugin updates (Classic): BuddyPress 14.5.0, BuddyPress Docs 2.2.7
+* OpenLab: Overhauled the customizations that CBOX applies to the WP toolbar on secondary sites, for better theme compatibility and ease-of-use.
+* OpenLab: New Communications widgets on site Dashboards.
+* OpenLab: Improved user-facing error reporting during the site creation flow.
+* OpenLab: Changed the behavior of the site template picker so that no template is selected by default.
+* OpenLab: Ensure that super admins can always use the bulk group-member import feature.
+* OpenLab: During portfolio creation, "show portfolio link" is now checked by default.
+* OpenLab: Added a feature that allows network admins to disable the core WordPress Welcome banner by default.
+* OpenLab: Fixed bug that prevented the "WordPress Biography" BuddyPress field type from being properly usable on CBOX profiles.
+* OpenLab: Fixed bug that prevented Gravity Forms forms from being copied during site clone.
+* OpenLab: Fixed bug that prevented the site template chooser from appearing when creating a site via the Settings section of an existing group.
+* OpenLab: Fixed bug that caused group site link not to appear in sidebar in certain cases.
+* OpenLab: Fixed bug arising from legacy group data after BP 14.0.0 update.
+* OpenLab: Fixed bug that caused "Hi, {user}" link to go to the wrong place in certain instances.
+* OpenLab: Fixed certain notices appearing in the Site Editor.
+* OpenLab: Added "attention required" bubble for pending membership requests to group nav menus.
+* OpenLab: Ensure that "Sign Up" sectiond doesn\'t appear in the homepage login box when registration is disabled.
+* OpenLab: Improve "required" behavior for academic units during group creation/edit.
+* OpenLab: Improve handling of browser focus during registration AJAX events.
+* OpenLab: Contrast improvements for accessibility.
 
 = 1.7.0 =
 * Updated plugins (OpenLab): bbPress 2.6.13, BP Group Documents 2.0, BuddyPress 14.3.4, BuddyPress Docs 2.2.5, BuddyPress Group Email Subscription 4.2.4, BuddyPress Reply By Email 1.0-RC11, Event Organiser 3.12.8, Invite Anyone 1.4.10, PressForward 5.8.0, OpenLab Attributions 2.1.4, WP Grade Comments 1.6.0
