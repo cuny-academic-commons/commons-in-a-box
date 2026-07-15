@@ -62,6 +62,7 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 = 1.8.0 =
 
 * Plugin updates (OpenLab): BuddyPress 14.5.0, BuddyPress Docs 2.2.7, PressForward 5.9.9, OpenLab Attributions 2.1.5
+* Plugin updates (Classic): BuddyPress 14.5.0, BuddyPress Docs 2.2.7
 * OpenLab: Overhauled the customizations that CBOX applies to the WP toolbar on secondary sites, for better theme compatibility and ease-of-use.
 * OpenLab: New Communications widgets on site Dashboards.
 * OpenLab: Improved user-facing error reporting during the site creation flow.
