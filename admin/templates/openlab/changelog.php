@@ -47,6 +47,7 @@
 					<ul>
 						<li>BuddyPress 14.5.0</li>
 						<li>BuddyPress Docs 2.2.7</li>
+						<li>BuddyPress Docs in Group 1.0.5</li>
 						<li>PressForward 5.9.5</li>
 						<li>OpenLab Attributions 2.1.5</li>
 					</ul>
