@@ -2,8 +2,8 @@
 Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 4.9.8
-Tested up to: 6.8
-Stable tag: 1.8.0
+Tested up to: 7.0
+Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -59,8 +59,10 @@ It is possible to install Commons In A Box on an existing WordPress site, and it
 
 == Changelog ==
 
-= 1.8.0 =
+= 1.8.1 =
+* Fixed bug with 1.8.0 release package.
 
+= 1.8.0 =
 * Plugin updates (OpenLab): BuddyPress 14.5.0, BuddyPress Docs 2.2.7, BuddyPress Docs in Group 1.0.5, PressForward 5.9.9, OpenLab Attributions 2.1.5
 * Plugin updates (Classic): BuddyPress 14.5.0, BuddyPress Docs 2.2.7
 * OpenLab: Overhauled the customizations that CBOX applies to the WP toolbar on secondary sites, for better theme compatibility and ease-of-use.
